@@ -1,0 +1,24 @@
+image: node
+
+pipelines:
+  default:
+    - step:
+        name: Test
+        script:
+          - npm install && npm test
+
+    - step:
+        name: Build
+        script:
+          - npm install && npm run build
+        artifacts:
+          - build/**
+
+    - step:
+        name: Deploy to Firebase
+        deployment: production
+        script:
+          - pipe: atlassian/firebase-deploy:0.2.1
+            variables:
+              FIREBASE_TOKEN: $FIREBASE_TOKEN
+              PROJECT_ID: $FIREBASE_PROJECT
