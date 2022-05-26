@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="dark"
+  data-auto-appearance="true"
+><head>
+  <meta charset="utf-8" />
+  
+    <meta http-equiv="content-language" content="en" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  
+  <title>ASPIRE CTF 2021 — Linux Skills & Networking &middot; Trevor Saudi</title>
+    <meta name="title" content="ASPIRE CTF 2021 — Linux Skills & Networking &middot; Trevor Saudi" />
+  
+  <meta name="description" content="Portfolio/blog" />
+  
+  
+  
+  <link rel="canonical" href="https://trevorsaudi.github.io/blog/2021-02-15_aspire-ctf-2021linux-skills-networking/" />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.8d6f934e50c42eacbf71529412d91ce34181ec8a6a1bc9a4b96d7d7ce8bba2a397de1562411d0617d3b4ae9b438986aa54aa4f9eb442653b947b28652ac88deb.css"
+    integrity="sha512-jW&#43;TTlDELqy/cVKUEtkc40GB7IpqG8mkuW19fOi7oqOX3hViQR0GF9O0rptDiYaqVKpPnrRCZTuUeyhlKsiN6w=="
+  />
+  
+  
+  <script type="text/javascript" src="/js/appearance.min.4df8309499991be53c71b2b39ba0f5d5e77ea7d411d0710ce48c24218e7cc24ded28f19e85838fdc56db2306195cb001f049f577be0cf0ffb2dd6e2037ede1b9.js" integrity="sha512-TfgwlJmZG&#43;U8cbKzm6D11ed&#43;p9QR0HEM5IwkIY58wk3tKPGehYOP3FbbIwYZXLAB8En1d74M8P&#43;y3W4gN&#43;3huQ=="></script>
+  
+    
+    
+    
+  
+  
+  
+  
+    
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.6181b21eec1c6107c9a9661245521ad9d1861d87537142f2a6f697bf0e5d2742a222001a426f782830c704cf2a4939b31d87e45b5c3686eb0dbff98310112161.js" integrity="sha512-YYGyHuwcYQfJqWYSRVIa2dGGHYdTcULypvaXvw5dJ0KiIgAaQm94KDDHBM8qSTmzHYfkW1w2husNv/mDEBEhYQ==" data-copy="Copy" data-copied="Copied"></script>
+  
+  
+  
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="ASPIRE CTF 2021 — Linux Skills &amp; Networking" />
+<meta property="og:description" content="ASPIRE CTF was a good refresher for basic CTF skills." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://trevorsaudi.github.io/blog/2021-02-15_aspire-ctf-2021linux-skills-networking/" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/1.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/2.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/3.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/4.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/5.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/6.png" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-02-15T06:53:05+00:00" />
+<meta property="article:modified_time" content="2022-05-24T14:30:57+03:00" /><meta property="og:site_name" content="Trevor Saudi" />
+
+
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://trevorsaudi.github.io/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/1.png"/>
+
+<meta name="twitter:title" content="ASPIRE CTF 2021 — Linux Skills &amp; Networking"/>
+<meta name="twitter:description" content="ASPIRE CTF was a good refresher for basic CTF skills."/>
+
+  
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Blogs",
+    "name": "ASPIRE CTF 2021 — Linux Skills \u0026 Networking",
+    "headline": "ASPIRE CTF 2021 — Linux Skills \u0026 Networking",
+    
+    "abstract": "ASPIRE CTF was a good refresher for basic CTF skills.",
+    "inLanguage": "en",
+    "url" : "https:\/\/trevorsaudi.github.io\/blog\/2021-02-15_aspire-ctf-2021linux-skills-networking\/",
+    "author" : {
+      "@type": "Person",
+      "name": "Trevor Saudi"
+    },
+    "copyrightYear": "2021",
+    "dateCreated": "2021-02-15T06:53:05\u002b00:00",
+    "datePublished": "2021-02-15T06:53:05\u002b00:00",
+    
+    "dateModified": "2022-05-24T14:30:57\u002b03:00",
+    
+    
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "1570"
+  }]
+  </script>
+
+
+  
+  <meta name="author" content="Trevor Saudi" />
+  
+    
+      <link href="https://github.com/trevorsaudi" rel="me" />
+    
+  
+  
+  
+
+
+
+
+
+
+  
+  
+  
+  
+
+
+  
+  
+</head>
+<body
+    class="flex flex-col h-screen px-6 m-auto text-lg leading-7 bg-neutral text-neutral-900 sm:px-14 md:px-24 lg:px-32 dark:bg-neutral-800 dark:text-neutral max-w-7xl"
+  >
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 dark:bg-neutral-600 focus:translate-y-0"
+        href="#main-content"
+        ><span class="font-bold ltr:pr-2 rtl:pl-2 text-primary-600 dark:text-primary-400"
+          >&darr;</span
+        >Skip to main content</a
+      >
+    </div><header
+  class="flex justify-between py-6 font-semibold sm:items-center sm:py-10 text-neutral-900 dark:text-neutral print:hidden"
+>
+  
+  <div>
+    
+      
+    
+    
+
+  </div>
+  
+  
+    <nav>
+      <ul class="flex flex-col list-none sm:flex-row">
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/"
+              title=""
+              >Home</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/blog/"
+              title="Blogs"
+              >Blog</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href=""
+              title=""
+              >About</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/tags/"
+              title="Tags"
+              >Tags</a
+            >
+          </li>
+        
+        
+          <li
+            class="ltr:text-right rtl:text-left ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <button
+              id="search-button"
+              class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+              title="Search (/)"
+            >
+              
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+            </button>
+          </li>
+        
+      </ul>
+    </nav>
+  
+</header>
+<div class="relative">
+      <main id="main-content" class="grow">
+  <article>
+    <header class="max-w-prose">
+      
+        <ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden">
+  
+  
+    
+  
+    
+  
+  <li class="inline hidden">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/"
+      ></a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline ">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/blog/"
+      >Blogs</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline hidden">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/blog/2021-02-15_aspire-ctf-2021linux-skills-networking/"
+      >ASPIRE CTF 2021 — Linux Skills &amp; Networking</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+</ol>
+
+
+      
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        ASPIRE CTF 2021 — Linux Skills & Networking
+      </h1>
+      <div class="mt-8 mb-12 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+        
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+    
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2021-02-15 06:53:05.771 &#43;0000 UTC">15 February 2021</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">8 mins</span>
+    
+
+    
+    
+  </div>
+
+  
+  
+
+
+      </div>
+    </header>
+    <section class="flex flex-col max-w-full mt-0 prose lg:flex-row dark:prose-invert">
+      
+        <div class="order-first px-0 lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8 lg:order-last">
+          <div class="ltr:pl-5 rtl:pr-5 toc lg:sticky lg:top-10 print:hidden">
+            <details open class="mt-0 overflow-hidden rounded-lg rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 lg:mt-3">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 text-neutral-800 dark:text-neutral-100 lg:hidden bg-neutral-100 dark:bg-neutral-700"
+  >
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted ltr:border-l rtl:border-r rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 border-neutral-300 dark:border-neutral-600"
+  >
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#needle-in-a-haystack--50pts"><strong>Needle in a haystack -50pts</strong></a></li>
+            <li><a href="#yarn-50pts">Yarn-50pts</a></li>
+            <li><a href="#commitment-50pts">Commitment-50pts</a></li>
+            <li><a href="#shape-shifter-50pts"><strong>Shape shifter-50pts</strong></a></li>
+            <li><a href="#make-me-whole-again">Make me whole again</a></li>
+            <li><a href="#matroska-50pts">Matroska-50pts</a></li>
+            <li><a href="#back-to-the-future-50pts">Back to the future-50pts</a></li>
+            <li><a href="#time-travel-100pts">Time travel-100pts</a></li>
+            <li><a href="#backdoors-250pts">Backdoors-250pts</a></li>
+            <li><a href="#backdoors-hide-and-seek-250pts">Backdoors-Hide and Seek-250pts</a></li>
+            <li><a href="#escape-room250-pts">Escape Room — 250 pts</a></li>
+            <li><a href="#the-wire-50pts">The wire-50pts</a></li>
+            <li><a href="#redirection-50pts">Redirection-50pts</a></li>
+            <li><a href="#gateway-50pts">Gateway-50pts</a></li>
+            <li><a href="#certs-50pts">Certs-50pts</a></li>
+            <li><a href="#wireless-one-50pts">Wireless One-50pts</a></li>
+            <li><a href="#wireless-two-150pts">Wireless Two-150pts</a></li>
+            <li><a href="#resolver-50pts">Resolver-50pts</a></li>
+            <li><a href="#attribution-150pts">Attribution-150pts</a></li>
+            <li><a href="#fingerprint-250pts"><strong>Fingerprint-250pts</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+          </div>
+        </div>
+      
+      <div class="min-w-0 min-h-0 max-w-prose">
+        <p>ASPIRE CTF was a good refresher for basic CTF skills. I hopped onto it played and solo to get the most out of it. Below is a detailed walk-through for all the challenges I solved in the Linux skills category</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/1.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h4 id="needle-in-a-haystack--50pts" class="relative group"><strong>Needle in a haystack -50pts</strong> <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#needle-in-a-haystack--50pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/2.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>From the challenge description and title, we need to leverage on using commands to locate our flag. The zip file contains a number of different files</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/3.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Well, the most efficient way to look for the flag in this case would be to perform a grep search using a regex pattern.</p>
+<p>This particular article came in handy in constructing the regex pattern that gets us the flag.</p>
+<p><a href="https://www.xspdf.com/resolution/58231696.html">How to grep text with brackets only</a></p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/4.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h4 id="yarn-50pts" class="relative group">Yarn-50pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#yarn-50pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/5.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Our next challenge entails a bit of forensics CTF knowledge. First things first when given an image file is to analyze its metadata for any additional helpful information</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/6.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>The markers I have highlighted didn’t yield that much information so I ran strings on the image to check for low hanging fruits. We get interesting information.
+<code>strings bean.jpeg</code>
+
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/7.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>This segment of the strings output reveals we are working with XMP metadata, commonly used with Adobe and Photoshop apps. We can therefore proceed to extract the XMP data to obtain our flag.
+<code>dd bs=1 if=bean.jpeg skip=718 count=3827</code>
+
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/8.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>This article came in handy</p>
+<p><a href="https://www.hackerfactor.com/blog/index.php?/archives/552-Deep-Dive.html">Deep Dive</a></p>
+<h4 id="commitment-50pts" class="relative group">Commitment-50pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#commitment-50pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/9.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We have an interesting challenge here testing our git skills. From the challenge name and description, this entails commit messages.
+<code>git log</code></p>
+<p>Running <code>git log</code> allows us to view information about previous commits that have occurred in a project.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/10.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We get our flag :)</p>
+<h4 id="shape-shifter-50pts" class="relative group"><strong>Shape shifter-50pts</strong> <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#shape-shifter-50pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/11.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>From the challenge description, we may have embedded information within the pdf. I thought of first running <code>strings</code> to get any low hanging fruits.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/12.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Didn’t get anything, so I extracted embedded data using <code>binwalk</code> a tool for searching for embedded data within files.
+<code>binwalk -Me proceedings.pdf #recursively extract files from the pdf</code>
+
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/13.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We get a number of files</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/14.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>The versatile file seems interesting</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/15.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We get our flag :)</p>
+<h4 id="make-me-whole-again" class="relative group">Make me whole again <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#make-me-whole-again" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/16.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Some classic forensics file carving. Sweet :)</p>
+<p>Unzip the broken.zip file and run <code>file</code> to get the details about the file types.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/17.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Interesting, the first file hints that we are working with a broken JPEG file. The appended letters of the files(a-v) also hints that if we joined the files in that order, we may get the original file
+<code>cat * &amp;gt; final #this command gives us the final appended data   eog final #this command opens the jpeg file</code>
+
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/18.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h4 id="matroska-50pts" class="relative group">Matroska-50pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#matroska-50pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/19.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<blockquote>
+<p>“”<strong>Matroska</strong>” is derived from matryoshka , the Russian word for the hollow wooden dolls which open to expose another smaller doll, that in turn opens to expose another doll, and so on.”</p>
+</blockquote>
+<p>The file we get didn’t require automation to get the flag as the nesting wasn’t intense :D, simply extract the nested to extract your flag</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/20.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h4 id="back-to-the-future-50pts" class="relative group">Back to the future-50pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#back-to-the-future-50pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/21.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>This particular challenge was rather interesting.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/22.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We get a file that looks like the normal linux home directory structure. Well, let’s get prying. Our challenge description hints that our focus point should be at the bash_history.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/23.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>So I tried grepping for the string <code>aspire</code> then for the string <code>flag</code></p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/24.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We get some interesting info. <code>flag.txt</code> gets created and converted to a script.</p>
+<p><code>cat **flag**.sh | curl -F ‘f:1=&amp;lt;-’ ix.io</code> This line sticks out. I tried accessing ix.io to understand what this line meant.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/25.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Nice, a command line pastebin. Where users can store texts , in this case, commands. Running the highlighted command generates a link which contains the output of the command</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/26.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/27.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>This means that the last command <code>cat **flag**.sh | curl -F ‘f:1=&amp;lt;-’ ix.io &amp;gt; .cache/.url</code> will redirect the generated link to .cache/.url</p>
+<p>All we need to do is access the link and get the flag</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/28.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/29.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h4 id="time-travel-100pts" class="relative group">Time travel-100pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#time-travel-100pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/30.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Hmm, time travel ?</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/31.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Another git challenge, sweet :D
+<code>git status   git log</code>
+
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/32.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>The highlighted commit hash message stuck out. The redacted info could be our flag. We can use <code>git checkout</code> to check that commit out, then <code>git log -p</code> to inspect what was modified, the location of the changes and the changes that were made.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/33.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We get our flag :)</p>
+<h4 id="backdoors-250pts" class="relative group">Backdoors-250pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#backdoors-250pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/34.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>This was a rather simple challenge for 250pts :)</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/35.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>The flag was located in the /home/backdoor/ directory.</p>
+<h4 id="backdoors-hide-and-seek-250pts" class="relative group">Backdoors-Hide and Seek-250pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#backdoors-hide-and-seek-250pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/36.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>This challenge didn’t require any priv esc, At first I thought is was guessy but this was my thought process after getting some help from a friend. If I was to check for a backdoor in a system, I would try monitor for running processes using command like <code>netstat ss lsof ps</code> I tried typing out these command but didn’t get much.</p>
+<p>But upon viewing the actual scripts …</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/37.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We get the flag :)</p>
+<h4 id="escape-room250-pts" class="relative group">Escape Room — 250 pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#escape-room250-pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/38.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Well, given the ssh creds. Let’s try accessing the server</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/39.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>The ssh connection immediately closes upon connection. hmmm, an ssh jail?</p>
+<p>My workaround for this challenge was to directly pass commands into the ssh session before the connection is shut down</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/40.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Using the flag <code>-t</code> allows you to pass commands into the ssh connection . I also used sshpass, a utility that provides non-interactive password prompt. We can now output our flag
+<code>sshpass -p escape ssh -t escape@68.183.92.119 &amp;#39;cat flag.txt&amp;#39;</code>
+
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/41.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We get the flag :)</p>
+<p>That’s it for linux skills### <strong>Networking</strong></p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/42.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>The networking bit was equally as fun and beginner friendly, here are all solves for the challenges.</p>
+<h4 id="the-wire-50pts" class="relative group">The wire-50pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#the-wire-50pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/43.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>From the challenge description it was likely the flag was captured in the network. Ran strings to output it
+<code>strings cisco.pcapng</code>
+
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/44.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We get the flag at the bottom</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/45.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h4 id="redirection-50pts" class="relative group">Redirection-50pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#redirection-50pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/46.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>The challenge involves HTTP redirection</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/47.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections">Redirections in HTTP</a></p>
+<p>From the above article, I followed that to identify redirection you check for 301 and 302 status codes in the packet capture</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/48.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We get a packet, moving on to analyzing it</p>
+<p>Right click on the packet &gt; Follow &gt; TCP stream</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/49.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>The highlighted text contains the URI path that the client was redirected from</p>
+<h4 id="gateway-50pts" class="relative group">Gateway-50pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#gateway-50pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/50.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>The quickest way to identify the router was check for ARP requests. Usually for remote hosts to make a connection to the network, an ARP to the default gateway is made that triggers a series of ARPs from that gateway or router throughout the network. This can help us trace the router</p>
+<p>Filter for <code>arp</code> packets and we get the devices sending ARP requests</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/51.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>The highlighted one is our router, it’s MAC is provided.</p>
+<h4 id="certs-50pts" class="relative group">Certs-50pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#certs-50pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/52.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>x509 is a standard defining the format for public certificates, commonly used in TSL/SSL.</p>
+<p>To get the x509 certificate we need to filter for ssl and observe the packet which is has <code>certificate</code> in the description. Expanding this in the description gives the serial number.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/53.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h4 id="wireless-one-50pts" class="relative group">Wireless One-50pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#wireless-one-50pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/54.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>To identify the attacker’s IP, we must first take into consideration what type of attack is being carried out.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/55.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>If you observer the protocol of the communication, you can see 802.11, a protocol used to implement wireless LAN. In the context of wi-fi based attacks I thought of MITM where the attacker could intercept packets.</p>
+<p>Further extrapolating this thought process, we arrive at a deauthentication attack. The attacker here, attempts to deauthenticate users in the network and capture their tcp 4-way handshake once they try to reauthenticate.</p>
+<p>In our packet capture, identify the deauthentication packet, the source is the attacker</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/56.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h4 id="wireless-two-150pts" class="relative group">Wireless Two-150pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#wireless-two-150pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/57.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>To get the password to the network, all we need to do is to crack the 4-way handshake packet capture. We can use <code>air-crack ng</code> for this
+<code>aircrack-ng subzero.cap -w /opt/rockyout.txt</code>
+
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/58.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We get the key !</p>
+<h4 id="resolver-50pts" class="relative group">Resolver-50pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#resolver-50pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/59.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>In a forward <strong>DNS lookup</strong>, the <strong>DNS</strong> is queried for the IP address of a certain hostname. In a reverse <strong>DNS lookup</strong> It’s where the hostname of a certain IP address is queried. Basically, a <strong>reverse DNS lookup</strong> returns the hostname of an IP address.</p>
+<p>From the challenge description, we can narrow down our search by investigating IPs outside Kenya. Wireshark has plugins that allow you to check the location of an IP</p>
+<p><a href="https://wiki.wireshark.org/HowToUseGeoIP">HowToUseGeoIP</a></p>
+<p>To inspect the locations of the IP in the packet capture go to</p>
+<p>statistics &gt; endpoints</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/60.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>The IP<code> 62.8.64.6</code> contains our reverse DNS records</p>
+<p>Using this site, I queried the IP and got the results</p>
+<p><a href="https://mxtoolbox.com/ReverseLookup.aspx">Reverse IP Lookup - MxToolbox</a></p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/61.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h4 id="attribution-150pts" class="relative group">Attribution-150pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#attribution-150pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/62.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>In this particular challenge, we need to check the location of the IP. This particular article comes in handy in using the GeoIP database</p>
+<p><a href="https://wiki.wireshark.org/HowToUseGeoIP">HowToUseGeoIP</a></p>
+<p>Go to statistics &gt; endpoints , the first entry contains our answer</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/63.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h4 id="fingerprint-250pts" class="relative group"><strong>Fingerprint-250pts</strong> <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#fingerprint-250pts" aria-label="Anchor">#</a></span></h4>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/64.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>In TLS, the way the encryption is implemented can be fingerprinted. This fingerprint can be added to list of factors used to determine if you are who you say you are. JA3 is a method for creating this fingerprints</p>
+<p>To solve this challenge we need to install the following plugin</p>
+<p><a href="https://github.com/fullylegit/ja3">fullylegit/ja3</a></p>
+<p>Copy the ja3.lua file to your wireshark/plugins.</p>
+<p>You may need to create this folder incase it does not exist. In linux , I created the folder in this path
+<code>/home/&amp;lt;username&amp;gt;/.config/wireshark/plugins</code></p>
+<p>Naturally, it only makes sense to establish the TSL at the start of the communication. You can see this in the packet called <code>Client Hello</code> which is the start of TSL handshake</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/65.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>You get the ja3 fingerprint hash</p>
+<p>That concludes the entire writeup for Aspire CTF. Hope you learnt something :)</p>
+<p>Like, share and follow for more ! Happy hacking :)</p>
+
+      </div>
+    </section>
+    <footer class="pt-8 max-w-prose print:hidden">
+      
+
+      
+
+      
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="flex group" href="/blog/2021-02-01_thanks-so-much-for-the-feedback-and-the-information-i-will-definitely-try-it-out-/">
+              <span
+                class="mr-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+              <span
+                class="ml-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Thanks so much for the feedback and the information, I will definitely try it out :)</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2021-02-01 09:51:07.146 &#43;0000 UTC">1 February 2021</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+            <a class="flex text-right group" href="/blog/2021-03-23_rce-on-unauthenticated-redis-server/">
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >RCE on Unauthenticated Redis server</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2021-03-23 18:02:12.222 &#43;0000 UTC">23 March 2021</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ml-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span
+                class="mr-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+            </a>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+    </footer>
+    
+  </article>
+
+        
+          <div
+            class="absolute top-[110vh] ltr:right-0 rtl:left-0 w-12 pointer-events-none bottom-0"
+          >
+            <a
+              href="#the-top"
+              class="w-12 h-12 sticky pointer-events-auto top-[calc(100vh-5.5rem)] bg-neutral/50 dark:bg-neutral-800/50 backdrop-blur rounded-full text-xl flex items-center justify-center text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400"
+              aria-label="Scroll to top"
+              title="Scroll to top"
+            >
+              &uarr;
+            </a>
+          </div>
+        
+      </main>
+      <div
+  id="search-wrapper"
+  class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible"
+  data-url="https://trevorsaudi.github.io"
+>
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg border-neutral-200 top-20 bg-neutral dark:bg-neutral-800 dark:border-neutral-700"
+  >
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-transparent focus:outline-2"
+          placeholder="Search"
+          tabindex="0"
+        />
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400"
+        title="Close (Esc)"
+      >
+        
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+
+  </span>
+
+
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+<footer class="py-10 print:hidden">
+  
+  
+  <div class="flex justify-between">
+    <div>
+      
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          😄
+      </p>
+      
+      
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          
+          
+          Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> &amp; <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://git.io/hugo-congo" target="_blank" rel="noopener noreferrer">Congo</a>
+        </p>
+      
+    </div>
+    
+    
+      <div
+        class="text-sm cursor-pointer text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400 ltr:mr-14 rtl:ml-14"
+      >
+        <button
+          id="appearance-switcher"
+          class="w-12 h-12 "
+          type="button"
+          title="Switch to dark appearance"
+        >
+          <span class="inline dark:hidden">
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+
+  </span>
+
+</span>
+          <span class="hidden dark:inline">
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+
+  </span>
+
+</span>
+        </button>
+      </div>
+    
+  </div>
+  
+  
+</footer>
+</div>
+  </body>
+</html>
