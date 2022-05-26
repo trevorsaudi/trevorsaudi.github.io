@@ -3,6 +3,7 @@
 # https://jpanther.github.io/congo/docs/getting-started/
 
 baseURL = "http://trevorsaudi.github.io"
+publishDir = "docs"
 defaultContentLanguage = "en"
 
 enableRobotsTXT = true
