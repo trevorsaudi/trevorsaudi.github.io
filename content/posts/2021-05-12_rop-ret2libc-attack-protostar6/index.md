@@ -69,7 +69,7 @@ As of previous challenges, our goal is get code execution on the target host whi
 
 *   ```gets(buffer) :``` The program will ask as for an input and store it an ```buffer of size 64 bytes.``` Gets is a vulnerable function in C that causes stack overflows
 *   ```ret``` : __builtin_return_address(0) - This function checks the current return address on the stack and sets it to a variable ret
-*   ```if((ret &amp; 0xbf000000) == 0xbf000000) :``` This check performs a ```bitwise AND``` operation with the ```current address on the stack``` with the hex value ```0xbf000000``` and then compares it with 0xbf000000. Essentially what this means is that, it checks if the first byte in the return address is equal to 0xbf, since the remaining bytes will be converted to 0 in the AND operation.````Suppose our return address points to``` 0xbfffff01, the check is performed as follows```  
+*   ```if((ret &amp; 0xbf000000) == 0xbf000000) :``` This check performs a ```bitwise AND``` operation with the ```current address on the stack``` with the hex value ```0xbf000000``` and then compares it with 0xbf000000. Essentially what this means is that, it checks if the first byte in the return address is equal to 0xbf, since the remaining bytes will be converted to 0 in the AND operation. Suppose our return address points to``` 0xbfffff01:```, the check is performed as follows
 Operation``` |    ```HEX```    |    ```Binary```  
 __________|___________|__________________________________________  
 
