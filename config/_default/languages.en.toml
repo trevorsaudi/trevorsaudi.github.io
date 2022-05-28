@@ -18,5 +18,6 @@ image = "img/profile.jpg"
 headline = "Information Security Consultant"
 bio = "A little bit abousdfsdfsdft you"
 links = [
-  { github = "https://github.com/trevorsaudi" } 
+  { github = "https://github.com/trevorsaudi" } ,
+  { linkedin = "https://www.linkedin.com/in/trevor-saudi-9275b8186" } ,
    ]

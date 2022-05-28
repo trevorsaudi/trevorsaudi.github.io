@@ -54,9 +54,6 @@ _June 2021 to October 2021_
 -   Solving different challenges centered around cybersecurity concepts such as Cryptography, Web Exploitation, Reverse Engineering, Forensics. etc
 -   Creating gamified scenarios revolving around different cybersecurity topics such as cryptography, forensics, network exploitation, binary exploitation & reverse engineering, to help sharpen and hone skills at different levels in the cybersecurity industry
 
-Email: **<trevorsaudi@silensec.com>**
-Github: **<https://github.com/trevorsaudi>**
-LinkedIn: **<https://www.linkedin.com/in/trevor-saudi-9275b8186/>**
 ## Skills
 
 **Technical**
