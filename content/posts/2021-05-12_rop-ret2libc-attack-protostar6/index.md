@@ -21,6 +21,10 @@ images:
 aliases:
     - "/rop-ret2libc-attack-protostar6-ab537d59b6a8"
 
+
+tags:
+- ROP
+- ret2libc
 ---
 
 ## Bypassing stack pointer restrictions to gain arbitrary code execution
@@ -129,8 +133,8 @@ Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac
 
 
 3. Finding the address of the ```system``` syscall
-`(gdb) p system ```&lt;--- p means print```  
-$1 = {&lt;text variable, no debug info&gt;} 0xb7ecffb0 &lt;__libc_system&gt;  
+`(gdb) p system ```<--- p means print```  
+$1 = {<text variable, no debug info>} 0xb7ecffb0 <__libc_system>  
 (gdb)`
 
 4. Finding the location of the ‘/bin/sh’ within libc

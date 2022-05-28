@@ -19,6 +19,9 @@ images:
 aliases:
     - "/razictf-listen-steganography-6f857c3e0f9b"
 
+tags:
+- Morse
+
 ---
 
 Beginner-Intermediate CTF that took place on Oct 28. We came 15th :).

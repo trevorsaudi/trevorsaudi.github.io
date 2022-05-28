@@ -19,6 +19,10 @@ images:
 aliases:
     - "/yaml-2-json-hackpack-ctf-7de28ef0ecff"
 
+
+tags:
+- pyyaml
+- code injection
 ---
 
 ## Exploiting a deserialize vunlerability in pyyaml

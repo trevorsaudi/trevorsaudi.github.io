@@ -50,6 +50,11 @@ images:
 aliases:
     - "/africahackon-2021-ctf-finals-8111f8edc408"
 
+
+tags:
+- Forensics
+- Malware
+- Pwn
 ---
 
 ![image](/posts/2021-11-09_africahackon-2021-ctf-finals/images/1.jpeg#layoutTextWidth)
@@ -161,7 +166,7 @@ Going through the output we can see a hidden macro sheet in the file. There is a
 ![image](/posts/2021-11-09_africahackon-2021-ctf-finals/images/17.png#layoutTextWidth)
 
 
-I went back to my editor and tried unhiding the file. Right click on ```Sheet1``` &gt; ```Unhide```
+I went back to my editor and tried unhiding the file. Right click on ```Sheet1``` > ```Unhide```
 
 ![image](/posts/2021-11-09_africahackon-2021-ctf-finals/images/18.png#layoutTextWidth)
 

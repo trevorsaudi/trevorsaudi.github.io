@@ -30,6 +30,11 @@ images:
 aliases:
     - "/cybertalents-national-ctf-68f38cf7db2a"
 
+
+tags:
+- Forensics
+- Web
+- BOF
 ---
 
 ![image](/posts/2021-09-12_cybertalents-national-ctf/images/1.png#layoutTextWidth)

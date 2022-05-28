@@ -32,6 +32,8 @@ images:
 aliases:
     - "/automating-my-project-workflow-with-bash-scripting-43c3f5453514"
 
+tags:
+- Scripting
 ---
 
 Welcome to another episode of spending 4 hours to automate something that would take me 5 minutes to manually do 😂But hey, this was a fun project to do and it proved useful in my day to day project workflow.
@@ -162,7 +164,7 @@ Note that after consuming the API we need to actually connect our local reposito
 
 Our final script can be jumbled up into a function that we will pass a command line argument. Add some CLI messages to make it look attractive :)
 
-Don’t forget to make the script executable using _chmod +x &lt;path to script&gt;_
+Don’t forget to make the script executable using _chmod +x <path to script>_
 
 ![image](/posts/2021-02-01_automating-my-project-workflow-with-bash-scripting/images/16.png#layoutTextWidth)
 

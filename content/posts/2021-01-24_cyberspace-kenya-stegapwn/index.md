@@ -30,6 +30,10 @@ images:
 aliases:
     - "/cyberspace-kenya-stegapwn-721bed4e8600"
 
+tags:
+- Privesc
+- Machine
+
 ---
 
 ### Crontab Privilege escalation

@@ -552,7 +552,7 @@ er/repos
 <p>A bash script is a series of commands put together in a text file. This comes in handy in automation in linux.</p>
 <p>Now that we can successfully consume the REST API , let’s add it all to a bash script and create a system link to have the bash script work as our very own terminal command.</p>
 <p>Step 1: Creating a directory for our project and navigating into it</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mmkdir &lt;project_name&gt; <span class="o">&amp;&amp;</span> <span class="nb">cd</span> &lt;project_name&gt;
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mmkdir <project_name> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <project_name>
 </code></pre></div><p>
 
 
@@ -582,7 +582,7 @@ er/repos
   
 
 </p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="p">&amp;</span>&gt;/dev/null is used to redirect all output so we don’t see any of it in the terminal
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="p">&amp;</span>>/dev/null is used to redirect all output so we don’t see any of it in the terminal
 </code></pre></div><p>Now that we have the initial project setup, let’s put the API into use</p>
 <p>
 
@@ -600,7 +600,7 @@ er/repos
 </p>
 <p>Note that after consuming the API we need to actually connect our local repository to our remote repository , push the initial change then open your text editor of choice.</p>
 <p>Our final script can be jumbled up into a function that we will pass a command line argument. Add some CLI messages to make it look attractive :)</p>
-<p>Don’t forget to make the script executable using <em>chmod +x &lt;path to script&gt;</em></p>
+<p>Don’t forget to make the script executable using <em>chmod +x <path to script></em></p>
 <p>
 
 
@@ -616,7 +616,7 @@ er/repos
 
 </p>
 <p>Now lets add a system link to the bash script to we can use it as a single command anywhere in the system.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo ln -s &lt;path to project&gt; /usr/local/bin
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo ln -s <path to project> /usr/local/bin
 </code></pre></div><p>
 
 
@@ -640,18 +640,18 @@ automate<span class="o">(){</span>
 	<span class="nb">echo</span> <span class="s2">&#34;Creating the directory for your project&#34;</span>
 	<span class="nb">echo</span> <span class="s2">&#34;+------------------------------------------------+&#34;</span>
 	mkdir -p <span class="nv">$1</span> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="nv">$1</span>
-	<span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> &gt; README.md
-	git init <span class="p">&amp;</span>&gt;/dev/null
-	git add .<span class="p">&amp;</span>&gt;/dev/null
-	git commit -m <span class="s2">&#34;first commit&#34;</span> <span class="p">&amp;</span>&gt;/dev/null
-	git branch -M main <span class="p">&amp;</span>&gt;/dev/null
+	<span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> > README.md
+	git init <span class="p">&amp;</span>>/dev/null
+	git add .<span class="p">&amp;</span>>/dev/null
+	git commit -m <span class="s2">&#34;first commit&#34;</span> <span class="p">&amp;</span>>/dev/null
+	git branch -M main <span class="p">&amp;</span>>/dev/null
 
 	<span class="nb">echo</span> <span class="s2">&#34;Creating the Repository&#34;</span>
 	<span class="nb">echo</span> <span class="s2">&#34;+------------------------------------------------+&#34;</span>
 
-	curl -i -H <span class="s2">&#34;Authorization: token </span><span class="nv">$access_token</span><span class="s2">&#34;</span> -d <span class="s1">&#39;{&#34;name&#34;: &#34;&#39;</span><span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span><span class="s1">&#39;&#34;,&#34;auto_init&#34;: false,&#34;private&#34;: false}&#39;</span>  https://api.github.com/user/repos <span class="p">&amp;</span>&gt;/dev/null
-	git remote add origin https://github.com/trevorsaudi/<span class="si">${</span><span class="nv">1</span><span class="si">}</span>.git <span class="p">&amp;</span>&gt;/dev/null
-	git push -u origin main <span class="p">&amp;</span>&gt;/dev/null
+	curl -i -H <span class="s2">&#34;Authorization: token </span><span class="nv">$access_token</span><span class="s2">&#34;</span> -d <span class="s1">&#39;{&#34;name&#34;: &#34;&#39;</span><span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span><span class="s1">&#39;&#34;,&#34;auto_init&#34;: false,&#34;private&#34;: false}&#39;</span>  https://api.github.com/user/repos <span class="p">&amp;</span>>/dev/null
+	git remote add origin https://github.com/trevorsaudi/<span class="si">${</span><span class="nv">1</span><span class="si">}</span>.git <span class="p">&amp;</span>>/dev/null
+	git push -u origin main <span class="p">&amp;</span>>/dev/null
 	<span class="nb">echo</span> <span class="s2">&#34;Opening your favourite text editor&#34;</span>
 	<span class="nb">echo</span> <span class="s2">&#34;+------------------------------------------------+&#34;</span>
 	code .

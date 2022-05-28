@@ -34,6 +34,10 @@ images:
 aliases:
     - "/brainpan-tryhackme-ced123611c56"
 
+
+tags:
+- Machine
+- BOF
 ---
 
 ![image](/posts/2021-04-05_brainpantryhackme/images/1.png#layoutTextWidth)

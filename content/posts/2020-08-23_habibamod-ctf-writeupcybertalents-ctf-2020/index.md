@@ -21,11 +21,18 @@ images:
 aliases:
     - "/habibamod-ctf-writeup-cybertalents-ctf-2020-fb5631e83e16"
 
+tags:
+- Forensics
+- PCAP Analysis
+
+
+
+
 ---
 
 _CyberTalents organized a national CTF competition yesterday which my team and I participated and settled for 2nd place. This is a write-up of the Habibamod challenge (Forensics category)._
 
-**PART ONE: PCAP ANALYSIS**
+## PART ONE: PCAP ANALYSIS
 
 We are given a .pcap file (packet capture file) that contains information about communication between 2 people.
 
@@ -46,7 +53,7 @@ Voila! you get a dump of the communication data captured.
 
 The captured data consists of 2 parts. A string called data, and a base64 encoded string called encoder.
 
-**PART TWO: Python Scripting**
+## PART TWO: Python Scripting
 
 I proceeded to decode the base64 data to ascii, giving us a function written in python to convert text to binary, then binary to a combination of dots(0) and exclamation marks (1)
 

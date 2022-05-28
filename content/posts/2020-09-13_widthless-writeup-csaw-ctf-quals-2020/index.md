@@ -26,6 +26,11 @@ images:
 aliases:
     - "/widthless-writeup-csaw-ctf-quals-2020-a007b3ddadc3"
 
+tags:
+- ZWSP
+- Web
+
+
 ---
 
 Diving right into the first web category challenge — widthless.
@@ -53,11 +58,11 @@ After viewing the source, we get the first clue of the challenge
 
 ZWSP is fun
 
-**Step 1: Some Reconnaisance**
+### Step 1: Some Reconnaisance
 
 I wanted to gather enough data to figure out what zwsp was all about since I had no clue at first. Googling zwsp, I found out that zwsp (zero width spacing) is a character used in unicode for invisible word separation. More googling reveals that zwsp can be used to hide pieces of information in plain-sight!.
 
-**Step 2: Detecting ZWSP**
+### Step 2: Detecting ZWSP
 
 Stumbled upon a tool called diffchecker that could highlight all the characters that are hidden in a piece of text.
 
@@ -66,7 +71,7 @@ Stumbled upon a tool called diffchecker that could highlight all the characters 
 
 Pasting the entire html source code, you can see presence of hidden text inside the document. So how do I uncover it??
 
-**Step 3: Decoding ZWSP**
+### Step 3: Decoding ZWSP
 
 Since I know the characters do exist, I tried finding scripts that could help in revealing the hidden characters and voila, I came across a steganography library written in javascript from github
 
@@ -82,7 +87,7 @@ Decoding this gives alm0st_2_3z as the output. Flag maybe?? No, challenge still 
 
 Pasting in the decoded string gives this long string.
 
-/ahsdiufghawuflkaekdhjfaldshjfvbalerhjwfvblasdnjfbldf/&lt;pwd&gt;
+/ahsdiufghawuflkaekdhjfaldshjfvbalerhjwfvblasdnjfbldf/<pwd>
 
 I spent quite some time trying to figure out what it meant, at first, I thought it was the password to a hidden input field, and tried posting the data to the website but it failed.
 
@@ -93,7 +98,7 @@ Finally, I figured that the string enclosed in backslashes is actually a directo
 
 Putting that info in the URL takes us to another page. More ZWSP maybe?
 
-**Step 4: Solving the challenge :D**
+### Step 4: Solving the challenge :D
 
 Viewing the source and repeating the process, but this time actually decoding the whole html source since the zwsp characters were hidden everywhere
 

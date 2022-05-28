@@ -24,6 +24,9 @@ images:
 
 aliases:
     - "/whistleblow-csaw-ctf-quals-2020-9e4bd6ba7aa2"
+tags:
+- Web
+- AWS S3
 
 ---
 
@@ -34,7 +37,7 @@ The second challenge in the web category.
 
 From the description and 2 hints, this was what I was able to deduce after several minutes:
 
-**Challenge description:**
+### Challenge description:
 
 One of your coworkers in the cloud security department sent you an urgent email, probably about some privacy concerns for your company.
 
@@ -60,14 +63,14 @@ This particular writeup came in handy !
 
 Okay, so we’ve gathered enough information on how to start the challenge…
 
-**Step 1: Authenticating as a valid user**
+### Step 1: Authenticating as a valid user
 
 From the letter , ‘ Make sure you’re a valid user!’ is a hint that you need to successfully authenticate as a valid aws user to access the S3 bucket which is ad586b62e3b5921bd86fe2efa4919208
 
 ![image](/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/3.png#layoutTextWidth)
 
 
-**Step 2: Accessing the S3 bucket**
+### Step 2: Accessing the S3 bucket
 
 The aws documentation came in handy! I believe in reading documentation as it saves you alot from unintended errors.
 
@@ -81,7 +84,7 @@ Interesting , so the bucket contains several folders
 ![image](/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/4.png#layoutTextWidth)
 
 
-**Step 3: Analysing the bucket contents**
+### Step 3: Analysing the bucket contents
 
 I had to find a way to easily work with the contents of the bucket. The best way was to recursively download the bucket contents to my local directory
 
@@ -107,14 +110,14 @@ I continued probing the folders and something interesting pops up. An unusually 
 Hmmm… this was my lightbulb moment, everything starts to add up as I reread the hints and the presigning information comes in handy.
 
 Pre-signed URLs have five pieces of information; bucket, object, access key, signature, and expiration. `awscli` tends to present them in this form:
-``https://&lt;bucket&gt;.s3.amazonaws.com/&lt;object&gt;?AWSAccessKeyId=&lt;key&gt;&amp;Expires=&lt;expiration&gt;&amp;Signature=&lt;signature&gt;``
+``https://<bucket>.s3.amazonaws.com/<object>?AWSAccessKeyId=<key>&amp;Expires=<expiration>&amp;Signature=<signature>``
 
 Since the first two pieces of strings stands out from the rest of the other texts in terms of length, I decided to try and grab pieces of text less than/ greater than 30 characters.
 
 ![image](/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/8.png#layoutTextWidth)
 
 
-**Step 4: Solving the challenge**
+### Step 4: Solving the challenge
 
 From the above info, we retrieve the following pieces of text
 

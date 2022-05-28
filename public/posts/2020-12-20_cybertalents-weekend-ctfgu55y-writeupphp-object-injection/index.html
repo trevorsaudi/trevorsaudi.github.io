@@ -485,8 +485,8 @@
 <p><code>a%3A2%3A%7Bi%3A0%3Bs%3A4%3A%22hey+%22%3Bi%3A1%3Bs%3A5%3A%22there%22%3B%7D” which is URL encoding for “a:2:{i:0;s:4:”hey+”;i:1;s:5:”there”;}</code></p>
 <p>Sweet! We have some PHP objects being used to store the data from the input form. Summarizing an article from <a href="https://portswigger.net/web-security/deserialization/exploiting">https://portswigger.net/web-security/deserialization/exploiting</a> , this is how PHP objects work.</p>
 <p>PHP uses a mostly human-readable string format, with letters representing the data type and numbers representing the length of each entry. For example, consider a <code>User</code> object with the attributes:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="nv">$user</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s2">&#34;carlos&#34;</span><span class="p">;</span>
-<span class="nv">$user</span><span class="o">-&gt;</span><span class="na">isLoggedIn</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="nv">$user</span><span class="o">-></span><span class="na">name</span> <span class="o">=</span> <span class="s2">&#34;carlos&#34;</span><span class="p">;</span>
+<span class="nv">$user</span><span class="o">-></span><span class="na">isLoggedIn</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 </code></pre></div><p>When serialized, this object may look something like this:</p>
 <p><code>O:4:&amp;#34;User&amp;#34;:2:{s:4:&amp;#34;name&amp;#34;:s:6:&amp;#34;carlos&amp;#34;; s:10:&amp;#34;isLoggedIn&amp;#34;🅱️1;}</code></p>
 <p>This can be interpreted as follows:</p>

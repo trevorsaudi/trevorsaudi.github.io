@@ -31,6 +31,10 @@ images:
 aliases:
     - "/cybertalents-shadower-fb601ce474dc"
 
+tags:
+- Privesc
+- Machine
+
 ---
 
 In the machine section in Cybertalents, we have this medium level box to root. Diving right in!

@@ -6,7 +6,7 @@ lastmod: 2022-05-24T14:30:20+03:00
 
 description: ""
 
-subtitle: "Another audio steganography challenge from RaziCTF. As the name suggest this is a really cliche challenge in CTFs :/"
+subtitle: "Another audio steganography challenge from RaziCTF. As the name suggest this is a  cliche challenge in CTFs :/"
 
 image: "/posts/2020-10-28_razictf-clichesteganography/images/1.png" 
 images:
@@ -17,9 +17,11 @@ images:
 aliases:
     - "/razictf-cliche-steganography-8b9de1bc8f25"
 
+tags:
+- QSSTV
+- Audio
 ---
-
-Another audio steganography challenge from RaziCTF. As the name suggest this is a really cliche challenge in CTFs :/
+Another audio steganography challenge from RaziCTF.
 
 Proceeding to solve
 

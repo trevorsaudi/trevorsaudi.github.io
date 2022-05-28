@@ -372,10 +372,10 @@
 <p><a href="https://www.vulnhub.com/entry/exploit-exercises-protostar-v2,32/"><em>Protostar</em></a> <em>is a series of beginner binary exploitation challenges which showcases concepts like basic stack-based buffer overflows, bypassing stack protections and even performing format string attacks. I tried out these challenges as I have close to 0 experience with binary exploitation and wanted to learn some of it and it turned out fun. So let’s get to</em> <a href="https://exploit.education/protostar/stack-six/"><em>protostar6</em></a> <em>and learn some ret2libc !</em></p>
 <h3 id="source-code-analysis-and-some-recon" class="relative group">Source code analysis and some recon <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#source-code-analysis-and-some-recon" aria-label="Anchor">#</a></span></h3>
 <p>We are given the source code below to protostar6.c</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="cp">#include</span> <span class="cpf"><stdlib.h></span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf"><unistd.h></span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf"><stdio.h></span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf"><string.h></span><span class="cp">
 </span><span class="cp"></span>
 <span class="kt">void</span> <span class="nf">getpath</span><span class="p">()</span>
 <span class="p">{</span>

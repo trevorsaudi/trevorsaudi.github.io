@@ -17,6 +17,10 @@ images:
 aliases:
     - "/downunderctf-on-the-spectrum-forensics-fa5a9ea1e28e"
 
+tags:
+- Forensics
+- Audio
+
 ---
 
 Recently, I’ve been getting hooked with forensics challenges, this being the second solve I made for the team.

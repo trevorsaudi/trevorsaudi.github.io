@@ -23,6 +23,9 @@ images:
 aliases:
     - "/ssrf-to-gaining-rce-rootme-ssrf-box-31b7d0e5ad08"
 
+tags:
+- SSRF
+- Web
 ---
 
 Write-up for an [SSRF box] (https://www.root-me.org/?lang=en&amp;page=ctf_alltheday&amp;id_salle=4)on the rootme platform.

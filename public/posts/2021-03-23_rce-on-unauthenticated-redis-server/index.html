@@ -372,8 +372,8 @@
 </blockquote>
 <h3 id="enumeration" class="relative group">Enumeration <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#enumeration" aria-label="Anchor">#</a></span></h3>
 <p>As always, spin up our machine instance and begin some enumeration. For speed and more accuracy, I perform a port scan using rustscan( an incredibly fast port scanning tool) and then do a default scripts and vuln scan using nmap as shown below</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rustscan -a &lt;IP&gt;
-nmap -sC -sV --scripts<span class="o">=</span>vuln &lt;IP&gt; -p 80,6379
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rustscan -a <IP>
+nmap -sC -sV --scripts<span class="o">=</span>vuln <IP> -p 80,6379
 </code></pre></div><p>
 
 
@@ -405,7 +405,7 @@ nmap -sC -sV --scripts<span class="o">=</span>vuln &lt;IP&gt; -p 80,6379
 
 </p>
 <p>We can try bruteforcing for any important directories that may be worth looking into. Here I fired up dirsearch, another blazingly fast directory scanner. In other scenarios it’s good to also maximize accuracy by using additional tools like gobuster and dirbuster that may pick up interesting directories.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">python3 dirsearch.py -u &lt;IP&gt; -e <span class="s2">&#34;*&#34;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">python3 dirsearch.py -u <IP> -e <span class="s2">&#34;*&#34;</span>
 </code></pre></div><p>We don’t get anything interesting.</p>
 <p>
 

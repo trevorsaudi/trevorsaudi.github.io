@@ -42,6 +42,10 @@ images:
 aliases:
     - "/tryhackme-brainstorm-28cd427024e7"
 
+
+tags:
+- Machine
+- BOF
 ---
 
 ![image](/posts/2021-03-28_tryhackme-brainstorm/images/1.jpeg#layoutTextWidth)

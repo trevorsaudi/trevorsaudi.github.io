@@ -33,6 +33,10 @@ images:
 aliases:
     - "/rce-on-unauthenticated-redis-server-11d3494ded5f"
 
+
+tags:
+- Redis
+- RCE
 ---
 
 ![image](/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/1.png#layoutTextWidth)

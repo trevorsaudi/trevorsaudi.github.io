@@ -17,6 +17,10 @@ images:
 aliases:
     - "/downunderctf-tim-tams-misc-5d94158e97a8"
 
+tags:
+- Forensics
+- QSSTV
+- Audio
 ---
 
 Misc challenges are usually random and require logic and lots of patience to solve. Surprisingly this one wasn’t too challenging.

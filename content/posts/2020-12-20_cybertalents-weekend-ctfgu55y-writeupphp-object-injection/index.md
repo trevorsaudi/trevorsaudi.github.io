@@ -24,6 +24,9 @@ images:
 aliases:
     - "/cybertalents-weekend-ctf-gu55y-writeup-php-object-injection-dfe173d9f446"
 
+tags:
+- Web
+- PHP
 ---
 
 Had some spare time over the weekend to participate in this awesome CTF. This challenge covers a web app vulnerability — PHP Object Injection(Insecure deserialization). Let’s dive in!

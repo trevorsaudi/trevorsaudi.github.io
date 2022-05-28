@@ -23,6 +23,9 @@ images:
 aliases:
     - "/indead-hackpack-ctf-1b3878120da5"
 
+
+tags:
+- PHP
 ---
 
 ## getimagesize() File upload vulnerability
@@ -73,6 +76,6 @@ getimagesize() is used to perform the checks on files being uploaded to the serv
 ### Exploitation
 The header bypasses getimagesize() and we upload our webshell to `very_long_directory_path`
 
-We can access the flag via &lt;url&gt;/`very_long_directory_path/exploit.php?cmd=cat /var/www/flag.txt`
+We can access the flag via <url>/`very_long_directory_path/exploit.php?cmd=cat /var/www/flag.txt`
 
 ![image](/posts/2021-04-18_indead-hackpack-ctf/images/8.png#layoutTextWidth)

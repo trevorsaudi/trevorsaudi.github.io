@@ -80,6 +80,10 @@ images:
 aliases:
     - "/aspire-ctf-2021-linux-skills-networking-1ff73f0685cb"
 
+tags:
+- Networking
+- Linux
+
 ---
 
 ASPIRE CTF was a good refresher for basic CTF skills. I hopped onto it played and solo to get the most out of it. Below is a detailed walk-through for all the challenges I solved in the Linux skills category
@@ -184,7 +188,7 @@ Unzip the broken.zip file and run `file` to get the details about the file types
 
 
 Interesting, the first file hints that we are working with a broken JPEG file. The appended letters of the files(a-v) also hints that if we joined the files in that order, we may get the original file
-`cat * &gt; final #this command gives us the final appended data  
+`cat * > final #this command gives us the final appended data  
 eog final #this command opens the jpeg file`
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/18.png#layoutTextWidth)
 
@@ -192,7 +196,7 @@ eog final #this command opens the jpeg file`
 #### Matroska-50pts
 
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/19.png#layoutTextWidth)
-> “”Matroska” is derived from matryoshka , the Russian word for the hollow wooden dolls which open to expose another smaller doll, that in turn opens to expose another doll, and so on.”
+> Matroska is derived from matryoshka , the Russian word for the hollow wooden dolls which open to expose another smaller doll, that in turn opens to expose another doll, and so on.
 
 The file we get didn’t require automation to get the flag as the nesting wasn’t intense :D, simply extract the nested to extract your flag
 
@@ -221,7 +225,7 @@ So I tried grepping for the string `aspire` then for the string `flag`
 
 We get some interesting info. `flag.txt` gets created and converted to a script.
 
-`cat flag.sh | curl -F ‘f:1=&lt;-’ ix.io` This line sticks out. I tried accessing ix.io to understand what this line meant.
+`cat flag.sh | curl -F ‘f:1=<-’ ix.io` This line sticks out. I tried accessing ix.io to understand what this line meant.
 
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/25.png#layoutTextWidth)
 
@@ -233,7 +237,7 @@ Nice, a command line pastebin. Where users can store texts , in this case, comma
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/27.png#layoutTextWidth)
 
 
-This means that the last command `cat flag.sh | curl -F ‘f:1=&lt;-’ ix.io &gt; .cache/.url` will redirect the generated link to .cache/.url
+This means that the last command `cat flag.sh | curl -F ‘f:1=<-’ ix.io > .cache/.url` will redirect the generated link to .cache/.url
 
 All we need to do is access the link and get the flag
 
@@ -356,7 +360,7 @@ From the above article, I followed that to identify redirection you check for 30
 
 We get a packet, moving on to analyzing it
 
-Right click on the packet &gt; Follow &gt; TCP stream
+Right click on the packet > Follow > TCP stream
 
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/49.png#layoutTextWidth)
 
@@ -434,7 +438,7 @@ From the challenge description, we can narrow down our search by investigating I
 
 To inspect the locations of the IP in the packet capture go to
 
-statistics &gt; endpoints
+statistics > endpoints
 
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/60.png#layoutTextWidth)
 
@@ -458,7 +462,7 @@ In this particular challenge, we need to check the location of the IP. This part
 [HowToUseGeoIP](https://wiki.wireshark.org/HowToUseGeoIP)
 
 
-Go to statistics &gt; endpoints , the first entry contains our answer
+Go to statistics > endpoints , the first entry contains our answer
 
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/63.png#layoutTextWidth)
 
@@ -478,7 +482,7 @@ To solve this challenge we need to install the following plugin
 Copy the ja3.lua file to your wireshark/plugins.
 
 You may need to create this folder incase it does not exist. In linux , I created the folder in this path
-`/home/&lt;username&gt;/.config/wireshark/plugins`
+`/home/<username>/.config/wireshark/plugins`
 
 Naturally, it only makes sense to establish the TSL at the start of the communication. You can see this in the packet called `Client Hello` which is the start of TSL handshake
 
