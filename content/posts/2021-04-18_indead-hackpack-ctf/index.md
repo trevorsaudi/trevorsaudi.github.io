@@ -25,9 +25,11 @@ aliases:
 
 ---
 
-#### getimagesize() File upload vulnerability
+## getimagesize() File upload vulnerability
 
 In this write-up we go through Indead in the web category
+
+### Enumeration 
 
 We are given a web page with an upload functionality.
 
@@ -68,7 +70,7 @@ getimagesize() is used to perform the checks on files being uploaded to the serv
 
 ![image](/posts/2021-04-18_indead-hackpack-ctf/images/7.png#layoutTextWidth)
 
-
+### Exploitation
 The header bypasses getimagesize() and we upload our webshell to `very_long_directory_path`
 
 We can access the flag via &lt;url&gt;/`very_long_directory_path/exploit.php?cmd=cat /var/www/flag.txt`
