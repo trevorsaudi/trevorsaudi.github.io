@@ -46,10 +46,13 @@
     
   
   
+    
+    
+  
   
   
     
-    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.6181b21eec1c6107c9a9661245521ad9d1861d87537142f2a6f697bf0e5d2742a222001a426f782830c704cf2a4939b31d87e45b5c3686eb0dbff98310112161.js" integrity="sha512-YYGyHuwcYQfJqWYSRVIa2dGGHYdTcULypvaXvw5dJ0KiIgAaQm94KDDHBM8qSTmzHYfkW1w2husNv/mDEBEhYQ==" data-copy="Copy" data-copied="Copied"></script>
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.61ddd918b834d47011bb8923606e0c3814bbcec0f2d5ab743171ca58a52eea55eb74d2f5ea267d6398ccaf6cabb0360c61b93e541ed4892fddf757fd2d317822.js" integrity="sha512-Yd3ZGLg01HARu4kjYG4MOBS7zsDy1at0MXHKWKUu6lXrdNL16iZ9Y5jMr2yrsDYMYbk&#43;VB7UiS/d91f9LTF4Ig==" data-copy="Copy" data-copied="Copied"></script>
   
   
   
@@ -467,8 +470,8 @@
 <h3 id="exploitation" class="relative group">Exploitation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#exploitation" aria-label="Anchor">#</a></span></h3>
 <p>For the exploitation phase, I will take you through writing a python exploit for a buffer overflow vulnerability to gain shell access on the windows machine.</p>
 <p>The chat application asks us for a username of 20 characters, what if we supplied one of more than 20 characters? Let us see if we can trigger a crash in the application.</p>
-<p><code>python3 -c “print(‘A’*100)”</code></p>
-<p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="n">python3</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&#34;print(‘A’*100)&#34;</span>
+</code></pre></div><p>
 
 
 
@@ -515,9 +518,9 @@
   
 
 </p>
-<p>Let us test if we can reach the chatserver from our local machine
-<code>nc -nv &lt;;windows IP&gt;; 9999</code>
-
+<p>Let us test if we can reach the chatserver from our local machine</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">nc -nv &lt;<span class="p">;</span>windows IP&gt;<span class="p">;</span> <span class="m">9999</span>
+</code></pre></div><p>
 
 
 
@@ -578,9 +581,9 @@
   
 
 </p>
-<p>Subtract to get the size of the buffer we sent. We then create a pattern of different ascii values using metasploit module and send that as the buffer
-<code>/usr/bin/msf-pattern_create -l 4088</code>
-
+<p>Subtract to get the size of the buffer we sent. We then create a pattern of different ascii values using metasploit module and send that as the buffer</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">/usr/bin/msf-pattern_create -l <span class="m">4088</span>
+</code></pre></div><p>
 
 
 
@@ -609,9 +612,9 @@
   
 
 </p>
-<p>The value that overwrites the EIP is different from when we sent a bunch of As, this can help us determine where this value occurs within the buffer we sent. Copy the value and find the offset
-<code>/usr/bin/msf-pattern_offset -l 4088 -q 31704330</code>
-
+<p>The value that overwrites the EIP is different from when we sent a bunch of As, this can help us determine where this value occurs within the buffer we sent. Copy the value and find the offset</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">/usr/bin/msf-pattern_offset -l <span class="m">4088</span> -q <span class="m">31704330</span>
+</code></pre></div><p>
 
 
 
@@ -660,9 +663,9 @@
 <h4 id="finding-a-jmp-esp" class="relative group">Finding a JMP ESP <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#finding-a-jmp-esp" aria-label="Anchor">#</a></span></h4>
 <p>We need to locate a JMP ESP instruction in memory that we will use to redirect the control flow of the program to the stack. The address of the JMP ESP is placed in the EIP.</p>
 <p>We can use the awesome mona python script to find the instruction</p>
-<p><a href="https://github.com/corelan/mona">corelan/mona</a>
-<code>!mona jmp -r esp</code>
-
+<p><a href="https://github.com/corelan/mona">corelan/mona</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">!mona jmp -r esp
+</code></pre></div><p>
 
 
 
@@ -952,7 +955,7 @@
       <div
   id="search-wrapper"
   class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible"
-  data-url="https://trevorsaudi.github.io"
+  data-url="https://trevorsaudi.github.io/"
 >
   <div
     id="search-modal"

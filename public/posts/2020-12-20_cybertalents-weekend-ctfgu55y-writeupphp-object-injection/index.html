@@ -46,10 +46,13 @@
     
   
   
+    
+    
+  
   
   
     
-    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.6181b21eec1c6107c9a9661245521ad9d1861d87537142f2a6f697bf0e5d2742a222001a426f782830c704cf2a4939b31d87e45b5c3686eb0dbff98310112161.js" integrity="sha512-YYGyHuwcYQfJqWYSRVIa2dGGHYdTcULypvaXvw5dJ0KiIgAaQm94KDDHBM8qSTmzHYfkW1w2husNv/mDEBEhYQ==" data-copy="Copy" data-copied="Copied"></script>
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.61ddd918b834d47011bb8923606e0c3814bbcec0f2d5ab743171ca58a52eea55eb74d2f5ea267d6398ccaf6cabb0360c61b93e541ed4892fddf757fd2d317822.js" integrity="sha512-Yd3ZGLg01HARu4kjYG4MOBS7zsDy1at0MXHKWKUu6lXrdNL16iZ9Y5jMr2yrsDYMYbk&#43;VB7UiS/d91f9LTF4Ig==" data-copy="Copy" data-copied="Copied"></script>
   
   
   
@@ -103,7 +106,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "485"
+    "wordCount": "491"
   }]
   </script>
 
@@ -320,6 +323,38 @@
     </header>
     <section class="flex flex-col max-w-full mt-0 prose lg:flex-row dark:prose-invert">
       
+        <div class="order-first px-0 lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8 lg:order-last">
+          <div class="ltr:pl-5 rtl:pr-5 toc lg:sticky lg:top-10 print:hidden">
+            <details open class="mt-0 overflow-hidden rounded-lg rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 lg:mt-3">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 text-neutral-800 dark:text-neutral-100 lg:hidden bg-neutral-100 dark:bg-neutral-700"
+  >
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted ltr:border-l rtl:border-r rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 border-neutral-300 dark:border-neutral-600"
+  >
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#enumeration">Enumeration</a>
+          <ul>
+            <li><a href="#what-are-php-magic-methodshttpscultttcom20140416php-magic-methods"><a href="https://culttt.com/2014/04/16/php-magic-methods/">What are PHP Magic Methods?</a></a></li>
+            <li><a href="#how-php-object-injection-works---php-object-injectionhttpswwwtarlogiccomenbloghow-php-object-injection-works-php-object-injection"><a href="https://www.tarlogic.com/en/blog/how-php-object-injection-works-php-object-injection/">How PHP Object Injection works - PHP Object Injection</a></a></li>
+          </ul>
+        </li>
+        <li><a href="#exploitation">Exploitation</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+          </div>
+        </div>
+      
       <div class="min-w-0 min-h-0 max-w-prose">
         <p>Had some spare time over the weekend to participate in this awesome CTF. This challenge covers a web app vulnerability — PHP Object Injection(Insecure deserialization). Let’s dive in!</p>
 <p>
@@ -335,8 +370,11 @@
     </figure>
   
 
-
-<code>I wonder if you can guess what&amp;#39;s going on</code></p>
+</p>
+<blockquote>
+<p>I wonder if you can guess what&rsquo;s going on</p>
+</blockquote>
+<h3 id="enumeration" class="relative group">Enumeration <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#enumeration" aria-label="Anchor">#</a></span></h3>
 <p>We get a simple input form that we can fuzz around for a bit to get an idea of what is going on :)</p>
 <p>
 
@@ -444,28 +482,30 @@
   
 
 </p>
-<p>“a%3A2%3A%7Bi%3A0%3Bs%3A4%3A%22hey+%22%3Bi%3A1%3Bs%3A5%3A%22there%22%3B%7D” which is URL encoding for “a:2:{i:0;s:4:”hey+”;i:1;s:5:”there”;}”</p>
+<p><code>a%3A2%3A%7Bi%3A0%3Bs%3A4%3A%22hey+%22%3Bi%3A1%3Bs%3A5%3A%22there%22%3B%7D” which is URL encoding for “a:2:{i:0;s:4:”hey+”;i:1;s:5:”there”;}</code></p>
 <p>Sweet! We have some PHP objects being used to store the data from the input form. Summarizing an article from <a href="https://portswigger.net/web-security/deserialization/exploiting">https://portswigger.net/web-security/deserialization/exploiting</a> , this is how PHP objects work.</p>
 <p>PHP uses a mostly human-readable string format, with letters representing the data type and numbers representing the length of each entry. For example, consider a <code>User</code> object with the attributes:</p>
-<p><code>$user-&amp;gt;name = &amp;#34;carlos&amp;#34;;   $user-&amp;gt;isLoggedIn = true;</code></p>
-<p>When serialized, this object may look something like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="nv">$user</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s2">&#34;carlos&#34;</span><span class="p">;</span>
+<span class="nv">$user</span><span class="o">-&gt;</span><span class="na">isLoggedIn</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</code></pre></div><p>When serialized, this object may look something like this:</p>
 <p><code>O:4:&amp;#34;User&amp;#34;:2:{s:4:&amp;#34;name&amp;#34;:s:6:&amp;#34;carlos&amp;#34;; s:10:&amp;#34;isLoggedIn&amp;#34;🅱️1;}</code></p>
 <p>This can be interpreted as follows:</p>
 <ul>
-<li><code>O:4:&amp;#34;User&amp;#34;</code> - An object with the 4-character class name <code>&amp;#34;User&amp;#34;</code></li>
+<li><code>O:4:&quot;User&quot;</code> - An object with the 4-character class name <code>&amp;#34;User&amp;#34;</code></li>
 <li><code>2</code> - the object has 2 attributes</li>
-<li><code>s:4:&amp;#34;name&amp;#34;</code> - The key of the first attribute is the 4-character string <code>&amp;#34;name&amp;#34;</code></li>
-<li><code>s:6:&amp;#34;carlos&amp;#34;</code> - The value of the first attribute is the 6-character string <code>&amp;#34;carlos&amp;#34;</code></li>
-<li><code>s:10:&amp;#34;isLoggedIn&amp;#34;</code> - The key of the second attribute is the 10-character string <code>&amp;#34;isLoggedIn&amp;#34;</code></li>
+<li><code>s:4:&quot;name&quot;</code> - The key of the first attribute is the 4-character string <code>&quot;name&quot;</code></li>
+<li><code>s:6:&quot;carlos&quot;</code> - The value of the first attribute is the 6-character string <code>&quot;carlos&quot;</code></li>
+<li><code>s:10:&quot;isLoggedIn&quot;</code> - The key of the second attribute is the 10-character string <code>&quot;isLoggedIn&quot;</code></li>
 <li><code>b:1</code> - The value of the second attribute is the boolean value <code>true</code></li>
 </ul>
-<p>We can now use the information we have to create our exploit. The swap file contains some php code that uses a magic method (__toString) to return an object of the ‘index.php’ page from the class “l33t”. You can read more on magic methods here</p>
-<p><a href="https://culttt.com/2014/04/16/php-magic-methods/">What are PHP Magic Methods?</a></p>
+<p>We can now use the information we have to create our exploit. The swap file contains some php code that uses a magic method <code>(__toString)</code> to return an object of the <code>index.php</code> page from the class <code>l33t</code>. You can read more on magic methods here</p>
+<h4 id="what-are-php-magic-methodshttpscultttcom20140416php-magic-methods" class="relative group"><a href="https://culttt.com/2014/04/16/php-magic-methods/">What are PHP Magic Methods?</a> <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#what-are-php-magic-methodshttpscultttcom20140416php-magic-methods" aria-label="Anchor">#</a></span></h4>
 <p>Simply put, the toString method is being used to return information on the index.php page. We can use this method in constructing a payload that helps us return fl4g.php instead. Keep in mind that the source attribute needs to be included for us to read the fl4g.php page</p>
 <p>This article came in handy in creating the final payload to get the flag</p>
-<p><a href="https://www.tarlogic.com/en/blog/how-php-object-injection-works-php-object-injection/">How PHP Object Injection works - PHP Object Injection</a></p>
+<h4 id="how-php-object-injection-works---php-object-injectionhttpswwwtarlogiccomenbloghow-php-object-injection-works-php-object-injection" class="relative group"><a href="https://www.tarlogic.com/en/blog/how-php-object-injection-works-php-object-injection/">How PHP Object Injection works - PHP Object Injection</a> <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#how-php-object-injection-works---php-object-injectionhttpswwwtarlogiccomenbloghow-php-object-injection-works-php-object-injection" aria-label="Anchor">#</a></span></h4>
+<h3 id="exploitation" class="relative group">Exploitation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#exploitation" aria-label="Anchor">#</a></span></h3>
 <p>Our final payload will like this
-<code>a:3:{i:0;s:5:&amp;#34;hello&amp;#34;;i:1;s:5:&amp;#34;there&amp;#34;;i:2;O:4:&amp;#34;l33t&amp;#34;:1:{s:6:&amp;#34;source&amp;#34;;s:8:&amp;#34;fl4g.php&amp;#34;;}}</code></p>
+<code>a:3:{i:0;s:5:&quot;hello&quot;;i:1;s:5:&quot;there&quot;;i:2;O:4:&quot;l33t&quot;:1:{s:6:&quot;source&quot;;s:8:&quot;fl4g.php&quot;;}}</code></p>
 <p>URL encode it and supply as the cookie value for list. voila ! you get the flag.
 <code>flag{5w337_PHP_0bj3c7_!nj3c7!0n}</code>
 
@@ -576,7 +616,7 @@
       <div
   id="search-wrapper"
   class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible"
-  data-url="https://trevorsaudi.github.io"
+  data-url="https://trevorsaudi.github.io/"
 >
   <div
     id="search-modal"

@@ -46,10 +46,13 @@
     
   
   
+    
+    
+  
   
   
     
-    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.6181b21eec1c6107c9a9661245521ad9d1861d87537142f2a6f697bf0e5d2742a222001a426f782830c704cf2a4939b31d87e45b5c3686eb0dbff98310112161.js" integrity="sha512-YYGyHuwcYQfJqWYSRVIa2dGGHYdTcULypvaXvw5dJ0KiIgAaQm94KDDHBM8qSTmzHYfkW1w2husNv/mDEBEhYQ==" data-copy="Copy" data-copied="Copied"></script>
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.61ddd918b834d47011bb8923606e0c3814bbcec0f2d5ab743171ca58a52eea55eb74d2f5ea267d6398ccaf6cabb0360c61b93e541ed4892fddf757fd2d317822.js" integrity="sha512-Yd3ZGLg01HARu4kjYG4MOBS7zsDy1at0MXHKWKUu6lXrdNL16iZ9Y5jMr2yrsDYMYbk&#43;VB7UiS/d91f9LTF4Ig==" data-copy="Copy" data-copied="Copied"></script>
   
   
   
@@ -103,7 +106,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "718"
+    "wordCount": "816"
   }]
   </script>
 
@@ -335,8 +338,13 @@
   <ul>
     <li>
       <ul>
-        <li><a href="#_the-github-api-and-bash-scripting_"><strong><em>The github API and Bash Scripting</em></strong></a></li>
-        <li><a href="#bash-scripting"><strong>Bash scripting</strong></a></li>
+        <li><a href="#how-does-my-workflow-look-like">How does my workflow look like</a></li>
+        <li><a href="#identifying-recurring-tasks-in-the-workflow">Identifying recurring tasks in the workflow</a></li>
+        <li><a href="#the-github-api-and-bash-scripting">The github API and Bash Scripting</a></li>
+        <li><a href="#what-you-will-need">What you will need</a></li>
+        <li><a href="#environment-variables">Environment variables</a></li>
+        <li><a href="#testing-the-rest-api">Testing the REST API</a></li>
+        <li><a href="#bash-scripting">Bash scripting</a></li>
       </ul>
     </li>
   </ul>
@@ -350,9 +358,9 @@
       <div class="min-w-0 min-h-0 max-w-prose">
         <p>Welcome to another episode of spending 4 hours to automate something that would take me 5 minutes to manually do 😂But hey, this was a fun project to do and it proved useful in my day to day project workflow.</p>
 <p>In this article, I will show you how you can automate your workflow too :)</p>
-<p><strong><em>How does my workflow look like</em></strong></p>
+<h3 id="how-does-my-workflow-look-like" class="relative group">How does my workflow look like <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#how-does-my-workflow-look-like" aria-label="Anchor">#</a></span></h3>
 <p>Besides being a CTF player, I am also a freelance web developer. This means I take on a number projects from time to time and experiment with different technologies occasionally.</p>
-<p><strong><em>Identifying recurring tasks in the workflow</em></strong></p>
+<h3 id="identifying-recurring-tasks-in-the-workflow" class="relative group">Identifying recurring tasks in the workflow <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#identifying-recurring-tasks-in-the-workflow" aria-label="Anchor">#</a></span></h3>
 <p>My workflow is coupled up with a ubiquitous setup process where I login to github, create a new project, go to my terminal and create a directory for the project, connect the local repo to my remote repo, make an initial push to my repo then finally opening my editor to actually work on the project. The github REST API and a few lines of bash is all we need to automate this entire process.</p>
 <p>
 
@@ -368,9 +376,9 @@
   
 
 </p>
-<h3 id="_the-github-api-and-bash-scripting_" class="relative group"><strong><em>The github API and Bash Scripting</em></strong> <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#_the-github-api-and-bash-scripting_" aria-label="Anchor">#</a></span></h3>
+<h3 id="the-github-api-and-bash-scripting" class="relative group">The github API and Bash Scripting <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#the-github-api-and-bash-scripting" aria-label="Anchor">#</a></span></h3>
 <p>The github REST API allows you to manage issues, branches, repos and more. In this case, we will consume the API to help us create a repository.</p>
-<p><strong><em>What you will need</em></strong></p>
+<h3 id="what-you-will-need" class="relative group">What you will need <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#what-you-will-need" aria-label="Anchor">#</a></span></h3>
 <p>Before actually consuming the REST API, you will need to generate a personal access token that allows us to authenticate against the API. Head over to <a href="https://github.com/settings/tokens">https://github.com/settings/tokens</a> and generate a new token.</p>
 <p>
 
@@ -401,7 +409,7 @@
   
 
 </p>
-<p><strong><em>Environment variables</em></strong></p>
+<h3 id="environment-variables" class="relative group">Environment variables <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#environment-variables" aria-label="Anchor">#</a></span></h3>
 <p>In the context of linux, environment variables come in pretty handy in storing sensitive information like passwords and tokens that you don’t want exposed when working on projects.</p>
 <p>Editing into the ~/.bash_profile helps you store your personal token safely.</p>
 <p>
@@ -463,29 +471,22 @@
   
 
 </p>
-<p><strong>Testing the REST API</strong></p>
+<h3 id="testing-the-rest-api" class="relative group">Testing the REST API <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#testing-the-rest-api" aria-label="Anchor">#</a></span></h3>
 <p>We will test github’s REST API endpoint with our personal access token using curl — a command line tool that comes pre-installed in most operating systems and can be used to handle HTTP requests and responses and also transferring data in a network.</p>
 <p>The github API docs is pretty well written and came in handy.</p>
 <p><a href="https://docs.github.com/en/rest/overview/resources-in-the-rest-api">Resources in the REST API</a></p>
-<p>Sending an authentication curl request to the API returns no errors
-<code>**curl** -H &amp;#34;Authorization: token $access_token&amp;#34; https://api.github.co   m</code>
+<p>Sending an authentication curl request to the API returns no errors</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">curl -H <span class="s2">&#34;Authorization: token </span><span class="nv">$access_token</span><span class="s2">&#34;</span> https://api.github.co
+m<span class="sb">`</span>
+<span class="sb">``</span>
+!<span class="o">[</span>image<span class="o">](</span>/posts/2021-02-01_automating-my-project-workflow-with-bash-scripting/images/8.png#layoutTextWidth<span class="o">)</span>
 
 
-
-
-  
-  
-  
-    <figure>
-      <img class="my-0 rounded-md" src="/posts/2021-02-01_automating-my-project-workflow-with-bash-scripting/images/8.png#layoutTextWidth" alt="image" />
-      
-    </figure>
-  
-
-</p>
-<p>We can try querying for repos
-<code>**curl** -H &amp;#34;Authorization: token $access_token&amp;#34; &amp;#34;https://api.github.c   om/search/repositories?q=user:trevorsaudi&amp;#34; | less</code>
-
+We can try querying <span class="k">for</span> repos
+<span class="sb">```</span>bash
+curl -H <span class="s2">&#34;Authorization: token </span><span class="nv">$access_token</span><span class="s2">&#34;</span> <span class="s2">&#34;https://api.github.c
+</span><span class="s2">om/search/repositories?q=user:trevorsaudi&#34;</span> <span class="p">|</span> less
+</code></pre></div><p>
 
 
 
@@ -514,9 +515,11 @@
   
 
 </p>
-<p>Let’s try creating a repo using the access token
-<code>**curl** -i -H &amp;#34;Authorization: token $access_token&amp;#34; -d &amp;#39;{&amp;#34;name&amp;#34;: &amp;#34;demo   &amp;#34;,&amp;#34;auto_init&amp;#34;: false,&amp;#34;private&amp;#34;: false}&amp;#39;  https://api.github.com/us   er/repos</code>
-
+<p>Let’s try creating a repo using the access token</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">curl -i -H <span class="s2">&#34;Authorization: token </span><span class="nv">$access_token</span><span class="s2">&#34;</span> -d <span class="s1">&#39;{&#34;name&#34;: &#34;demo
+</span><span class="s1">&#34;,&#34;auto_init&#34;: false,&#34;private&#34;: false}&#39;</span>  https://api.github.com/us
+er/repos
+</code></pre></div><p>
 
 
 
@@ -545,12 +548,12 @@
   
 
 </p>
-<h3 id="bash-scripting" class="relative group"><strong>Bash scripting</strong> <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#bash-scripting" aria-label="Anchor">#</a></span></h3>
+<h3 id="bash-scripting" class="relative group">Bash scripting <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#bash-scripting" aria-label="Anchor">#</a></span></h3>
 <p>A bash script is a series of commands put together in a text file. This comes in handy in automation in linux.</p>
 <p>Now that we can successfully consume the REST API , let’s add it all to a bash script and create a system link to have the bash script work as our very own terminal command.</p>
-<p>Step 1: Creating a directory for our project and navigating into it
-<code>mkdir &amp;lt;project_name&amp;gt; &amp;amp;&amp;amp; cd &amp;lt;project_name&amp;gt;</code>
-
+<p>Step 1: Creating a directory for our project and navigating into it</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mmkdir &lt;project_name&gt; <span class="o">&amp;&amp;</span> <span class="nb">cd</span> &lt;project_name&gt;
+</code></pre></div><p>
 
 
 
@@ -578,9 +581,9 @@
     </figure>
   
 
-
-<code>&amp;amp;&amp;gt;/dev/null is used to redirect all output so we don’t see any of it in the terminal</code></p>
-<p>Now that we have the initial project setup, let’s put the API into use</p>
+</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="p">&amp;</span>&gt;/dev/null is used to redirect all output so we don’t see any of it in the terminal
+</code></pre></div><p>Now that we have the initial project setup, let’s put the API into use</p>
 <p>
 
 
@@ -612,9 +615,9 @@
   
 
 </p>
-<p>Now lets add a system link to the bash script to we can use it as a single command anywhere in the system.
-<code>sudo ln -s &amp;lt;path to project&amp;gt; /usr/local/bin </code>
-
+<p>Now lets add a system link to the bash script to we can use it as a single command anywhere in the system.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo ln -s &lt;path to project&gt; /usr/local/bin
+</code></pre></div><p>
 
 
 
@@ -629,9 +632,39 @@
 
 </p>
 <p>Our final result</p>
-<p>Source code to the script.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">
+<span class="c1">#!/usr/bin/bash</span>
+
+automate<span class="o">(){</span>
+	<span class="nb">echo</span> <span class="s2">&#34;Welcome to Automate&#34;</span> <span class="p">|</span> cowsay
+	<span class="nb">echo</span> <span class="s2">&#34;Creating the directory for your project&#34;</span>
+	<span class="nb">echo</span> <span class="s2">&#34;+------------------------------------------------+&#34;</span>
+	mkdir -p <span class="nv">$1</span> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="nv">$1</span>
+	<span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> &gt; README.md
+	git init <span class="p">&amp;</span>&gt;/dev/null
+	git add .<span class="p">&amp;</span>&gt;/dev/null
+	git commit -m <span class="s2">&#34;first commit&#34;</span> <span class="p">&amp;</span>&gt;/dev/null
+	git branch -M main <span class="p">&amp;</span>&gt;/dev/null
+
+	<span class="nb">echo</span> <span class="s2">&#34;Creating the Repository&#34;</span>
+	<span class="nb">echo</span> <span class="s2">&#34;+------------------------------------------------+&#34;</span>
+
+	curl -i -H <span class="s2">&#34;Authorization: token </span><span class="nv">$access_token</span><span class="s2">&#34;</span> -d <span class="s1">&#39;{&#34;name&#34;: &#34;&#39;</span><span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span><span class="s1">&#39;&#34;,&#34;auto_init&#34;: false,&#34;private&#34;: false}&#39;</span>  https://api.github.com/user/repos <span class="p">&amp;</span>&gt;/dev/null
+	git remote add origin https://github.com/trevorsaudi/<span class="si">${</span><span class="nv">1</span><span class="si">}</span>.git <span class="p">&amp;</span>&gt;/dev/null
+	git push -u origin main <span class="p">&amp;</span>&gt;/dev/null
+	<span class="nb">echo</span> <span class="s2">&#34;Opening your favourite text editor&#34;</span>
+	<span class="nb">echo</span> <span class="s2">&#34;+------------------------------------------------+&#34;</span>
+	code .
+
+
+	<span class="nb">exec</span> bash
+
+<span class="o">}</span>
+automate <span class="nv">$1</span>
+
+</code></pre></div><p>Source code to the script.</p>
 <p><a href="https://github.com/trevorsaudi/Project-Automation">https://github.com/trevorsaudi/Project-Automation</a></p>
-<p>Share, like and follow for more articles like this <strong>😃</strong></p>
+<p>Share, like and follow for more articles like this 😃</p>
 
       </div>
     </section>
@@ -725,7 +758,7 @@
       <div
   id="search-wrapper"
   class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible"
-  data-url="https://trevorsaudi.github.io"
+  data-url="https://trevorsaudi.github.io/"
 >
   <div
     id="search-modal"

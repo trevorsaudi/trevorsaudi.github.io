@@ -46,10 +46,13 @@
     
   
   
+    
+    
+  
   
   
     
-    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.6181b21eec1c6107c9a9661245521ad9d1861d87537142f2a6f697bf0e5d2742a222001a426f782830c704cf2a4939b31d87e45b5c3686eb0dbff98310112161.js" integrity="sha512-YYGyHuwcYQfJqWYSRVIa2dGGHYdTcULypvaXvw5dJ0KiIgAaQm94KDDHBM8qSTmzHYfkW1w2husNv/mDEBEhYQ==" data-copy="Copy" data-copied="Copied"></script>
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.61ddd918b834d47011bb8923606e0c3814bbcec0f2d5ab743171ca58a52eea55eb74d2f5ea267d6398ccaf6cabb0360c61b93e541ed4892fddf757fd2d317822.js" integrity="sha512-Yd3ZGLg01HARu4kjYG4MOBS7zsDy1at0MXHKWKUu6lXrdNL16iZ9Y5jMr2yrsDYMYbk&#43;VB7UiS/d91f9LTF4Ig==" data-copy="Copy" data-copied="Copied"></script>
   
   
   
@@ -337,10 +340,10 @@
       <ul>
         <li>
           <ul>
-            <li><a href="#needle-in-a-haystack--50pts"><strong>Needle in a haystack -50pts</strong></a></li>
+            <li><a href="#needle-in-a-haystack--50pts">Needle in a haystack -50pts</a></li>
             <li><a href="#yarn-50pts">Yarn-50pts</a></li>
             <li><a href="#commitment-50pts">Commitment-50pts</a></li>
-            <li><a href="#shape-shifter-50pts"><strong>Shape shifter-50pts</strong></a></li>
+            <li><a href="#shape-shifter-50pts">Shape shifter-50pts</a></li>
             <li><a href="#make-me-whole-again">Make me whole again</a></li>
             <li><a href="#matroska-50pts">Matroska-50pts</a></li>
             <li><a href="#back-to-the-future-50pts">Back to the future-50pts</a></li>
@@ -356,7 +359,7 @@
             <li><a href="#wireless-two-150pts">Wireless Two-150pts</a></li>
             <li><a href="#resolver-50pts">Resolver-50pts</a></li>
             <li><a href="#attribution-150pts">Attribution-150pts</a></li>
-            <li><a href="#fingerprint-250pts"><strong>Fingerprint-250pts</strong></a></li>
+            <li><a href="#fingerprint-250pts">Fingerprint-250pts</a></li>
           </ul>
         </li>
       </ul>
@@ -385,7 +388,7 @@
   
 
 </p>
-<h4 id="needle-in-a-haystack--50pts" class="relative group"><strong>Needle in a haystack -50pts</strong> <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#needle-in-a-haystack--50pts" aria-label="Anchor">#</a></span></h4>
+<h4 id="needle-in-a-haystack--50pts" class="relative group">Needle in a haystack -50pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#needle-in-a-haystack--50pts" aria-label="Anchor">#</a></span></h4>
 <p>
 
 
@@ -529,7 +532,7 @@
 
 </p>
 <p>We get our flag :)</p>
-<h4 id="shape-shifter-50pts" class="relative group"><strong>Shape shifter-50pts</strong> <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#shape-shifter-50pts" aria-label="Anchor">#</a></span></h4>
+<h4 id="shape-shifter-50pts" class="relative group">Shape shifter-50pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#shape-shifter-50pts" aria-label="Anchor">#</a></span></h4>
 <p>
 
 
@@ -669,7 +672,7 @@
 
 </p>
 <blockquote>
-<p>“”<strong>Matroska</strong>” is derived from matryoshka , the Russian word for the hollow wooden dolls which open to expose another smaller doll, that in turn opens to expose another doll, and so on.”</p>
+<p>“”Matroska” is derived from matryoshka , the Russian word for the hollow wooden dolls which open to expose another smaller doll, that in turn opens to expose another doll, and so on.”</p>
 </blockquote>
 <p>The file we get didn’t require automation to get the flag as the nesting wasn’t intense :D, simply extract the nested to extract your flag</p>
 <p>
@@ -747,7 +750,7 @@
 
 </p>
 <p>We get some interesting info. <code>flag.txt</code> gets created and converted to a script.</p>
-<p><code>cat **flag**.sh | curl -F ‘f:1=&amp;lt;-’ ix.io</code> This line sticks out. I tried accessing ix.io to understand what this line meant.</p>
+<p><code>cat flag.sh | curl -F ‘f:1=&amp;lt;-’ ix.io</code> This line sticks out. I tried accessing ix.io to understand what this line meant.</p>
 <p>
 
 
@@ -791,7 +794,7 @@
   
 
 </p>
-<p>This means that the last command <code>cat **flag**.sh | curl -F ‘f:1=&amp;lt;-’ ix.io &amp;gt; .cache/.url</code> will redirect the generated link to .cache/.url</p>
+<p>This means that the last command <code>cat flag.sh | curl -F ‘f:1=&amp;lt;-’ ix.io &amp;gt; .cache/.url</code> will redirect the generated link to .cache/.url</p>
 <p>All we need to do is access the link and get the flag</p>
 <p>
 
@@ -1009,7 +1012,7 @@
 
 </p>
 <p>We get the flag :)</p>
-<p>That’s it for linux skills### <strong>Networking</strong></p>
+<p>That’s it for linux skills### Networking</p>
 <p>
 
 
@@ -1291,7 +1294,7 @@
   
 
 </p>
-<p>In a forward <strong>DNS lookup</strong>, the <strong>DNS</strong> is queried for the IP address of a certain hostname. In a reverse <strong>DNS lookup</strong> It’s where the hostname of a certain IP address is queried. Basically, a <strong>reverse DNS lookup</strong> returns the hostname of an IP address.</p>
+<p>In a forward DNS lookup, the DNS is queried for the IP address of a certain hostname. In a reverse DNS lookup It’s where the hostname of a certain IP address is queried. Basically, a reverse DNS lookup returns the hostname of an IP address.</p>
 <p>From the challenge description, we can narrow down our search by investigating IPs outside Kenya. Wireshark has plugins that allow you to check the location of an IP</p>
 <p><a href="https://wiki.wireshark.org/HowToUseGeoIP">HowToUseGeoIP</a></p>
 <p>To inspect the locations of the IP in the packet capture go to</p>
@@ -1359,7 +1362,7 @@
   
 
 </p>
-<h4 id="fingerprint-250pts" class="relative group"><strong>Fingerprint-250pts</strong> <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#fingerprint-250pts" aria-label="Anchor">#</a></span></h4>
+<h4 id="fingerprint-250pts" class="relative group">Fingerprint-250pts <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#fingerprint-250pts" aria-label="Anchor">#</a></span></h4>
 <p>
 
 
@@ -1491,7 +1494,7 @@
       <div
   id="search-wrapper"
   class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible"
-  data-url="https://trevorsaudi.github.io"
+  data-url="https://trevorsaudi.github.io/"
 >
   <div
     id="search-modal"

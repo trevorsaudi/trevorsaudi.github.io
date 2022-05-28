@@ -46,10 +46,13 @@
     
   
   
+    
+    
+  
   
   
     
-    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.6181b21eec1c6107c9a9661245521ad9d1861d87537142f2a6f697bf0e5d2742a222001a426f782830c704cf2a4939b31d87e45b5c3686eb0dbff98310112161.js" integrity="sha512-YYGyHuwcYQfJqWYSRVIa2dGGHYdTcULypvaXvw5dJ0KiIgAaQm94KDDHBM8qSTmzHYfkW1w2husNv/mDEBEhYQ==" data-copy="Copy" data-copied="Copied"></script>
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.61ddd918b834d47011bb8923606e0c3814bbcec0f2d5ab743171ca58a52eea55eb74d2f5ea267d6398ccaf6cabb0360c61b93e541ed4892fddf757fd2d317822.js" integrity="sha512-Yd3ZGLg01HARu4kjYG4MOBS7zsDy1at0MXHKWKUu6lXrdNL16iZ9Y5jMr2yrsDYMYbk&#43;VB7UiS/d91f9LTF4Ig==" data-copy="Copy" data-copied="Copied"></script>
   
   
   
@@ -103,7 +106,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "552"
+    "wordCount": "556"
   }]
   </script>
 
@@ -320,6 +323,35 @@
     </header>
     <section class="flex flex-col max-w-full mt-0 prose lg:flex-row dark:prose-invert">
       
+        <div class="order-first px-0 lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8 lg:order-last">
+          <div class="ltr:pl-5 rtl:pr-5 toc lg:sticky lg:top-10 print:hidden">
+            <details open class="mt-0 overflow-hidden rounded-lg rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 lg:mt-3">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 text-neutral-800 dark:text-neutral-100 lg:hidden bg-neutral-100 dark:bg-neutral-700"
+  >
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted ltr:border-l rtl:border-r rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 border-neutral-300 dark:border-neutral-600"
+  >
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#enumeration">Enumeration</a></li>
+        <li><a href="#exploitation">Exploitation</a></li>
+        <li><a href="#remote-code-execution">Remote Code Execution</a></li>
+        <li><a href="#privilege-escalation">Privilege escalation</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+          </div>
+        </div>
+      
       <div class="min-w-0 min-h-0 max-w-prose">
         <p>
 
@@ -335,11 +367,14 @@
   
 
 </p>
+<blockquote>
 <p>In this brief walk-through , we will be hacking a vulnerable database server by showcasing the <a href="https://tryhackme.com/room/res">res room</a> in Tryhackme.</p>
-<p><strong>Enumeration</strong></p>
-<p>As always, spin up our machine instance and begin some enumeration. For speed and more accuracy, I perform a port scan using rustscan( an incredibly fast port scanning tool) and then do a default scripts and vuln scan using nmap as shown below
-<code>rustscan -a &amp;lt;IP&amp;gt;   nmap -sC -sV --scripts=vuln &amp;lt;IP&amp;gt; -p 80,6379</code>
-
+</blockquote>
+<h3 id="enumeration" class="relative group">Enumeration <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#enumeration" aria-label="Anchor">#</a></span></h3>
+<p>As always, spin up our machine instance and begin some enumeration. For speed and more accuracy, I perform a port scan using rustscan( an incredibly fast port scanning tool) and then do a default scripts and vuln scan using nmap as shown below</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rustscan -a &lt;IP&gt;
+nmap -sC -sV --scripts<span class="o">=</span>vuln &lt;IP&gt; -p 80,6379
+</code></pre></div><p>
 
 
 
@@ -369,9 +404,9 @@
   
 
 </p>
-<p>We can try bruteforcing for any important directories that may be worth looking into. Here I fired up dirsearch, another blazingly fast directory scanner. In other scenarios it’s good to also maximize accuracy by using additional tools like gobuster and dirbuster that may pick up interesting directories.
-<code>python3 dirsearch.py -u &amp;lt;IP&amp;gt; -e &amp;#34;*&amp;#34;</code></p>
-<p>We don’t get anything interesting.</p>
+<p>We can try bruteforcing for any important directories that may be worth looking into. Here I fired up dirsearch, another blazingly fast directory scanner. In other scenarios it’s good to also maximize accuracy by using additional tools like gobuster and dirbuster that may pick up interesting directories.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">python3 dirsearch.py -u &lt;IP&gt; -e <span class="s2">&#34;*&#34;</span>
+</code></pre></div><p>We don’t get anything interesting.</p>
 <p>
 
 
@@ -386,11 +421,11 @@
   
 
 </p>
-<p><strong>Exploitation</strong></p>
+<h3 id="exploitation" class="relative group">Exploitation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#exploitation" aria-label="Anchor">#</a></span></h3>
 <p><a href="https://book.hacktricks.xyz/pentesting/6379-pentesting-redis#redis-rce">6379 - Pentesting Redis</a></p>
-<p>The article above came in handy in gaining RCE. I used redis-cli to interact with the instance. You can install redis-cli as shown below
-<code>sudo apt-get install redis-tools</code></p>
-<p>We have unauthenticated access to the database instance.</p>
+<p>The article above came in handy in gaining RCE. I used redis-cli to interact with the instance. You can install redis-cli as shown below</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo apt-get install redis-tools
+</code></pre></div><p>We have unauthenticated access to the database instance.</p>
 <p>
 
 
@@ -451,7 +486,7 @@
 
 </p>
 <p>Sweet :) This means we have remote code execution on this server. We can therefore proceed to getting a shell, escalating our privileges and gaining root access.</p>
-<p><strong>Remote Code Execution</strong></p>
+<h3 id="remote-code-execution" class="relative group">Remote Code Execution <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#remote-code-execution" aria-label="Anchor">#</a></span></h3>
 <p>To gain RCE. Create another file and append the following code to be able to execute code on a parameter.</p>
 <p>
 
@@ -514,7 +549,7 @@
 </p>
 <p>Stabilize the shell by backgrounding it using <code>ctrl+z</code> and then <code>stty raw -echo;fg</code> to resume.</p>
 <p>Navigate directories to get your user.txt flag.</p>
-<p><strong>Privilege escalation</strong></p>
+<h3 id="privilege-escalation" class="relative group">Privilege escalation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#privilege-escalation" aria-label="Anchor">#</a></span></h3>
 <p>My approach for privesc before uploading linpeas or any enumerator is to first check for sudo rights the user has using <code>sudo -l,</code> then check for SUID bits set</p>
 <p>
 
@@ -531,9 +566,10 @@
 
 </p>
 <p>xxd has suid bit set. And it owned by the root user. Head over to <a href="https://gtfobins.github.io/gtfobins/xxd/#sudo">GTFObins</a> and check through xxd.</p>
-<p>Interesting, in this exploit, we can read sensitive info using the xxd binary like /etc/shadow file.
-<code>LFILE=file_to_read   xxd &amp;#34;$LFILE&amp;#34; | xxd -r</code>
-
+<p>Interesting, in this exploit, we can read sensitive info using the xxd binary like /etc/shadow file.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">LFILE</span><span class="o">=</span>file_to_read
+xxd <span class="s2">&#34;</span><span class="nv">$LFILE</span><span class="s2">&#34;</span> <span class="p">|</span> xxd -r
+</code></pre></div><p>
 
 
 
@@ -562,9 +598,9 @@
   
 
 </p>
-<p>We can crack their password using john.
-<code>john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt</code>
-
+<p>We can crack their password using john.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">john hash.txt --wordlist<span class="o">=</span>/usr/share/wordlists/rockyou.txt
+</code></pre></div><p>
 
 
 
@@ -704,7 +740,7 @@
       <div
   id="search-wrapper"
   class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible"
-  data-url="https://trevorsaudi.github.io"
+  data-url="https://trevorsaudi.github.io/"
 >
   <div
     id="search-modal"
