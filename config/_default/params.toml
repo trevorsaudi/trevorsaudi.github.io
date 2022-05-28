@@ -11,7 +11,7 @@ autoSwitchAppearance = true
 showAppearanceSwitcher = true
 
 enableSearch = true
-enableCodeCopy = false
+enableCodeCopy = true
 
 # mainSections = ["section1", "section2"]
 # robots = ""
@@ -40,9 +40,9 @@ showScrollToTop = true
   # sharingLinks = ["facebook", "twitter", "pinterest", "reddit", "linkedin", "email"]
 
 [list]
-  showBreadcrumbs = false
+  showBreadcrumbs = true
   showSummary = false
-  showTableOfContents = false
+  showTableOfContents = true
   groupByYear = true
 
 [sitemap]
