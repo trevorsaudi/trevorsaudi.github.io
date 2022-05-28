@@ -32,6 +32,7 @@ Took part in Vulncon CTF this weekend where our team settled for 34th place out 
 
 ![image](/posts/2020-12-20_vulncon-ctfmaze/images/1.png#layoutTextWidth)
 
+### Enumeration 
 
 From the hint we are told we can use gobuster. So I did some directory bruteforcing with the tool of my choice -dirsearch :)
 
@@ -60,6 +61,7 @@ I used wget to recursively download all images
 ![image](/posts/2020-12-20_vulncon-ctfmaze/images/6.png#layoutTextWidth)
 
 
+### Solving
 So now, we can write a small python script to decode all the QR codes.
 
 ![image](/posts/2020-12-20_vulncon-ctfmaze/images/7.png#layoutTextWidth)

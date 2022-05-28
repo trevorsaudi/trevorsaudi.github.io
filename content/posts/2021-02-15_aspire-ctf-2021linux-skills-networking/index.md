@@ -85,7 +85,7 @@ aliases:
 ASPIRE CTF was a good refresher for basic CTF skills. I hopped onto it played and solo to get the most out of it. Below is a detailed walk-through for all the challenges I solved in the Linux skills category
 
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/1.png#layoutTextWidth)
-#### **Needle in a haystack -50pts**
+#### Needle in a haystack -50pts
 
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/2.png#layoutTextWidth)
 
@@ -144,7 +144,7 @@ Running `git log` allows us to view information about previous commits that have
 
 We get our flag :)
 
-#### **Shape shifter-50pts**
+#### Shape shifter-50pts
 
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/11.png#layoutTextWidth)
 
@@ -192,7 +192,7 @@ eog final #this command opens the jpeg file`
 #### Matroska-50pts
 
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/19.png#layoutTextWidth)
-> “”**Matroska**” is derived from matryoshka , the Russian word for the hollow wooden dolls which open to expose another smaller doll, that in turn opens to expose another doll, and so on.”
+> “”Matroska” is derived from matryoshka , the Russian word for the hollow wooden dolls which open to expose another smaller doll, that in turn opens to expose another doll, and so on.”
 
 The file we get didn’t require automation to get the flag as the nesting wasn’t intense :D, simply extract the nested to extract your flag
 
@@ -221,7 +221,7 @@ So I tried grepping for the string `aspire` then for the string `flag`
 
 We get some interesting info. `flag.txt` gets created and converted to a script.
 
-`cat **flag**.sh | curl -F ‘f:1=&lt;-’ ix.io` This line sticks out. I tried accessing ix.io to understand what this line meant.
+`cat flag.sh | curl -F ‘f:1=&lt;-’ ix.io` This line sticks out. I tried accessing ix.io to understand what this line meant.
 
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/25.png#layoutTextWidth)
 
@@ -233,7 +233,7 @@ Nice, a command line pastebin. Where users can store texts , in this case, comma
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/27.png#layoutTextWidth)
 
 
-This means that the last command `cat **flag**.sh | curl -F ‘f:1=&lt;-’ ix.io &gt; .cache/.url` will redirect the generated link to .cache/.url
+This means that the last command `cat flag.sh | curl -F ‘f:1=&lt;-’ ix.io &gt; .cache/.url` will redirect the generated link to .cache/.url
 
 All we need to do is access the link and get the flag
 
@@ -315,7 +315,7 @@ Using the flag `-t` allows you to pass commands into the ssh connection . I also
 
 We get the flag :)
 
-That’s it for linux skills### **Networking**
+That’s it for linux skills### Networking
 
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/42.png#layoutTextWidth)
 
@@ -425,7 +425,7 @@ We get the key !
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/59.png#layoutTextWidth)
 
 
-In a forward **DNS lookup**, the **DNS** is queried for the IP address of a certain hostname. In a reverse **DNS lookup** It’s where the hostname of a certain IP address is queried. Basically, a **reverse DNS lookup** returns the hostname of an IP address.
+In a forward DNS lookup, the DNS is queried for the IP address of a certain hostname. In a reverse DNS lookup It’s where the hostname of a certain IP address is queried. Basically, a reverse DNS lookup returns the hostname of an IP address.
 
 From the challenge description, we can narrow down our search by investigating IPs outside Kenya. Wireshark has plugins that allow you to check the location of an IP
 
@@ -463,7 +463,7 @@ Go to statistics &gt; endpoints , the first entry contains our answer
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/63.png#layoutTextWidth)
 
 
-#### **Fingerprint-250pts**
+#### Fingerprint-250pts
 
 ![image](/posts/2021-02-15_aspire-ctf-2021linux-skills-networking/images/64.png#layoutTextWidth)
 

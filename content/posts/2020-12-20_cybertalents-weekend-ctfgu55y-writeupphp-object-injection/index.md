@@ -29,7 +29,10 @@ aliases:
 Had some spare time over the weekend to participate in this awesome CTF. This challenge covers a web app vulnerability — PHP Object Injection(Insecure deserialization). Let’s dive in!
 
 ![image](/posts/2020-12-20_cybertalents-weekend-ctfgu55y-writeupphp-object-injection/images/1.png#layoutTextWidth)
-`I wonder if you can guess what&#39;s going on`
+
+> I wonder if you can guess what's going on
+
+### Enumeration 
 
 We get a simple input form that we can fuzz around for a bit to get an idea of what is going on :)
 
@@ -69,42 +72,44 @@ Enumerating further to investigate on the behavior of the input form, I took a l
 ![image](/posts/2020-12-20_cybertalents-weekend-ctfgu55y-writeupphp-object-injection/images/8.png#layoutTextWidth)
 
 
-“a%3A2%3A%7Bi%3A0%3Bs%3A4%3A%22hey+%22%3Bi%3A1%3Bs%3A5%3A%22there%22%3B%7D” which is URL encoding for “a:2:{i:0;s:4:”hey+”;i:1;s:5:”there”;}”
+`a%3A2%3A%7Bi%3A0%3Bs%3A4%3A%22hey+%22%3Bi%3A1%3Bs%3A5%3A%22there%22%3B%7D” which is URL encoding for “a:2:{i:0;s:4:”hey+”;i:1;s:5:”there”;}`
 
 Sweet! We have some PHP objects being used to store the data from the input form. Summarizing an article from [https://portswigger.net/web-security/deserialization/exploiting](https://portswigger.net/web-security/deserialization/exploiting) , this is how PHP objects work.
 
 PHP uses a mostly human-readable string format, with letters representing the data type and numbers representing the length of each entry. For example, consider a `User` object with the attributes:
 
-`$user-&gt;name = &#34;carlos&#34;;  
-$user-&gt;isLoggedIn = true;`
-
+```php
+$user->name = "carlos";
+$user->isLoggedIn = true;
+```
 When serialized, this object may look something like this:
 
 `O:4:&#34;User&#34;:2:{s:4:&#34;name&#34;:s:6:&#34;carlos&#34;; s:10:&#34;isLoggedIn&#34;:b:1;}`
 
 This can be interpreted as follows:
 
-*   `O:4:&#34;User&#34;` - An object with the 4-character class name `&#34;User&#34;`
+*   `O:4:"User"` - An object with the 4-character class name `&#34;User&#34;`
 *   `2` - the object has 2 attributes
-*   `s:4:&#34;name&#34;` - The key of the first attribute is the 4-character string `&#34;name&#34;`
-*   `s:6:&#34;carlos&#34;` - The value of the first attribute is the 6-character string `&#34;carlos&#34;`
-*   `s:10:&#34;isLoggedIn&#34;` - The key of the second attribute is the 10-character string `&#34;isLoggedIn&#34;`
+*   `s:4:"name"` - The key of the first attribute is the 4-character string `"name"`
+*   `s:6:"carlos"` - The value of the first attribute is the 6-character string `"carlos"`
+*   `s:10:"isLoggedIn"` - The key of the second attribute is the 10-character string `"isLoggedIn"`
 *   `b:1` - The value of the second attribute is the boolean value `true`
 
-We can now use the information we have to create our exploit. The swap file contains some php code that uses a magic method (__toString) to return an object of the ‘index.php’ page from the class “l33t”. You can read more on magic methods here
+We can now use the information we have to create our exploit. The swap file contains some php code that uses a magic method `(__toString)` to return an object of the `index.php` page from the class `l33t`. You can read more on magic methods here
 
-[What are PHP Magic Methods?](https://culttt.com/2014/04/16/php-magic-methods/)
+#### [What are PHP Magic Methods?](https://culttt.com/2014/04/16/php-magic-methods/)
 
 
 Simply put, the toString method is being used to return information on the index.php page. We can use this method in constructing a payload that helps us return fl4g.php instead. Keep in mind that the source attribute needs to be included for us to read the fl4g.php page
 
 This article came in handy in creating the final payload to get the flag
 
-[How PHP Object Injection works - PHP Object Injection](https://www.tarlogic.com/en/blog/how-php-object-injection-works-php-object-injection/)
+#### [How PHP Object Injection works - PHP Object Injection](https://www.tarlogic.com/en/blog/how-php-object-injection-works-php-object-injection/)
 
+### Exploitation
 
 Our final payload will like this
-`a:3:{i:0;s:5:&#34;hello&#34;;i:1;s:5:&#34;there&#34;;i:2;O:4:&#34;l33t&#34;:1:{s:6:&#34;source&#34;;s:8:&#34;fl4g.php&#34;;}}`
+```a:3:{i:0;s:5:"hello";i:1;s:5:"there";i:2;O:4:"l33t":1:{s:6:"source";s:8:"fl4g.php";}}```
 
 URL encode it and supply as the cookie value for list. voila ! you get the flag.
 `flag{5w337_PHP_0bj3c7_!nj3c7!0n}`

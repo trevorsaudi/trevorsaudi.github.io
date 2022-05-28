@@ -32,7 +32,7 @@ aliases:
 
 ---
 
-**_Crontab Privilege escalation_**
+### Crontab Privilege escalation
 
 In this awesome beginner friendly CTF, I will be taking you through how I rooted the box. [https://ctf.cyberspace.co.ke/vault/stegapwn](https://ctf.cyberspace.co.ke/vault/stegapwn)
 
@@ -83,7 +83,7 @@ At the time of writing this article, I found out about a tool from a friend of m
 ![image](/posts/2021-01-24_cyberspace-kenya-stegapwn/images/9.png#layoutTextWidth)
 
 
-**Privilege escalation**
+### Privilege escalation
 
 Now we ssh into the box using the credentials given, and attempt to gain root access.
 
@@ -119,4 +119,4 @@ Happy hacking :)
 ![image](/posts/2021-01-24_cyberspace-kenya-stegapwn/images/15.png#layoutTextWidth)
 
 
-Drop a like and follow for more articles like this :)
+Happy hacking :)

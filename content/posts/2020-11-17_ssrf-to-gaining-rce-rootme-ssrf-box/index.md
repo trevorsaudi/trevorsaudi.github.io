@@ -32,6 +32,8 @@ Write-up for an [SSRF box] (https://www.root-me.org/?lang=en&amp;page=ctf_allthe
 
 So from the description, our objective is to get root and find the flag in /root.
 
+### Enumeration
+
 Moving on to the challenge, we are presented with an input box where you can place a url and the site creates a link that redirects you to it.
 
 ![image](/posts/2020-11-17_ssrf-to-gaining-rce-rootme-ssrf-box/images/2.png#layoutTextWidth)
@@ -55,6 +57,7 @@ I proceed to port forward localhost on port 1234 using ngrok to expose my IP to 
 
 ![image](/posts/2020-11-17_ssrf-to-gaining-rce-rootme-ssrf-box/images/6.png#layoutTextWidth)
 
+### Exploitation
 
 Then used gopher to generate a payload that would get a reverse shell back on netcat. We get RCE !
 

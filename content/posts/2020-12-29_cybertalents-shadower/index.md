@@ -33,10 +33,12 @@ aliases:
 
 ---
 
-In the machine section we have this medium level box to root. Diving right in!
+In the machine section in Cybertalents, we have this medium level box to root. Diving right in!
+
+### Enumeration
 
 ![image](/posts/2020-12-29_cybertalents-shadower/images/1.png#layoutTextWidth)
-`Get The highest privilege on the machine and find the flag!``VPN Target IP: 172.24.209.176``Public Target IP: 18.193.123.37`
+> Get The highest privilege on the machine and find the flag!``VPN Target IP: 172.24.209.176``Public Target IP: 18.193.123.37
 
 Performed some nmap port scanning to get an overview of running ports and services
 
@@ -70,6 +72,8 @@ Ended up with this huuuuuuge chunk of nested base64 encoding
 
 So, using python we can recursively decode that.
 
+### Scripting
+
 ![image](/posts/2020-12-29_cybertalents-shadower/images/8.png#layoutTextWidth)
 
 
@@ -88,6 +92,8 @@ Sweet! if you look closely, you can see our target user - john. Logging in with 
 
 
 we’re in! Now for the sweet part of the challenge. Getting root access to the box.
+
+### Privilege Escalation
 
 Tried viewing what commands john could run as sudo
 

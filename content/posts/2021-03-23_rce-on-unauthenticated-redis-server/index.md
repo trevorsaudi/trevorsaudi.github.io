@@ -38,13 +38,16 @@ aliases:
 ![image](/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/1.png#layoutTextWidth)
 
 
-In this brief walk-through , we will be hacking a vulnerable database server by showcasing the [res room](https://tryhackme.com/room/res) in Tryhackme.
+> In this brief walk-through , we will be hacking a vulnerable database server by showcasing the [res room](https://tryhackme.com/room/res) in Tryhackme.
 
-**Enumeration**
+### Enumeration
 
 As always, spin up our machine instance and begin some enumeration. For speed and more accuracy, I perform a port scan using rustscan( an incredibly fast port scanning tool) and then do a default scripts and vuln scan using nmap as shown below
-`rustscan -a &lt;IP&gt;  
-nmap -sC -sV --scripts=vuln &lt;IP&gt; -p 80,6379`
+
+```bash
+rustscan -a <IP>
+nmap -sC -sV --scripts=vuln <IP> -p 80,6379
+```
 ![image](/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/2.png#layoutTextWidth)
 
 
@@ -56,20 +59,27 @@ We have an exposed redis instance that we will look into and a web server runnin
 
 
 We can try bruteforcing for any important directories that may be worth looking into. Here I fired up dirsearch, another blazingly fast directory scanner. In other scenarios it’s good to also maximize accuracy by using additional tools like gobuster and dirbuster that may pick up interesting directories.
-`python3 dirsearch.py -u &lt;IP&gt; -e &#34;*&#34;`
+
+```bash 
+python3 dirsearch.py -u <IP> -e "*"
+```
+
 
 We don’t get anything interesting.
 
 ![image](/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/4.png#layoutTextWidth)
 
 
-**Exploitation**
+### Exploitation
 
 [6379 - Pentesting Redis](https://book.hacktricks.xyz/pentesting/6379-pentesting-redis#redis-rce)
 
 
 The article above came in handy in gaining RCE. I used redis-cli to interact with the instance. You can install redis-cli as shown below
-``sudo apt-get install redis-tools``
+```bash     
+sudo apt-get install redis-tools
+```
+
 
 We have unauthenticated access to the database instance.
 
@@ -93,7 +103,7 @@ As a POC, we can try displaying phpinfo as shown above and accessing it on the b
 
 Sweet :) This means we have remote code execution on this server. We can therefore proceed to getting a shell, escalating our privileges and gaining root access.
 
-**Remote Code Execution**
+### Remote Code Execution
 
 To gain RCE. Create another file and append the following code to be able to execute code on a parameter.
 
@@ -119,7 +129,7 @@ Stabilize the shell by backgrounding it using `ctrl+z` and then `stty raw -echo;
 
 Navigate directories to get your user.txt flag.
 
-**Privilege escalation**
+### Privilege escalation
 
 My approach for privesc before uploading linpeas or any enumerator is to first check for sudo rights the user has using `sudo -l,` then check for SUID bits set
 
@@ -129,8 +139,10 @@ My approach for privesc before uploading linpeas or any enumerator is to first c
 xxd has suid bit set. And it owned by the root user. Head over to [GTFObins](https://gtfobins.github.io/gtfobins/xxd/#sudo) and check through xxd.
 
 Interesting, in this exploit, we can read sensitive info using the xxd binary like /etc/shadow file.
-``LFILE=file_to_read  
-xxd &#34;$LFILE&#34; | xxd -r``
+```bash
+LFILE=file_to_read
+xxd "$LFILE" | xxd -r
+```
 ![image](/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/14.png#layoutTextWidth)
 
 
@@ -140,7 +152,10 @@ I read this file and grabbed the hash of the vianka user, since it was part of t
 
 
 We can crack their password using john.
-`john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt`
+
+```bash
+john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt
+```
 ![image](/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/16.png#layoutTextWidth)
 
 
