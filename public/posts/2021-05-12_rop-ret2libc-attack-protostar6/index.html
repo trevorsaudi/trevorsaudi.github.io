@@ -20,7 +20,7 @@
   
   
   
-  <link rel="canonical" href="https://trevorsaudi.github.io/posts/2021-05-12_rop-ret2libc-attack-protostar6/" />
+  <link rel="canonical" href="https://trevorsaudi.com/posts/2021-05-12_rop-ret2libc-attack-protostar6/" />
   
   
   
@@ -70,13 +70,13 @@
   <meta property="og:title" content="ROP: ret2libc Attack -Protostar6" />
 <meta property="og:description" content="Bypassing stack pointer restrictions to gain arbitrary code execution #    Protostar is a series of beginner binary exploitation challenges which showcases concepts like basic stack-based buffer overflows, bypassing stack protections and even performing format string attacks." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://trevorsaudi.github.io/posts/2021-05-12_rop-ret2libc-attack-protostar6/" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/1.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/2.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/3.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/4.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/5.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/6.png" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://trevorsaudi.com/posts/2021-05-12_rop-ret2libc-attack-protostar6/" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/1.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/2.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/3.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/4.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/5.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/6.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-05-12T10:30:13+00:00" />
 <meta property="article:modified_time" content="2022-05-24T14:32:01+03:00" /><meta property="og:site_name" content="Trevor Saudi" />
 
 
   <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://trevorsaudi.github.io/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/1.png"/>
+<meta name="twitter:image" content="https://trevorsaudi.com/posts/2021-05-12_rop-ret2libc-attack-protostar6/images/1.png"/>
 
 <meta name="twitter:title" content="ROP: ret2libc Attack -Protostar6"/>
 <meta name="twitter:description" content="Bypassing stack pointer restrictions to gain arbitrary code execution #    Protostar is a series of beginner binary exploitation challenges which showcases concepts like basic stack-based buffer overflows, bypassing stack protections and even performing format string attacks."/>
@@ -92,7 +92,7 @@
     
     "abstract": "Bypassing stack pointer restrictions to gain arbitrary code execution #    Protostar is a series of beginner binary exploitation challenges which showcases concepts like basic stack-based buffer overflows, bypassing stack protections and even performing format string attacks.",
     "inLanguage": "en",
-    "url" : "https:\/\/trevorsaudi.github.io\/posts\/2021-05-12_rop-ret2libc-attack-protostar6\/",
+    "url" : "https:\/\/trevorsaudi.com\/posts\/2021-05-12_rop-ret2libc-attack-protostar6\/",
     "author" : {
       "@type": "Person",
       "name": "Trevor Saudi"
@@ -103,7 +103,7 @@
     
     "dateModified": "2022-05-24T14:32:01\u002b03:00",
     
-    
+    "keywords": ["ROP","ret2libc"],
     
     "mainEntityOfPage": "true",
     "wordCount": "1009"
@@ -189,7 +189,7 @@
           >
             <a
               class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
-              href=""
+              href="/about/"
               title=""
               >About</a
             >
@@ -372,10 +372,10 @@
 <p><a href="https://www.vulnhub.com/entry/exploit-exercises-protostar-v2,32/"><em>Protostar</em></a> <em>is a series of beginner binary exploitation challenges which showcases concepts like basic stack-based buffer overflows, bypassing stack protections and even performing format string attacks. I tried out these challenges as I have close to 0 experience with binary exploitation and wanted to learn some of it and it turned out fun. So let’s get to</em> <a href="https://exploit.education/protostar/stack-six/"><em>protostar6</em></a> <em>and learn some ret2libc !</em></p>
 <h3 id="source-code-analysis-and-some-recon" class="relative group">Source code analysis and some recon <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#source-code-analysis-and-some-recon" aria-label="Anchor">#</a></span></h3>
 <p>We are given the source code below to protostar6.c</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="cp">#include</span> <span class="cpf"><stdlib.h></span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf"><unistd.h></span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf"><stdio.h></span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf"><string.h></span><span class="cp">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
 </span><span class="cp"></span>
 <span class="kt">void</span> <span class="nf">getpath</span><span class="p">()</span>
 <span class="p">{</span>
@@ -504,7 +504,7 @@ Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac
 <ol start="3">
 <li>
 <p>Finding the address of the <code>system</code> syscall
-<code>(gdb) p system ```&amp;lt;--- p means print```   $1 = {&amp;lt;text variable, no debug info&amp;gt;} 0xb7ecffb0 &amp;lt;__libc_system&amp;gt;   (gdb)</code></p>
+<code>(gdb) p system ```&lt;--- p means print```   $1 = {&lt;text variable, no debug info&gt;} 0xb7ecffb0 &lt;__libc_system&gt;   (gdb)</code></p>
 </li>
 <li>
 <p>Finding the location of the ‘/bin/sh’ within libc
@@ -649,7 +649,7 @@ Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac
       <div
   id="search-wrapper"
   class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible"
-  data-url="https://trevorsaudi.github.io/"
+  data-url="https://trevorsaudi.com/"
 >
   <div
     id="search-modal"

@@ -20,7 +20,7 @@
   
   
   
-  <link rel="canonical" href="https://trevorsaudi.github.io/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/" />
+  <link rel="canonical" href="https://trevorsaudi.com/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/" />
   
   
   
@@ -70,13 +70,13 @@
   <meta property="og:title" content="whistleblow-CSAW CTF Quals 2020" />
 <meta property="og:description" content="The second challenge in the web category." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://trevorsaudi.github.io/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/1.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/2.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/3.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/4.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/5.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/6.png" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://trevorsaudi.com/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/" /><meta property="og:image" content="https://trevorsaudi.com/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/1.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/2.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/3.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/4.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/5.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/6.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-09-14T10:41:54+00:00" />
 <meta property="article:modified_time" content="2022-05-24T14:30:07+03:00" /><meta property="og:site_name" content="Trevor Saudi" />
 
 
   <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://trevorsaudi.github.io/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/1.png"/>
+<meta name="twitter:image" content="https://trevorsaudi.com/posts/2020-09-14_whistleblowcsaw-ctf-quals-2020/images/1.png"/>
 
 <meta name="twitter:title" content="whistleblow-CSAW CTF Quals 2020"/>
 <meta name="twitter:description" content="The second challenge in the web category."/>
@@ -92,7 +92,7 @@
     
     "abstract": "The second challenge in the web category.",
     "inLanguage": "en",
-    "url" : "https:\/\/trevorsaudi.github.io\/posts\/2020-09-14_whistleblowcsaw-ctf-quals-2020\/",
+    "url" : "https:\/\/trevorsaudi.com\/posts\/2020-09-14_whistleblowcsaw-ctf-quals-2020\/",
     "author" : {
       "@type": "Person",
       "name": "Trevor Saudi"
@@ -103,10 +103,10 @@
     
     "dateModified": "2022-05-24T14:30:07\u002b03:00",
     
-    
+    "keywords": ["Web","AWS S3"],
     
     "mainEntityOfPage": "true",
-    "wordCount": "557"
+    "wordCount": "562"
   }]
   </script>
 
@@ -189,7 +189,7 @@
           >
             <a
               class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
-              href=""
+              href="/about/"
               title=""
               >About</a
             >
@@ -323,6 +323,36 @@
     </header>
     <section class="flex flex-col max-w-full mt-0 prose lg:flex-row dark:prose-invert">
       
+        <div class="order-first px-0 lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8 lg:order-last">
+          <div class="ltr:pl-5 rtl:pr-5 toc lg:sticky lg:top-10 print:hidden">
+            <details open class="mt-0 overflow-hidden rounded-lg rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 lg:mt-3">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 text-neutral-800 dark:text-neutral-100 lg:hidden bg-neutral-100 dark:bg-neutral-700"
+  >
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted ltr:border-l rtl:border-r rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 border-neutral-300 dark:border-neutral-600"
+  >
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#challenge-description">Challenge description:</a></li>
+        <li><a href="#step-1-authenticating-as-a-valid-user">Step 1: Authenticating as a valid user</a></li>
+        <li><a href="#step-2-accessing-the-s3-bucket">Step 2: Accessing the S3 bucket</a></li>
+        <li><a href="#step-3-analysing-the-bucket-contents">Step 3: Analysing the bucket contents</a></li>
+        <li><a href="#step-4-solving-the-challenge">Step 4: Solving the challenge</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+          </div>
+        </div>
+      
       <div class="min-w-0 min-h-0 max-w-prose">
         <p>The second challenge in the web category.</p>
 <p>
@@ -340,7 +370,7 @@
 
 </p>
 <p>From the description and 2 hints, this was what I was able to deduce after several minutes:</p>
-<p><strong>Challenge description:</strong></p>
+<h3 id="challenge-description" class="relative group">Challenge description: <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#challenge-description" aria-label="Anchor">#</a></span></h3>
 <p>One of your coworkers in the cloud security department sent you an urgent email, probably about some privacy concerns for your company.</p>
 <p><strong>Hint 1:</strong></p>
 <p>Presigning is always better than postsigning</p>
@@ -365,7 +395,7 @@
 <p>This particular writeup came in handy !</p>
 <p><a href="https://n0j.github.io/2017/10/02/aws-s3-ctf.html">AWS S3 CTF Challenges</a></p>
 <p>Okay, so we’ve gathered enough information on how to start the challenge…</p>
-<p><strong>Step 1: Authenticating as a valid user</strong></p>
+<h3 id="step-1-authenticating-as-a-valid-user" class="relative group">Step 1: Authenticating as a valid user <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#step-1-authenticating-as-a-valid-user" aria-label="Anchor">#</a></span></h3>
 <p>From the letter , ‘ Make sure you’re a valid user!’ is a hint that you need to successfully authenticate as a valid aws user to access the S3 bucket which is ad586b62e3b5921bd86fe2efa4919208</p>
 <p>
 
@@ -381,7 +411,7 @@
   
 
 </p>
-<p><strong>Step 2: Accessing the S3 bucket</strong></p>
+<h3 id="step-2-accessing-the-s3-bucket" class="relative group">Step 2: Accessing the S3 bucket <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#step-2-accessing-the-s3-bucket" aria-label="Anchor">#</a></span></h3>
 <p>The aws documentation came in handy! I believe in reading documentation as it saves you alot from unintended errors.</p>
 <p><a href="https://docs.aws.amazon.com/cli/latest/reference/s3/ls.html">ls - AWS CLI 1.18.137 Command Reference</a></p>
 <p>From the documentation, you get a command to list the contents of the bucket</p>
@@ -400,7 +430,7 @@
   
 
 </p>
-<p><strong>Step 3: Analysing the bucket contents</strong></p>
+<h3 id="step-3-analysing-the-bucket-contents" class="relative group">Step 3: Analysing the bucket contents <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#step-3-analysing-the-bucket-contents" aria-label="Anchor">#</a></span></h3>
 <p>I had to find a way to easily work with the contents of the bucket. The best way was to recursively download the bucket contents to my local directory</p>
 <p>The cp command comes in handy and we get access to all folders in the bucket in our current local directory.</p>
 <p>
@@ -451,7 +481,7 @@
 </p>
 <p>Hmmm… this was my lightbulb moment, everything starts to add up as I reread the hints and the presigning information comes in handy.</p>
 <p>Pre-signed URLs have five pieces of information; bucket, object, access key, signature, and expiration. <code>awscli</code> tends to present them in this form:
-<code>https://&amp;lt;bucket&amp;gt;.s3.amazonaws.com/&amp;lt;object&amp;gt;?AWSAccessKeyId=&amp;lt;key&amp;gt;&amp;amp;Expires=&amp;lt;expiration&amp;gt;&amp;amp;Signature=&amp;lt;signature&amp;gt;</code></p>
+<code>https://&lt;bucket&gt;.s3.amazonaws.com/&lt;object&gt;?AWSAccessKeyId=&lt;key&gt;&amp;amp;Expires=&lt;expiration&gt;&amp;amp;Signature=&lt;signature&gt;</code></p>
 <p>Since the first two pieces of strings stands out from the rest of the other texts in terms of length, I decided to try and grab pieces of text less than/ greater than 30 characters.</p>
 <p>
 
@@ -467,7 +497,7 @@
   
 
 </p>
-<p><strong>Step 4: Solving the challenge</strong></p>
+<h3 id="step-4-solving-the-challenge" class="relative group">Step 4: Solving the challenge <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#step-4-solving-the-challenge" aria-label="Anchor">#</a></span></h3>
 <p>From the above info, we retrieve the following pieces of text</p>
 <p>
 
@@ -606,7 +636,7 @@
       <div
   id="search-wrapper"
   class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible"
-  data-url="https://trevorsaudi.github.io/"
+  data-url="https://trevorsaudi.com/"
 >
   <div
     id="search-modal"

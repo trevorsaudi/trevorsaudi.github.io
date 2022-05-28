@@ -20,7 +20,7 @@
   
   
   
-  <link rel="canonical" href="https://trevorsaudi.github.io/posts/2021-03-23_rce-on-unauthenticated-redis-server/" />
+  <link rel="canonical" href="https://trevorsaudi.com/posts/2021-03-23_rce-on-unauthenticated-redis-server/" />
   
   
   
@@ -70,13 +70,13 @@
   <meta property="og:title" content="RCE on Unauthenticated Redis server" />
 <meta property="og:description" content="In this brief walk-through , we will be hacking a vulnerable database server by showcasing the res room in Tryhackme." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://trevorsaudi.github.io/posts/2021-03-23_rce-on-unauthenticated-redis-server/" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/1.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/2.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/3.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/4.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/5.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/6.png" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://trevorsaudi.com/posts/2021-03-23_rce-on-unauthenticated-redis-server/" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/1.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/2.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/3.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/4.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/5.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/6.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-03-23T18:02:12+00:00" />
 <meta property="article:modified_time" content="2022-05-24T14:31:21+03:00" /><meta property="og:site_name" content="Trevor Saudi" />
 
 
   <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://trevorsaudi.github.io/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/1.png"/>
+<meta name="twitter:image" content="https://trevorsaudi.com/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/1.png"/>
 
 <meta name="twitter:title" content="RCE on Unauthenticated Redis server"/>
 <meta name="twitter:description" content="In this brief walk-through , we will be hacking a vulnerable database server by showcasing the res room in Tryhackme."/>
@@ -92,7 +92,7 @@
     
     "abstract": "In this brief walk-through , we will be hacking a vulnerable database server by showcasing the res room in Tryhackme.",
     "inLanguage": "en",
-    "url" : "https:\/\/trevorsaudi.github.io\/posts\/2021-03-23_rce-on-unauthenticated-redis-server\/",
+    "url" : "https:\/\/trevorsaudi.com\/posts\/2021-03-23_rce-on-unauthenticated-redis-server\/",
     "author" : {
       "@type": "Person",
       "name": "Trevor Saudi"
@@ -103,7 +103,7 @@
     
     "dateModified": "2022-05-24T14:31:21\u002b03:00",
     
-    
+    "keywords": ["Redis","RCE"],
     
     "mainEntityOfPage": "true",
     "wordCount": "556"
@@ -189,7 +189,7 @@
           >
             <a
               class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
-              href=""
+              href="/about/"
               title=""
               >About</a
             >
@@ -372,8 +372,8 @@
 </blockquote>
 <h3 id="enumeration" class="relative group">Enumeration <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#enumeration" aria-label="Anchor">#</a></span></h3>
 <p>As always, spin up our machine instance and begin some enumeration. For speed and more accuracy, I perform a port scan using rustscan( an incredibly fast port scanning tool) and then do a default scripts and vuln scan using nmap as shown below</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rustscan -a <IP>
-nmap -sC -sV --scripts<span class="o">=</span>vuln <IP> -p 80,6379
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rustscan -a &lt;IP&gt;
+nmap -sC -sV --scripts<span class="o">=</span>vuln &lt;IP&gt; -p 80,6379
 </code></pre></div><p>
 
 
@@ -405,7 +405,7 @@ nmap -sC -sV --scripts<span class="o">=</span>vuln <IP> -p 80,6379
 
 </p>
 <p>We can try bruteforcing for any important directories that may be worth looking into. Here I fired up dirsearch, another blazingly fast directory scanner. In other scenarios it’s good to also maximize accuracy by using additional tools like gobuster and dirbuster that may pick up interesting directories.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">python3 dirsearch.py -u <IP> -e <span class="s2">&#34;*&#34;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">python3 dirsearch.py -u &lt;IP&gt; -e <span class="s2">&#34;*&#34;</span>
 </code></pre></div><p>We don’t get anything interesting.</p>
 <p>
 
@@ -740,7 +740,7 @@ xxd <span class="s2">&#34;</span><span class="nv">$LFILE</span><span class="s2">
       <div
   id="search-wrapper"
   class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible"
-  data-url="https://trevorsaudi.github.io/"
+  data-url="https://trevorsaudi.com/"
 >
   <div
     id="search-modal"

