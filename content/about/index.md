@@ -48,7 +48,7 @@ _June 2021 to October 2021_
 ### Fr334aks
 _Nairobi_<br>
 **CTF Player & Developer**<br>
-_June 2021 to October 2021_
+_June 2021 Present_
 
 -   Playing for the #1 ranked competitive CTF team in Kenya
 -   Solving different challenges centered around cybersecurity concepts such as Cryptography, Web Exploitation, Reverse Engineering, Forensics. etc
