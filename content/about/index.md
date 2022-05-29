@@ -48,7 +48,7 @@ _June 2021 to October 2021_
 ### Fr334aks
 _Nairobi_<br>
 **CTF Player & Developer**<br>
-_June 2021 Present_
+_June 2021 to Present_
 
 -   Playing for the #1 ranked competitive CTF team in Kenya
 -   Solving different challenges centered around cybersecurity concepts such as Cryptography, Web Exploitation, Reverse Engineering, Forensics. etc
@@ -79,18 +79,18 @@ Grade: First Class Honors
 ## Certifications
 
 ### Certified Linux Administrator (LPIC-1)
-**Linux Professional Institute (LPI)**
-Apr 2022
+**Linux Professional Institute (LPI)** <br>
+Apr 2022<br>
 [Credential ID 4b56z3phfb](https://cs.lpi.org/caf/Xamman/certification/verify/LPI000515003/4b56z3phfb)
 
 ### eLearnSecurity Junior Penetration Tester
-**eLearnSecurity**
-Jan 2021
+**eLearnSecurity** <br>
+Jan 2021 <br>
 [Credential ID 6416736](https://verified.elearnsecurity.com/certificates/962ae3aa-58ee-4649-9216-6c11a804a92b)
 
 ### Certified Ethical Hacker
-**EC-Council**
-Jan 2020
+**EC-Council** <br>
+Jan 2020 <br>
 [Credential ID ECC1082376945](https://aspen.eccouncil.org/VerifyBadge?type=certification&a=8Oxz5wABOq3cgnRAjRypuzMCgfENEfJyUP7O/brUMp4=)
 
 
