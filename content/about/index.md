@@ -117,5 +117,5 @@ Jan 2020 <br>
 7. ### DEFCON 28 redteam CTF 2020
 - Emerged 16th in the qualification round out of thousands of teams competing. Proceeded to the finals where we took 16th out of 20 teams
 
-8. ### Dean's ListDean's List
+8. ### Dean's List
 - Academic Year 2018/2019 , 2019/2020, 2021/2022
