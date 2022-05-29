@@ -96,26 +96,26 @@ Jan 2020 <br>
 
 ## Honors & awards
 1. ### CyberTalents Cybersecurity CTF 2021 Nationals
-- Took 1st place in the 2021 annual National Cybersecurity CTF organized by cybertalentsTook 1st place in the 2021 annual National Cybersecurity CTF organized by cybertalents
+- Took 1st place in the 2021 annual National Cybersecurity CTF organized by cybertalents
 
 2. ### CyberTalents Penetration Testing Scholarship
-- I was awarded a scholarship to study Penetration Testing and web hacking for 4 months with Cybersecurity for having an outstanding CTF performanceI was awarded a scholarship to study Penetration Testing and web hacking for 4 months with Cybersecurity for having an outstanding CTF performance
+- I was awarded a scholarship to study Penetration Testing and web hacking for 4 months with Cybersecurity for having an outstanding CTF performance
 
 3. ### SHEHACKS KE 2020
-- Took 1st place in the SHEHACKS 2020 Cybersecurity CTFTook 1st place in the SHEHACKS 2020 Cybersecurity CTF
+- Took 1st place in the SHEHACKS 2020 Cybersecurity CTFT
 
 
 4. ### CyberTalents Cybersecurity CTF 2020 Nationals
-- Took 1st place to Represent Kenya in Egypt in the 2020 annual National Cybersecurity CTFTook 1st place to Represent Kenya in Egypt in the 2020 annual National Cybersecurity CTF
+- Took 1st place to Represent Kenya in Egypt in the 2020 annual National Cybersecurity CTF
 
 5. ### AfricaHackon CTF 2021
-- 3rd place in the AfricaHackon 2021 CTF competition3rd place in the AfricaHackon 2021 CTF competition
+- Took 3rd place in the AfricaHackon 2021 CTF competition
 
 6. ### Cybertalents Cybersecurity CTF 2021 regionals
 - Took 4th out of 110 teams in AfricaTook 4th out of 110 teams in Africa
 
 7. ### DEFCON 28 redteam CTF 2020
-- Emerged 16th in the qualification round out of thousands of teams competing. Proceeded to the finals where we took 16th out of 20 teamsEmerged 16th in the qualification round out of thousands of teams competing. Proceeded to the finals where we took 16th out of 20 teams
+- Emerged 16th in the qualification round out of thousands of teams competing. Proceeded to the finals where we took 16th out of 20 teams
 
 8. ### Dean's ListDean's List
 - Academic Year 2018/2019 , 2019/2020, 2021/2022
