@@ -112,7 +112,7 @@ Jan 2020 <br>
 - Took 3rd place in the AfricaHackon 2021 CTF competition
 
 6. ### Cybertalents Cybersecurity CTF 2021 regionals
-- Took 4th out of 110 teams in AfricaTook 4th out of 110 teams in Africa
+- Took 4th out of 110 teams in Africa
 
 7. ### DEFCON 28 redteam CTF 2020
 - Emerged 16th in the qualification round out of thousands of teams competing. Proceeded to the finals where we took 16th out of 20 teams
