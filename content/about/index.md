@@ -26,6 +26,12 @@ _Feb 2022 to Present_
 - Creating guided technical tutorials aimed at imparting knowledge
 - Training clients on different topics using he platform
 
+### NOUVETA LIMITED
+_Nairobi_ <br>
+** Software Engineer Intern** <br>
+_Feb 2021 to April 2021_
+
+- Developing web applications and APIs to automate the process of data entry and processing of data for the company’s internal use.
 
 ### SheHacks KE
 _Nairobi_ <br>
@@ -56,15 +62,17 @@ _June 2021 to Present_
 
 ## Skills
 
-**Technical**
+**Programming languages**
 
 `Python`
 `C`
+`Ruby`
+`Javasript`
+
+**Technical**
+
 `Exploit Development`
 `Reverse Engineering`
-`ELK Stack`
-`AlienVault`
-`Arkime`
 `Forensics`
 `Web Development`
 
