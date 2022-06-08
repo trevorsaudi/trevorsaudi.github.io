@@ -15,7 +15,7 @@ dateFormat = "2 January 2006"
 [author]
 name = "Trevor Saudi"
 image = "img/profile.jpg"
-headline = "Cyber Security Consultant"
+headline = "Cybersecurity Consultant"
 links = [
   { github = "https://github.com/trevorsaudi" } ,
   { linkedin = "https://www.linkedin.com/in/trevor-saudi-9275b8186" } ,
