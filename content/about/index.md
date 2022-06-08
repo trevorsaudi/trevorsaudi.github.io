@@ -3,7 +3,7 @@ date: 2022-05-23T12:36:41.827Z
 
 ---
 # **My Resume**
-I am an Information Security consultant with a highly technical background specializing in providing Security Intelligence to multiple local and international companies. 
+I am a Cybersecurity consultant with a highly technical background specializing in providing Security Intelligence to multiple local and international companies. 
 
 ## Work Experience
 
