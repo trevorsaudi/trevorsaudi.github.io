@@ -28,7 +28,7 @@ _Feb 2022 to Present_
 
 ### NOUVETA LIMITED
 _Nairobi_ <br>
-** Software Engineer Intern** <br>
+**Software Engineer Intern** <br>
 _Feb 2021 to April 2021_
 
 - Developing web applications and APIs to automate the process of data entry and processing of data for the company’s internal use.
@@ -110,7 +110,7 @@ Jan 2020 <br>
 - I was awarded a scholarship to study Penetration Testing and web hacking for 4 months with Cybersecurity for having an outstanding CTF performance
 
 3. ### SHEHACKS KE 2020
-- Took 1st place in the SHEHACKS 2020 Cybersecurity CTFT
+- Took 1st place in the SHEHACKS 2020 Cybersecurity CTF
 
 
 4. ### CyberTalents Cybersecurity CTF 2020 Nationals
