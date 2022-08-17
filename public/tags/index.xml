@@ -7,13 +7,49 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>:smile: </copyright>
-    <lastBuildDate>Mon, 13 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://trevorsaudi.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://trevorsaudi.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>angr</title>
+      <link>https://trevorsaudi.com/tags/angr/</link>
+      <pubDate>Mon, 15 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://trevorsaudi.com/tags/angr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>exploit development</title>
+      <link>https://trevorsaudi.com/tags/exploit-development/</link>
+      <pubDate>Mon, 15 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://trevorsaudi.com/tags/exploit-development/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>python</title>
       <link>https://trevorsaudi.com/tags/python/</link>
-      <pubDate>Mon, 13 Jun 2022 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 15 Aug 2022 00:00:00 +0000</pubDate>
       
       <guid>https://trevorsaudi.com/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>reverse engineering</title>
+      <link>https://trevorsaudi.com/tags/reverse-engineering/</link>
+      <pubDate>Mon, 15 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://trevorsaudi.com/tags/reverse-engineering/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>polyglots</title>
+      <link>https://trevorsaudi.com/tags/polyglots/</link>
+      <pubDate>Mon, 13 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://trevorsaudi.com/tags/polyglots/</guid>
       <description></description>
     </item>
     
