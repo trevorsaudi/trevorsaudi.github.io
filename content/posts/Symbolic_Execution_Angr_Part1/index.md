@@ -50,15 +50,13 @@ Given a simple program, let us map out the execution paths of the program
 
 ```python 
 input = input('Input the password: ')
-if input == 'gooodpass':
+if input == 'goodpass':
     print 'Success.'
 else:
     print 'Try again.'
 ```
 
-{{< alert >}}
-λ is the symbol. It represents our input variable
-{{< /alert >}}
+
 
 **path 1**: User enters 'goodpass' as input
 
@@ -76,7 +74,12 @@ A[input = λ ]-->B[if input == 'pass123'];
 B-->C[print 'Try Again']
 {{< /mermaid >}}
 
-To find the value of λ, find out how to reach the state that prints out 'Success'. To reach that state, find the branch that triggers it **(if input == 'goodpass')**. To reach the branch, what input triggers the branch? **goodpass**
+{{< alert >}}
+λ is the symbol that represents our input variable
+{{< /alert >}}
+
+To find the value of λ, we can walk back in a given execution path to find out what input triggers a given branch. In the first branch, backtracking leads you to **(if input == 'goodpass')**, where goodpass triggers the desirable input.
+
 
 Let us look into how we can do this using the angr framework
 
@@ -157,7 +160,7 @@ def main():
 
 We provide the path to the project and use the Project method to create an instance of an angr project to work with. ```#1 ```    
 
-We then create an initial_state variable that holds the entry point to the program. This is necessary for the symbolic execution engine to know where to start exploring the program /.```#2```    
+We then create an initial_state variable that holds the entry point to the program. This is necessary for the symbolic execution engine to know where to start exploring the program.```#2```    
 
 We follow through with a simulation manager object that starts executing at the entry point of our program. ```#3```
 
