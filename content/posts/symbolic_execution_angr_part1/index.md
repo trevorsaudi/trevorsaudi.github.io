@@ -5,11 +5,11 @@ date: 2022-08-15
 
 subtitle: "An overview of symbolic execution with angr"
 
-image: "/posts/Symbolic_Execution_Angr_part1/images/angry_face.png" 
+image: "/posts/symbolic_execution_angr_part1/images/angry_face.png" 
 
 
 aliases:
-    - "/Symbolic_Execution_Angr_part1"
+    - "/symbolic_execution_angr_part1"
 
 tags:
 - python
@@ -20,7 +20,7 @@ tags:
 
 
 ---
-![image](/posts/2021-09-12_cybertalents-national-ctf/images/angry_face.png)
+![image](/posts/symbolic_execution_angr_part1/images/1.png)
 
 _An overview of the binary analysis python framework angr in performing symbolic execution._
 
@@ -125,11 +125,11 @@ Using a disassembler of your choice, disassemble the main function and view your
 
 The control graph is not too complicated but we don't have to spend time analyzing it to find the password
 
-![image](/posts/2021-09-12_cybertalents-national-ctf/images/control.png)
+![image](/posts/symbolic_execution_angr_part1/images/2.png)
 
 2 branches are of interest. 
 
-![image](/posts/2021-09-12_cybertalents-national-ctf/images/branches.png)
+![image](/posts/symbolic_execution_angr_part1/images/3.png)
 
 Branch 1 triggered "Try again" while branch 2 should trigger "Good job"
 
@@ -173,7 +173,7 @@ We follow through with a simulation manager object that starts executing at the 
 
 The good address that we want is the one of the branches that leads to printing 'Good job' indicated below as 0x8048675
 
-![image](/posts/2021-09-12_cybertalents-national-ctf/images/good_address.png)
+![image](/posts/symbolic_execution_angr_part1/images/4.png)
 
 4. House-keeping
 
@@ -181,7 +181,7 @@ The good address that we want is the one of the branches that leads to printing 
     if simulation.found: #6
         solution_state = simulation.found[0] #7
         solution = solution_state.posix.dumps(sys.stdin.fileno()) #8
-        print("[+] Success! Solution is: {}".format(solution.decode('utf-8'))) #9
+        print("[+] Solution found! : {}".format(solution.decode('utf-8'))) #9
     else:
         raise Exception("Could not find the solution") #10
 
@@ -228,6 +228,10 @@ if __name__ == "__main__":
 Run it to see angr perform its dark magic
 
 
-![image](/posts/2021-09-12_cybertalents-national-ctf/images/solution.png)
+![image](/posts/symbolic_execution_angr_part1/images/6.png)
 
-We easily find the string that triggers our desirable state. In the next tutorial, we will look at more advanced practical concepts. Stay tuned!
+We easily find the string that triggers our desirable state.
+
+For the next binary 01_angr_avoid, the solution is exactly the same as this only that you shall have to specify the address of the branch you want to avoid.
+
+In the next tutorial, we will look at more advanced concepts such as how to avoid path explosion and also injecting symbolic values into registers. Stay tuned!
