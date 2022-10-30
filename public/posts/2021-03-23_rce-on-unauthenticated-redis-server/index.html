@@ -36,12 +36,12 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="/css/main.bundle.min.6392876d35eabbaa711ea81779afb0cae5109113f7350f65e95aea1bd21e6e638b4ce9495a6786c3cee07affcc31970317defd77804c71f0ddae3a395649e93a.css"
-    integrity="sha512-Y5KHbTXqu6pxHqgXea&#43;wyuUQkRP3NQ9l6VrqG9IebmOLTOlJWmeGw87gev/MMZcDF979d4BMcfDdrjo5VknpOg=="
+    href="/css/main.bundle.min.71883ab0661482cf6c7d29b8bdd1af3be3d2f1ea750e56a67846b7f64f41d19b8dc6d7047f48422ec8cbe4a0a412d551c8210307e2b93b1254cdbf7d8af216e0.css"
+    integrity="sha512-cYg6sGYUgs9sfSm4vdGvO&#43;PS8ep1DlameEa39k9B0ZuNxtcEf0hCLsjL5KCkEtVRyCEDB&#43;K5OxJUzb99ivIW4A=="
   />
   
   
-  <script type="text/javascript" src="/js/appearance.min.4df8309499991be53c71b2b39ba0f5d5e77ea7d411d0710ce48c24218e7cc24ded28f19e85838fdc56db2306195cb001f049f577be0cf0ffb2dd6e2037ede1b9.js" integrity="sha512-TfgwlJmZG&#43;U8cbKzm6D11ed&#43;p9QR0HEM5IwkIY58wk3tKPGehYOP3FbbIwYZXLAB8En1d74M8P&#43;y3W4gN&#43;3huQ=="></script>
+  <script type="text/javascript" src="/js/appearance.min.badab316c9287a5a42a843e4eb45da65bb3d194a5a0f5fa4a3e516160e67df0b8c65f4f19a8e146436e29d583699e6cb41d6bbe99e05e1dbaa877763bad9f8e2.js" integrity="sha512-utqzFskoelpCqEPk60XaZbs9GUpaD1&#43;ko&#43;UWFg5n3wuMZfTxmo4UZDbinVg2mebLQda76Z4F4duqh3djutn44g=="></script>
   
     
     
@@ -54,7 +54,7 @@
   
   
     
-    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.61ddd918b834d47011bb8923606e0c3814bbcec0f2d5ab743171ca58a52eea55eb74d2f5ea267d6398ccaf6cabb0360c61b93e541ed4892fddf757fd2d317822.js" integrity="sha512-Yd3ZGLg01HARu4kjYG4MOBS7zsDy1at0MXHKWKUu6lXrdNL16iZ9Y5jMr2yrsDYMYbk&#43;VB7UiS/d91f9LTF4Ig==" data-copy="Copy" data-copied="Copied"></script>
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.5ffdd39e73bd1438c0f4ff42f13915f067c633da22f60efa62139a4c51b972622badb1157d4aa4322634b55c8a2dc5ddfbd3917426df1c02d7b69362030197da.js" integrity="sha512-X/3TnnO9FDjA9P9C8TkV8GfGM9oi9g76YhOaTFG5cmIrrbEVfUqkMiY0tVyKLcXd&#43;9ORdCbfHALXtpNiAwGX2g==" data-copy="Copy" data-copied="Copied"></script>
   
   
   
@@ -376,9 +376,9 @@
 </blockquote>
 <h3 id="enumeration" class="relative group">Enumeration <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#enumeration" aria-label="Anchor">#</a></span></h3>
 <p>As always, spin up our machine instance and begin some enumeration. For speed and more accuracy, I perform a port scan using rustscan( an incredibly fast port scanning tool) and then do a default scripts and vuln scan using nmap as shown below</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">rustscan -a &lt;IP&gt;
-nmap -sC -sV --scripts<span class="o">=</span>vuln &lt;IP&gt; -p 80,6379
-</code></pre></div><p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rustscan -a &lt;IP&gt;
+</span></span><span class="line"><span class="cl">nmap -sC -sV --scripts<span class="o">=</span>vuln &lt;IP&gt; -p 80,6379
+</span></span></code></pre></div><p>
 
 
 
@@ -409,8 +409,8 @@ nmap -sC -sV --scripts<span class="o">=</span>vuln &lt;IP&gt; -p 80,6379
 
 </p>
 <p>We can try bruteforcing for any important directories that may be worth looking into. Here I fired up dirsearch, another blazingly fast directory scanner. In other scenarios it’s good to also maximize accuracy by using additional tools like gobuster and dirbuster that may pick up interesting directories.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">python3 dirsearch.py -u &lt;IP&gt; -e <span class="s2">&#34;*&#34;</span>
-</code></pre></div><p>We don’t get anything interesting.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python3 dirsearch.py -u &lt;IP&gt; -e <span class="s2">&#34;*&#34;</span>
+</span></span></code></pre></div><p>We don’t get anything interesting.</p>
 <p>
 
 
@@ -428,8 +428,8 @@ nmap -sC -sV --scripts<span class="o">=</span>vuln &lt;IP&gt; -p 80,6379
 <h3 id="exploitation" class="relative group">Exploitation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#exploitation" aria-label="Anchor">#</a></span></h3>
 <p><a href="https://book.hacktricks.xyz/pentesting/6379-pentesting-redis#redis-rce">6379 - Pentesting Redis</a></p>
 <p>The article above came in handy in gaining RCE. I used redis-cli to interact with the instance. You can install redis-cli as shown below</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo apt-get install redis-tools
-</code></pre></div><p>We have unauthenticated access to the database instance.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get install redis-tools
+</span></span></code></pre></div><p>We have unauthenticated access to the database instance.</p>
 <p>
 
 
@@ -571,9 +571,9 @@ nmap -sC -sV --scripts<span class="o">=</span>vuln &lt;IP&gt; -p 80,6379
 </p>
 <p>xxd has suid bit set. And it owned by the root user. Head over to <a href="https://gtfobins.github.io/gtfobins/xxd/#sudo">GTFObins</a> and check through xxd.</p>
 <p>Interesting, in this exploit, we can read sensitive info using the xxd binary like /etc/shadow file.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">LFILE</span><span class="o">=</span>file_to_read
-xxd <span class="s2">&#34;</span><span class="nv">$LFILE</span><span class="s2">&#34;</span> <span class="p">|</span> xxd -r
-</code></pre></div><p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">LFILE</span><span class="o">=</span>file_to_read
+</span></span><span class="line"><span class="cl">xxd <span class="s2">&#34;</span><span class="nv">$LFILE</span><span class="s2">&#34;</span> <span class="p">|</span> xxd -r
+</span></span></code></pre></div><p>
 
 
 
@@ -603,8 +603,8 @@ xxd <span class="s2">&#34;</span><span class="nv">$LFILE</span><span class="s2">
 
 </p>
 <p>We can crack their password using john.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">john hash.txt --wordlist<span class="o">=</span>/usr/share/wordlists/rockyou.txt
-</code></pre></div><p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">john hash.txt --wordlist<span class="o">=</span>/usr/share/wordlists/rockyou.txt
+</span></span></code></pre></div><p>
 
 
 

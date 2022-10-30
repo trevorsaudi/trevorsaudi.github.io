@@ -41,7 +41,7 @@
       <pubDate>Sun, 28 Mar 2021 15:51:16 +0000</pubDate>
       
       <guid>https://trevorsaudi.com/posts/2021-03-28_tryhackme-brainstorm/</guid>
-      <description>Reverse engineering a chat application to exploit a windows machine using a buffer overflow # Prerequisites #  Windows 7/10 virtual environment Immunity Debugger Basic understanding of buffer overflows  Enumeration # We Spin off the instance and get right into some enumeration.</description>
+      <description>Reverse engineering a chat application to exploit a windows machine using a buffer overflow # Prerequisites # Windows 7/10 virtual environment Immunity Debugger Basic understanding of buffer overflows Enumeration # We Spin off the instance and get right into some enumeration.</description>
     </item>
     
   </channel>

@@ -36,12 +36,12 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="/css/main.bundle.min.6392876d35eabbaa711ea81779afb0cae5109113f7350f65e95aea1bd21e6e638b4ce9495a6786c3cee07affcc31970317defd77804c71f0ddae3a395649e93a.css"
-    integrity="sha512-Y5KHbTXqu6pxHqgXea&#43;wyuUQkRP3NQ9l6VrqG9IebmOLTOlJWmeGw87gev/MMZcDF979d4BMcfDdrjo5VknpOg=="
+    href="/css/main.bundle.min.71883ab0661482cf6c7d29b8bdd1af3be3d2f1ea750e56a67846b7f64f41d19b8dc6d7047f48422ec8cbe4a0a412d551c8210307e2b93b1254cdbf7d8af216e0.css"
+    integrity="sha512-cYg6sGYUgs9sfSm4vdGvO&#43;PS8ep1DlameEa39k9B0ZuNxtcEf0hCLsjL5KCkEtVRyCEDB&#43;K5OxJUzb99ivIW4A=="
   />
   
   
-  <script type="text/javascript" src="/js/appearance.min.4df8309499991be53c71b2b39ba0f5d5e77ea7d411d0710ce48c24218e7cc24ded28f19e85838fdc56db2306195cb001f049f577be0cf0ffb2dd6e2037ede1b9.js" integrity="sha512-TfgwlJmZG&#43;U8cbKzm6D11ed&#43;p9QR0HEM5IwkIY58wk3tKPGehYOP3FbbIwYZXLAB8En1d74M8P&#43;y3W4gN&#43;3huQ=="></script>
+  <script type="text/javascript" src="/js/appearance.min.badab316c9287a5a42a843e4eb45da65bb3d194a5a0f5fa4a3e516160e67df0b8c65f4f19a8e146436e29d583699e6cb41d6bbe99e05e1dbaa877763bad9f8e2.js" integrity="sha512-utqzFskoelpCqEPk60XaZbs9GUpaD1&#43;ko&#43;UWFg5n3wuMZfTxmo4UZDbinVg2mebLQda76Z4F4duqh3djutn44g=="></script>
   
     
     
@@ -54,7 +54,7 @@
   
   
     
-    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.61ddd918b834d47011bb8923606e0c3814bbcec0f2d5ab743171ca58a52eea55eb74d2f5ea267d6398ccaf6cabb0360c61b93e541ed4892fddf757fd2d317822.js" integrity="sha512-Yd3ZGLg01HARu4kjYG4MOBS7zsDy1at0MXHKWKUu6lXrdNL16iZ9Y5jMr2yrsDYMYbk&#43;VB7UiS/d91f9LTF4Ig==" data-copy="Copy" data-copied="Copied"></script>
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.5ffdd39e73bd1438c0f4ff42f13915f067c633da22f60efa62139a4c51b972622badb1157d4aa4322634b55c8a2dc5ddfbd3917426df1c02d7b69362030197da.js" integrity="sha512-X/3TnnO9FDjA9P9C8TkV8GfGM9oi9g76YhOaTFG5cmIrrbEVfUqkMiY0tVyKLcXd&#43;9ORdCbfHALXtpNiAwGX2g==" data-copy="Copy" data-copied="Copied"></script>
   
   
   
@@ -106,7 +106,7 @@
     "keywords": ["python","angr","reverse engineering","exploit development"],
     
     "mainEntityOfPage": "true",
-    "wordCount": "900"
+    "wordCount": "942"
   }]
   </script>
 
@@ -127,7 +127,7 @@
   
   
   
-  <script defer type="text/javascript" src="/js/mermaid.bundle.11e2fa05ac9871d23f073a989113693b321afac841da209899c8eb00ad5edb20c27da40c8b179e10b6fe7e57592ce726fcf482b3b0ff1cb4851cba37ec3d4b43.js" integrity="sha512-EeL6BayYcdI/BzqYkRNpOzIa&#43;shB2iCYmcjrAK1e2yDCfaQMixeeELb&#43;fldZLOcm/PSCs7D/HLSFHLo37D1LQw=="></script>
+  <script defer type="text/javascript" src="/js/mermaid.bundle.14c5e13b22e4433e4997bbd3d61419be6c2af8709d2a0db0f72d866f20bd2157d56e5852ce85d1a7b00a8566a4deab011ac0c8e7bb63e458b0d5b2d6472c861d.js" integrity="sha512-FMXhOyLkQz5Jl7vT1hQZvmwq&#43;HCdKg2w9y2GbyC9IVfVblhSzoXRp7AKhWak3qsBGsDI57tj5Fiw1bLWRyyGHQ=="></script>
 
 
 
@@ -509,7 +509,7 @@
   
   
     <figure>
-      <img class="my-0 rounded-md" src="/posts/2021-09-12_cybertalents-national-ctf/images/angry_face.png" alt="image" />
+      <img class="my-0 rounded-md" src="/posts/symbolic_execution_angr_part1/images/1.png" alt="image" />
       
     </figure>
   
@@ -528,26 +528,12 @@
 <p>An <strong>execution path</strong> is how you traverse through the program to reach a state.</p>
 <h3 id="example-1" class="relative group">Example 1 <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#example-1" aria-label="Anchor">#</a></span></h3>
 <p>Given a simple program, let us map out the execution paths of the program</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="nb">input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Input the password: &#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="nb">input</span> <span class="o">==</span> <span class="s1">&#39;gooodpass&#39;</span><span class="p">:</span>
-    <span class="nb">print</span> <span class="s1">&#39;Success.&#39;</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span> <span class="s1">&#39;Try again.&#39;</span>
-</code></pre></div><div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900">
-  <span class="ltr:pr-3 rtl:pl-3 text-primary-400">
-    
-
-  <span class="relative inline-block align-text-bottom icon">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M506.3 417l-213.3-364c-16.33-28-57.54-28-73.98 0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6C502.1 480 522.6 445 506.3 417zM232 168c0-13.25 10.75-24 24-24S280 154.8 280 168v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zM256 416c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"/></svg>
-
-  </span>
-
-
-  </span>
-  <span class="dark:text-neutral-300">λ is the symbol. It represents our input variable</span>
-</div>
-
-<p><strong>path 1</strong>: User enters &lsquo;goodpass&rsquo; as input</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Input the password: &#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">input</span> <span class="o">==</span> <span class="s1">&#39;goodpass&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span> <span class="s1">&#39;Success.&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span> <span class="s1">&#39;Try again.&#39;</span>
+</span></span></code></pre></div><p><strong>path 1</strong>: User enters &lsquo;goodpass&rsquo; as input</p>
 <div class="mermaid" align="center">
   
 graph TB;
@@ -565,7 +551,21 @@ B-->C[print 'Try Again']
 
 </div>
 
-<p>To find the value of λ, find out how to reach the state that prints out &lsquo;Success&rsquo;. To reach that state, find the branch that triggers it <strong>(if input == &lsquo;goodpass&rsquo;)</strong>. To reach the branch, what input triggers the branch? <strong>goodpass</strong></p>
+<div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900">
+  <span class="ltr:pr-3 rtl:pl-3 text-primary-400">
+    
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M506.3 417l-213.3-364c-16.33-28-57.54-28-73.98 0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6C502.1 480 522.6 445 506.3 417zM232 168c0-13.25 10.75-24 24-24S280 154.8 280 168v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zM256 416c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"/></svg>
+
+  </span>
+
+
+  </span>
+  <span class="dark:text-neutral-300">λ is the symbol that represents our input variable</span>
+</div>
+
+<p>To find the value of λ, we can walk back in a given execution path to find out what input triggers a given branch. In the first branch, backtracking leads you to <strong>(if input == &lsquo;goodpass&rsquo;)</strong>, where goodpass triggers the desirable input.</p>
 <p>Let us look into how we can do this using the angr framework</p>
 <h2 id="the-angr-framework" class="relative group">The Angr Framework <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#the-angr-framework" aria-label="Anchor">#</a></span></h2>
 <p>Angr is a binary analysis framework based on a suite of python 3 libraries that allows you to carry out various tasks.</p>
@@ -573,24 +573,24 @@ B-->C[print 'Try Again']
 <p>Installation instructions can be found <a href="https://github.com/angr/angr">here</a></p>
 <p>Clone this <a href="https://github.com/jakespringer/angr_ctf.git">repository</a> which contains the files we will need throughout this n-part series.</p>
 <p>In the <strong>dist</strong> directory, you will find all your project files.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">➜  dist git:<span class="o">(</span>master<span class="o">)</span> <span class="nb">pwd</span>
-/opt/angr_ctf/dist
-➜  dist git:<span class="o">(</span>master<span class="o">)</span> ls
-00_angr_find                     07_angr_symbolic_file  14_angr_shared_library        scaffold02.py  scaffold09.py  scaffold16.py
-01_angr_avoid                    08_angr_constraints    15_angr_arbitrary_read        scaffold03.py  scaffold10.py  scaffold17.py
-02_angr_find_condition           09_angr_hooks          16_angr_arbitrary_write       scaffold04.py  scaffold11.py
-03_angr_symbolic_registers       10_angr_simprocedures  17_angr_arbitrary_jump        scaffold05.py  scaffold12.py
-04_angr_symbolic_stack           11_angr_sim_scanf      lib14_angr_shared_library.so  scaffold06.py  scaffold13.py
-05_angr_symbolic_memory          12_angr_veritesting    scaffold00.py                 scaffold07.py  scaffold14.py
-06_angr_symbolic_dynamic_memory  13_angr_static_binary  scaffold01.py                 scaffold08.py  scaffold15.py
-➜  dist git:<span class="o">(</span>master<span class="o">)</span>
-</code></pre></div><h2 id="00_angr_find" class="relative group">00_angr_find <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#00_angr_find" aria-label="Anchor">#</a></span></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">➜  dist git:<span class="o">(</span>master<span class="o">)</span> <span class="nb">pwd</span>
+</span></span><span class="line"><span class="cl">/opt/angr_ctf/dist
+</span></span><span class="line"><span class="cl">➜  dist git:<span class="o">(</span>master<span class="o">)</span> ls
+</span></span><span class="line"><span class="cl">00_angr_find                     07_angr_symbolic_file  14_angr_shared_library        scaffold02.py  scaffold09.py  scaffold16.py
+</span></span><span class="line"><span class="cl">01_angr_avoid                    08_angr_constraints    15_angr_arbitrary_read        scaffold03.py  scaffold10.py  scaffold17.py
+</span></span><span class="line"><span class="cl">02_angr_find_condition           09_angr_hooks          16_angr_arbitrary_write       scaffold04.py  scaffold11.py
+</span></span><span class="line"><span class="cl">03_angr_symbolic_registers       10_angr_simprocedures  17_angr_arbitrary_jump        scaffold05.py  scaffold12.py
+</span></span><span class="line"><span class="cl">04_angr_symbolic_stack           11_angr_sim_scanf      lib14_angr_shared_library.so  scaffold06.py  scaffold13.py
+</span></span><span class="line"><span class="cl">05_angr_symbolic_memory          12_angr_veritesting    scaffold00.py                 scaffold07.py  scaffold14.py
+</span></span><span class="line"><span class="cl">06_angr_symbolic_dynamic_memory  13_angr_static_binary  scaffold01.py                 scaffold08.py  scaffold15.py
+</span></span><span class="line"><span class="cl">➜  dist git:<span class="o">(</span>master<span class="o">)</span>
+</span></span></code></pre></div><h2 id="00_angr_find" class="relative group">00_angr_find <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#00_angr_find" aria-label="Anchor">#</a></span></h2>
 <p>The first example we look into sets us up for basic angr usage.
 Run the binary in your terminal to see how it works</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">➜  dist git:<span class="o">(</span>master<span class="o">)</span> ./00_angr_find
-Enter the password: pass123
-Try again.
-</code></pre></div><h3 id="program-analysis" class="relative group">Program analysis <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#program-analysis" aria-label="Anchor">#</a></span></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">➜  dist git:<span class="o">(</span>master<span class="o">)</span> ./00_angr_find
+</span></span><span class="line"><span class="cl">Enter the password: pass123
+</span></span><span class="line"><span class="cl">Try again.
+</span></span></code></pre></div><h3 id="program-analysis" class="relative group">Program analysis <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#program-analysis" aria-label="Anchor">#</a></span></h3>
 <p>It is a simple program that asks for a password. We can disassemble the program to find out more information.
 Using a disassembler of your choice, disassemble the main function and view your control graph.You can use ghidra, IDA pro, Cutter, radare etc. I disassembled with Cutter</p>
 <p>The control graph is not too complicated but we don&rsquo;t have to spend time analyzing it to find the password</p>
@@ -602,7 +602,7 @@ Using a disassembler of your choice, disassemble the main function and view your
   
   
     <figure>
-      <img class="my-0 rounded-md" src="/posts/2021-09-12_cybertalents-national-ctf/images/control.png" alt="image" />
+      <img class="my-0 rounded-md" src="/posts/symbolic_execution_angr_part1/images/2.png" alt="image" />
       
     </figure>
   
@@ -617,7 +617,7 @@ Using a disassembler of your choice, disassemble the main function and view your
   
   
     <figure>
-      <img class="my-0 rounded-md" src="/posts/2021-09-12_cybertalents-national-ctf/images/branches.png" alt="image" />
+      <img class="my-0 rounded-md" src="/posts/symbolic_execution_angr_part1/images/3.png" alt="image" />
       
     </figure>
   
@@ -630,26 +630,26 @@ Using a disassembler of your choice, disassemble the main function and view your
 <ol>
 <li>Import necessary libraries.</li>
 </ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">angr</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-</code></pre></div><p><strong>sys</strong> library will be used to parse our arguments</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">angr</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span></code></pre></div><p><strong>sys</strong> library will be used to parse our arguments</p>
 <ol start="2">
 <li>Instantiate an angr project.</li>
 </ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="n">path_to_binary</span> <span class="o">=</span>  <span class="s1">&#39;/opt/angr_ctf/dist/00_angr_find&#39;</span>
-    <span class="n">project</span> <span class="o">=</span> <span class="n">angr</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="n">path_to_binary</span><span class="p">)</span>  <span class="c1">#1</span>
-    <span class="n">initial_state</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">entry_state</span><span class="p">()</span> <span class="c1">#2</span>
-    <span class="n">simulation</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">simgr</span><span class="p">(</span><span class="n">initial_state</span><span class="p">)</span> <span class="c1">#3</span>
-</code></pre></div><p>We provide the path to the project and use the Project method to create an instance of an angr project to work with. <code>#1 </code></p>
-<p>We then create an initial_state variable that holds the entry point to the program. This is necessary for the symbolic execution engine to know where to start exploring the program /.<code>#2</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">path_to_binary</span> <span class="o">=</span>  <span class="s1">&#39;/opt/angr_ctf/dist/00_angr_find&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">project</span> <span class="o">=</span> <span class="n">angr</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="n">path_to_binary</span><span class="p">)</span>  <span class="c1">#1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">initial_state</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">entry_state</span><span class="p">()</span> <span class="c1">#2</span>
+</span></span><span class="line"><span class="cl">    <span class="n">simulation</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">simgr</span><span class="p">(</span><span class="n">initial_state</span><span class="p">)</span> <span class="c1">#3</span>
+</span></span></code></pre></div><p>We provide the path to the project and use the Project method to create an instance of an angr project to work with. <code>#1 </code></p>
+<p>We then create an initial_state variable that holds the entry point to the program. This is necessary for the symbolic execution engine to know where to start exploring the program.<code>#2</code></p>
 <p>We follow through with a simulation manager object that starts executing at the entry point of our program. <code>#3</code></p>
 <ol start="3">
 <li>Addresses definition</li>
 </ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python">    <span class="n">print_good_address</span> <span class="o">=</span> <span class="mh">0x8048675</span> <span class="c1">#4</span>
-    <span class="n">simulation</span><span class="o">.</span><span class="n">explore</span><span class="p">(</span><span class="n">find</span><span class="o">=</span><span class="n">print_good_address</span><span class="p">)</span> <span class="c1">#5</span>
-</code></pre></div><p>The good address that we want is the one of the branches that leads to printing &lsquo;Good job&rsquo; indicated below as 0x8048675</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="n">print_good_address</span> <span class="o">=</span> <span class="mh">0x8048675</span> <span class="c1">#4</span>
+</span></span><span class="line"><span class="cl">    <span class="n">simulation</span><span class="o">.</span><span class="n">explore</span><span class="p">(</span><span class="n">find</span><span class="o">=</span><span class="n">print_good_address</span><span class="p">)</span> <span class="c1">#5</span>
+</span></span></code></pre></div><p>The good address that we want is the one of the branches that leads to printing &lsquo;Good job&rsquo; indicated below as 0x8048675</p>
 <p>
 
 
@@ -658,7 +658,7 @@ Using a disassembler of your choice, disassemble the main function and view your
   
   
     <figure>
-      <img class="my-0 rounded-md" src="/posts/2021-09-12_cybertalents-national-ctf/images/good_address.png" alt="image" />
+      <img class="my-0 rounded-md" src="/posts/symbolic_execution_angr_part1/images/4.png" alt="image" />
       
     </figure>
   
@@ -667,43 +667,43 @@ Using a disassembler of your choice, disassemble the main function and view your
 <ol start="4">
 <li>House-keeping</li>
 </ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python">    <span class="k">if</span> <span class="n">simulation</span><span class="o">.</span><span class="n">found</span><span class="p">:</span> <span class="c1">#6</span>
-        <span class="n">solution_state</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">found</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">#7</span>
-        <span class="n">solution</span> <span class="o">=</span> <span class="n">solution_state</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span> <span class="c1">#8</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[+] Success! Solution is: </span><span class="si">{}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)))</span> <span class="c1">#9</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&#34;Could not find the solution&#34;</span><span class="p">)</span> <span class="c1">#10</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>    
-</code></pre></div><p>Once the execution paths to reach our desirable address have been obtained, we begin by checking if our simulation variable contains something. <code>#6</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">simulation</span><span class="o">.</span><span class="n">found</span><span class="p">:</span> <span class="c1">#6</span>
+</span></span><span class="line"><span class="cl">        <span class="n">solution_state</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">found</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">#7</span>
+</span></span><span class="line"><span class="cl">        <span class="n">solution</span> <span class="o">=</span> <span class="n">solution_state</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span> <span class="c1">#8</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[+] Solution found! : </span><span class="si">{}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)))</span> <span class="c1">#9</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&#34;Could not find the solution&#34;</span><span class="p">)</span> <span class="c1">#10</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>    
+</span></span></code></pre></div><p>Once the execution paths to reach our desirable address have been obtained, we begin by checking if our simulation variable contains something. <code>#6</code>.</p>
 <p>If we found something, we obtain the input that triggered that particular state. <code>#7</code></p>
 <p>We then dump it  <code>#8</code> and print it out <code>#9</code></p>
 <p>If not, we raise an exception <code>#10</code></p>
 <p>Our final script looks as follows:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">angr</span>
-<span class="kn">import</span> <span class="nn">sys</span> 
-
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="n">path_to_binary</span> <span class="o">=</span>  <span class="s1">&#39;/opt/angr_ctf/dist/00_angr_find&#39;</span>
-    <span class="n">project</span> <span class="o">=</span> <span class="n">angr</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="n">path_to_binary</span><span class="p">)</span>
-    <span class="n">initial_state</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">entry_state</span><span class="p">()</span> 
-    <span class="n">simulation</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">simgr</span><span class="p">(</span><span class="n">initial_state</span><span class="p">)</span> 
-    <span class="n">print_good_address</span> <span class="o">=</span> <span class="mh">0x8048675</span>
-    <span class="n">simulation</span><span class="o">.</span><span class="n">explore</span><span class="p">(</span><span class="n">find</span><span class="o">=</span><span class="n">print_good_address</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">simulation</span><span class="o">.</span><span class="n">found</span><span class="p">:</span>
-        <span class="n">solution_state</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">found</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">solution</span> <span class="o">=</span> <span class="n">solution_state</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[+] Success! Solution is: </span><span class="si">{}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)))</span>
-
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&#34;Could not find the solution&#34;</span><span class="p">)</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
-</code></pre></div><p>Run it to see angr perform its dark magic</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">angr</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">path_to_binary</span> <span class="o">=</span>  <span class="s1">&#39;/opt/angr_ctf/dist/00_angr_find&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">project</span> <span class="o">=</span> <span class="n">angr</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="n">path_to_binary</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">initial_state</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">entry_state</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">simulation</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">simgr</span><span class="p">(</span><span class="n">initial_state</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">print_good_address</span> <span class="o">=</span> <span class="mh">0x8048675</span>
+</span></span><span class="line"><span class="cl">    <span class="n">simulation</span><span class="o">.</span><span class="n">explore</span><span class="p">(</span><span class="n">find</span><span class="o">=</span><span class="n">print_good_address</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">simulation</span><span class="o">.</span><span class="n">found</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">solution_state</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">found</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">solution</span> <span class="o">=</span> <span class="n">solution_state</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[+] Success! Solution is: </span><span class="si">{}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&#34;Could not find the solution&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
+</span></span></code></pre></div><p>Run it to see angr perform its dark magic</p>
 <p>
 
 
@@ -712,13 +712,15 @@ Using a disassembler of your choice, disassemble the main function and view your
   
   
     <figure>
-      <img class="my-0 rounded-md" src="/posts/2021-09-12_cybertalents-national-ctf/images/solution.png" alt="image" />
+      <img class="my-0 rounded-md" src="/posts/symbolic_execution_angr_part1/images/6.png" alt="image" />
       
     </figure>
   
 
 </p>
-<p>We easily find the string that triggers our desirable state. In the next tutorial, we will look at more advanced practical concepts. Stay tuned!</p>
+<p>We easily find the string that triggers our desirable state.</p>
+<p>For the next binary 01_angr_avoid, the solution is exactly the same as this only that you shall have to specify the address of the branch you want to avoid.</p>
+<p>In the next tutorial, we will look at more advanced concepts such as how to avoid path explosion and also injecting symbolic values into registers. Stay tuned!</p>
 
       </div>
     </section>
@@ -761,6 +763,28 @@ Using a disassembler of your choice, disassemble the main function and view your
           
         </span>
         <span>
+          
+            <a class="flex text-right group" href="/posts/symbolic_execution_angr_part2/">
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Symbolic Execution with Angr - part 2</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2022-08-18 00:00:00 &#43;0000 UTC">18 August 2022</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ml-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span
+                class="mr-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+            </a>
           
         </span>
       </div>

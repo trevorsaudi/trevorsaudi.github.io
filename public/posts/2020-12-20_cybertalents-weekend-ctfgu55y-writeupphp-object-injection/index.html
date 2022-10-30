@@ -36,12 +36,12 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="/css/main.bundle.min.6392876d35eabbaa711ea81779afb0cae5109113f7350f65e95aea1bd21e6e638b4ce9495a6786c3cee07affcc31970317defd77804c71f0ddae3a395649e93a.css"
-    integrity="sha512-Y5KHbTXqu6pxHqgXea&#43;wyuUQkRP3NQ9l6VrqG9IebmOLTOlJWmeGw87gev/MMZcDF979d4BMcfDdrjo5VknpOg=="
+    href="/css/main.bundle.min.71883ab0661482cf6c7d29b8bdd1af3be3d2f1ea750e56a67846b7f64f41d19b8dc6d7047f48422ec8cbe4a0a412d551c8210307e2b93b1254cdbf7d8af216e0.css"
+    integrity="sha512-cYg6sGYUgs9sfSm4vdGvO&#43;PS8ep1DlameEa39k9B0ZuNxtcEf0hCLsjL5KCkEtVRyCEDB&#43;K5OxJUzb99ivIW4A=="
   />
   
   
-  <script type="text/javascript" src="/js/appearance.min.4df8309499991be53c71b2b39ba0f5d5e77ea7d411d0710ce48c24218e7cc24ded28f19e85838fdc56db2306195cb001f049f577be0cf0ffb2dd6e2037ede1b9.js" integrity="sha512-TfgwlJmZG&#43;U8cbKzm6D11ed&#43;p9QR0HEM5IwkIY58wk3tKPGehYOP3FbbIwYZXLAB8En1d74M8P&#43;y3W4gN&#43;3huQ=="></script>
+  <script type="text/javascript" src="/js/appearance.min.badab316c9287a5a42a843e4eb45da65bb3d194a5a0f5fa4a3e516160e67df0b8c65f4f19a8e146436e29d583699e6cb41d6bbe99e05e1dbaa877763bad9f8e2.js" integrity="sha512-utqzFskoelpCqEPk60XaZbs9GUpaD1&#43;ko&#43;UWFg5n3wuMZfTxmo4UZDbinVg2mebLQda76Z4F4duqh3djutn44g=="></script>
   
     
     
@@ -54,7 +54,7 @@
   
   
     
-    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.61ddd918b834d47011bb8923606e0c3814bbcec0f2d5ab743171ca58a52eea55eb74d2f5ea267d6398ccaf6cabb0360c61b93e541ed4892fddf757fd2d317822.js" integrity="sha512-Yd3ZGLg01HARu4kjYG4MOBS7zsDy1at0MXHKWKUu6lXrdNL16iZ9Y5jMr2yrsDYMYbk&#43;VB7UiS/d91f9LTF4Ig==" data-copy="Copy" data-copied="Copied"></script>
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.5ffdd39e73bd1438c0f4ff42f13915f067c633da22f60efa62139a4c51b972622badb1157d4aa4322634b55c8a2dc5ddfbd3917426df1c02d7b69362030197da.js" integrity="sha512-X/3TnnO9FDjA9P9C8TkV8GfGM9oi9g76YhOaTFG5cmIrrbEVfUqkMiY0tVyKLcXd&#43;9ORdCbfHALXtpNiAwGX2g==" data-copy="Copy" data-copied="Copied"></script>
   
   
   
@@ -489,9 +489,9 @@
 <p><code>a%3A2%3A%7Bi%3A0%3Bs%3A4%3A%22hey+%22%3Bi%3A1%3Bs%3A5%3A%22there%22%3B%7D” which is URL encoding for “a:2:{i:0;s:4:”hey+”;i:1;s:5:”there”;}</code></p>
 <p>Sweet! We have some PHP objects being used to store the data from the input form. Summarizing an article from <a href="https://portswigger.net/web-security/deserialization/exploiting">https://portswigger.net/web-security/deserialization/exploiting</a> , this is how PHP objects work.</p>
 <p>PHP uses a mostly human-readable string format, with letters representing the data type and numbers representing the length of each entry. For example, consider a <code>User</code> object with the attributes:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="nv">$user</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s2">&#34;carlos&#34;</span><span class="p">;</span>
-<span class="nv">$user</span><span class="o">-&gt;</span><span class="na">isLoggedIn</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
-</code></pre></div><p>When serialized, this object may look something like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$user</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s2">&#34;carlos&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$user</span><span class="o">-&gt;</span><span class="na">isLoggedIn</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span></span></code></pre></div><p>When serialized, this object may look something like this:</p>
 <p><code>O:4:&amp;#34;User&amp;#34;:2:{s:4:&amp;#34;name&amp;#34;:s:6:&amp;#34;carlos&amp;#34;; s:10:&amp;#34;isLoggedIn&amp;#34;🅱️1;}</code></p>
 <p>This can be interpreted as follows:</p>
 <ul>

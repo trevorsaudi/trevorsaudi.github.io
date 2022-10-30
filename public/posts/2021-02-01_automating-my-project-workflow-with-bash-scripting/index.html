@@ -36,12 +36,12 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="/css/main.bundle.min.6392876d35eabbaa711ea81779afb0cae5109113f7350f65e95aea1bd21e6e638b4ce9495a6786c3cee07affcc31970317defd77804c71f0ddae3a395649e93a.css"
-    integrity="sha512-Y5KHbTXqu6pxHqgXea&#43;wyuUQkRP3NQ9l6VrqG9IebmOLTOlJWmeGw87gev/MMZcDF979d4BMcfDdrjo5VknpOg=="
+    href="/css/main.bundle.min.71883ab0661482cf6c7d29b8bdd1af3be3d2f1ea750e56a67846b7f64f41d19b8dc6d7047f48422ec8cbe4a0a412d551c8210307e2b93b1254cdbf7d8af216e0.css"
+    integrity="sha512-cYg6sGYUgs9sfSm4vdGvO&#43;PS8ep1DlameEa39k9B0ZuNxtcEf0hCLsjL5KCkEtVRyCEDB&#43;K5OxJUzb99ivIW4A=="
   />
   
   
-  <script type="text/javascript" src="/js/appearance.min.4df8309499991be53c71b2b39ba0f5d5e77ea7d411d0710ce48c24218e7cc24ded28f19e85838fdc56db2306195cb001f049f577be0cf0ffb2dd6e2037ede1b9.js" integrity="sha512-TfgwlJmZG&#43;U8cbKzm6D11ed&#43;p9QR0HEM5IwkIY58wk3tKPGehYOP3FbbIwYZXLAB8En1d74M8P&#43;y3W4gN&#43;3huQ=="></script>
+  <script type="text/javascript" src="/js/appearance.min.badab316c9287a5a42a843e4eb45da65bb3d194a5a0f5fa4a3e516160e67df0b8c65f4f19a8e146436e29d583699e6cb41d6bbe99e05e1dbaa877763bad9f8e2.js" integrity="sha512-utqzFskoelpCqEPk60XaZbs9GUpaD1&#43;ko&#43;UWFg5n3wuMZfTxmo4UZDbinVg2mebLQda76Z4F4duqh3djutn44g=="></script>
   
     
     
@@ -54,7 +54,7 @@
   
   
     
-    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.61ddd918b834d47011bb8923606e0c3814bbcec0f2d5ab743171ca58a52eea55eb74d2f5ea267d6398ccaf6cabb0360c61b93e541ed4892fddf757fd2d317822.js" integrity="sha512-Yd3ZGLg01HARu4kjYG4MOBS7zsDy1at0MXHKWKUu6lXrdNL16iZ9Y5jMr2yrsDYMYbk&#43;VB7UiS/d91f9LTF4Ig==" data-copy="Copy" data-copied="Copied"></script>
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.5ffdd39e73bd1438c0f4ff42f13915f067c633da22f60efa62139a4c51b972622badb1157d4aa4322634b55c8a2dc5ddfbd3917426df1c02d7b69362030197da.js" integrity="sha512-X/3TnnO9FDjA9P9C8TkV8GfGM9oi9g76YhOaTFG5cmIrrbEVfUqkMiY0tVyKLcXd&#43;9ORdCbfHALXtpNiAwGX2g==" data-copy="Copy" data-copied="Copied"></script>
   
   
   
@@ -480,17 +480,17 @@
 <p>The github API docs is pretty well written and came in handy.</p>
 <p><a href="https://docs.github.com/en/rest/overview/resources-in-the-rest-api">Resources in the REST API</a></p>
 <p>Sending an authentication curl request to the API returns no errors</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">curl -H <span class="s2">&#34;Authorization: token </span><span class="nv">$access_token</span><span class="s2">&#34;</span> https://api.github.co
-m<span class="sb">`</span>
-<span class="sb">``</span>
-!<span class="o">[</span>image<span class="o">](</span>/posts/2021-02-01_automating-my-project-workflow-with-bash-scripting/images/8.png#layoutTextWidth<span class="o">)</span>
-
-
-We can try querying <span class="k">for</span> repos
-<span class="sb">```</span>bash
-curl -H <span class="s2">&#34;Authorization: token </span><span class="nv">$access_token</span><span class="s2">&#34;</span> <span class="s2">&#34;https://api.github.c
-</span><span class="s2">om/search/repositories?q=user:trevorsaudi&#34;</span> <span class="p">|</span> less
-</code></pre></div><p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -H <span class="s2">&#34;Authorization: token </span><span class="nv">$access_token</span><span class="s2">&#34;</span> https://api.github.co
+</span></span><span class="line"><span class="cl">m<span class="sb">`</span>
+</span></span><span class="line"><span class="cl"><span class="sb">``</span>
+</span></span><span class="line"><span class="cl">!<span class="o">[</span>image<span class="o">](</span>/posts/2021-02-01_automating-my-project-workflow-with-bash-scripting/images/8.png#layoutTextWidth<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">We can try querying <span class="k">for</span> repos
+</span></span><span class="line"><span class="cl"><span class="sb">```</span>bash
+</span></span><span class="line"><span class="cl">curl -H <span class="s2">&#34;Authorization: token </span><span class="nv">$access_token</span><span class="s2">&#34;</span> <span class="s2">&#34;https://api.github.c
+</span></span></span><span class="line"><span class="cl"><span class="s2">om/search/repositories?q=user:trevorsaudi&#34;</span> <span class="p">|</span> less
+</span></span></code></pre></div><p>
 
 
 
@@ -520,10 +520,10 @@ curl -H <span class="s2">&#34;Authorization: token </span><span class="nv">$acce
 
 </p>
 <p>Let’s try creating a repo using the access token</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">curl -i -H <span class="s2">&#34;Authorization: token </span><span class="nv">$access_token</span><span class="s2">&#34;</span> -d <span class="s1">&#39;{&#34;name&#34;: &#34;demo
-</span><span class="s1">&#34;,&#34;auto_init&#34;: false,&#34;private&#34;: false}&#39;</span>  https://api.github.com/us
-er/repos
-</code></pre></div><p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -i -H <span class="s2">&#34;Authorization: token </span><span class="nv">$access_token</span><span class="s2">&#34;</span> -d <span class="s1">&#39;{&#34;name&#34;: &#34;demo
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#34;,&#34;auto_init&#34;: false,&#34;private&#34;: false}&#39;</span>  https://api.github.com/us
+</span></span><span class="line"><span class="cl">er/repos
+</span></span></code></pre></div><p>
 
 
 
@@ -556,8 +556,8 @@ er/repos
 <p>A bash script is a series of commands put together in a text file. This comes in handy in automation in linux.</p>
 <p>Now that we can successfully consume the REST API , let’s add it all to a bash script and create a system link to have the bash script work as our very own terminal command.</p>
 <p>Step 1: Creating a directory for our project and navigating into it</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mmkdir &lt;project_name&gt; <span class="o">&amp;&amp;</span> <span class="nb">cd</span> &lt;project_name&gt;
-</code></pre></div><p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mmkdir &lt;project_name&gt; <span class="o">&amp;&amp;</span> <span class="nb">cd</span> &lt;project_name&gt;
+</span></span></code></pre></div><p>
 
 
 
@@ -586,8 +586,8 @@ er/repos
   
 
 </p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="p">&amp;</span>&gt;/dev/null is used to redirect all output so we don’t see any of it in the terminal
-</code></pre></div><p>Now that we have the initial project setup, let’s put the API into use</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="p">&amp;</span>&gt;/dev/null is used to redirect all output so we don’t see any of it in the terminal
+</span></span></code></pre></div><p>Now that we have the initial project setup, let’s put the API into use</p>
 <p>
 
 
@@ -620,8 +620,8 @@ er/repos
 
 </p>
 <p>Now lets add a system link to the bash script to we can use it as a single command anywhere in the system.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo ln -s &lt;path to project&gt; /usr/local/bin
-</code></pre></div><p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ln -s &lt;path to project&gt; /usr/local/bin
+</span></span></code></pre></div><p>
 
 
 
@@ -636,37 +636,36 @@ er/repos
 
 </p>
 <p>Our final result</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">
-<span class="c1">#!/usr/bin/bash</span>
-
-automate<span class="o">(){</span>
-	<span class="nb">echo</span> <span class="s2">&#34;Welcome to Automate&#34;</span> <span class="p">|</span> cowsay
-	<span class="nb">echo</span> <span class="s2">&#34;Creating the directory for your project&#34;</span>
-	<span class="nb">echo</span> <span class="s2">&#34;+------------------------------------------------+&#34;</span>
-	mkdir -p <span class="nv">$1</span> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="nv">$1</span>
-	<span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> &gt; README.md
-	git init <span class="p">&amp;</span>&gt;/dev/null
-	git add .<span class="p">&amp;</span>&gt;/dev/null
-	git commit -m <span class="s2">&#34;first commit&#34;</span> <span class="p">&amp;</span>&gt;/dev/null
-	git branch -M main <span class="p">&amp;</span>&gt;/dev/null
-
-	<span class="nb">echo</span> <span class="s2">&#34;Creating the Repository&#34;</span>
-	<span class="nb">echo</span> <span class="s2">&#34;+------------------------------------------------+&#34;</span>
-
-	curl -i -H <span class="s2">&#34;Authorization: token </span><span class="nv">$access_token</span><span class="s2">&#34;</span> -d <span class="s1">&#39;{&#34;name&#34;: &#34;&#39;</span><span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span><span class="s1">&#39;&#34;,&#34;auto_init&#34;: false,&#34;private&#34;: false}&#39;</span>  https://api.github.com/user/repos <span class="p">&amp;</span>&gt;/dev/null
-	git remote add origin https://github.com/trevorsaudi/<span class="si">${</span><span class="nv">1</span><span class="si">}</span>.git <span class="p">&amp;</span>&gt;/dev/null
-	git push -u origin main <span class="p">&amp;</span>&gt;/dev/null
-	<span class="nb">echo</span> <span class="s2">&#34;Opening your favourite text editor&#34;</span>
-	<span class="nb">echo</span> <span class="s2">&#34;+------------------------------------------------+&#34;</span>
-	code .
-
-
-	<span class="nb">exec</span> bash
-
-<span class="o">}</span>
-automate <span class="nv">$1</span>
-
-</code></pre></div><p>Source code to the script.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#!/usr/bin/bash</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">automate<span class="o">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;Welcome to Automate&#34;</span> <span class="p">|</span> cowsay
+</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;Creating the directory for your project&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;+------------------------------------------------+&#34;</span>
+</span></span><span class="line"><span class="cl">	mkdir -p <span class="nv">$1</span> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="nv">$1</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> &gt; README.md
+</span></span><span class="line"><span class="cl">	git init <span class="p">&amp;</span>&gt;/dev/null
+</span></span><span class="line"><span class="cl">	git add .<span class="p">&amp;</span>&gt;/dev/null
+</span></span><span class="line"><span class="cl">	git commit -m <span class="s2">&#34;first commit&#34;</span> <span class="p">&amp;</span>&gt;/dev/null
+</span></span><span class="line"><span class="cl">	git branch -M main <span class="p">&amp;</span>&gt;/dev/null
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;Creating the Repository&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;+------------------------------------------------+&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	curl -i -H <span class="s2">&#34;Authorization: token </span><span class="nv">$access_token</span><span class="s2">&#34;</span> -d <span class="s1">&#39;{&#34;name&#34;: &#34;&#39;</span><span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span><span class="s1">&#39;&#34;,&#34;auto_init&#34;: false,&#34;private&#34;: false}&#39;</span>  https://api.github.com/user/repos <span class="p">&amp;</span>&gt;/dev/null
+</span></span><span class="line"><span class="cl">	git remote add origin https://github.com/trevorsaudi/<span class="si">${</span><span class="nv">1</span><span class="si">}</span>.git <span class="p">&amp;</span>&gt;/dev/null
+</span></span><span class="line"><span class="cl">	git push -u origin main <span class="p">&amp;</span>&gt;/dev/null
+</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;Opening your favourite text editor&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;+------------------------------------------------+&#34;</span>
+</span></span><span class="line"><span class="cl">	code .
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nb">exec</span> bash
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">automate <span class="nv">$1</span>
+</span></span></code></pre></div><p>Source code to the script.</p>
 <p><a href="https://github.com/trevorsaudi/Project-Automation">https://github.com/trevorsaudi/Project-Automation</a></p>
 <p>Share, like and follow for more articles like this 😃</p>
 

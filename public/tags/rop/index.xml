@@ -14,7 +14,7 @@
       <pubDate>Wed, 12 May 2021 10:30:13 +0000</pubDate>
       
       <guid>https://trevorsaudi.com/posts/2021-05-12_rop-ret2libc-attack-protostar6/</guid>
-      <description>Bypassing stack pointer restrictions to gain arbitrary code execution #    Protostar is a series of beginner binary exploitation challenges which showcases concepts like basic stack-based buffer overflows, bypassing stack protections and even performing format string attacks.</description>
+      <description>Bypassing stack pointer restrictions to gain arbitrary code execution # Protostar is a series of beginner binary exploitation challenges which showcases concepts like basic stack-based buffer overflows, bypassing stack protections and even performing format string attacks.</description>
     </item>
     
   </channel>
