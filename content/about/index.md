@@ -66,8 +66,7 @@ _June 2021 to Present_
 
 `Python`
 `C`
-`Ruby`
-`Javasript`
+
 
 **Technical**
 
@@ -91,7 +90,13 @@ Grade: First Class Honors
 Apr 2022<br>
 [Credential ID 4b56z3phfb](https://cs.lpi.org/caf/Xamman/certification/verify/LPI000515003/4b56z3phfb)
 
-### eLearnSecurity Junior Penetration Tester
+### eLearnSecurity Certified Professional Penetration Tester (eCPPT)
+**eLearnSecurity** <br>
+Jan 2021 <br>
+
+[Credential ID 1111876](https://verified.elearnsecurity.com/certificates/541dff28-1233-4273-99ed-2b4fe2d6580c)
+
+### eLearnSecurity Junior Penetration Tester (eJPT)
 **eLearnSecurity** <br>
 Jan 2021 <br>
 [Credential ID 6416736](https://verified.elearnsecurity.com/certificates/962ae3aa-58ee-4649-9216-6c11a804a92b)
