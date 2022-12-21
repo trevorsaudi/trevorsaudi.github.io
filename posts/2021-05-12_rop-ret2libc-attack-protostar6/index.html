@@ -11,23 +11,23 @@
 </span></span><span class=line><span class=cl>  <span class=kt>char</span> <span class=n>buffer</span><span class=p>[</span><span class=mi>64</span><span class=p>];</span>
 </span></span><span class=line><span class=cl>  <span class=kt>unsigned</span> <span class=kt>int</span> <span class=n>ret</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  <span class=n>printf</span><span class=p>(</span><span class=s>&#34;input path please: &#34;</span><span class=p>);</span> <span class=n>fflush</span><span class=p>(</span><span class=n>stdout</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;input path please: &#34;</span><span class=p>);</span> <span class=nf>fflush</span><span class=p>(</span><span class=n>stdout</span><span class=p>);</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  <span class=n>gets</span><span class=p>(</span><span class=n>buffer</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>gets</span><span class=p>(</span><span class=n>buffer</span><span class=p>);</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  <span class=n>ret</span> <span class=o>=</span> <span class=n>__builtin_return_address</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span> 
+</span></span><span class=line><span class=cl>  <span class=n>ret</span> <span class=o>=</span> <span class=nf>__builtin_return_address</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span> 
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>  <span class=k>if</span><span class=p>((</span><span class=n>ret</span> <span class=o>&amp;</span> <span class=mh>0xbf000000</span><span class=p>)</span> <span class=o>==</span> <span class=mh>0xbf000000</span><span class=p>)</span> <span class=p>{</span> 
-</span></span><span class=line><span class=cl>      <span class=n>printf</span><span class=p>(</span><span class=s>&#34;bzzzt (%p)</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>ret</span><span class=p>);</span> 
-</span></span><span class=line><span class=cl>      <span class=n>_exit</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;bzzzt (%p)</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>ret</span><span class=p>);</span> 
+</span></span><span class=line><span class=cl>      <span class=nf>_exit</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
 </span></span><span class=line><span class=cl>  <span class=p>}</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  <span class=n>printf</span><span class=p>(</span><span class=s>&#34;got path %s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>buffer</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;got path %s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>buffer</span><span class=p>);</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span> <span class=o>**</span><span class=n>argv</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=n>getpath</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>  <span class=nf>getpath</span><span class=p>();</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
 </span></span></code></pre></div><p>As of previous challenges, our goal is get code execution on the target host which has the compiled binary of this source code. Some of the key things to understand here are:</p><ul><li><code>gets(buffer) :</code> The program will ask as for an input and store it an <code>buffer of size 64 bytes.</code> Gets is a vulnerable function in C that causes stack overflows</li><li><code>ret</code> : __builtin_return_address(0) - This function checks the current return address on the stack and sets it to a variable ret</li><li><code>if((ret &amp;amp; 0xbf000000) == 0xbf000000) :</code> This check performs a <code>bitwise AND</code> operation with the <code>current address on the stack</code> with the hex value <code>0xbf000000</code> and then compares it with 0xbf000000. Essentially what this means is that, it checks if the first byte in the return address is equal to 0xbf, since the remaining bytes will be converted to 0 in the AND operation.</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>Suppose our <span class=k>return</span> address points to 0xbfffff01, the check is performed as follows
 </span></span><span class=line><span class=cl>
