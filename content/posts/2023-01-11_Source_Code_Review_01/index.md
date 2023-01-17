@@ -130,7 +130,7 @@ if __name__ == "__main__":
 - If the input is large, it is split into smaller blocks and processed one at a time, such as the `CBC (Cipher Block Chaining)`, where a hash is generated for a block, then for the next block, add the previous hash to the block and hash it
 - The function also adds `predictable padding` to the input before processing it. The padding does not add any security to the overall process. `It will vary based on the length of secret+data`, introducing a requirement where the length of the secret is needed to be able to append more data
 
-**Conditions to be met in an attack :**
+### Conditions to be met in an attack :
 
 1. We should know the length of the key
 2. We can control the content of the message
