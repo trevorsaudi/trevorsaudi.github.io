@@ -92,7 +92,7 @@ Apr 2022<br>
 
 ### eLearnSecurity Certified Professional Penetration Tester (eCPPT)
 **eLearnSecurity** <br>
-Jan 2021 <br>
+Dec 2022 <br>
 
 [Credential ID 1111876](https://verified.elearnsecurity.com/certificates/541dff28-1233-4273-99ed-2b4fe2d6580c)
 
