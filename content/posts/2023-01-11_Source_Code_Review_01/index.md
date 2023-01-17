@@ -1,5 +1,5 @@
 ---
-title: "Source Code Review 01 - Hash Length Extension Attack"
+title: "Secure Code Review 01 - Hash Length Extension Attack"
 author: "Trevor saudi"
 date: 2023-01-10
 
@@ -16,7 +16,7 @@ tags:
 - Python
 ---
 
-![image](/posts/2023-01-11_Source_Code_Review_01/images/logo.png)
+![image](/posts/2023-01-11_Source_Code_Review_01/images/1.png)
 
 
 ## Introduction
