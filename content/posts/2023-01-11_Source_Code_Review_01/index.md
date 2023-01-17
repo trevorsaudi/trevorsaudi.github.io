@@ -40,7 +40,7 @@ tags:
 
 - This idea aims to <kbd>focus on the specific implementation of the details in the code </kbd>such as how data types, functions, APIs, libraries, application logic etc. This information lies at the lowest abstraction of code and the reviewer gradually works upward towards higher level of abstraction such as the architecture in use
 
-**Thread-Modelling approach**
+**Threat-Modelling approach**
 
 - This approach involves identifying known vulnerabilities and reviewing the code to find those vulns
 
