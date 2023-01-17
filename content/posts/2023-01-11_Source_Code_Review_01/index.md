@@ -13,16 +13,18 @@ images:
 
 tags:
 - Secure Code Review
+- Hash length extension 
 - Python
 ---
 
-![image](/posts/2023-01-11_Source_Code_Review_01/images/1.png)
 
+![image](/posts/2022-06-13_zipslip-vulnerability-justctf2022/images/logo.png)
 
 ## Introduction
 
-- Welcome to the secure code review series, where we take a closer look at different types of code and evaluate them based on best practices, performance, and maintainability, with an emphasis on security. In this series, we'll be reviewing code from various programming languages and frameworks, including Python, Java, and PHP. 
+- Welcome to the secure code review series, where we take a closer look at different types of code and evaluate them based on potential security vulnerabilities. In this series, we'll be reviewing code from various programming languages, including <kbd>Python, Java, and PHP</kbd>. 
 - The goal is to provide valuable insights and feedback to developers and security engineers, as well as to encourage a culture of continuous improvement within the tech community. In each review, we'll be examining sample code for potential security vulnerabilities and providing concrete suggestions for improvement. Whether you're a seasoned developer or just starting out, I hope you'll find this series informative and helpful.
+- The only prerequisite for this series is <kbd>being able to read some code :) <kbd>
 
 ### Strategies
 
@@ -30,13 +32,13 @@ tags:
 
 **Top-to-bottom approach**
 
-- This practice takes an approach that begins reviewing code at the highest level of abstraction. By looking at the bigger picture, one can start off by studying the overall architecture of the application, which entails looking into the various modules in an application and their functionalities, dependencies and design patterns.
+- This practice takes an approach that <kbd> begins reviewing code at the  highest level of abstraction </kbd>. By looking at the bigger picture, one can start off by studying the overall architecture of the application, which entails looking into the various modules in an application and their functionalities, dependencies and design patterns.
 - Gradually, you move into the specific modules’ functionalities and logic, examining implementation details, documentation, and use of libraries, APIs or dependencies.
 - This approach provides a good overview of the application code base and functionalities, and how the different functionalities interact with each other.
 
 **Bottom-to-top approach**
 
-- This idea aims to focus on the specific implementation of the details in the code such as how data types, functions, APIs, libraries, application logic etc. This information lies at the lowest abstraction of code and the reviewer gradually works upward towards higher level of abstraction such as the architecture in use
+- This idea aims to <kbd>focus on the specific implementation of the details in the code </kbd>such as how data types, functions, APIs, libraries, application logic etc. This information lies at the lowest abstraction of code and the reviewer gradually works upward towards higher level of abstraction such as the architecture in use
 
 **Thread-Modelling approach**
 
@@ -56,7 +58,7 @@ tags:
 
 - When reviewing sample code for vulnerabilities at the implementation level, you can look for the following:
 1. **Dangerous functions**: Some functions introduce security issues when used <kbd>incorrectly or regardless of how they are used</kbd>. e.g a function like `gets() in C`, should never be used as it introduces buffer overflow vulnerabilities. `include()` or `require() in PHP` can be used to achieve RCE via LFI or RFI vulnerabilities, but correct usage of the functions prevents that
-2. **Arguments and constants:** Ensure arguments or constants passed to any potentially dangerous functions are properly validated and sanitized to prevent injection attacks 
+2. **Arguments and constants:** Ensure arguments or constants passed to any potentially dangerous functions are <kbd>properly validated and sanitized</kbd> to prevent injection attacks 
 3. **Filters:** Ensure input and output is properly sanitized and filtered to prevent XSS or other types of injection attacks.
 4. **Error handling:** properly handling errors prevents leaking of information which may pose security threats
 5. **Authentication and Authorization:** sensitive data and resources should be protected to prevent privilege escalation vulnerabilities or authentication bypasses that access such information. Passwords should be hashed properly, salted or encrypted. Users should also be granted minimum permissions/privileges to perform their jobs
