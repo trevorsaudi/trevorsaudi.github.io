@@ -51,7 +51,6 @@ tags:
 - These approaches can be used alone or in combination to get a greater understanding of the code base, from the bigger picture down to the intricate details. Automation is also a good way to speed up the process and can help to narrow it down to specific and reduce noise.
 
  
-
 - Let us begin by focusing on the various building blocks to performing secure code review in python applications
 
 ### Reviewing Code
