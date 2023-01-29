@@ -18,7 +18,7 @@ tags:
 ---
 
 
-![image](/posts/2022-06-13_zipslip-vulnerability-justctf2022/images/logo.png)
+![image](/posts/2022-06-13_zipslip-vulnerability-justctf2022/images/logo2.png)
 
 ## Introduction
 
@@ -93,7 +93,7 @@ class MyServer(BaseHTTPRequestHandler):
 2. The server processes the request by parsing that value and using the `open` function to load the directory. The `../` character allows the attacker to move upward the directory tree
 3. The object is accessed and returned to the body 
 
-- The example below shows how the attack works in real time. Using the python3 IDLE terminal, we can use the open function to read the etc passwd directory as shown: 
+- The example below shows how the attack works in real-time. Using the python3 IDLE terminal, we can use the open function to read the etc passwd directory as shown: 
 
 ```python3
 >>> open('../../../etc/passwd').readlines()[0]
