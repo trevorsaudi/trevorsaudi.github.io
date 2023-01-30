@@ -139,7 +139,7 @@ class MyServer(BaseHTTPRequestHandler):
 ```
 {{< alert >}}
 
-The problem with this implementation is the filter can be bypassed e.g using `URL encoded characters like  %2e%2e`  and other methods
+The problem with this implementation is the filter can be bypassed e.g using `URL encoded characters like  %2e%2e which represents a dot(.)`  and other methods
 
 {{< /alert >}}
 
