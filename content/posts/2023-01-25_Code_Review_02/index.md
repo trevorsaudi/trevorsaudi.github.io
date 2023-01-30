@@ -10,7 +10,6 @@ image: "/posts/2023-01-11-Source_Code_Review_01/images/logo.png"
 images:
  - "/posts/2023-01-11-Source_Code_Review_01/images/logo.png"
 
-
 tags:
 - Secure Code Review
 - Hash length extension 
@@ -50,7 +49,7 @@ class MyServer(BaseHTTPRequestHandler):
 ```
 
 ## Overview
-
+- Let us look at what the application does, discuss a technique for tracing user input and then identify our vulnerability.
 
 ### Functionality
 
@@ -148,7 +147,7 @@ The problem with this implementation is the filter can be bypassed e.g using `UR
 
 2. Whitelisting
 
-- This makes it way harder to perform a path traversal because only a select number of paths are allowed. It prevents one from accessing any other files 
+- This makes it way harder to perform a path traversal because only a select number of paths are allowed. It prevents one from accessing any other files. In the example below we use an array called whitelist which contains the directories the user can access.
 
 ```python
 class MyServer(BaseHTTPRequestHandler):
