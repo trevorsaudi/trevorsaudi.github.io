@@ -57,11 +57,11 @@ class MyServer(BaseHTTPRequestHandler):
 - From the [python documentation](https://docs.python.org/3/library/http.server.html#http.server.SimpleHTTPRequestHandler.do_GET), the method works by mapping a request to a local file by interpreting the request as a path relative to the working directory
 - This method is contained with the `http.server` in-built module
 - We begin by retrieving the value of the header 'Auth-Token' and creating a `SimpleCookie` object
-- We then check if there is a cookie named `auth_id` in the request headers by using the `get()` method of the SimpleCookie object. When such a cookie is present, it `opens a file with the value of the cookie as its name`, reads the first line of that file, and assigns it to the username variable. When the cookie is not present, the username variable is assigned the value of `guest`.
+- We then check if there is a cookie named `auth_id` in the request headers by using the `get()` method of the SimpleCookie object. When such a cookie is present, the open function `opens a file with the value of the cookie as its name`, reads the first line of that file, and assigns it to the username variable. When the cookie is not present, the username variable is assigned the value of `guest`.
 
 ### Source and Sink
 
-- This terminology is commonly used in data flow analysis and can be applied to the analysis of code. A source is where data comes from while a sink is where data ends. Therefore, we approach our analysis by looking for a`ny areas of the application where a user can input data,` then look at how the data is `being handled`. Spot any `dangerous functions` and find how we can force the application to behave in an unintended way.
+- This terminology is commonly used in data flow analysis and can be applied to the analysis of code. A source is where data comes from while a sink is where data ends. Therefore, we approach our analysis by looking for `any areas of the application where a user can input data,` then look at how the data is being handled. Spot any `dangerous functions` that handle the user input. Are there any ways of exploiting these functions?
 
 ### Vulnerability
 
@@ -176,3 +176,8 @@ class MyServer(BaseHTTPRequestHandler):
 
 - Sandbox environments are hardened environments that create a string boundary between the running programs and the operating system.
 - Even if an attacker were to gain access, they won't be able to reach other areas of the system, network, OS etc
+
+## Conclusion
+
+- The path traversal bug is very simple to exploit and is still occurring in modern applications. We discussed a few use cases but there's still a tonne of possible scenarios that may lead to this bug.
+- This has been captured in the [CVE details](https://www.cvedetails.com/vulnerability-list/opdirt-1/directory-traversal.html) website, with cases stemming as late as 26th January 2023
