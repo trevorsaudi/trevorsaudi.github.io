@@ -306,6 +306,6 @@ b'crypto{1f_y0u_Kn0w_En0uGH_y0u_Kn0w_1t_4ll}'
 
 - We get the flag
 
-## CONLUSION
+## CONCLUSION
 
 - We have covered some basic building blocks that will serve to be very useful in understanding other cryptography concepts. See you in the next blog!
