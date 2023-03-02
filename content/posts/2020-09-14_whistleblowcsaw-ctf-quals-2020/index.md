@@ -27,6 +27,7 @@ aliases:
 tags:
 - Web
 - AWS S3
+- CTF
 
 ---
 

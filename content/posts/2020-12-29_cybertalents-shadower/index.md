@@ -34,7 +34,7 @@ aliases:
 tags:
 - Privesc
 - Machine
-
+- CTF
 ---
 
 In the machine section in Cybertalents, we have this medium level box to root. Diving right in!

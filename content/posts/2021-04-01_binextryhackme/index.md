@@ -40,6 +40,7 @@ aliases:
 tags:
 - Machine
 - BOF
+- CTF
 ---
 
 ![image](/posts/2021-04-01_binextryhackme/images/1.png#layoutTextWidth)

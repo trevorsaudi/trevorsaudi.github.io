@@ -37,6 +37,7 @@ aliases:
 tags:
 - Redis
 - RCE
+- CTF
 ---
 
 ![image](/posts/2021-03-23_rce-on-unauthenticated-redis-server/images/1.png#layoutTextWidth)

@@ -83,6 +83,7 @@ aliases:
 tags:
 - Networking
 - Linux
+- CTF
 
 ---
 

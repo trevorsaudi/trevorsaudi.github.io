@@ -33,6 +33,7 @@ aliases:
 tags:
 - Privesc
 - Machine
+- CTF
 
 ---
 

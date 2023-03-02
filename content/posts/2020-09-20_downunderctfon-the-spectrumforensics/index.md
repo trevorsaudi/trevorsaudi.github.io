@@ -20,6 +20,7 @@ aliases:
 tags:
 - Forensics
 - Audio
+- CTF
 
 ---
 

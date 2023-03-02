@@ -22,6 +22,7 @@ aliases:
 
 tags:
 - pyyaml
+- CTF
 - code injection
 ---
 

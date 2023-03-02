@@ -21,7 +21,7 @@ aliases:
 
 tags:
 - Morse
-
+- CTF
 ---
 
 Beginner-Intermediate CTF that took place on Oct 28. We came 15th :).

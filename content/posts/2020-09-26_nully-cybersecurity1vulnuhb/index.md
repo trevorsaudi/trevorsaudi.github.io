@@ -35,6 +35,7 @@ aliases:
 tags:
 - Pivoting
 - Machine
+- CTF
 ---
 
 

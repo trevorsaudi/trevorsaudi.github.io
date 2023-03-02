@@ -55,6 +55,7 @@ tags:
 - Forensics
 - Malware
 - Pwn
+- CTF
 ---
 
 ![image](/posts/2021-11-09_africahackon-2021-ctf-finals/images/1.jpeg#layoutTextWidth)

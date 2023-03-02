@@ -28,6 +28,7 @@ aliases:
 
 tags:
 - Web
+- CTF
 - Scripting
 ---
 

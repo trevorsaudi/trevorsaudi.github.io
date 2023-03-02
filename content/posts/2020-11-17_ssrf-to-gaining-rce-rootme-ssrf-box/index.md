@@ -26,6 +26,7 @@ aliases:
 tags:
 - SSRF
 - Web
+- CTF
 ---
 
 Write-up for an [SSRF box] (https://www.root-me.org/?lang=en&amp;page=ctf_alltheday&amp;id_salle=4)on the rootme platform.

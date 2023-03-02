@@ -26,6 +26,7 @@ aliases:
 
 tags:
 - PHP
+- CTF
 ---
 
 ## getimagesize() File upload vulnerability

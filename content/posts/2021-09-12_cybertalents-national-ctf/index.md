@@ -35,6 +35,7 @@ tags:
 - Forensics
 - Web
 - BOF
+- CTF
 ---
 
 ![image](/posts/2021-09-12_cybertalents-national-ctf/images/1.png#layoutTextWidth)

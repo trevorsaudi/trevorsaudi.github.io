@@ -21,6 +21,7 @@ tags:
 - Forensics
 - QSSTV
 - Audio
+- CTF
 ---
 
 Misc challenges are usually random and require logic and lots of patience to solve. Surprisingly this one wasn’t too challenging.

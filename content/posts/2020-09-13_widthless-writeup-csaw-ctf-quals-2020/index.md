@@ -29,6 +29,7 @@ aliases:
 tags:
 - ZWSP
 - Web
+- CTF
 
 
 ---

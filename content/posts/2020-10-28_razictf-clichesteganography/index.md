@@ -20,6 +20,7 @@ aliases:
 tags:
 - QSSTV
 - Audio
+- CTF
 ---
 Another audio steganography challenge from RaziCTF.
 

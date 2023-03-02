@@ -27,6 +27,7 @@ aliases:
 tags:
 - Web
 - PHP
+- CTF
 ---
 
 Had some spare time over the weekend to participate in this awesome CTF. This challenge covers a web app vulnerability — PHP Object Injection(Insecure deserialization). Let’s dive in!

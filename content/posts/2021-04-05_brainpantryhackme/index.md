@@ -38,6 +38,7 @@ aliases:
 tags:
 - Machine
 - BOF
+- CTF
 ---
 
 ![image](/posts/2021-04-05_brainpantryhackme/images/1.png#layoutTextWidth)
