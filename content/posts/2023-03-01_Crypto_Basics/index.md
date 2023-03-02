@@ -22,11 +22,11 @@ tags:
 
 ![image](/posts/2023-03-01_crypto_basics/images/logo.png)
 
-- I spent the better part of the start of my year doing a lot of problem-solving with Python(preparing for interviews :D). Most of that entailed revisiting data structures and algorithms.
+- I spent the better part of the start of my year doing a lot of problem-solving with Python (secretly preparing for interviews :D ). Most of that entailed revisiting data structures and algorithms.
 
 - Because I am not landing any Google or Microsoft roles anytime soon :) , that knowledge will not go to waste. So let's learn some cryptography with Python!
 
-- I thought this would be a fun experience to document how I solve various challenges starting from basic beginner-level problems from Cryptohack or Cryptopals to advanced-level problems. This first blog will be focused on laying the groundwork and getting our hands dirty with some practical basic problems that will be used to build upon future challenges 
+- I thought this would be a fun experience to document how I solve various cryptography challenges starting from basic beginner-level problems from Cryptohack or Cryptopals to advanced-level problems. This first blog will be focused on laying the groundwork and getting our hands dirty with some practical basic problems that will be used to build upon future challenges 
 
 - Let us look at various important methods and concepts that will serve as our building blocks
 
