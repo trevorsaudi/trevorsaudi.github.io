@@ -16,8 +16,6 @@ tags:
 - Python
 ---
 
-![image](/posts/2023-03-01_euclidean_modular/images/logo.png)
-
 ## Introduction
 
 - In the previous [blog](http://localhost:1313/posts/2023-03-01_crypto_basics/), we did a general introduction to cryptography and the various important libraries and techniques for handling encrypted data with python.
