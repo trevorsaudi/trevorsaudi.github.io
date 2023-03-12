@@ -6,9 +6,9 @@ date: 2023-03-01
 description: "Euclidean Algorithm"
 
 
-image: "/posts/2023-03-01_crypto_basics/images/logo.png" 
+image: "/posts/2023-03-01_euclidean_modular/images/logo.png" 
 images:
- - "/posts/2023-03-01_crypto_basics/images/logo.png"
+ - "/posts/2023-03-01_euclidean_modular/images/logo.png"
 
 tags:
 - Cryptography
