@@ -1,14 +1,14 @@
 ---
 title: "Cryptography 02 - Euclidean Algorithm"
 author: "Trevor Saudi"
-date: 2023-03-01
+date: 2023-03-12
 
 description: "Euclidean Algorithm"
 
 
-image: "/posts/2023-03-01_euclidean_modular/images/logo.png" 
+image: "/posts/2023-03-12_euclidean_modular/images/logo.png" 
 images:
- - "/posts/2023-03-01_euclidean_modular/images/logo.png"
+ - "/posts/2023-03-12_euclidean_modular/images/logo.png"
 
 tags:
 - Cryptography
@@ -18,7 +18,7 @@ tags:
 
 ## Introduction
 
-- In the previous [blog](http://localhost:1313/posts/2023-03-01_crypto_basics/), we did a general introduction to cryptography and the various important libraries and techniques for handling encrypted data with python.
+- In the previous [blog](http://localhost:1313/posts/2023-03-12_crypto_basics/), we did a general introduction to cryptography and the various important libraries and techniques for handling encrypted data with python.
 - We introduce some basic math concepts in this blog, where we talk about GCD and the euclidean algorithm, its extended version and how to form recursive algorithms in python for them.
 
 
@@ -101,51 +101,51 @@ dividend = quotient * divider + remainder
 - Suppose we have 2 big numbers represented as 2 piles of stones. We are going to find the GCD of the 2 piles of stones.
 - Pile B is bigger than A. If we find copies of stones from a smaller pile in the larger pile, we subtract the copies.
 
-![image](/posts/2023-03-01_euclidean_modular/images/1.png)
+![image](/posts/2023-03-12_euclidean_modular/images/1.png)
 
 - We start by finding copies of pile A in pile B as shown below.
 
-![image](/posts/2023-03-01_euclidean_modular/images/112.png)
+![image](/posts/2023-03-12_euclidean_modular/images/112.png)
 
 - Subtract the copies from pile B
 
-![image](/posts/2023-03-01_euclidean_modular/images/2.png)
+![image](/posts/2023-03-12_euclidean_modular/images/2.png)
 
 - We end up with the following resulting pile
 
-![image](/posts/2023-03-01_euclidean_modular/images/3.png)
+![image](/posts/2023-03-12_euclidean_modular/images/3.png)
 
 - Pile B is now smaller than A. We find copies of pile B in pile A
 
-![image](/posts/2023-03-01_euclidean_modular/images/4.png)
+![image](/posts/2023-03-12_euclidean_modular/images/4.png)
 
 - Subtract the copy of pile B from pile A
 
-![image](/posts/2023-03-01_euclidean_modular/images/5.png)
+![image](/posts/2023-03-12_euclidean_modular/images/5.png)
 
 - We end up with the following resulting pile
 
-![image](/posts/2023-03-01_euclidean_modular/images/6.png)
+![image](/posts/2023-03-12_euclidean_modular/images/6.png)
 
 - Pile A is now smaller than B. We find copies of pile A in pile B
 
-![image](/posts/2023-03-01_euclidean_modular/images/7.png)
+![image](/posts/2023-03-12_euclidean_modular/images/7.png)
 
 - Subtract the copies of pile A from pile B
 
-![image](/posts/2023-03-01_euclidean_modular/images/8.png)
+![image](/posts/2023-03-12_euclidean_modular/images/8.png)
 
 - Find copies of pile B (which is now smaller), in pile A
 
-![image](/posts/2023-03-01_euclidean_modular/images/9.png)
+![image](/posts/2023-03-12_euclidean_modular/images/9.png)
 
 - Subtract the copy
 
-![image](/posts/2023-03-01_euclidean_modular/images/11.png)
+![image](/posts/2023-03-12_euclidean_modular/images/11.png)
 
 - Now that the 2 piles are equal, it means we have found the GCD which is 3
 
-![image](/posts/2023-03-01_euclidean_modular/images/12.png)
+![image](/posts/2023-03-12_euclidean_modular/images/12.png)
 
 - The 2 numbers representing the pile are 21 and 54 whose GCD is 3
 
