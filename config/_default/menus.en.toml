@@ -20,27 +20,18 @@
 [[main]]
   name = "Posts"
   pageRef = "posts"
-  weight = 2
-
-[[main]]
-  name = "Cryptography"
-  pageRef = "cryptography"
   weight = 3
-
-[[main]]
-  name = "CTFs"
-  pageRef = "CTF"
-  weight = 4
 
 [[main]]
   name = "About"
   pageRef = "about"
-  weight = 5
+  weight = 4
 
 [[main]]
   name = "Tags"
   pageRef = "tags"
-  weight = 6
+  weight = 5
+
 
 
 # -- Footer Menu --
