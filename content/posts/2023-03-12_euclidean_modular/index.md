@@ -16,6 +16,8 @@ tags:
 - Python
 ---
 
+
+
 ## Introduction
 
 - In the previous [blog](http://localhost:1313/posts/2023-03-12_crypto_basics/), we did a general introduction to cryptography and the various important libraries and techniques for handling encrypted data with python.
