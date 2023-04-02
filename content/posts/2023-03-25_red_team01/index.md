@@ -2,7 +2,7 @@
 title: "Email Phishing with Covenant"
 author: "Trevor Saudi"
 date: 2023-03-12
-description: "Email Phishing with Covenan"
+description: "Email Phishing with Covenant"
 image: "/posts/2023-03-25_red_team01/images/logo.png"
 tags:
 - Red Teaming
