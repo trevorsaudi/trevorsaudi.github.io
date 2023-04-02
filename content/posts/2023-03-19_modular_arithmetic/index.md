@@ -106,6 +106,36 @@ Modular inverses exist if and only if a and m are coprime, meaning they have no 
     `3 * 2 mod 5 = 1` <---------- answer
 
 - So the modular inverse of 3 mod 5 is 2
+- Let us build some intuition with this calculations:
+- Find the modular inverse of 3 mod 13
+- The expression can be written as
+
+
+    `3 * b  ≡ 1 (mod 13)` 
+
+- We ask ourselves this question, what number when multiplied by 3 and divided by 13 will give 1 as the answer?
+
+    `3 * 0 mod 13 = 0`
+
+    `3 * 1 mod 13 = 3`
+
+    `3 * 2 mod 13 = 6`
+
+    `3 * 3 mod 13 = 9`
+
+    `3 * 4 mod 13 = 12`
+
+    `3 * 5 mod 13 = 2`
+
+    `3 * 6 mod 13 = 5`
+
+    `3 * 7 mod 13 = 8`
+
+    `3 * 8 mod 13 = 11`
+
+    `3 * 9 mod 13 = 1` <----------- answer (27 mod 13 is 1)
+
+- The modular inverse of 3 mod 13 becomes 9
 
 
 ### Calculating modular inverses: Euclidean algorithm
