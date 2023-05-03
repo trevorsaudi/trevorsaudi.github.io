@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pwn on Trevor Saudi</title>
+    <link>https://trevorsaudi.com/tags/pwn/</link>
+    <description>Recent content in Pwn on Trevor Saudi</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>:smile: </copyright>
+    <lastBuildDate>Tue, 09 Nov 2021 11:58:56 +0000</lastBuildDate><atom:link href="https://trevorsaudi.com/tags/pwn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AfricaHackon 2021 CTF Finals</title>
+      <link>https://trevorsaudi.com/posts/2021-11-09_africahackon-2021-ctf-finals/</link>
+      <pubDate>Tue, 09 Nov 2021 11:58:56 +0000</pubDate>
+      
+      <guid>https://trevorsaudi.com/posts/2021-11-09_africahackon-2021-ctf-finals/</guid>
+      <description>My team (fr334aks) and I had the pleasure of taking part in AH2021 CTF finals where we took 3rd out of the ten teams that qualified.</description>
+    </item>
+    
+  </channel>
+</rss>
