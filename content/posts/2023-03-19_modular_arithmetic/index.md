@@ -1,5 +1,5 @@
 ---
-title: "Cryptography 03 - Modular Arithmetic"
+title: "Cryptography - Modular Arithmetic"
 author: "Trevor Saudi"
 date: 2023-03-12
 

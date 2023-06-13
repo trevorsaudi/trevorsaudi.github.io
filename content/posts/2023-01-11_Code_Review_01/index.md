@@ -1,5 +1,5 @@
 ---
-title: "Secure Code Review 01 - Hash Length Extension Attack"
+title: "Secure Code Review - Hash Length Extension Attack"
 author: "Trevor Saudi"
 date: 2023-01-10
 

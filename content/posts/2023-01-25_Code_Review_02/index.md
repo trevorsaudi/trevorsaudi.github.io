@@ -1,5 +1,5 @@
 ---
-title: "Secure Code Review 02 - Path Traversal Bugs"
+title: "Secure Code Review - Path Traversal Bugs"
 author: "Trevor Saudi"
 date: 2023-01-29
 
