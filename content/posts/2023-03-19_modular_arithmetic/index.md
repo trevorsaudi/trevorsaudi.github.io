@@ -1,7 +1,7 @@
 ---
 title: "Cryptography - Modular Arithmetic"
 author: "Trevor Saudi"
-date: 2023-03-12
+date: 2023-03-18
 
 description: "Euclidean Algorithm"
 
