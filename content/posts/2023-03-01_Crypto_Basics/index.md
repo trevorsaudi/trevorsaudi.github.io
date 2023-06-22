@@ -1,5 +1,5 @@
 ---
-title: "Cryptography 01 - The Basics"
+title: "Cryptography - The Basics"
 author: "Trevor Saudi"
 date: 2023-03-01
 

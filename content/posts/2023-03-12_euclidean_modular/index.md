@@ -1,5 +1,5 @@
 ---
-title: "Cryptography 02 - Euclidean Algorithm"
+title: "Cryptography - Euclidean Algorithm"
 author: "Trevor Saudi"
 date: 2023-03-12
 
