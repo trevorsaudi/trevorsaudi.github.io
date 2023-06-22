@@ -1,7 +1,7 @@
 ---
 title: "Email Phishing with Covenant"
 author: "Trevor Saudi"
-date: 2023-03-12
+date: 2023-03-25
 description: "Email Phishing with Covenant"
 image: "/posts/2023-03-25_red_team01/images/logo.png"
 tags:
