@@ -111,7 +111,7 @@ tags:
 
 ### MessageBox API
 
-- We will write our first program that uses the MessageBox API to display some text. The implementation of the API is well documented as shown:
+- We will write our first program that uses a Windows API (MessageBox) to display some text. The implementation of the API is well documented as shown:
 
     ![image](/posts/2023-07-19_red_team02/images/image7.png)
 
@@ -123,6 +123,15 @@ tags:
 </iframe>
 
   ![image](/posts/2023-07-19_red_team02/images/gif2.gif)
+
+## High-level Overview
+
+- At a high-level, the dropper's implementation to execute shellcode is as follows:
+
+1. Embed the shellcode to the dropper by using a byte array of the raw hex of the shellcode.
+2. Allocate memory on a process for the shellcode to be copied into
+3. Copy the shellcode into the allocated memory
+4. Execute the shellcode 
 
 - Let's move on to the APIs necessary to implement for our dropper.
 
