@@ -23,6 +23,10 @@ tags:
 - Basic programming knowledge
 
 
+## Why?
+
+- In my red teaming journey, the emphasis on writing custom toolset always plays a big role in understanding the current threat landscape, emulating what adversaries are doing and I guess... it's just fun!
+
 ## The PE file structure
 
 - The `portable executable` also called the Windows executable file format is a data structure that in Windows that holds information necessary for the execution of files. 
