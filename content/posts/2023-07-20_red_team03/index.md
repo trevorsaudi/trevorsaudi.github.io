@@ -4,7 +4,7 @@ author: "Trevor Saudi"
 date: 2023-07-19
 description: "Process Injection with C++"
 image: "/posts/2023-03-25_red_team01/images/logo.png"
-draft: false
+draft: true
 tags:
 - Red Teaming
 - Malware Development
