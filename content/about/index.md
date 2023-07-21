@@ -7,41 +7,32 @@ I am a Cybersecurity consultant with a highly technical background specializing 
 
 ## Work Experience
 
+
+### CYBER RANGES
+_Nairobi_ <br>
+**`Threat and Adversary Emulation`**` <br>
+_Jan 2023 to Present_
+
+- Building lab simulations of real network environments to simulate complex attack scenarios
+- Creating guided technical tutorials aimed at imparting knowledge
+- Training clients on different topics using the platform
+
 ### Silensec Africa
 _Nairobi_ <br>
-**Security Consultant** <br>
-_Feb 2022 to Present_
+**`Security Consultant`** <br>
+_Feb 2022 to Dec 2022_
 
 - Threat and Vulnerability analysis.
 - Documenting and Reporting of Infosec related issues and emerging trends.
 - Analysis and response to previously unknown hardware and software vulnerabilities.
 
 
-### CYBER RANGES
-_Nairobi_ <br>
-**Technical Content Developer** <br>
-_Feb 2022 to Present_
-
-- Building lab simulations of real network environments to simulate complex attack scenarios
-- Creating guided technical tutorials aimed at imparting knowledge
-- Training clients on different topics using he platform
-
 ### NOUVETA LIMITED
 _Nairobi_ <br>
-**Software Engineer Intern** <br>
+**`Software Engineer Intern`** <br>
 _Feb 2021 to April 2021_
 
 - Developing web applications and APIs to automate the process of data entry and processing of data for the company’s internal use.
-
-### SheHacks KE
-_Nairobi_ <br>
-**Campus Ambassador** <br>
-_Feb 2022 to Present_
-
--  Ideating and executing engaging training sessions centered around CyberSecurity
-- Gaining exposure from community programs and training sessions
-- Collaborated with SheHacks KE to create awareness of the company in Strathmore University
-
 
 
 ### Decoded Africa
@@ -65,15 +56,20 @@ _June 2021 to Present_
 **Programming languages**
 
 `Python`
-`C`
+`C/C++`
+`Java`
+`Javascript`
+
 
 
 **Technical**
 
+`Malware Development`
 `Exploit Development`
-`Reverse Engineering`
+`Malware Reverse Engineering`
 `Forensics`
-`Web Development`
+`Programming`
+
 
 ## Education
 
@@ -84,6 +80,12 @@ _2018-2022_ <br>
 Grade: First Class Honors
 
 ## Certifications
+
+### Certified Red Team Operator (CRTO)
+**Zero-Point Security** <br>
+Jun 2023 <br>
+
+[Credential ID 4966458](https://eu.badgr.com/public/assertions/5AnirSmZQdCqjNNK9A3Jvw?identity__email=trevorsaudi@gmail.com)
 
 ### Certified Linux Administrator (LPIC-1)
 **Linux Professional Institute (LPI)** <br>
@@ -100,6 +102,12 @@ Dec 2022 <br>
 **eLearnSecurity** <br>
 Jan 2021 <br>
 [Credential ID 6416736](https://verified.elearnsecurity.com/certificates/962ae3aa-58ee-4649-9216-6c11a804a92b)
+
+### Certified Ethical Hacker | Practical
+**EC-Council** <br>
+Jan 2020 <br>
+[Credential ID ECC1082376945](https://aspen.eccouncil.org/VerifyBadge?type=certification&a=8Oxz5wABOq3cgnRAjRypuzMCgfENEfJyUP7O/brUMp4=)
+
 
 ### Certified Ethical Hacker
 **EC-Council** <br>

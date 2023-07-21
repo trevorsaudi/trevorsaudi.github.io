@@ -142,7 +142,7 @@ tags:
 <br>
 
 <iframe
-  src="https://carbon.now.sh/embed?bg=rgba%280%2C0%2C202%2C0%29&t=panda-syntax&wt=sharp&l=text%2Fx-c%2B%2Bsrc&width=768&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=0px&ph=0px&ln=false&fl=1&fm=Fira+Code&fs=14px&lh=143%25&si=false&es=2x&wm=false&code=LPVOID%2520VirtualAlloc%28%250A%2520%2520%2520LPVOID%2520lpAddress%252C%250A%2520%2520%2520SIZE_T%2520dwSize%252C%250A%2520%2520%2520DWORD%2520%2520flAllocationType%252C%250A%2520%2520%2520DWORD%2520%2520flProtect%250A%29%253B"
+  src="https://carbon.now.sh/embed?bg=rgba%280%2C0%2C202%2C0%29&t=panda-syntax&wt=sharp&l=text%2Fx-c%2B%2Bsrc&width=777.6875&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=0px&ph=0px&ln=false&fl=1&fm=Fira+Code&fs=14px&lh=143%25&si=false&es=2x&wm=false&code=LPVOID%2520VirtualAlloc%28%250A%2520%2520%2520LPVOID%2520lpAddress%252C%2520%2520%2520%2520%252F%252F%2520Starting%2520address%2520of%2520the%2520memory%2520region%2520to%2520allocate.%250A%2520%2520%2520SIZE_T%2520dwSize%252C%2520%2520%2520%2520%2520%2520%2520%252F%252F%2520Size%252C%2520in%2520bytes%252C%2520of%2520the%2520memory%2520region%2520to%2520allocate.%250A%2520%2520%2520DWORD%2520%2520flAllocationType%252C%2520%252F%252F%2520Type%2520of%2520memory%2520allocation%2520%28e.g.%252C%2520MEM_COMMIT%252C%2520MEM_RESERVE%29.%250A%2520%2520%2520DWORD%2520%2520flProtect%2520%2520%2520%2520%2520%2520%2520%252F%252F%2520Page%2520protection%2520for%2520committed%2520pages%2520%28e.g.%252C%2520PAGE_EXECUTE%29.%250A%29%253B%250A"
   style="width: 783px; height: 220px; border:0; transform: scale(1); overflow:hidden;"
   sandbox="allow-scripts allow-same-origin">
 </iframe>
@@ -157,7 +157,7 @@ tags:
 
 
 <iframe
-  src="https://carbon.now.sh/embed?bg=rgba%280%2C0%2C202%2C0%29&t=panda-syntax&wt=sharp&l=text%2Fx-c%2B%2Bsrc&width=768.65625&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=0px&ph=0px&ln=false&fl=1&fm=Fira+Code&fs=14px&lh=143%25&si=false&es=2x&wm=false&code=void%2520RtlMoveMemory%28%250A%2520%2520PVOID%2520%2520Destination%252C%250A%2520%2520const%2520VOID%2520%2520%2520*Source%252C%250A%2520%2520SIZE_T%2520Length%250A%29%253B%250A"
+  src="https://carbon.now.sh/embed?bg=rgba%280%2C0%2C202%2C0%29&t=panda-syntax&wt=sharp&l=text%2Fx-c%2B%2Bsrc&width=777.6875&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=0px&ph=0px&ln=false&fl=1&fm=Fira+Code&fs=14px&lh=143%25&si=false&es=2x&wm=false&code=void%2520RtlMoveMemory%28%250A%2520%2520%2520void*%2520Destination%252C%2520%2520%2520%252F%252F%2520Pointer%2520to%2520the%2520destination%2520memory%2520block.%250A%2520%2520%2520const%2520void*%2520Source%252C%2520%2520%252F%252F%2520Pointer%2520to%2520the%2520source%2520memory%2520block.%250A%2520%2520%2520SIZE_T%2520Length%2520%2520%2520%2520%2520%2520%2520%2520%2520%252F%252F%2520Number%2520of%2520bytes%2520to%2520copy%2520from%2520the%2520source%2520to%2520the%2520destination.%250A%29%253B"
   style="width: 783px; height: 220px; border:0; transform: scale(1); overflow:hidden;"
   sandbox="allow-scripts allow-same-origin">
 </iframe>
@@ -170,8 +170,8 @@ tags:
 
 
 <iframe
-  src="https://carbon.now.sh/embed?bg=rgba%280%2C0%2C202%2C0%29&t=panda-syntax&wt=sharp&l=text%2Fx-c%2B%2Bsrc&width=768.65625&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=0px&ph=0px&ln=false&fl=1&fm=Fira+Code&fs=14px&lh=143%25&si=false&es=2x&wm=false&code=BOOL%2520VirtualProtect%28%250A%2520%2520LPVOID%2520lpAddress%252C%250A%2520%2520SIZE_T%2520dwSize%252C%250A%2520%2520DWORD%2520%2520flNewProtect%252C%250A%2520%2520PDWORD%2520lpflOldProtect%250A%29%253B"
-  style="width: 783px; height: 220px; border:0; transform: scale(1); overflow:hidden;"
+  src="https://carbon.now.sh/embed?bg=rgba%280%2C0%2C202%2C0%29&t=panda-syntax&wt=sharp&l=text%2Fx-c%2B%2Bsrc&width=777.6875&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=0px&ph=0px&ln=false&fl=1&fm=Fira+Code&fs=14px&lh=143%25&si=false&es=2x&wm=false&code=BOOL%2520VirtualProtect%28%250A%2520%2520%2520LPVOID%2520lpAddress%252C%2520%2520%2520%2520%2520%252F%252F%2520Pointer%2520to%2520the%2520base%2520address%2520of%2520the%2520region%2520of%2520pages%2520to%2520change%2520protection.%250A%2520%2520%2520SIZE_T%2520dwSize%252C%2520%2520%2520%2520%2520%2520%2520%2520%252F%252F%2520Size%2520of%2520the%2520memory%2520region%2520whose%2520protection%2520attributes%2520will%2520be%2520changed.%250A%2520%2520%2520DWORD%2520flNewProtect%252C%2520%2520%2520%252F%252F%2520New%2520memory%2520protection%2520option%2520%28e.g.%252C%2520PAGE_EXECUTE_READ%252C%2520PAGE_READWRITE%29.%250A%2520%2520%2520PDWORD%2520lpflOldProtect%2520%252F%252F%2520Pointer%2520to%2520a%2520variable%2520that%2520will%2520receive%2520the%2520previous%2520protection%2520option.%250A%29%253B%250A"
+  style="width: 783px; height: 350px; border:0; transform: scale(1); overflow:hidden;"
   sandbox="allow-scripts allow-same-origin">
 </iframe>
 
@@ -181,8 +181,8 @@ tags:
 
 
 <iframe
-  src="https://carbon.now.sh/embed?bg=rgba%280%2C0%2C202%2C0%29&t=panda-syntax&wt=sharp&l=text%2Fx-c%2B%2Bsrc&width=768.65625&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=0px&ph=0px&ln=false&fl=1&fm=Fira+Code&fs=14px&lh=143%25&si=false&es=2x&wm=false&code=HANDLE%2520CreateThread%28%250A%2520%2520LPSECURITY_ATTRIBUTES%2520%2520%2520lpThreadAttributes%252C%250A%2520%2520SIZE_T%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520dwStackSize%252C%250A%2520%2520LPTHREAD_START_ROUTINE%2520%2520lpStartAddress%252C%250A%2520%2520LPVOID%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520lpParameter%252C%250A%2520%2520DWORD%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520dwCreationFlags%252C%250A%2520%2520LPDWORD%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520lpThreadId%250A%29%253B%250A"
-  style="width: 783px; height: 220px; border:0; transform: scale(1); overflow:hidden;"
+  src="https://carbon.now.sh/embed?bg=rgba%280%2C0%2C202%2C0%29&t=panda-syntax&wt=sharp&l=text%2Fx-c%2B%2Bsrc&width=777.6875&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=0px&ph=0px&ln=false&fl=1&fm=Fira+Code&fs=14px&lh=143%25&si=false&es=2x&wm=false&code=HANDLE%2520CreateThread%28%250A%2520%2520%2520LPSECURITY_ATTRIBUTES%2520lpThreadAttributes%252C%2520%252F%252F%2520Pointer%2520to%2520the%2520thread%27s%2520security%2520attributes%2520%28can%2520be%2520NULL%29.%250A%2520%2520%2520SIZE_T%2520dwStackSize%252C%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%252F%252F%2520Initial%2520size%2520of%2520the%2520stack%252C%2520in%2520bytes%2520%280%2520uses%2520default%2520size%29.%250A%2520%2520%2520LPTHREAD_START_ROUTINE%2520lpStartAddress%252C%2520%2520%2520%2520%252F%252F%2520Thread%2520function%2520-%2520starting%2520address.%250A%2520%2520%2520LPVOID%2520lpParameter%252C%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%252F%252F%2520Optional%2520parameter%2520passed%2520to%2520the%2520thread%2520function.%250A%2520%2520%2520DWORD%2520dwCreationFlags%252C%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%252F%252F%2520Creation%2520flags%2520%28e.g.%252C%2520CREATE_SUSPENDED%252C%25200%2520for%2520no%2520flags%29.%250A%2520%2520%2520LPDWORD%2520lpThreadId%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%252F%252F%2520Pointer%2520to%2520a%2520variable%2520that%2520will%2520receive%2520the%2520thread%2520identifier.%250A%29%253B%250A"
+  style="width: 783px; height: 350px; border:0; transform: scale(1); overflow:hidden;"
   sandbox="allow-scripts allow-same-origin">
 </iframe>
 
@@ -192,7 +192,7 @@ tags:
 - It is used to wait until the specified object is in a certain state or until a timeout interval elapses. We use this to have our shellcode running infinitely till a failure is encountered
 
 <iframe
-  src="https://carbon.now.sh/embed?bg=rgba%280%2C0%2C202%2C0%29&t=panda-syntax&wt=sharp&l=text%2Fx-c%2B%2Bsrc&width=768.65625&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=0px&ph=0px&ln=false&fl=1&fm=Fira+Code&fs=14px&lh=143%25&si=false&es=2x&wm=false&code=DWORD%2520WaitForSingleObject%28%250A%2520%2520HANDLE%2520hHandle%252C%250A%2520%2520DWORD%2520%2520dwMilliseconds%250A%29%253B%250A"
+  src="https://carbon.now.sh/embed?bg=rgba%280%2C0%2C202%2C0%29&t=panda-syntax&wt=sharp&l=text%2Fx-c%2B%2Bsrc&width=777.6875&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=0px&ph=0px&ln=false&fl=1&fm=Fira+Code&fs=14px&lh=143%25&si=false&es=2x&wm=false&code=DWORD%2520WaitForSingleObject%28%250A%2520%2520%2520HANDLE%2520hHandle%252C%2520%2520%2520%2520%2520%2520%2520%252F%252F%2520Handle%2520to%2520the%2520object%2520to%2520wait%2520for%2520%28e.g.%252C%2520a%2520thread%2520handle%252C%2520process%2520handle%29.%250A%2520%2520%2520DWORD%2520dwMilliseconds%2520%2520%252F%252F%2520Maximum%2520time%2520to%2520wait%2520for%2520the%2520object%2520%28in%2520milliseconds%29%252C%2520or%2520INFINITE%2520for%2520no%2520timeout.%250A%29%253B"
   style="width: 783px; height: 220px; border:0; transform: scale(1); overflow:hidden;"
   sandbox="allow-scripts allow-same-origin">
 </iframe>
