@@ -3,6 +3,7 @@ title: "Malware Development: Writing a C++ dropper"
 author: "Trevor Saudi"
 date: 2023-07-19
 description: "Malware Development: Writing a C++ dropper"
+draft: true
 image: "/posts/2023-07-19_red_team01/images/logo.png"
 tags:
 - Red Teaming
