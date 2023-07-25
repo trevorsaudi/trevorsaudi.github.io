@@ -51,7 +51,8 @@ tags:
 4. Write our shellcode into the memory
 5. Execute the injected code.
 
-- We will summarize the points into 2: Finding the target process we want to inject to and then injecting into it
+- We will summarize the points into 2: Finding the target process we want to inject to and then injecting into it.
+- The final project file can be located here for quick reference: [https://github.com/trevorsaudi/Process-Injection-cpp](https://github.com/trevorsaudi/Process-Injection-cpp)
 
 ## 1. Finding a Target Process
 
@@ -171,7 +172,6 @@ tags:
 ## 3. Final Implant
 
 - The final process injection implementation:
-
 
 <script src="https://gist.github.com/trevorsaudi/8a1a83fdbeeba7b4f1e9cbaedad99f2d.js"></script>
 
