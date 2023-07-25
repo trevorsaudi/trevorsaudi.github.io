@@ -1,7 +1,7 @@
 ---
 title: "Malware development: Process Injection with C++"
 author: "Trevor Saudi"
-date: 2023-07-21
+date: 2023-07-25
 description: "Process Injection with C++"
 image: "/posts/2023-07-21_red_team03/images/logo.png"
 draft: false
@@ -51,7 +51,11 @@ tags:
 4. Write our shellcode into the memory
 5. Execute the injected code.
 
-- We will summarize the points into 2: Finding the target process we want to inject to and then injecting into it.
+- We can summarize the above into 2 main parts:
+
+1. Find a target process
+2. Injecting into the target process
+
 - The final project file can be located here for quick reference: [https://github.com/trevorsaudi/Process-Injection-cpp](https://github.com/trevorsaudi/Process-Injection-cpp)
 
 ## 1. Finding a Target Process
