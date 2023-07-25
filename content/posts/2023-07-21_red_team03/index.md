@@ -80,8 +80,8 @@ tags:
 
 ### [PROCESSENTRY32 pe32](https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/ns-tlhelp32-processentry32)
 
-- This pre-defined windows data structure holds information about a single process when the snapshot was taken
-- `pe32` is an instance of `PROCESSENTRY32`
+- This pre-defined windows data structure holds information about a single process when the snapshot was taken.
+- `pe32` is an instance of `PROCESSENTRY32`.
 
 <!-- <iframe
   src="https://carbon.now.sh/embed?bg=rgba%280%2C0%2C202%2C0%29&t=panda-syntax&wt=sharp&l=text%2Fx-c%2B%2Bsrc&width=763.6875&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=0px&ph=0px&ln=false&fl=1&fm=Fira+Code&fs=14px&lh=143%25&si=false&es=2x&wm=false&code=pe32.dwSize%2520%253D%2520sizeof%28PROCESSENTRY32%29%253B%2520"
