@@ -196,7 +196,7 @@ Start notepad (or the process you are injecting into) before injecting into it.
 
 - We can verify the messagebox was spawned in context of notepad using Process Hacker.
 - Process Hacker is a tool that can help you monitor resources, debug software and detect malware. 
-- It has a functionality called "Find Window and Threads", demonstrated below, which you can click and drag to a window to show the kind of resources (processes, threads, handles etc) it is associated with.
+- It has a functionality called "Find Window and Threads", demonstrated below, which you can click then drag to a window to show the kind of resources (processes, threads, handles etc) it is associated with.
 
 
 <img src="/posts/2023-07-21_red_team03/images/video3.gif" alt= "" width="750">
