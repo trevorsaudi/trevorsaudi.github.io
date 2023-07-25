@@ -24,13 +24,8 @@ tags:
    
   *, ::before, ::after {
     border-style: none;
-
+    font: 16px;
   }
-
-  body {
-  margin: 20px;
-  font: 16px 'Open Sans', sans-serif;
-}
 
 
 

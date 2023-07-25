@@ -25,6 +25,7 @@ tags:
    
   *, ::before, ::after {
     border-style: none;
+    font: 16px;
 
   }
 
