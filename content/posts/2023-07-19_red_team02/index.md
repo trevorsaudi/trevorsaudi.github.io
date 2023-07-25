@@ -86,6 +86,13 @@ tags:
 
 - Both have their cons and pros where we see staged payloads being more evasive and capable of bypassing AVs due to execution of malware in separate stages. Stageless are good when maintaining simplicity but can be bulky to deliver. We will look into both ways developing these malware.
 
+## Processes, Threads, Handles
+
+- A process is a program in execution. It can be made of different multiple threads executing instructions at the same time.
+- A thread is the smallest unit of execution within a process. Processes can have multiple threads that share the process's resources.
+- A handle is an identifier used to access a resource (files, threads, memory). When a process needs to access resources, the OS will provide a handle which the process will use to access said resources.
+
+
 ## Shellcode 
 
 - Shellcode is a `set of instructions` that is meant to be executed directly by a target system. Once it's executed, it could provide a callback `connection to the attacker or execute arbitrary commands` on the target.
@@ -105,9 +112,6 @@ tags:
 - It allows developers to create applications that can interact with the underlying resources.
 - The APIs are well documented [here](https://learn.microsoft.com/en-us/docs/) and we will be using it as a reference
 
-
-
----
 
 ### MessageBox API
 

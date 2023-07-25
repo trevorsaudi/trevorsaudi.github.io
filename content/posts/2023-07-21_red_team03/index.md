@@ -3,7 +3,7 @@ title: "Malware development: Process Injection with C++"
 author: "Trevor Saudi"
 date: 2023-07-21
 description: "Process Injection with C++"
-image: "/posts/2023-03-25_red_team01/images/logo.png"
+image: "/posts/2023-07-21_red_team03/images/logo.png"
 draft: false
 tags:
 - Red Teaming
@@ -98,7 +98,8 @@ tags:
 </iframe>
 
 
-- Its difference with VirtualAlloc is that we can specify a handle to a specified process.
+- The difference between the VirtualAllocEx and VirtualAlloc is that VirtualAlloc allocates memory within the address space of the calling process, while VirtualAllocEx lets you specify a target process to allocate memory.
+
 
 ### [WriteProcessMemory](https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-writeprocessmemory)
 
@@ -136,7 +137,7 @@ tags:
  sandbox="allow-scripts allow-same-origin">
 </iframe>
 
-- You can compile with clang
+- You can compile with cl.exe using the following flags
 
 ```bash
 cl.exe /Ox /MT /W0 /GS- /DNDEBUG /Tcprocessinjection.cpp /link /OUT:processinjection.exe /SUBSYSTEM:CONSOLE /MACHINE:x64
