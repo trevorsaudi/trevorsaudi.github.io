@@ -88,7 +88,7 @@ tags:
 
 ### [VirtualAllocEx](https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualallocex)
 
-- We use this to allocate memory in the `specified process`.
+- We use this to allocate memory in the `target` process.
 
 <iframe
   src="https://carbon.now.sh/embed?bg=rgba%280%2C0%2C202%2C0%29&t=panda-syntax&wt=bw&l=text%2Fx-c%2B%2Bsrc&width=766.125&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=0px&ph=0px&ln=false&fl=1&fm=Fira+Code&fs=14px&lh=143%25&si=false&es=2x&wm=false&code=LPVOID%2520pRemoteCode%2520%253D%2520VirtualAllocEx%28hProc%252C%2520NULL%252C%2520payload_len%252C%2520MEM_COMMIT%252C%2520PAGE_EXECUTE_READ%29%253B" 
@@ -98,7 +98,7 @@ tags:
 </iframe>
 
 
-- The difference between the VirtualAllocEx and VirtualAlloc is that VirtualAlloc allocates memory within the address space of the calling process, while VirtualAllocEx lets you specify a target process to allocate memory.
+- The difference between the VirtualAllocEx and VirtualAlloc is that VirtualAlloc allocates memory within the address space of the `calling process`, while VirtualAllocEx lets you `specify a target process` to allocate memory.
 
 
 ### [WriteProcessMemory](https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-writeprocessmemory)
@@ -152,14 +152,16 @@ Start notepad (or the process you are injecting into) before injecting into it.
 
 <img src="/posts/2023-07-21_red_team03/images/gif3.gif" alt= "" width="750">
 
-- We can verify the messagebox was spawned in context of notepad using process hacker.
+- We can verify the messagebox was spawned in context of notepad using Process Hacker.
+- Process Hacker is a tool that can help you monitor resources, debug software and detect malware. 
+- It has a functionality called "Find Window and Threads", demonstrated below, which you can click and drag to a window to show the kind of resources (processes, threads, handles etc) it is associated with.
 
 
 <img src="/posts/2023-07-21_red_team03/images/video3.gif" alt= "" width="750">
 
-
-
-- We can also see the memory region we had allocated for our target process, marked as RX (Read Executable)
+- We can also see the memory region we had allocated for our target process, marked as RX (Read Executable) as shown below.
 
 
 ![image](/posts/2023-07-21_red_team03/images/image8.png)
+
+- This brings us to the end of our blog, hope you learnt a ton!
