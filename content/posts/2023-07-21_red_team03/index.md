@@ -108,7 +108,7 @@ tags:
 
 <script src="https://gist.github.com/trevorsaudi/acad1be8b3094dd5bac2627207e855d9.js"></script>
 
-- In line  of the code block above, we get the first process from the snapshot we took, where, `hProcSnap` is a handle to the snapshot of processes and `pe32` is a `PROCESSENTRY32` structure which will get filled with information about a process.
+- In line with the code block above, we get the first process from the snapshot we took, where, `hProcSnap` is a handle to the snapshot of processes and `pe32` is a `PROCESSENTRY32` structure which will get filled with information about a process.
 - If the block of code fails to get a process for some reason, we close the handle.
 
 - We now proceed to find the target process below
@@ -125,7 +125,7 @@ tags:
 
 ## 2. Injecting into the target process
 
-- This process involves us allocating memory to our target process, writing to it and executing the shellcode from the process calling it.
+- This process involves us allocating memory to our target process, writing to it, and executing the shellcode from the process calling it.
 
 ### [VirtualAllocEx](https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualallocex)
 
@@ -160,8 +160,8 @@ tags:
 
 ### [CreateRemoteThread](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createremotethread)
 
-- This API is used to create a thread that runs in the address space of a target process. Our target being notepad.exe, this API will help us run our shellcode in that context
-- We specify `hProc`, a handle to the process we are injecting to.
+- This API is used to create a thread that runs in the address space of a target process. Our target is notepad.exe, this API will help us run our shellcode in that context
+- We specify `hProc`, a handle to the process that we are injecting to.
 - We then use `WaitForSingleObject` to specify a timeout for the process.
 <!-- 
 <iframe
@@ -188,16 +188,16 @@ cl.exe /Ox /MT /W0 /GS- /DNDEBUG /Tcprocessinjection.cpp /link /OUT:processinjec
 
 {{< alert >}}
 
-Start notepad (or the process you are injecting into) before injecting into it.
+Start notepad (or the process you are injecting into) before doing process injection.
 
 {{< /alert >}}
 
 
 <img src="/posts/2023-07-21_red_team03/images/gif3.gif" alt= "" width="750">
 
-- We can verify the messagebox was spawned in context of notepad using Process Hacker.
+- We can verify the messagebox was spawned in the context of Notepad using Process Hacker.
 - Process Hacker is a tool that can help you monitor resources, debug software and detect malware. 
-- It has a functionality called "Find Window and Threads", demonstrated below, which you can click then drag to a window to show the kind of resources (processes, threads, handles etc) it is associated with.
+- It has a functionality called "Find Window and Threads", demonstrated below, which you can click then drag to a window to show the kind of resources (processes, threads, handles, etc) it is associated with.
 
 
 <img src="/posts/2023-07-21_red_team03/images/video3.gif" alt= "" width="750">
@@ -207,4 +207,4 @@ Start notepad (or the process you are injecting into) before injecting into it.
 
 ![image](/posts/2023-07-21_red_team03/images/image8.png)
 
-- This brings us to the end of our blog, hope you learnt a ton!
+- This brings us to the end of our blog, hope you learned a ton!
