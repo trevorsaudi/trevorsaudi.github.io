@@ -103,10 +103,11 @@ tags:
 - We use `wprintf` to print out our messages. It is similar to `printf` but is used to print wide-character strings. It takes in wide character literals indicated by the prefix `L`
 - `GetLastError` is used to grab the last error code value
 
+<br>
 {{< alert >}}
 When `CreateThread` is called, it may return before ThreadProc finishes executing. That is why we use the `sleep function` inside the main() function to allow ThreadProc to finish executing. 
 {{< /alert >}}
-
+<br>
 
 3. We finally queue in our APC using the `QueueUserAPC` function. Remember that we mentioned we can only queue in threads that have been put in an `alertable state`. So how do you do this?
 
