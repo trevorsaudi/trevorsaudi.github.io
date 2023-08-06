@@ -1,7 +1,7 @@
 ---
 title: "Malware development: APC Injection with C++"
 author: "Trevor Saudi"
-date: 2023-07-30
+date: 2023-08-07
 description: "Process Injection part 2: QueueUserAPC Process Injection with C++"
 image: "/posts/2023-07-21_red_team03/images/logo.png"
 draft: false
