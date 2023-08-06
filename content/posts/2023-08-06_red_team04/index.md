@@ -104,7 +104,7 @@ tags:
 - `GetLastError` is used to grab the last error code value
 
 {{< alert >}}
-When `CreateThread` is called, it may return before ThreadProc finishes executing. That is why we use the `sleep function` inside the main() function. 
+When `CreateThread` is called, it may return before ThreadProc finishes executing. That is why we use the `sleep function` inside the main() function to allow ThreadProc to finish executing. 
 {{< /alert >}}
 
 
