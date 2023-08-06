@@ -37,7 +37,7 @@ tags:
 
 </style>
 
-![image](/posts/2023-08-07_red_team04/images/logo.png)
+![image](/posts/2023-08-06_red_team04/images/logo.png)
 
 
 ## Introduction
@@ -79,7 +79,7 @@ tags:
 - `dwData`: This is the data that you want to `pass to the APC function`. It's a single number (an integer, technically a `ULONG_PTR`) that can be used for whatever you want. It is up to you to decide what you want for this value (error code, status code, commands)
 
 
-#### Implementing the QueueAPC() API
+#### Implementing the QueueUserAPC() API
 
 - I will demonstrate a simple example of how we queue an APC in C++. We will create a thread and execute it. After its execution, we will then queue our APC and see how it gets executed.
 
