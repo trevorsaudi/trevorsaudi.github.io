@@ -1,9 +1,9 @@
 ---
 title: "Malware development: APC Injection with C++"
 author: "Trevor Saudi"
-date: 2023-08-07
-description: "Process Injection part 2: QueueUserAPC Process Injection with C++"
-image: "/posts/2023-07-21_red_team03/images/logo.png"
+date: 2023-08-06
+description: "Process Injection part 2: QueueUserAPC Injection with C++"
+image: "/posts/2023-08-07_red_team04/images/logo.png"
 draft: false
 tags:
 - Red Teaming
@@ -37,7 +37,7 @@ tags:
 
 </style>
 
-![image](/posts/2023-07-30_red_team04/images/logo.png)
+![image](/posts/2023-08-07_red_team04/images/logo.png)
 
 
 ## Introduction
@@ -113,7 +113,7 @@ When `CreateThread` is called, it may return before ThreadProc finishes executin
 - [msdn](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-queueuserapc) docs describes this as shown in the screenshot below.
 
 
-![image](/posts/2023-07-30_red_team04/images/image1.png)
+![image](/posts/2023-08-07_red_team04/images/image1.png)
 
 - TLDR; We can use the `SleepEx` function to make our thread `alertable before queueing in the APC`. We adjust our code by adding the API and a [callback function](https://learn.microsoft.com/en-us/windows/win32/api/winnt/nc-winnt-papcfunc) that will be queued in after the thread has been executed.
 - The callback function has a parameter called `Parameter`, which contains the data that is passed in the `dwData` parameter in the QueueUserAPC() function, which was `123`. We can print it out as well to confirm that as shown in line 22
@@ -124,7 +124,7 @@ When `CreateThread` is called, it may return before ThreadProc finishes executin
 
 - It executes as shown:
 
-<img src="/posts/2023-07-30_red_team04/images/gif5.gif" alt= "" width="750">
+<img src="/posts/2023-08-07_red_team04/images/gif5.gif" alt= "" width="750">
 
 
 ### Implementing QueueUserAPC() in our implant.
@@ -156,7 +156,7 @@ When `CreateThread` is called, it may return before ThreadProc finishes executin
 
 - Using processhacker, we can further verify our process spawned in the context of notepad as shown.
 
-<img src="/posts/2023-07-30_red_team04/images/gif6.gif" alt= "" width="750">
+<img src="/posts/2023-08-07_red_team04/images/gif6.gif" alt= "" width="750">
 
 
 ## Conclusion
