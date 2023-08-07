@@ -129,6 +129,11 @@ When `CreateThread` is called, it may return before ThreadProc finishes executin
 <img src="/posts/2023-08-06_red_team04/images/gif5.gif" alt= "" width="750">
 
 
+{{< alert >}}
+Note that SleepEx returned 192. In the msdn docs, the return value of sleepex is WAIT_IO_COMPLETION if the callback is completed. WAIT_IO_COMPLETION is a return code whose value is 0xC0 which is 192 in decimal
+{{< /alert >}}
+
+
 ### Implementing QueueUserAPC() in our implant.
 
 #### High-Level Overview
