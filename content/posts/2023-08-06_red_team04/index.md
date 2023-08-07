@@ -166,6 +166,11 @@ When `CreateThread` is called, it may return before ThreadProc finishes executin
 - I hope you enjoyed diving deep into how this technique works. You can play around with the code and see if you can implement some form of encryption for the shellcode. Happy hacking !!
 
 
+## Project Files
+
+- You can find the project files for process injection [here](https://github.com/trevorsaudi/Process-Injection-cpp/tree/main)
+
+
 ## References
 
 - [Red Team Notes](https://www.ired.team/offensive-security/code-injection-process-injection/early-bird-apc-queue-code-injection)
