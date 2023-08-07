@@ -42,21 +42,21 @@ tags:
 
 ## Introduction
 
-- In our previous blog post, we looked into classic process injection, going into the various techniques such as finding target processes to inject to using various APIs, as well as injecting into the said processes.
-- There are several methods to perform process injection, we will dive into APC Injection, a more advanced technique, that offers more advantages to the vanilla method.
+- In our previous blog post, we looked into classic process injection, going into the various techniques such as finding target processes to inject to using Windows APIs, as well as injecting into the said processes.
+- There are several methods to perform process injection, we will dive into APC Injection, a more advanced technique, that offers more advantages to the standard method.
 
 ## Why?
 
 - This method is harder to detect than the standard process injection. Despite implementing some common APIs used in malware development such as `VirtualAllocEx, WriteProcessMemory and OpenProcess`, the major difference is in how shellcode is executed.
-- Traditional process injection executes shellcode using `CreateRemoteThread`. This API is overtly suspicious and will get flagged. APC injection uses an API called `QueueUserAPC`, which is less suspicious since it is used in scheduling work for a thread when it becomes idle.
-- Enough of the technical jargon, let's dive into what these terms mean.
+- Traditional process injection executes shellcode using `CreateRemoteThread`. This API is overtly suspicious and will get flagged by the AV. APC injection uses an API called `QueueUserAPC`, which is less suspicious since it is used in normal OS operations such as scheduling work for a thread when it becomes idle.
+-Let's dive into what some of these technical terms mean.
 
 
 ## Program Execution in Modern Operating Systems
 
 
 - When programs are executed in Windows, the operating system allocates necessary resources to the program to start the execution.
-- During the execution, multiple threads are usually assigned to a program. A thread in this case represents a sequence of instructions that can be scheduled by the OS to run.
+- During the execution, multiple threads are usually assigned to a program. A `thread` in this case represents a sequence of instructions in the program that can be scheduled by the OS to run. These threads could be performing tasks such as accessing OS resources.
 - If a program needs to perform I/O operations such as reading data from files, it uses `synchronous calls`, which halts the execution of the thread to allow the I/O operation to take place.
 - To address this inefficiency issue, modern Operating Systems will provide support for `asynchronous calls`. This allows the thread to continue execution after handing over the I/O operation to the OS.
 
@@ -64,6 +64,7 @@ tags:
 
 - When an asynchronous I/O operation is completed, the operating system can `queue an APC associated with that I/O operation`. 
 - The APC can contain some code or a function that is `executed in response to the completion of the I/O event`. This requires a thread to be in an `alertable state`, which is when a thread is idle and ready to receive Asynchronous Procedure Calls. This allows the OS to deliver the APC to the thread hence executing the code.
+- In our case, we will be creating an APC routine that points to our shellcode so that when the APC fires, our shellcode executes!
 
 
 ### QueueUserAPC() 
