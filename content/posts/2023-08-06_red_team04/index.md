@@ -57,7 +57,7 @@ tags:
 
 - When programs are executed in Windows, the operating system allocates necessary resources to the program to start the execution.
 - During the execution, multiple threads are usually assigned to a program. A thread in this case represents a sequence of instructions that can be scheduled by the OS to run.
-- If a program needs to perform I/O operations such as reading of data from files, it uses `synchronous calls`, which halts the execution of the thread to allow the I/O operation to take place.
+- If a program needs to perform I/O operations such as reading data from files, it uses `synchronous calls`, which halts the execution of the thread to allow the I/O operation to take place.
 - To address this inefficiency issue, modern Operating Systems will provide support for `asynchronous calls`. This allows the thread to continue execution after handing over the I/O operation to the OS.
 
 ## Asynchronous Procedure Calls
@@ -74,7 +74,7 @@ tags:
 
 - `pfnAPC`: This is a pointer to the function that you want to be executed asynchronously. This function will be invoked when the thread is in a `state where it can process APCs` (also known as an `alertable state`).
 
-- `hThread`: This is a `handle` to the thread that you want to queue the APC to. A handle can be thought of as a unique identifier used to interact with a resource, in our case this will be a specific thread.
+- `hThread`: This is a `handle` to the thread to which you want to queue the APC. A handle can be thought of as a unique identifier used to interact with a resource, in our case this will be a specific thread.
 
 - `dwData`: This is the data that you want to `pass to the APC function`. It's a single number (an integer, technically a `ULONG_PTR`) that can be used for whatever you want. It is up to you to decide what you want for this value (error code, status code, commands)
 
@@ -84,7 +84,7 @@ tags:
 - I will demonstrate a simple example of how we queue an APC in C++. We will create a thread and execute it. After its execution, we will then queue our APC and see how it gets executed.
 
 1. Starting with an empty C++ project. Import the Windows.h header and create a simple thread as shown.
-- `ThreadProc` is a callback function that is going to be executed by CreateThread() as a thread.
+- `ThreadProc` is a callback function that will be executed by CreateThread() as a thread.
 
 <br>
 
@@ -138,7 +138,7 @@ When `CreateThread` is called, it may return before ThreadProc finishes executin
 1. Create the target process in a suspended state.
 2. Allocate memory using `VirtualAllocEx` in the suspended process.
 3. Define the `APC callback routine`, it is going to point to our shellcode
-4. Write shellcode into the allocated memory withing the target process using `WriteProcessMemory`
+4. Write shellcode into the allocated memory within the target process using `WriteProcessMemory`
 5. Queue the APC to the main thread using `QueueUserAPC`.
 6. Once the thread is resumed the shellcode is executed.
 
