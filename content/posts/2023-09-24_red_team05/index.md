@@ -258,7 +258,7 @@ typedef struct _IMAGE_IMPORT_BY_NAME {
 
 ## Project Files
 
-- The complete project files are linked [here]()
+- The complete project files are linked [here](https://github.com/trevorsaudi/Zero-Import-Malware)
 - The final implant code fully encrypts all suspicious strings and dynamically resolves all our functions:
 
 <script src="https://gist.github.com/trevorsaudi/51cb353e6f7e6950452d658d30ac9e62.js"></script>
