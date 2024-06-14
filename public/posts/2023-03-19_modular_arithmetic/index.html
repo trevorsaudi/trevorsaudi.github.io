@@ -1,11 +1,804 @@
-<!doctype html><html lang=en dir=ltr class=scroll-smooth data-default-appearance=dark data-auto-appearance=true><head><meta charset=utf-8><meta http-equiv=content-language content="en"><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><title>Cryptography - Modular Arithmetic &#183; Trevor Saudi</title><meta name=title content="Cryptography - Modular Arithmetic &#183; Trevor Saudi"><meta name=description content="Portfolio/blog"><link rel=canonical href=https://trevorsaudi.com/posts/2023-03-19_modular_arithmetic/><link type=text/css rel=stylesheet href=/css/main.bundle.min.71883ab0661482cf6c7d29b8bdd1af3be3d2f1ea750e56a67846b7f64f41d19b8dc6d7047f48422ec8cbe4a0a412d551c8210307e2b93b1254cdbf7d8af216e0.css integrity="sha512-cYg6sGYUgs9sfSm4vdGvO+PS8ep1DlameEa39k9B0ZuNxtcEf0hCLsjL5KCkEtVRyCEDB+K5OxJUzb99ivIW4A=="><script type=text/javascript src=/js/appearance.min.badab316c9287a5a42a843e4eb45da65bb3d194a5a0f5fa4a3e516160e67df0b8c65f4f19a8e146436e29d583699e6cb41d6bbe99e05e1dbaa877763bad9f8e2.js integrity="sha512-utqzFskoelpCqEPk60XaZbs9GUpaD1+ko+UWFg5n3wuMZfTxmo4UZDbinVg2mebLQda76Z4F4duqh3djutn44g=="></script>
-<script defer type=text/javascript id=script-bundle src=/js/main.bundle.min.5ffdd39e73bd1438c0f4ff42f13915f067c633da22f60efa62139a4c51b972622badb1157d4aa4322634b55c8a2dc5ddfbd3917426df1c02d7b69362030197da.js integrity="sha512-X/3TnnO9FDjA9P9C8TkV8GfGM9oi9g76YhOaTFG5cmIrrbEVfUqkMiY0tVyKLcXd+9ORdCbfHALXtpNiAwGX2g==" data-copy=Copy data-copied=Copied></script>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><meta property="og:title" content="Cryptography - Modular Arithmetic"><meta property="og:description" content="Euclidean Algorithm"><meta property="og:type" content="article"><meta property="og:url" content="https://trevorsaudi.com/posts/2023-03-19_modular_arithmetic/"><meta property="og:image" content="https://trevorsaudi.com/posts/2023-03-19_modular_arithmetic/images/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-03-18T00:00:00+00:00"><meta property="article:modified_time" content="2023-03-18T00:00:00+00:00"><meta property="og:site_name" content="Trevor Saudi"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://trevorsaudi.com/posts/2023-03-19_modular_arithmetic/images/logo.png"><meta name=twitter:title content="Cryptography - Modular Arithmetic"><meta name=twitter:description content="Euclidean Algorithm"><script type=application/ld+json>[{"@context":"https://schema.org","@type":"Article","articleSection":"Posts","name":"Cryptography - Modular Arithmetic","headline":"Cryptography - Modular Arithmetic","description":"Euclidean Algorithm","abstract":"Introduction # What happens when the hour hand of your wall clock crosses 12?","inLanguage":"en","url":"https:\/\/trevorsaudi.com\/posts\/2023-03-19_modular_arithmetic\/","author":{"@type":"Person","name":"Trevor Saudi"},"copyrightYear":"2023","dateCreated":"2023-03-18T00:00:00\u002b00:00","datePublished":"2023-03-18T00:00:00\u002b00:00","dateModified":"2023-03-18T00:00:00\u002b00:00","keywords":["Cryptography","Cryptohack","Python"],"mainEntityOfPage":"true","wordCount":"1400"}]</script><meta name=author content="Trevor Saudi"><link href=https://github.com/trevorsaudi rel=me><link href=https://www.linkedin.com/in/trevor-saudi-9275b8186 rel=me></head><body class="flex flex-col h-screen px-6 m-auto text-lg leading-7 bg-neutral text-neutral-900 sm:px-14 md:px-24 lg:px-32 dark:bg-neutral-800 dark:text-neutral max-w-7xl"><div id=the-top class="absolute flex self-center"><a class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 dark:bg-neutral-600 focus:translate-y-0" href=#main-content><span class="font-bold ltr:pr-2 rtl:pl-2 text-primary-600 dark:text-primary-400">&darr;</span>Skip to main content</a></div><header class="flex justify-between py-6 font-semibold sm:items-center sm:py-10 text-neutral-900 dark:text-neutral print:hidden"><div></div><nav><ul class="flex flex-col list-none sm:flex-row"><li class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><a class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2" href=/ title>Home</a></li><li class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><a class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2" href=/posts/ title=Posts>Posts</a></li><li class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><a class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2" href=/about/ title>About</a></li><li class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><a class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2" href=/tags/ title=Tags>Tags</a></li><li class="ltr:text-right rtl:text-left ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><button id=search-button class="text-base hover:text-primary-600 dark:hover:text-primary-400" title="Search (/)">
-<span class="relative inline-block align-text-bottom icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M505 442.7 405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9.0 208 0S0 93.1.0 208s93.1 208 208 208c48.3.0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9.0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7.0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7.0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></span></button></li></ul></nav></header><div class=relative><main id=main-content class=grow><article><header class=max-w-prose><ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden"><li class="inline hidden"><a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href=/></a><span class="px-1 text-primary-500">/</span></li><li class=inline><a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href=/posts/>Posts</a><span class="px-1 text-primary-500">/</span></li><li class="inline hidden"><a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href=/posts/2023-03-19_modular_arithmetic/>Cryptography - Modular Arithmetic</a><span class="px-1 text-primary-500">/</span></li></ol><h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">Cryptography - Modular Arithmetic</h1><div class="mt-8 mb-12 text-base text-neutral-500 dark:text-neutral-400 print:hidden"><div class="flex flex-row flex-wrap items-center"><time datetime="2023-03-18 00:00:00 +0000 UTC">18 March 2023</time><span class="px-2 text-primary-500">&#183;</span><span title="Reading time">7 mins</span></div></div></header><section class="flex flex-col max-w-full mt-0 prose lg:flex-row dark:prose-invert"><div class="order-first px-0 lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8 lg:order-last"><div class="ltr:pl-5 rtl:pr-5 toc lg:sticky lg:top-10 print:hidden"><details open class="mt-0 overflow-hidden rounded-lg rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 lg:mt-3"><summary class="block py-1 text-lg font-semibold cursor-pointer rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 text-neutral-800 dark:text-neutral-100 lg:hidden bg-neutral-100 dark:bg-neutral-700">Table of Contents</summary><div class="py-2 border-dotted ltr:border-l rtl:border-r rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 border-neutral-300 dark:border-neutral-600"><nav id=TableOfContents><ul><li><a href=#introduction>Introduction</a></li><li><a href=#theory-of-congruences>Theory of Congruences</a></li><li><a href=#properties-of-an-equivalence-relation>Properties of an equivalence relation</a></li><li><a href=#modular-inverse>Modular Inverse</a><ul><li><a href=#calculating-modular-inverses-naive-approach>Calculating modular inverses: Naive approach</a></li><li><a href=#calculating-modular-inverses-euclidean-algorithm>Calculating modular inverses: Euclidean algorithm</a><ul><li><a href=#step-1-find-the-gcd-of-197-and-3000>Step 1: Find the GCD of 197 and 3000</a></li><li><a href=#step-2-express-1-as-the-difference-between-multiples-of-3000-and-197>Step 2: Express 1 as the difference between multiples of 3000 and 197</a></li><li><a href=#step-3-apply-modulo-to-both-sides>Step 3: Apply modulo to both sides</a></li></ul></li></ul></li><li><a href=#conclusion>Conclusion</a></li></ul></nav></div></details></div></div><div class="min-w-0 min-h-0 max-w-prose"><p><figure><img class="my-0 rounded-md" src=/posts/2023-03-19_modular_arithmetic/images/logo.png alt=image></figure></p><h2 id=introduction class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#introduction aria-label=Anchor>#</a></span></h2><ul><li>What happens when the hour hand of your wall clock crosses 12? It simply goes back to 1.</li><li>That is modular arithmetic. When numbers wrap around upon reaching a given point. When you get to hour 13 on your wall clock, it goes back to 1. 14 becomes 2, 15 becomes 3 and so on&mldr; A concept you understand from when you learnt how to tell the time</li><li>Looking at the clock in terms of modular arithmetic, when we cross over the clock at 12 and go to 13, we instead switch to 1 because 1 is the remainder of 13 mod 12. The range of numbers in this case is bounded by 12 and any remainders will simply be in this range.</li><li>This concept is very important in cryptography as it is fundamental to computing private and public keys in RSA as you will see in future blogs. This is true because modular arithmetic introduces the perspective of <code>finiteness</code>, allowing us to work with a range of values defined by a modulo operation. This makes it more efficient when handling large prime numbers and factorization in RSA.</li><li>We will utilize the concepts learnt before - euclidean algorithm and its extended version, to understand how to compute various operations in modular arithmetic</li></ul><h2 id=theory-of-congruences class="relative group">Theory of Congruences <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#theory-of-congruences aria-label=Anchor>#</a></span></h2><ul><li><p>The theory of congruences deals with the concept of numbers being equivalent or congruent to each other, based on a given modulus.</p></li><li><p>Sometimes also referred to as an equivalence relation, it follows the principle that algebraic operations done with <code>equivalent elements</code> will yield <code>equivalent results</code></p></li><li><p>Elements are said to be equivalent to each other based on a specific relationship for example:</p></li><li><p>Let&rsquo;s take for example an equation: <code>A ≡ B(mod C)</code>, we say that A is congruent to B modulo C, which means that A and B have the same remainder when divided by C. Meaning A and B are equivalent or in the same equivalence class</p></li><li><p>We can also look at it this way:</p><ul><li><p><code>A ≡ B(mod C)</code>, therefore</p></li><li><p><code>A - B</code> is divisible by C</p></li></ul></li><li><p>So if we had the following:</p><ul><li><p><code>37 ≡ 57(mod 10)</code></p></li><li><p><code>37 - 57</code> is divisible by <code>10</code></p></li><li><p><code>-20</code> is divisible by <code>10</code></p></li></ul></li><li><p>So <code>37</code> and <code>57</code> are in the same <code>equivalence class</code></p></li><li><p>Let’s apply that knowledge to solve for x in the following equation</p><ul><li><code>11 = x mod 6</code></li></ul></li><li><p>According to the theory of congruences, both 11 and x have the same remainder when divided by 6. Or, 11 - x is going to be divisible by 6</p></li><li><p>We can therefore calculate x by taking 11 mod 6.</p><ul><li><p><code>11 mod 6 = 5</code>, therefore</p></li><li><p><code>11 = 5 mod 6</code></p></li><li><p><code>11-5 = 6</code> which is divisible by 6</p></li></ul></li><li><p>We can also say that 11 and 5 are in the same equivalence class because they both have the same remainder when divided by 6.</p></li><li><p>These equivalence relationships are bound by various properties that will help us understand other concepts:</p></li></ul><h2 id=properties-of-an-equivalence-relation class="relative group">Properties of an equivalence relation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#properties-of-an-equivalence-relation aria-label=Anchor>#</a></span></h2><ul><li><code>Reflexivity</code>: every element is related to itself, meaning A is equivalent to A. So a = a (mod n)</li><li><code>Symmetry</code>: if A is equivalent to B, then B is equivalent to A. So a = b(mod n) and b = a (mod n)</li><li><code>Transitivity</code>: if A is equivalent to B and B is equivalent to C, then A is equivalent to C. So if a = b (mod n) and b = c(mod n), then a = c (mod n)</li></ul><h2 id=modular-inverse class="relative group">Modular Inverse <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#modular-inverse aria-label=Anchor>#</a></span></h2><ul><li>Before we talk about modular inverses. Let&rsquo;s start by understanding what an inverse is. You have probably come across the concept in your algebra class, where if you multiply a number by its inverse, you get 1</li><li>The inverse of a number <code>10</code> would be <code>1/10</code> also written as 10 <sup>-1</sup>. So <code>10 * 1/10</code> is <code>1</code></li><li>Note that 0 does not have an inverse</li><li>With the above concept of inverses in mind, in modular arithmetic, a modular inverse of a number a is another number b such that their product is congruent to 1 modulo a given modulus m. In other words, if we have <code>a * b ≡ 1 (mod m)</code>, then <code>b</code> is the modular inverse of <code>a modulo m</code>.</li><li>This can also be written as <code>a * b (mod m) = 1</code>. This is important because we are going to use this to calculate modular inverses in the next section</li></ul><br><div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900"><span class="ltr:pr-3 rtl:pl-3 text-primary-400"><span class="relative inline-block align-text-bottom icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M506.3 417 293 53c-16.33-28-57.54-28-73.98.0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6c32.76.0 53.26-35 36.96-63zM232 168c0-13.25 10.75-24 24-24s24 10.8 24 24v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zm24 248c-17.36.0-31.44-14.08-31.44-31.44s14.07-31.44 31.44-31.44 31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"/></svg></span></span><span class=dark:text-neutral-300>Modular inverses exist if and only if a and m are coprime, meaning they have no common factors other than 1. If a and m are not coprime, then there is no integer b that satisfies the congruence equation.</span></div><h3 id=calculating-modular-inverses-naive-approach class="relative group">Calculating modular inverses: Naive approach <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#calculating-modular-inverses-naive-approach aria-label=Anchor>#</a></span></h3><ul><li><p>Enough theory, let us see how we can use the euclidean algorithm and its extended version to compute modular inverses</p></li><li><p>Find the modular inverse of 3 mod 5</p></li><li><p>The expression can be written as
-<code>3 * b ≡ 1 (mod 5)</code></p></li><li><p>You Calculate 3 * b mod 5 for b values 0 through c - 1</p></li><li><p>So we plug in the values 0 - 4 for b till we find an equation that gives 1 as the answer</p><p><code>3 * 0 mod 5 = 0</code></p><p><code>3 * 1 mod 5 = 3</code></p><p><code>3 * 2 mod 5 = 1</code> &lt;&mdash;&mdash;&mdash;- answer</p></li><li><p>So the modular inverse of 3 mod 5 is 2</p></li><li><p>Let us build some intuition with this calculations:</p></li><li><p>Find the modular inverse of 3 mod 13</p></li><li><p>The expression can be written as</p><p><code>3 * b ≡ 1 (mod 13)</code></p></li><li><p>We ask ourselves this question, what number when multiplied by 3 and divided by 13 will give 1 as the answer?</p><p><code>3 * 0 mod 13 = 0</code></p><p><code>3 * 1 mod 13 = 3</code></p><p><code>3 * 2 mod 13 = 6</code></p><p><code>3 * 3 mod 13 = 9</code></p><p><code>3 * 4 mod 13 = 12</code></p><p><code>3 * 5 mod 13 = 2</code></p><p><code>3 * 6 mod 13 = 5</code></p><p><code>3 * 7 mod 13 = 8</code></p><p><code>3 * 8 mod 13 = 11</code></p><p><code>3 * 9 mod 13 = 1</code> &lt;&mdash;&mdash;&mdash;&ndash; answer (27 mod 13 is 1)</p></li><li><p>The modular inverse of 3 mod 13 becomes 9</p></li></ul><h3 id=calculating-modular-inverses-euclidean-algorithm class="relative group">Calculating modular inverses: Euclidean algorithm <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#calculating-modular-inverses-euclidean-algorithm aria-label=Anchor>#</a></span></h3><ul><li><p>We explained in detail how to calculate the euclidean algorithm and its extended version in the previous <a href=https://trevorsaudi.com/posts/2023-03-12_euclidean_modular/>blog</a>.</p></li><li><p>Seeing that it&rsquo;s an efficient method for finding GCD, we can apply the algorithm and its extended version to calculate coefficients that will find us the modular inverse</p></li><li><p>Find the modular inverse of 197 mod 3000</p></li><li><p>The expression can be written as</p><p><code>197 * b ≡ 1 (mod 3000)</code> or</p><p><code>197 * b (mod 3000) = 1</code></p></li></ul><h4 id=step-1-find-the-gcd-of-197-and-3000 class="relative group">Step 1: Find the GCD of 197 and 3000 <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#step-1-find-the-gcd-of-197-and-3000 aria-label=Anchor>#</a></span></h4><ul><li><p>We can do this using the euclidean algorithm</p><p><code>3000 = 15(197) + 45</code></p><p><code>197 = 4 (45) + 17</code></p><p><code>45 = 2(17) + 11</code></p><p><code>17 = 1(11) + 6</code></p><p><code>11 = 1(6) + 5</code></p><p><code>6 = 1(5) + 1</code></p></li><li><p>We can see that the GCD of the 2 numbers is 1. There are no common factors between the 2 numbers meaning the numbers are <code>co-prime</code>, which was a condition to find these modular inverses</p></li></ul><h4 id=step-2-express-1-as-the-difference-between-multiples-of-3000-and-197 class="relative group">Step 2: Express 1 as the difference between multiples of 3000 and 197 <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#step-2-express-1-as-the-difference-between-multiples-of-3000-and-197 aria-label=Anchor>#</a></span></h4><ul><li><p>We generally want to follow the pattern of this equation: <code>197 * b (mod 3000) = 1</code>, to find the multiples, we perform back substitution as we saw in the previous blog post with the extended euclidean algorithm</p><p><code>1 = 6- 1(5)</code></p><p><code>= 2(6) - 1(11)</code></p><p><code>= 2(17) - 3(11)</code></p><p><code>= 8(17) - 3(45)</code></p><p><code>= 8(197) - 3(45)</code></p><p><code>= 533(197) - 35(3000)</code> &lt;&mdash;&mdash;&mdash; We reach this point where we get the multiples of 3000 and 197 that will give us 1</p></li></ul><h4 id=step-3-apply-modulo-to-both-sides class="relative group">Step 3: Apply modulo to both sides <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#step-3-apply-modulo-to-both-sides aria-label=Anchor>#</a></span></h4><ul><li><p>So,</p><p><code>1 = 533(197) - 35(3000)</code></p></li><li><p>Becomes,</p><p><code>1 (mod 3000)= (533(197) - 35(3000))(mod 3000)</code></p><p><code>1 = 533(197)(mod 3000)</code> # 3000 mod 3000 is equal to 0 so that part of the equation is removed</p></li><li><p>The modular inverse becomes 533</p></li><li><p>The operations discussed with modular inverses are crucial in key generation in various cryptosystems like RSA</p></li></ul><h2 id=conclusion class="relative group">Conclusion <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#conclusion aria-label=Anchor>#</a></span></h2><ul><li>I hope your brains are not fried yet :) In the future blogs, we will see how we can use simple prebuilt tools to perform these computations for us and make our lives easier :D. See you in the next blog where we introduce even cooler math concepts</li></ul></div></section><footer class="pt-8 max-w-prose print:hidden"><div class=pt-8><hr class="border-dotted border-neutral-300 dark:border-neutral-600"><div class="flex justify-between pt-3"><span><a class="flex group" href=/posts/2023-03-12_euclidean_modular/><span class="mr-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400">&larr;</span>
-<span class="ml-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400">&rarr;</span>
-<span class="flex flex-col"><span class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500">Cryptography 02 - Euclidean Algorithm</span>
-<span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400"><time datetime="2023-03-12 00:00:00 +0000 UTC">12 March 2023</time></span></span></a></span>
-<span></span></div></div></footer></article><div class="absolute top-[110vh] ltr:right-0 rtl:left-0 w-12 pointer-events-none bottom-0"><a href=#the-top class="w-12 h-12 sticky pointer-events-auto top-[calc(100vh-5.5rem)] bg-neutral/50 dark:bg-neutral-800/50 backdrop-blur rounded-full text-xl flex items-center justify-center text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400" aria-label="Scroll to top" title="Scroll to top">&uarr;</a></div></main><div id=search-wrapper class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible" data-url=https://trevorsaudi.com/><div id=search-modal class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg border-neutral-200 top-20 bg-neutral dark:bg-neutral-800 dark:border-neutral-700"><header class="relative z-10 flex items-center justify-between flex-none px-2"><form class="flex items-center flex-auto min-w-0"><div class="flex items-center justify-center w-8 h-8 text-neutral-400"><span class="relative inline-block align-text-bottom icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M505 442.7 405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9.0 208 0S0 93.1.0 208s93.1 208 208 208c48.3.0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9.0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7.0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7.0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></span></div><input type=search id=search-query class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-transparent focus:outline-2" placeholder=Search tabindex=0></form><button id=close-search-button class="flex items-center justify-center w-8 h-8 text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400" title="Close (Esc)">
-<span class="relative inline-block align-text-bottom icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentcolor" d="M310.6 361.4c12.5 12.5 12.5 32.75.0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3 54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75.0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75.0-45.25s32.75-12.5 45.25.0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25.0s12.5 32.75.0 45.25l-105.4 105.4L310.6 361.4z"/></svg></span></button></header><section class="flex-auto px-2 overflow-auto"><ul id=search-results></ul></section></div></div><footer class="py-10 print:hidden"><div class="flex justify-between"><div><p class="text-sm text-neutral-500 dark:text-neutral-400">😄</p><p class="text-xs text-neutral-500 dark:text-neutral-400">Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href=https://gohugo.io/ target=_blank rel="noopener noreferrer">Hugo</a> & <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href=https://git.io/hugo-congo target=_blank rel="noopener noreferrer">Congo</a></p></div><div class="text-sm cursor-pointer text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400 ltr:mr-14 rtl:ml-14"><button id=appearance-switcher class="w-12 h-12" type=button title="Switch to dark appearance">
-<span class="inline dark:hidden"><span class="relative inline-block align-text-bottom icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M32 256C32 132.2 132.3 32 255.8 32c11.36.0 29.7 1.668 40.9 3.746 9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3 9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480 132.1 480 32 379.6 32 256z"/></svg></span></span><span class="hidden dark:inline"><span class="relative inline-block align-text-bottom icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M256 159.1c-53.02.0-95.1 42.98-95.1 95.1s41.2 96.9 95.1 96.9 95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347l-63.2-91.9 63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89 164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6 12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256 2.74 347.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7 19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109 109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69.0-127.1-57.31-127.1-127.1.0-70.69 57.31-127.1 127.1-127.1S383.1 186.2 383.1 256c0 70.7-56.4 127.1-127.1 127.1z"/></svg></span></span></button></div></div></footer></div></body></html>
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="light"
+  data-auto-appearance="true"
+><head>
+  <meta charset="utf-8" />
+  
+    <meta http-equiv="content-language" content="en" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  
+  <title>Cryptography - Modular Arithmetic &middot; Trevor Saudi</title>
+    <meta name="title" content="Cryptography - Modular Arithmetic &middot; Trevor Saudi" />
+  
+  <meta name="description" content="Portfolio/blog" />
+  
+  
+  
+  <link rel="canonical" href="https://trevorsaudi.com/posts/2023-03-19_modular_arithmetic/" />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.71883ab0661482cf6c7d29b8bdd1af3be3d2f1ea750e56a67846b7f64f41d19b8dc6d7047f48422ec8cbe4a0a412d551c8210307e2b93b1254cdbf7d8af216e0.css"
+    integrity="sha512-cYg6sGYUgs9sfSm4vdGvO&#43;PS8ep1DlameEa39k9B0ZuNxtcEf0hCLsjL5KCkEtVRyCEDB&#43;K5OxJUzb99ivIW4A=="
+  />
+  
+  
+  <script type="text/javascript" src="/js/appearance.min.badab316c9287a5a42a843e4eb45da65bb3d194a5a0f5fa4a3e516160e67df0b8c65f4f19a8e146436e29d583699e6cb41d6bbe99e05e1dbaa877763bad9f8e2.js" integrity="sha512-utqzFskoelpCqEPk60XaZbs9GUpaD1&#43;ko&#43;UWFg5n3wuMZfTxmo4UZDbinVg2mebLQda76Z4F4duqh3djutn44g=="></script>
+  
+    
+    
+    
+  
+  
+    
+    
+  
+  
+  
+    
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.5ffdd39e73bd1438c0f4ff42f13915f067c633da22f60efa62139a4c51b972622badb1157d4aa4322634b55c8a2dc5ddfbd3917426df1c02d7b69362030197da.js" integrity="sha512-X/3TnnO9FDjA9P9C8TkV8GfGM9oi9g76YhOaTFG5cmIrrbEVfUqkMiY0tVyKLcXd&#43;9ORdCbfHALXtpNiAwGX2g==" data-copy="Copy" data-copied="Copied"></script>
+  
+  
+  
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="Cryptography - Modular Arithmetic" />
+<meta property="og:description" content="Euclidean Algorithm" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://trevorsaudi.com/posts/2023-03-19_modular_arithmetic/" /><meta property="og:image" content="https://trevorsaudi.com/posts/2023-03-19_modular_arithmetic/images/logo.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-03-18T00:00:00+00:00" /><meta property="og:site_name" content="Trevor Saudi" />
+
+
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://trevorsaudi.com/posts/2023-03-19_modular_arithmetic/images/logo.png"/>
+
+<meta name="twitter:title" content="Cryptography - Modular Arithmetic"/>
+<meta name="twitter:description" content="Euclidean Algorithm"/>
+
+  
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Posts",
+    "name": "Cryptography - Modular Arithmetic",
+    "headline": "Cryptography - Modular Arithmetic",
+    "description": "Euclidean Algorithm",
+    "abstract": "Introduction # What happens when the hour hand of your wall clock crosses 12?",
+    "inLanguage": "en",
+    "url" : "https:\/\/trevorsaudi.com\/posts\/2023-03-19_modular_arithmetic\/",
+    "author" : {
+      "@type": "Person",
+      "name": "Trevor Saudi"
+    },
+    "copyrightYear": "2023",
+    "dateCreated": "2023-03-18T00:00:00\u002b00:00",
+    "datePublished": "2023-03-18T00:00:00\u002b00:00",
+    
+    "dateModified": "2023-03-18T00:00:00\u002b00:00",
+    
+    "keywords": ["Cryptography","Cryptohack","Python"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "1400"
+  }]
+  </script>
+
+
+  
+  <meta name="author" content="Trevor Saudi" />
+  
+    
+      <link href="https://github.com/trevorsaudi" rel="me" />
+    
+      <link href="https://www.linkedin.com/in/trevor-saudi-9275b8186" rel="me" />
+    
+  
+  
+  
+
+
+
+
+
+
+  
+  
+  
+  
+
+
+  
+  
+</head>
+<body
+    class="flex flex-col h-screen px-6 m-auto text-lg leading-7 bg-neutral text-neutral-900 sm:px-14 md:px-24 lg:px-32 dark:bg-neutral-800 dark:text-neutral max-w-7xl"
+  >
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 dark:bg-neutral-600 focus:translate-y-0"
+        href="#main-content"
+        ><span class="font-bold ltr:pr-2 rtl:pl-2 text-primary-600 dark:text-primary-400"
+          >&darr;</span
+        >Skip to main content</a
+      >
+    </div><header
+  class="flex justify-between py-6 font-semibold sm:items-center sm:py-10 text-neutral-900 dark:text-neutral print:hidden"
+>
+  
+  <div>
+    
+      
+    
+    
+
+  </div>
+  
+  
+    <nav>
+      <ul class="flex flex-col list-none sm:flex-row">
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/"
+              title=""
+              >Home</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/posts/"
+              title="Posts"
+              >Posts</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/about/"
+              title=""
+              >About</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/tags/"
+              title="Tags"
+              >Tags</a
+            >
+          </li>
+        
+        
+          <li
+            class="ltr:text-right rtl:text-left ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <button
+              id="search-button"
+              class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+              title="Search (/)"
+            >
+              
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+            </button>
+          </li>
+        
+      </ul>
+    </nav>
+  
+</header>
+<div class="relative">
+      <main id="main-content" class="grow">
+  <article>
+    <header class="max-w-prose">
+      
+        <ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden">
+  
+  
+    
+  
+    
+  
+  <li class="inline hidden">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/"
+      ></a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline ">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/posts/"
+      >Posts</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline hidden">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/posts/2023-03-19_modular_arithmetic/"
+      >Cryptography - Modular Arithmetic</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+</ol>
+
+
+      
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        Cryptography - Modular Arithmetic
+      </h1>
+      <div class="mt-8 mb-12 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+        
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+    
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2023-03-18 00:00:00 &#43;0000 UTC">18 March 2023</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">7 mins</span>
+    
+
+    
+    
+  </div>
+
+  
+  
+
+
+      </div>
+    </header>
+    <section class="flex flex-col max-w-full mt-0 prose lg:flex-row dark:prose-invert">
+      
+        <div class="order-first px-0 lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8 lg:order-last">
+          <div class="ltr:pl-5 rtl:pr-5 toc lg:sticky lg:top-10 print:hidden">
+            <details open class="mt-0 overflow-hidden rounded-lg rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 lg:mt-3">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 text-neutral-800 dark:text-neutral-100 lg:hidden bg-neutral-100 dark:bg-neutral-700"
+  >
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted ltr:border-l rtl:border-r rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 border-neutral-300 dark:border-neutral-600"
+  >
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#theory-of-congruences">Theory of Congruences</a></li>
+    <li><a href="#properties-of-an-equivalence-relation">Properties of an equivalence relation</a></li>
+    <li><a href="#modular-inverse">Modular Inverse</a>
+      <ul>
+        <li><a href="#calculating-modular-inverses-naive-approach">Calculating modular inverses: Naive approach</a></li>
+        <li><a href="#calculating-modular-inverses-euclidean-algorithm">Calculating modular inverses: Euclidean algorithm</a>
+          <ul>
+            <li><a href="#step-1-find-the-gcd-of-197-and-3000">Step 1: Find the GCD of 197 and 3000</a></li>
+            <li><a href="#step-2-express-1-as-the-difference-between-multiples-of-3000-and-197">Step 2: Express 1 as the difference between multiples of 3000 and 197</a></li>
+            <li><a href="#step-3-apply-modulo-to-both-sides">Step 3: Apply modulo to both sides</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+          </div>
+        </div>
+      
+      <div class="min-w-0 min-h-0 max-w-prose">
+        <p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-03-19_modular_arithmetic/images/logo.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h2 id="introduction" class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>What happens when the hour hand of your wall clock crosses 12? It simply goes back to 1.</li>
+<li>That is modular arithmetic. When numbers wrap around upon reaching a given point. When you get to hour 13 on your wall clock, it goes back to 1. 14 becomes 2, 15 becomes 3 and so on&hellip; A concept you understand from when you learnt how to tell the time</li>
+<li>Looking at the clock in terms of modular arithmetic, when we cross over the clock at 12 and go to 13, we instead switch to 1 because 1 is the remainder of 13 mod 12. The range of numbers in this case is bounded by 12 and any remainders will simply be in this range.</li>
+<li>This concept is very important in cryptography as it is fundamental to computing private and public keys in RSA as you will see in future blogs. This is true because modular arithmetic introduces the perspective of <code>finiteness</code>, allowing us to work with a range of values defined by a modulo operation. This makes it more efficient when handling large prime numbers and factorization in RSA.</li>
+<li>We will utilize the concepts learnt before - euclidean algorithm  and its extended version, to understand how to compute various operations in modular arithmetic</li>
+</ul>
+<h2 id="theory-of-congruences" class="relative group">Theory of Congruences <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#theory-of-congruences" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>
+<p>The theory of congruences deals with the concept of numbers being equivalent or congruent to each other, based on a given modulus.</p>
+</li>
+<li>
+<p>Sometimes also referred to as an equivalence relation, it follows the principle that algebraic operations done with <code>equivalent elements</code> will yield <code>equivalent results</code></p>
+</li>
+<li>
+<p>Elements are said to be equivalent to each other based on a specific relationship for example:</p>
+</li>
+<li>
+<p>Let&rsquo;s take for example an equation: <code>A ≡ B(mod C)</code>, we say that A is congruent to B modulo C, which means that A and B have the same remainder when divided by C. Meaning A and B are equivalent or in the same equivalence class</p>
+</li>
+<li>
+<p>We can also look at it this way:</p>
+<ul>
+<li>
+<p><code>A ≡ B(mod C)</code>, therefore</p>
+</li>
+<li>
+<p><code>A - B</code> is divisible by C</p>
+</li>
+</ul>
+</li>
+<li>
+<p>So if we had the following:</p>
+<ul>
+<li>
+<p><code>37 ≡ 57(mod 10)</code></p>
+</li>
+<li>
+<p><code>37 - 57</code> is divisible by <code>10</code></p>
+</li>
+<li>
+<p><code>-20</code> is divisible by <code>10</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>So <code>37</code> and <code>57</code> are in the same <code>equivalence class</code></p>
+</li>
+<li>
+<p>Let’s apply that knowledge to solve for x in the following equation</p>
+<ul>
+<li><code>11 = x mod 6</code></li>
+</ul>
+</li>
+<li>
+<p>According to the theory of congruences, both 11 and x have the same remainder when divided by 6. Or, 11 - x is going to be divisible by 6</p>
+</li>
+<li>
+<p>We can therefore calculate x by taking 11 mod 6.</p>
+<ul>
+<li>
+<p><code>11 mod 6 = 5</code>, therefore</p>
+</li>
+<li>
+<p><code>11 = 5 mod 6</code></p>
+</li>
+<li>
+<p><code>11-5 = 6</code> which is divisible by 6</p>
+</li>
+</ul>
+</li>
+<li>
+<p>We can also say that 11 and 5 are in the same equivalence class because they both have the same remainder when divided by 6.</p>
+</li>
+<li>
+<p>These equivalence relationships are bound by various properties that will help us understand other concepts:</p>
+</li>
+</ul>
+<h2 id="properties-of-an-equivalence-relation" class="relative group">Properties of an equivalence relation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#properties-of-an-equivalence-relation" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li><code>Reflexivity</code>: every element is related to itself, meaning A is equivalent to A. So a = a (mod n)</li>
+<li><code>Symmetry</code>: if A is equivalent to B, then B is equivalent to A. So a = b(mod n) and b = a (mod n)</li>
+<li><code>Transitivity</code>: if A is equivalent to B and B is equivalent to C, then A is equivalent to C. So if a = b (mod n) and b = c(mod n), then a = c (mod n)</li>
+</ul>
+<h2 id="modular-inverse" class="relative group">Modular Inverse <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#modular-inverse" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>Before we talk about modular inverses. Let&rsquo;s start by understanding what an inverse is. You have probably come across the concept in your algebra class, where if you multiply a number by its inverse, you get 1</li>
+<li>The inverse of a number <code>10</code> would be <code>1/10</code>  also written as 10 <sup>-1</sup>. So <code>10 * 1/10</code> is <code>1</code></li>
+<li>Note that 0 does not have an inverse</li>
+<li>With the above concept of inverses in mind, in modular arithmetic, a modular inverse of a number a is another number b such that their product is congruent to 1 modulo a given modulus m. In other words, if we have <code>a * b ≡ 1 (mod m)</code>, then <code>b</code> is the modular inverse of <code>a modulo m</code>.</li>
+<li>This can also be written as <code>a * b (mod m) = 1</code>. This is important because we are going to use this to calculate modular inverses in the next section</li>
+</ul>
+<br>
+<div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900">
+  <span class="ltr:pr-3 rtl:pl-3 text-primary-400">
+    
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M506.3 417l-213.3-364c-16.33-28-57.54-28-73.98 0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6C502.1 480 522.6 445 506.3 417zM232 168c0-13.25 10.75-24 24-24S280 154.8 280 168v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zM256 416c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"/></svg>
+
+  </span>
+
+
+  </span>
+  <span class="dark:text-neutral-300">Modular inverses exist if and only if a and m are coprime, meaning they have no common factors other than 1. If a and m are not coprime, then there is no integer b that satisfies the congruence equation.</span>
+</div>
+
+<h3 id="calculating-modular-inverses-naive-approach" class="relative group">Calculating modular inverses: Naive approach <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#calculating-modular-inverses-naive-approach" aria-label="Anchor">#</a></span></h3>
+<ul>
+<li>
+<p>Enough theory, let us see how we can use the euclidean algorithm and its extended version to compute modular inverses</p>
+</li>
+<li>
+<p>Find the modular inverse of 3 mod 5</p>
+</li>
+<li>
+<p>The expression can be written as
+<code>3 * b ≡ 1 (mod 5)</code></p>
+</li>
+<li>
+<p>You Calculate 3 * b mod 5 for b values 0 through c - 1</p>
+</li>
+<li>
+<p>So we plug in the values 0 - 4 for b till we find an equation that gives 1 as the answer</p>
+<p><code>3 * 0 mod 5 = 0</code></p>
+<p><code>3 * 1 mod 5 = 3</code></p>
+<p><code>3 * 2 mod 5 = 1</code> &lt;&mdash;&mdash;&mdash;- answer</p>
+</li>
+<li>
+<p>So the modular inverse of 3 mod 5 is 2</p>
+</li>
+<li>
+<p>Let us build some intuition with this calculations:</p>
+</li>
+<li>
+<p>Find the modular inverse of 3 mod 13</p>
+</li>
+<li>
+<p>The expression can be written as</p>
+<p><code>3 * b  ≡ 1 (mod 13)</code></p>
+</li>
+<li>
+<p>We ask ourselves this question, what number when multiplied by 3 and divided by 13 will give 1 as the answer?</p>
+<p><code>3 * 0 mod 13 = 0</code></p>
+<p><code>3 * 1 mod 13 = 3</code></p>
+<p><code>3 * 2 mod 13 = 6</code></p>
+<p><code>3 * 3 mod 13 = 9</code></p>
+<p><code>3 * 4 mod 13 = 12</code></p>
+<p><code>3 * 5 mod 13 = 2</code></p>
+<p><code>3 * 6 mod 13 = 5</code></p>
+<p><code>3 * 7 mod 13 = 8</code></p>
+<p><code>3 * 8 mod 13 = 11</code></p>
+<p><code>3 * 9 mod 13 = 1</code> &lt;&mdash;&mdash;&mdash;&ndash; answer (27 mod 13 is 1)</p>
+</li>
+<li>
+<p>The modular inverse of 3 mod 13 becomes 9</p>
+</li>
+</ul>
+<h3 id="calculating-modular-inverses-euclidean-algorithm" class="relative group">Calculating modular inverses: Euclidean algorithm <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#calculating-modular-inverses-euclidean-algorithm" aria-label="Anchor">#</a></span></h3>
+<ul>
+<li>
+<p>We explained in detail how to calculate the euclidean algorithm and its extended version in the previous <a href="https://trevorsaudi.com/posts/2023-03-12_euclidean_modular/">blog</a>.</p>
+</li>
+<li>
+<p>Seeing that it&rsquo;s an efficient method for finding GCD, we can apply the algorithm and its extended version to calculate coefficients that will find us the modular inverse</p>
+</li>
+<li>
+<p>Find the modular inverse of 197 mod 3000</p>
+</li>
+<li>
+<p>The expression can be written as</p>
+<p><code>197 * b  ≡ 1 (mod 3000)</code> or</p>
+<p><code>197 * b (mod 3000) = 1</code></p>
+</li>
+</ul>
+<h4 id="step-1-find-the-gcd-of-197-and-3000" class="relative group">Step 1: Find the GCD of 197 and 3000 <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#step-1-find-the-gcd-of-197-and-3000" aria-label="Anchor">#</a></span></h4>
+<ul>
+<li>
+<p>We can do this using the euclidean algorithm</p>
+<p><code>3000 = 15(197) + 45</code></p>
+<p><code>197 = 4 (45) + 17</code></p>
+<p><code>45 = 2(17) + 11</code></p>
+<p><code>17 = 1(11) + 6</code></p>
+<p><code>11 = 1(6) + 5</code></p>
+<p><code>6 = 1(5) + 1</code></p>
+</li>
+<li>
+<p>We can see that the GCD of the 2 numbers is 1. There are no common factors between the 2 numbers meaning the numbers are <code>co-prime</code>, which was a condition to find these modular inverses</p>
+</li>
+</ul>
+<h4 id="step-2-express-1-as-the-difference-between-multiples-of-3000-and-197" class="relative group">Step 2: Express 1 as the difference between multiples of 3000 and 197 <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#step-2-express-1-as-the-difference-between-multiples-of-3000-and-197" aria-label="Anchor">#</a></span></h4>
+<ul>
+<li>
+<p>We generally want to follow the pattern of this equation:  <code>197 * b (mod 3000) = 1</code>, to find the multiples, we perform back substitution as we saw in the previous blog post with the extended euclidean algorithm</p>
+<p><code>1 = 6- 1(5)</code></p>
+<p><code>  = 2(6) - 1(11)</code></p>
+<p><code>  = 2(17) - 3(11)</code></p>
+<p><code>  = 8(17) - 3(45)</code></p>
+<p><code>  = 8(197) - 3(45)</code></p>
+<p><code>  = 533(197) - 35(3000)</code> &lt;&mdash;&mdash;&mdash; We reach this point where we get the multiples of 3000 and 197 that will give us 1</p>
+</li>
+</ul>
+<h4 id="step-3-apply-modulo-to-both-sides" class="relative group">Step 3: Apply modulo to both sides <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#step-3-apply-modulo-to-both-sides" aria-label="Anchor">#</a></span></h4>
+<ul>
+<li>
+<p>So,</p>
+<p><code>1 = 533(197) - 35(3000)</code></p>
+</li>
+<li>
+<p>Becomes,</p>
+<p><code>1 (mod 3000)= (533(197) - 35(3000))(mod 3000)</code></p>
+<p><code>1 =  533(197)(mod 3000)</code> # 3000 mod 3000 is equal to 0 so that part of the equation is removed</p>
+</li>
+<li>
+<p>The modular inverse becomes 533</p>
+</li>
+<li>
+<p>The operations discussed with modular inverses are crucial in key generation in various cryptosystems like RSA</p>
+</li>
+</ul>
+<h2 id="conclusion" class="relative group">Conclusion <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#conclusion" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>I hope your brains are not fried yet :) In the future blogs, we will see how we can use simple prebuilt tools to perform these computations for us and make our lives easier :D. See you in the next blog where we introduce even cooler math concepts</li>
+</ul>
+
+      </div>
+    </section>
+    <footer class="pt-8 max-w-prose print:hidden">
+      
+
+      
+
+      
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="flex group" href="/posts/2023-03-12_euclidean_modular/">
+              <span
+                class="mr-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+              <span
+                class="ml-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Cryptography - Euclidean Algorithm</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2023-03-12 00:00:00 &#43;0000 UTC">12 March 2023</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+            <a class="flex text-right group" href="/posts/2023-03-25_red_team01/">
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Email Phishing with Covenant</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2023-03-25 00:00:00 &#43;0000 UTC">25 March 2023</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ml-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span
+                class="mr-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+            </a>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+    </footer>
+    
+  </article>
+
+        
+          <div
+            class="absolute top-[110vh] ltr:right-0 rtl:left-0 w-12 pointer-events-none bottom-0"
+          >
+            <a
+              href="#the-top"
+              class="w-12 h-12 sticky pointer-events-auto top-[calc(100vh-5.5rem)] bg-neutral/50 dark:bg-neutral-800/50 backdrop-blur rounded-full text-xl flex items-center justify-center text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400"
+              aria-label="Scroll to top"
+              title="Scroll to top"
+            >
+              &uarr;
+            </a>
+          </div>
+        
+      </main>
+      <div
+  id="search-wrapper"
+  class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible"
+  data-url="https://trevorsaudi.com/"
+>
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg border-neutral-200 top-20 bg-neutral dark:bg-neutral-800 dark:border-neutral-700"
+  >
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-transparent focus:outline-2"
+          placeholder="Search"
+          tabindex="0"
+        />
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400"
+        title="Close (Esc)"
+      >
+        
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+
+  </span>
+
+
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+<footer class="py-10 print:hidden">
+  
+  
+  <div class="flex justify-between">
+    <div>
+      
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          😄
+      </p>
+      
+      
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          
+          
+          Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> &amp; <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://git.io/hugo-congo" target="_blank" rel="noopener noreferrer">Congo</a>
+        </p>
+      
+    </div>
+    
+    
+      <div
+        class="text-sm cursor-pointer text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400 ltr:mr-14 rtl:ml-14"
+      >
+        <button
+          id="appearance-switcher"
+          class="w-12 h-12 "
+          type="button"
+          title="Switch to dark appearance"
+        >
+          <span class="inline dark:hidden">
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+
+  </span>
+
+</span>
+          <span class="hidden dark:inline">
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+
+  </span>
+
+</span>
+        </button>
+      </div>
+    
+  </div>
+  
+  
+</footer>
+</div>
+  </body>
+</html>

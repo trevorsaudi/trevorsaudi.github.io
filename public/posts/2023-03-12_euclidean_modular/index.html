@@ -1,30 +1,1052 @@
-<!doctype html><html lang=en dir=ltr class=scroll-smooth data-default-appearance=dark data-auto-appearance=true><head><meta charset=utf-8><meta http-equiv=content-language content="en"><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><title>Cryptography 02 - Euclidean Algorithm &#183; Trevor Saudi</title><meta name=title content="Cryptography 02 - Euclidean Algorithm &#183; Trevor Saudi"><meta name=description content="Portfolio/blog"><link rel=canonical href=https://trevorsaudi.com/posts/2023-03-12_euclidean_modular/><link type=text/css rel=stylesheet href=/css/main.bundle.min.71883ab0661482cf6c7d29b8bdd1af3be3d2f1ea750e56a67846b7f64f41d19b8dc6d7047f48422ec8cbe4a0a412d551c8210307e2b93b1254cdbf7d8af216e0.css integrity="sha512-cYg6sGYUgs9sfSm4vdGvO+PS8ep1DlameEa39k9B0ZuNxtcEf0hCLsjL5KCkEtVRyCEDB+K5OxJUzb99ivIW4A=="><script type=text/javascript src=/js/appearance.min.badab316c9287a5a42a843e4eb45da65bb3d194a5a0f5fa4a3e516160e67df0b8c65f4f19a8e146436e29d583699e6cb41d6bbe99e05e1dbaa877763bad9f8e2.js integrity="sha512-utqzFskoelpCqEPk60XaZbs9GUpaD1+ko+UWFg5n3wuMZfTxmo4UZDbinVg2mebLQda76Z4F4duqh3djutn44g=="></script>
-<script defer type=text/javascript id=script-bundle src=/js/main.bundle.min.5ffdd39e73bd1438c0f4ff42f13915f067c633da22f60efa62139a4c51b972622badb1157d4aa4322634b55c8a2dc5ddfbd3917426df1c02d7b69362030197da.js integrity="sha512-X/3TnnO9FDjA9P9C8TkV8GfGM9oi9g76YhOaTFG5cmIrrbEVfUqkMiY0tVyKLcXd+9ORdCbfHALXtpNiAwGX2g==" data-copy=Copy data-copied=Copied></script>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><meta property="og:title" content="Cryptography 02 - Euclidean Algorithm"><meta property="og:description" content="Euclidean Algorithm"><meta property="og:type" content="article"><meta property="og:url" content="https://trevorsaudi.com/posts/2023-03-12_euclidean_modular/"><meta property="og:image" content="https://trevorsaudi.com/posts/2023-03-12_euclidean_modular/images/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-03-12T00:00:00+00:00"><meta property="article:modified_time" content="2023-03-12T00:00:00+00:00"><meta property="og:site_name" content="Trevor Saudi"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://trevorsaudi.com/posts/2023-03-12_euclidean_modular/images/logo.png"><meta name=twitter:title content="Cryptography 02 - Euclidean Algorithm"><meta name=twitter:description content="Euclidean Algorithm"><script type=application/ld+json>[{"@context":"https://schema.org","@type":"Article","articleSection":"Posts","name":"Cryptography 02 - Euclidean Algorithm","headline":"Cryptography 02 - Euclidean Algorithm","description":"Euclidean Algorithm","abstract":"Introduction # In the previous blog, we did a general introduction to cryptography and the various important libraries and techniques for handling encrypted data with python.","inLanguage":"en","url":"https:\/\/trevorsaudi.com\/posts\/2023-03-12_euclidean_modular\/","author":{"@type":"Person","name":"Trevor Saudi"},"copyrightYear":"2023","dateCreated":"2023-03-12T00:00:00\u002b00:00","datePublished":"2023-03-12T00:00:00\u002b00:00","dateModified":"2023-03-12T00:00:00\u002b00:00","keywords":["Cryptography","Cryptohack","Python"],"mainEntityOfPage":"true","wordCount":"1578"}]</script><meta name=author content="Trevor Saudi"><link href=https://github.com/trevorsaudi rel=me><link href=https://www.linkedin.com/in/trevor-saudi-9275b8186 rel=me></head><body class="flex flex-col h-screen px-6 m-auto text-lg leading-7 bg-neutral text-neutral-900 sm:px-14 md:px-24 lg:px-32 dark:bg-neutral-800 dark:text-neutral max-w-7xl"><div id=the-top class="absolute flex self-center"><a class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 dark:bg-neutral-600 focus:translate-y-0" href=#main-content><span class="font-bold ltr:pr-2 rtl:pl-2 text-primary-600 dark:text-primary-400">&darr;</span>Skip to main content</a></div><header class="flex justify-between py-6 font-semibold sm:items-center sm:py-10 text-neutral-900 dark:text-neutral print:hidden"><div></div><nav><ul class="flex flex-col list-none sm:flex-row"><li class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><a class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2" href=/ title>Home</a></li><li class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><a class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2" href=/posts/ title=Posts>Posts</a></li><li class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><a class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2" href=/about/ title>About</a></li><li class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><a class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2" href=/tags/ title=Tags>Tags</a></li><li class="ltr:text-right rtl:text-left ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><button id=search-button class="text-base hover:text-primary-600 dark:hover:text-primary-400" title="Search (/)">
-<span class="relative inline-block align-text-bottom icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M505 442.7 405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9.0 208 0S0 93.1.0 208s93.1 208 208 208c48.3.0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9.0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7.0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7.0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></span></button></li></ul></nav></header><div class=relative><main id=main-content class=grow><article><header class=max-w-prose><ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden"><li class="inline hidden"><a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href=/></a><span class="px-1 text-primary-500">/</span></li><li class=inline><a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href=/posts/>Posts</a><span class="px-1 text-primary-500">/</span></li><li class="inline hidden"><a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href=/posts/2023-03-12_euclidean_modular/>Cryptography 02 - Euclidean Algorithm</a><span class="px-1 text-primary-500">/</span></li></ol><h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">Cryptography 02 - Euclidean Algorithm</h1><div class="mt-8 mb-12 text-base text-neutral-500 dark:text-neutral-400 print:hidden"><div class="flex flex-row flex-wrap items-center"><time datetime="2023-03-12 00:00:00 +0000 UTC">12 March 2023</time><span class="px-2 text-primary-500">&#183;</span><span title="Reading time">8 mins</span></div></div></header><section class="flex flex-col max-w-full mt-0 prose lg:flex-row dark:prose-invert"><div class="order-first px-0 lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8 lg:order-last"><div class="ltr:pl-5 rtl:pr-5 toc lg:sticky lg:top-10 print:hidden"><details open class="mt-0 overflow-hidden rounded-lg rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 lg:mt-3"><summary class="block py-1 text-lg font-semibold cursor-pointer rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 text-neutral-800 dark:text-neutral-100 lg:hidden bg-neutral-100 dark:bg-neutral-700">Table of Contents</summary><div class="py-2 border-dotted ltr:border-l rtl:border-r rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 border-neutral-300 dark:border-neutral-600"><nav id=TableOfContents><ul><li><a href=#introduction>Introduction</a></li><li><a href=#why-should-you-understand-these-concepts>Why should you understand these concepts?</a></li><li><a href=#greatest-common-divisor-gcd>Greatest Common Divisor (GCD)</a></li><li><a href=#euclideans-algorithm>Euclidean&rsquo;s Algorithm</a><ul><li><a href=#example>Example</a></li><li><a href=#how-it-works-visually>How it works visually</a></li><li><a href=#the-algorithm-in-python>The algorithm in python</a><ul><li><a href=#solution>Solution</a></li><li><a href=#code>Code</a></li></ul></li></ul></li><li><a href=#extended-euclidean-algorithm>Extended Euclidean Algorithm</a><ul><li><a href=#the-algorithm-in-python-1>The algorithm in python</a><ul><li><a href=#solution-1>Solution</a></li><li><a href=#base-case>Base Case</a></li><li><a href=#code-1>Code</a></li></ul></li></ul></li><li><a href=#conclusion>Conclusion</a></li></ul></nav></div></details></div></div><div class="min-w-0 min-h-0 max-w-prose"><h2 id=introduction class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#introduction aria-label=Anchor>#</a></span></h2><ul><li>In the previous <a href=http://localhost:1313/posts/2023-03-12_crypto_basics/>blog</a>, we did a general introduction to cryptography and the various important libraries and techniques for handling encrypted data with python.</li><li>We introduce some basic math concepts in this blog, where we talk about GCD and the euclidean algorithm, its extended version and how to form recursive algorithms in python for them.</li></ul><h2 id=why-should-you-understand-these-concepts class="relative group">Why should you understand these concepts? <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#why-should-you-understand-these-concepts aria-label=Anchor>#</a></span></h2><ul><li>As we move into public key cryptography, all these concepts form a fundamental basis for understanding cryptosystems and cryptographic attacks. Some of the computations may be a bit confusing at first but grasping the logic behind these math algorithms will be important for you as we move forward.</li></ul><h2 id=greatest-common-divisor-gcd class="relative group">Greatest Common Divisor (GCD) <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#greatest-common-divisor-gcd aria-label=Anchor>#</a></span></h2><ul><li><p>Let us begin by defining these 2 terms:</p><ol><li>Factors - a number that divides another number evenly. i.e if 2 is a factor of 10, then 2 can divide 10 into 5 equal parts</li><li>Common Factors - if the factor of a number is the factor of another number, then it is said to be a common factor i.e if 2 is a factor of 10 and 4, then 2 is said to be a common factor</li></ol></li><li><p>GCD is then the largest common factor of 2 or more positive integers</p></li><li><p>Suppose we have 2 integers <code>a=12, b=18</code>, the factors of <code>a</code> are <code>2,3,4,6</code> while the factors of <code>b</code> are <code>2,3,6,9</code></p></li><li><p>The greatest common divisor of the 2 would be 6</p></li></ul><h2 id=euclideans-algorithm class="relative group">Euclidean&rsquo;s Algorithm <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#euclideans-algorithm aria-label=Anchor>#</a></span></h2><ul><li>Also known as Euclid&rsquo;s algorithm, this is an efficient method of computing the GCD between 2 numbers.</li><li>The algorithm is based on the following GCD property:<ul><li><p>If we have 2 numbers, the GCD of the numbers does not change if the larger number is replaced by its remainder when divided by the smaller of the two</p><p>i.e <code>if a > b then GCD(a,b) = GCD(b,a%b)</code></p></li></ul></li></ul><p><strong>Point to note</strong></p><ul><li>Our operations will be expressed as follows</li></ul><div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900"><span class="ltr:pr-3 rtl:pl-3 text-primary-400"><span class="relative inline-block align-text-bottom icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M506.3 417 293 53c-16.33-28-57.54-28-73.98.0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6c32.76.0 53.26-35 36.96-63zM232 168c0-13.25 10.75-24 24-24s24 10.8 24 24v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zm24 248c-17.36.0-31.44-14.08-31.44-31.44s14.07-31.44 31.44-31.44 31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"/></svg></span></span><span class=dark:text-neutral-300>dividend = quotient * divider + remainder</span></div><ul><li><p>For example, if we divide 48 by 6, we can express this as:</p><p><code>48 ÷ 6 = 8 + 0</code></p><p><code>48 - dividend</code></p><p><code>6 - divider</code></p><p><code>8 - quotient</code></p><p><code>0 - remainder</code></p></li><li><p>Rewrite in terms of the formula</p></li></ul><p><code>48 = 8 * 6 + 0</code></p><h3 id=example class="relative group">Example <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#example aria-label=Anchor>#</a></span></h3><ul><li><p>We start by dividing the larger number by the smaller number to get the quotient and remainder:</p><p><code>54 = 2 × 21 + 12</code></p></li><li><p>Next, we divide the smaller number by the remainder to get another quotient and remainder:</p><p><code>21 = 1 × 12 + 9</code></p></li><li><p>We repeat the process with the new pair of numbers:</p><p><code>12 = 1 × 9 + 3</code></p></li><li><p>Finally, we have:</p><p><code>9 = 3 × 3 + 0</code></p></li><li><p>Since the remainder is now 0, we have found the GCD of the original two numbers. In this case, the GCD of 54 and 21 is 3.</p></li><li><p>By replacing the larger number with its remainder by dividing it by the smaller number, we get a smaller pair of numbers. Repeating this process results in progressively smaller pairs of numbers until both numbers are equal.</p></li></ul><h3 id=how-it-works-visually class="relative group">How it works visually <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#how-it-works-visually aria-label=Anchor>#</a></span></h3><ul><li>Suppose we have 2 big numbers represented as 2 piles of stones. We are going to find the GCD of the 2 piles of stones.</li><li>Pile B is bigger than A. If we find copies of stones from a smaller pile in the larger pile, we subtract the copies.</li></ul><p><figure><img class="my-0 rounded-md" src=/posts/2023-03-12_euclidean_modular/images/1.png alt=image></figure></p><ul><li>We start by finding copies of pile A in pile B as shown below.</li></ul><p><figure><img class="my-0 rounded-md" src=/posts/2023-03-12_euclidean_modular/images/112.png alt=image></figure></p><ul><li>Subtract the copies from pile B</li></ul><p><figure><img class="my-0 rounded-md" src=/posts/2023-03-12_euclidean_modular/images/2.png alt=image></figure></p><ul><li>We end up with the following resulting pile</li></ul><p><figure><img class="my-0 rounded-md" src=/posts/2023-03-12_euclidean_modular/images/3.png alt=image></figure></p><ul><li>Pile B is now smaller than A. We find copies of pile B in pile A</li></ul><p><figure><img class="my-0 rounded-md" src=/posts/2023-03-12_euclidean_modular/images/4.png alt=image></figure></p><ul><li>Subtract the copy of pile B from pile A</li></ul><p><figure><img class="my-0 rounded-md" src=/posts/2023-03-12_euclidean_modular/images/5.png alt=image></figure></p><ul><li>We end up with the following resulting pile</li></ul><p><figure><img class="my-0 rounded-md" src=/posts/2023-03-12_euclidean_modular/images/6.png alt=image></figure></p><ul><li>Pile A is now smaller than B. We find copies of pile A in pile B</li></ul><p><figure><img class="my-0 rounded-md" src=/posts/2023-03-12_euclidean_modular/images/7.png alt=image></figure></p><ul><li>Subtract the copies of pile A from pile B</li></ul><p><figure><img class="my-0 rounded-md" src=/posts/2023-03-12_euclidean_modular/images/8.png alt=image></figure></p><ul><li>Find copies of pile B (which is now smaller), in pile A</li></ul><p><figure><img class="my-0 rounded-md" src=/posts/2023-03-12_euclidean_modular/images/9.png alt=image></figure></p><ul><li>Subtract the copy</li></ul><p><figure><img class="my-0 rounded-md" src=/posts/2023-03-12_euclidean_modular/images/11.png alt=image></figure></p><ul><li>Now that the 2 piles are equal, it means we have found the GCD which is 3</li></ul><p><figure><img class="my-0 rounded-md" src=/posts/2023-03-12_euclidean_modular/images/12.png alt=image></figure></p><ul><li>The 2 numbers representing the pile are 21 and 54 whose GCD is 3</li></ul><p><strong>Note</strong></p><ul><li>Repeated subtraction is just a <code>division operation</code></li><li>We stop our operations when we divide a and b and get a remainder of 0 which means the numbers are either equal or one of the 2 numbers is a 0, making the other number the GCD</li></ul><div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900"><span class="ltr:pr-3 rtl:pl-3 text-primary-400"><span class="relative inline-block align-text-bottom icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M506.3 417 293 53c-16.33-28-57.54-28-73.98.0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6c32.76.0 53.26-35 36.96-63zM232 168c0-13.25 10.75-24 24-24s24 10.8 24 24v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zm24 248c-17.36.0-31.44-14.08-31.44-31.44s14.07-31.44 31.44-31.44 31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"/></svg></span></span><span class=dark:text-neutral-300>Permission to use the <a href="https://www.youtube.com/watch?v=Jwf6ncRmhPg">images</a> in this section was exclusively granted by the owner</span></div><h3 id=the-algorithm-in-python class="relative group">The algorithm in python <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#the-algorithm-in-python aria-label=Anchor>#</a></span></h3><h4 id=solution class="relative group">Solution <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#solution aria-label=Anchor>#</a></span></h4><ul><li>We will utilize recursion to break down the large problem into smaller sub-problems and find the solution</li><li>The first step is to come up with a <code>base case</code>. The base case tells us when we should stop our calculation. We saw from the above computations that we stop when the numbers are equal or we get a 0. If <code>b</code> is zero, we have found the GCD of a and b, which is a. Therefore, we return <code>a</code> as the result</li><li>Otherwise, we perform a recursive call when we calculate the remainder of a divided by b using the modulo operator %, and call the gcd function recursively with the arguments b and a % b.</li><li>This operation replaces the larger number with its remainder when divided by the smaller number</li></ul><h4 id=code class="relative group">Code <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#code aria-label=Anchor>#</a></span></h4><ul><li>The following is a short implementation of the algorithm</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-python3 data-lang=python3><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>(</span><span class=n>a</span><span class=p>,</span><span class=n>b</span><span class=p>):</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>b</span> <span class=o>==</span> <span class=mi>0</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>a</span>
-</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>main</span><span class=p>(</span><span class=n>b</span><span class=p>,</span><span class=n>a</span><span class=o>%</span><span class=n>b</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>main</span><span class=p>(</span><span class=mi>54</span><span class=p>,</span><span class=mi>21</span><span class=p>))</span> <span class=c1>#3</span>
-</span></span></code></pre></div><div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900"><span class="ltr:pr-3 rtl:pl-3 text-primary-400"><span class="relative inline-block align-text-bottom icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M506.3 417 293 53c-16.33-28-57.54-28-73.98.0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6c32.76.0 53.26-35 36.96-63zM232 168c0-13.25 10.75-24 24-24s24 10.8 24 24v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zm24 248c-17.36.0-31.44-14.08-31.44-31.44s14.07-31.44 31.44-31.44 31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"/></svg></span></span><span class=dark:text-neutral-300>The order of the numbers does not matter. If you supply a small number followed by a big number as your order, the algorithm will swap the numbers in the next step</span></div><h2 id=extended-euclidean-algorithm class="relative group">Extended Euclidean Algorithm <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#extended-euclidean-algorithm aria-label=Anchor>#</a></span></h2><ul><li><p>This is an extension to the euclidean algorithm where in addition to the GCD of integers a and b, we compute x and y such that</p><p><code>ax + by = gcd(a,b)</code></p></li><li><p>The GCD of 54 and 21 is 3.</p></li><li><p>The steps used were:</p><p>step 1: <code>54 = 2 × 21 + 12</code></p><p>step 2: <code>21 = 1 × 12 + 9</code></p><p>step 3: <code>12 = 1 × 9 + 3</code></p><p>step 4: <code>9 = 3 × 3 + 0</code></p></li><li><p>Now we work backward from step 3 (we don&rsquo;t use step 4 because it has a remainder of 0) to find x and y:</p><p>Step a: <code>3 = 12 - 1 × 9</code></p><p>Step b: <code>3 = 12 - 1 × (21 - 1 × 12)</code>
-<code>3 = 2 × 12 - 1 × 21</code></p><p>Step c: <code>3 = 2 × (54 - 2 × 21) - 1 × 21</code></p><p>step d: <code>3 = 2 × 54 - 5 × 21</code></p></li><li><p>In step a, we substitute the equation from step 3 (12 = 1 × 9 + 3) to express 3 as a linear combination of 12 and 9.</p></li><li><p>In step b, we substitute the equation from step 2 (21 = 1 × 12 + 9) to express 3 as a linear combination of 12 and 21</p></li><li><p>In step c, we substitute the equations from step 1 to express 3 as a linear combination of 54 and 21. We continue this process until we have expressed the GCD as a linear combination of the original two numbers.</p></li><li><p>We end up with <code>2 and -5</code> as our coefficients</p></li></ul><h3 id=the-algorithm-in-python-1 class="relative group">The algorithm in python <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#the-algorithm-in-python-1 aria-label=Anchor>#</a></span></h3><h4 id=solution-1 class="relative group">Solution <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#solution-1 aria-label=Anchor>#</a></span></h4><ul><li><p>We perform another recursive algorithm for this case as well. It may seem intimidating but it gets pretty simple once you see how we generate the equations for coming up with the coefficients</p></li><li><p>So far, we know that</p><p><code>ax + by = gcd(a,b)</code></p></li><li><p>The gcd(a,b) can also be rewritten as <code>gcd(b,a%b)</code> which is a recursive operation so:</p><p><code>ax + by = gcd(b,a%b)</code></p></li><li><p>We can rewrite gcd(b,a%b) in the form ax2 + by2 as shown:</p><p><code>gcd(b,a%b) = b ⋅ x2 + (a%b) ⋅ y2</code></p></li><li><p>Recall that we said <code>dividend = quotient * divider + remainder</code>.</p></li><li><p>In the form of a and b: <code>a = b*q + r</code> where r is <code>a%b</code> and q is <code>a/b</code></p></li><li><p>So, the remainder can be rewritten as <code>remainder = dividend - (quotient * divider)</code>.</p></li></ul><p><code>a%b = a - (a/b) ⋅ b</code></p><ul><li><p>Rewrite the remainder</p><p><code>gcd(b,a%b) = b⋅x2 + [a - (a/b) ⋅ b] ⋅y2</code></p><p><code>gcd(b,a%b) = b⋅x2 + a⋅y2 - [a/b ⋅ b] ⋅ y2</code></p></li><li><p>Factor the b</p><p><code>gcd(b,a%b) = a⋅y2 + b[x2 - (a/b)]⋅ y2</code></p></li><li><p>Replace with the original</p><p><code>ax + by = a⋅y2 + b[x2 - (a/b)] ⋅ y2</code></p></li><li><p>Solve for x</p><p><code>ax = a⋅y2</code></p><p><code>x = y2</code></p></li><li><p>Solve for y</p><p><code>by = b[x2 - (a/b)]</code></p><p><code>y = [x2 - (a/b)]⋅ y2</code></p></li><li><p>We recursively find <code>x1</code> and <code>y2</code> and then find x and 2</p></li></ul><h4 id=base-case class="relative group">Base Case <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#base-case aria-label=Anchor>#</a></span></h4><ul><li>Just like in the euclidean algorithm, we check if one of the numbers between a and b is 0. Suppose b is 0 then:</li></ul><p><code>ax +0y = gcd(a,b) = a</code></p><ul><li>That results in x = 1 and y = 1</li></ul><h4 id=code-1 class="relative group">Code <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#code-1 aria-label=Anchor>#</a></span></h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>extended</span><span class=p>(</span><span class=n>a</span><span class=p>,</span> <span class=n>b</span><span class=p>):</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>b</span> <span class=o>==</span> <span class=mi>0</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>        <span class=n>x2</span><span class=p>,</span> <span class=n>y2</span> <span class=o>=</span> <span class=n>extended</span><span class=p>(</span><span class=n>b</span><span class=p>,</span> <span class=n>a</span> <span class=o>%</span> <span class=n>b</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>        <span class=n>y</span> <span class=o>=</span> <span class=n>x2</span> <span class=o>-</span> <span class=p>(</span><span class=n>a</span> <span class=o>//</span> <span class=n>b</span><span class=p>)</span> <span class=o>*</span> <span class=n>y2</span>
-</span></span><span class=line><span class=cl>        <span class=n>x</span> <span class=o>=</span> <span class=n>y2</span>
-</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>(</span><span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>)</span>
-</span></span></code></pre></div><ul><li>You can see how we use the equations we computed to form a base case and recursive algorithm to find our coefficients</li></ul><h2 id=conclusion class="relative group">Conclusion <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#conclusion aria-label=Anchor>#</a></span></h2><ul><li>We have seen how we can compute GCDs of large numbers efficiently using the euclidean algorithm. It is very fundamental in many cryptographic systems and we will see its application in the next blogs.</li></ul></div></section><footer class="pt-8 max-w-prose print:hidden"><div class=pt-8><hr class="border-dotted border-neutral-300 dark:border-neutral-600"><div class="flex justify-between pt-3"><span><a class="flex group" href=/posts/2023-03-25_red_team01/><span class="mr-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400">&larr;</span>
-<span class="ml-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400">&rarr;</span>
-<span class="flex flex-col"><span class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500">Email Phishing with Covenant</span>
-<span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400"><time datetime="2023-03-12 00:00:00 +0000 UTC">12 March 2023</time></span></span></a></span>
-<span><a class="flex text-right group" href=/posts/2023-03-19_modular_arithmetic/><span class="flex flex-col"><span class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500">Cryptography - Modular Arithmetic</span>
-<span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400"><time datetime="2023-03-18 00:00:00 +0000 UTC">18 March 2023</time></span></span>
-<span class="ml-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400">&rarr;</span>
-<span class="mr-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400">&larr;</span></a></span></div></div></footer></article><div class="absolute top-[110vh] ltr:right-0 rtl:left-0 w-12 pointer-events-none bottom-0"><a href=#the-top class="w-12 h-12 sticky pointer-events-auto top-[calc(100vh-5.5rem)] bg-neutral/50 dark:bg-neutral-800/50 backdrop-blur rounded-full text-xl flex items-center justify-center text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400" aria-label="Scroll to top" title="Scroll to top">&uarr;</a></div></main><div id=search-wrapper class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible" data-url=https://trevorsaudi.com/><div id=search-modal class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg border-neutral-200 top-20 bg-neutral dark:bg-neutral-800 dark:border-neutral-700"><header class="relative z-10 flex items-center justify-between flex-none px-2"><form class="flex items-center flex-auto min-w-0"><div class="flex items-center justify-center w-8 h-8 text-neutral-400"><span class="relative inline-block align-text-bottom icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M505 442.7 405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9.0 208 0S0 93.1.0 208s93.1 208 208 208c48.3.0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9.0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7.0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7.0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></span></div><input type=search id=search-query class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-transparent focus:outline-2" placeholder=Search tabindex=0></form><button id=close-search-button class="flex items-center justify-center w-8 h-8 text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400" title="Close (Esc)">
-<span class="relative inline-block align-text-bottom icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentcolor" d="M310.6 361.4c12.5 12.5 12.5 32.75.0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3 54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75.0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75.0-45.25s32.75-12.5 45.25.0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25.0s12.5 32.75.0 45.25l-105.4 105.4L310.6 361.4z"/></svg></span></button></header><section class="flex-auto px-2 overflow-auto"><ul id=search-results></ul></section></div></div><footer class="py-10 print:hidden"><div class="flex justify-between"><div><p class="text-sm text-neutral-500 dark:text-neutral-400">😄</p><p class="text-xs text-neutral-500 dark:text-neutral-400">Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href=https://gohugo.io/ target=_blank rel="noopener noreferrer">Hugo</a> & <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href=https://git.io/hugo-congo target=_blank rel="noopener noreferrer">Congo</a></p></div><div class="text-sm cursor-pointer text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400 ltr:mr-14 rtl:ml-14"><button id=appearance-switcher class="w-12 h-12" type=button title="Switch to dark appearance">
-<span class="inline dark:hidden"><span class="relative inline-block align-text-bottom icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M32 256C32 132.2 132.3 32 255.8 32c11.36.0 29.7 1.668 40.9 3.746 9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3 9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480 132.1 480 32 379.6 32 256z"/></svg></span></span><span class="hidden dark:inline"><span class="relative inline-block align-text-bottom icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M256 159.1c-53.02.0-95.1 42.98-95.1 95.1s41.2 96.9 95.1 96.9 95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347l-63.2-91.9 63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89 164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6 12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256 2.74 347.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7 19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109 109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69.0-127.1-57.31-127.1-127.1.0-70.69 57.31-127.1 127.1-127.1S383.1 186.2 383.1 256c0 70.7-56.4 127.1-127.1 127.1z"/></svg></span></span></button></div></div></footer></div></body></html>
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="light"
+  data-auto-appearance="true"
+><head>
+  <meta charset="utf-8" />
+  
+    <meta http-equiv="content-language" content="en" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  
+  <title>Cryptography - Euclidean Algorithm &middot; Trevor Saudi</title>
+    <meta name="title" content="Cryptography - Euclidean Algorithm &middot; Trevor Saudi" />
+  
+  <meta name="description" content="Portfolio/blog" />
+  
+  
+  
+  <link rel="canonical" href="https://trevorsaudi.com/posts/2023-03-12_euclidean_modular/" />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.71883ab0661482cf6c7d29b8bdd1af3be3d2f1ea750e56a67846b7f64f41d19b8dc6d7047f48422ec8cbe4a0a412d551c8210307e2b93b1254cdbf7d8af216e0.css"
+    integrity="sha512-cYg6sGYUgs9sfSm4vdGvO&#43;PS8ep1DlameEa39k9B0ZuNxtcEf0hCLsjL5KCkEtVRyCEDB&#43;K5OxJUzb99ivIW4A=="
+  />
+  
+  
+  <script type="text/javascript" src="/js/appearance.min.badab316c9287a5a42a843e4eb45da65bb3d194a5a0f5fa4a3e516160e67df0b8c65f4f19a8e146436e29d583699e6cb41d6bbe99e05e1dbaa877763bad9f8e2.js" integrity="sha512-utqzFskoelpCqEPk60XaZbs9GUpaD1&#43;ko&#43;UWFg5n3wuMZfTxmo4UZDbinVg2mebLQda76Z4F4duqh3djutn44g=="></script>
+  
+    
+    
+    
+  
+  
+    
+    
+  
+  
+  
+    
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.5ffdd39e73bd1438c0f4ff42f13915f067c633da22f60efa62139a4c51b972622badb1157d4aa4322634b55c8a2dc5ddfbd3917426df1c02d7b69362030197da.js" integrity="sha512-X/3TnnO9FDjA9P9C8TkV8GfGM9oi9g76YhOaTFG5cmIrrbEVfUqkMiY0tVyKLcXd&#43;9ORdCbfHALXtpNiAwGX2g==" data-copy="Copy" data-copied="Copied"></script>
+  
+  
+  
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="Cryptography - Euclidean Algorithm" />
+<meta property="og:description" content="Euclidean Algorithm" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://trevorsaudi.com/posts/2023-03-12_euclidean_modular/" /><meta property="og:image" content="https://trevorsaudi.com/posts/2023-03-12_euclidean_modular/images/logo.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-12T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-03-12T00:00:00+00:00" /><meta property="og:site_name" content="Trevor Saudi" />
+
+
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://trevorsaudi.com/posts/2023-03-12_euclidean_modular/images/logo.png"/>
+
+<meta name="twitter:title" content="Cryptography - Euclidean Algorithm"/>
+<meta name="twitter:description" content="Euclidean Algorithm"/>
+
+  
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Posts",
+    "name": "Cryptography - Euclidean Algorithm",
+    "headline": "Cryptography - Euclidean Algorithm",
+    "description": "Euclidean Algorithm",
+    "abstract": "Introduction # In the previous blog, we did a general introduction to cryptography and the various important libraries and techniques for handling encrypted data with python.",
+    "inLanguage": "en",
+    "url" : "https:\/\/trevorsaudi.com\/posts\/2023-03-12_euclidean_modular\/",
+    "author" : {
+      "@type": "Person",
+      "name": "Trevor Saudi"
+    },
+    "copyrightYear": "2023",
+    "dateCreated": "2023-03-12T00:00:00\u002b00:00",
+    "datePublished": "2023-03-12T00:00:00\u002b00:00",
+    
+    "dateModified": "2023-03-12T00:00:00\u002b00:00",
+    
+    "keywords": ["Cryptography","Cryptohack","Python"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "1578"
+  }]
+  </script>
+
+
+  
+  <meta name="author" content="Trevor Saudi" />
+  
+    
+      <link href="https://github.com/trevorsaudi" rel="me" />
+    
+      <link href="https://www.linkedin.com/in/trevor-saudi-9275b8186" rel="me" />
+    
+  
+  
+  
+
+
+
+
+
+
+  
+  
+  
+  
+
+
+  
+  
+</head>
+<body
+    class="flex flex-col h-screen px-6 m-auto text-lg leading-7 bg-neutral text-neutral-900 sm:px-14 md:px-24 lg:px-32 dark:bg-neutral-800 dark:text-neutral max-w-7xl"
+  >
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 dark:bg-neutral-600 focus:translate-y-0"
+        href="#main-content"
+        ><span class="font-bold ltr:pr-2 rtl:pl-2 text-primary-600 dark:text-primary-400"
+          >&darr;</span
+        >Skip to main content</a
+      >
+    </div><header
+  class="flex justify-between py-6 font-semibold sm:items-center sm:py-10 text-neutral-900 dark:text-neutral print:hidden"
+>
+  
+  <div>
+    
+      
+    
+    
+
+  </div>
+  
+  
+    <nav>
+      <ul class="flex flex-col list-none sm:flex-row">
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/"
+              title=""
+              >Home</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/posts/"
+              title="Posts"
+              >Posts</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/about/"
+              title=""
+              >About</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/tags/"
+              title="Tags"
+              >Tags</a
+            >
+          </li>
+        
+        
+          <li
+            class="ltr:text-right rtl:text-left ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <button
+              id="search-button"
+              class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+              title="Search (/)"
+            >
+              
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+            </button>
+          </li>
+        
+      </ul>
+    </nav>
+  
+</header>
+<div class="relative">
+      <main id="main-content" class="grow">
+  <article>
+    <header class="max-w-prose">
+      
+        <ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden">
+  
+  
+    
+  
+    
+  
+  <li class="inline hidden">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/"
+      ></a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline ">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/posts/"
+      >Posts</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline hidden">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/posts/2023-03-12_euclidean_modular/"
+      >Cryptography - Euclidean Algorithm</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+</ol>
+
+
+      
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        Cryptography - Euclidean Algorithm
+      </h1>
+      <div class="mt-8 mb-12 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+        
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+    
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2023-03-12 00:00:00 &#43;0000 UTC">12 March 2023</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">8 mins</span>
+    
+
+    
+    
+  </div>
+
+  
+  
+
+
+      </div>
+    </header>
+    <section class="flex flex-col max-w-full mt-0 prose lg:flex-row dark:prose-invert">
+      
+        <div class="order-first px-0 lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8 lg:order-last">
+          <div class="ltr:pl-5 rtl:pr-5 toc lg:sticky lg:top-10 print:hidden">
+            <details open class="mt-0 overflow-hidden rounded-lg rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 lg:mt-3">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 text-neutral-800 dark:text-neutral-100 lg:hidden bg-neutral-100 dark:bg-neutral-700"
+  >
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted ltr:border-l rtl:border-r rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 border-neutral-300 dark:border-neutral-600"
+  >
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#why-should-you-understand-these-concepts">Why should you understand these concepts?</a></li>
+    <li><a href="#greatest-common-divisor-gcd">Greatest Common Divisor (GCD)</a></li>
+    <li><a href="#euclideans-algorithm">Euclidean&rsquo;s Algorithm</a>
+      <ul>
+        <li><a href="#example">Example</a></li>
+        <li><a href="#how-it-works-visually">How it works visually</a></li>
+        <li><a href="#the-algorithm-in-python">The algorithm in python</a>
+          <ul>
+            <li><a href="#solution">Solution</a></li>
+            <li><a href="#code">Code</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#extended-euclidean-algorithm">Extended Euclidean Algorithm</a>
+      <ul>
+        <li><a href="#the-algorithm-in-python-1">The algorithm in python</a>
+          <ul>
+            <li><a href="#solution-1">Solution</a></li>
+            <li><a href="#base-case">Base Case</a></li>
+            <li><a href="#code-1">Code</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+          </div>
+        </div>
+      
+      <div class="min-w-0 min-h-0 max-w-prose">
+        <h2 id="introduction" class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>In the previous <a href="http://localhost:1313/posts/2023-03-12_crypto_basics/">blog</a>, we did a general introduction to cryptography and the various important libraries and techniques for handling encrypted data with python.</li>
+<li>We introduce some basic math concepts in this blog, where we talk about GCD and the euclidean algorithm, its extended version and how to form recursive algorithms in python for them.</li>
+</ul>
+<h2 id="why-should-you-understand-these-concepts" class="relative group">Why should you understand these concepts? <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#why-should-you-understand-these-concepts" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>As we move into public key cryptography, all these concepts form a fundamental basis for understanding cryptosystems and cryptographic attacks. Some of the computations may be a bit confusing at first but grasping the logic behind these math algorithms will be important for you as we move forward.</li>
+</ul>
+<h2 id="greatest-common-divisor-gcd" class="relative group">Greatest Common Divisor (GCD) <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#greatest-common-divisor-gcd" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>
+<p>Let us begin by defining these 2 terms:</p>
+<ol>
+<li>Factors - a number that divides another number evenly. i.e if 2 is a factor of 10, then 2 can divide 10 into 5 equal parts</li>
+<li>Common Factors - if the factor of a number is the factor of another number, then it is said to be a common factor i.e if 2 is a factor of 10 and 4, then 2 is said to be a common factor</li>
+</ol>
+</li>
+<li>
+<p>GCD is then the largest common factor of 2 or more positive integers</p>
+</li>
+<li>
+<p>Suppose we have 2 integers <code>a=12, b=18</code>, the factors of <code>a</code> are <code>2,3,4,6</code> while the factors of <code>b</code> are <code>2,3,6,9</code></p>
+</li>
+<li>
+<p>The greatest common divisor of the 2 would be 6</p>
+</li>
+</ul>
+<h2 id="euclideans-algorithm" class="relative group">Euclidean&rsquo;s Algorithm <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#euclideans-algorithm" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>Also known as Euclid&rsquo;s algorithm, this is an efficient method of computing the GCD between 2 numbers.</li>
+<li>The algorithm is based on the following GCD property:
+<ul>
+<li>
+<p>If we have 2 numbers, the GCD of the numbers does not change if the larger number is replaced by its remainder when divided by the smaller of the two</p>
+<p>i.e <code>if a &gt; b then GCD(a,b) = GCD(b,a%b)</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Point to note</strong></p>
+<ul>
+<li>Our operations will be expressed as follows</li>
+</ul>
+<div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900">
+  <span class="ltr:pr-3 rtl:pl-3 text-primary-400">
+    
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M506.3 417l-213.3-364c-16.33-28-57.54-28-73.98 0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6C502.1 480 522.6 445 506.3 417zM232 168c0-13.25 10.75-24 24-24S280 154.8 280 168v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zM256 416c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"/></svg>
+
+  </span>
+
+
+  </span>
+  <span class="dark:text-neutral-300">dividend = quotient * divider + remainder</span>
+</div>
+
+<ul>
+<li>
+<p>For example, if we divide 48 by 6, we can express this as:</p>
+<p><code>48 ÷ 6 = 8 + 0</code></p>
+<p><code>48 - dividend</code></p>
+<p><code>6 - divider</code></p>
+<p><code>8 - quotient</code></p>
+<p><code>0 - remainder</code></p>
+</li>
+<li>
+<p>Rewrite in terms of the formula</p>
+</li>
+</ul>
+<p><code>48 = 8 * 6 + 0</code></p>
+<h3 id="example" class="relative group">Example <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#example" aria-label="Anchor">#</a></span></h3>
+<ul>
+<li>
+<p>We start by dividing the larger number by the smaller number to get the quotient and remainder:</p>
+<p><code>54 = 2 × 21 + 12</code></p>
+</li>
+<li>
+<p>Next, we divide the smaller number by the remainder to get another quotient and remainder:</p>
+<p><code>21 = 1 × 12 + 9</code></p>
+</li>
+<li>
+<p>We repeat the process with the new pair of numbers:</p>
+<p><code>12 = 1 × 9 + 3</code></p>
+</li>
+<li>
+<p>Finally, we have:</p>
+<p><code>9 = 3 × 3 + 0</code></p>
+</li>
+<li>
+<p>Since the remainder is now 0, we have found the GCD of the original two numbers. In this case, the GCD of 54 and 21 is 3.</p>
+</li>
+<li>
+<p>By replacing the larger number with its remainder by dividing it by the smaller number, we get a smaller pair of numbers. Repeating this process results in progressively smaller pairs of numbers until both numbers are equal.</p>
+</li>
+</ul>
+<h3 id="how-it-works-visually" class="relative group">How it works visually <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#how-it-works-visually" aria-label="Anchor">#</a></span></h3>
+<ul>
+<li>Suppose we have 2 big numbers represented as 2 piles of stones. We are going to find the GCD of the 2 piles of stones.</li>
+<li>Pile B is bigger than A. If we find copies of stones from a smaller pile in the larger pile, we subtract the copies.</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-03-12_euclidean_modular/images/1.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<ul>
+<li>We start by finding copies of pile A in pile B as shown below.</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-03-12_euclidean_modular/images/112.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<ul>
+<li>Subtract the copies from pile B</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-03-12_euclidean_modular/images/2.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<ul>
+<li>We end up with the following resulting pile</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-03-12_euclidean_modular/images/3.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<ul>
+<li>Pile B is now smaller than A. We find copies of pile B in pile A</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-03-12_euclidean_modular/images/4.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<ul>
+<li>Subtract the copy of pile B from pile A</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-03-12_euclidean_modular/images/5.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<ul>
+<li>We end up with the following resulting pile</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-03-12_euclidean_modular/images/6.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<ul>
+<li>Pile A is now smaller than B. We find copies of pile A in pile B</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-03-12_euclidean_modular/images/7.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<ul>
+<li>Subtract the copies of pile A from pile B</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-03-12_euclidean_modular/images/8.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<ul>
+<li>Find copies of pile B (which is now smaller), in pile A</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-03-12_euclidean_modular/images/9.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<ul>
+<li>Subtract the copy</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-03-12_euclidean_modular/images/11.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<ul>
+<li>Now that the 2 piles are equal, it means we have found the GCD which is 3</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-03-12_euclidean_modular/images/12.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<ul>
+<li>The 2 numbers representing the pile are 21 and 54 whose GCD is 3</li>
+</ul>
+<p><strong>Note</strong></p>
+<ul>
+<li>Repeated subtraction is just a  <code>division operation</code></li>
+<li>We stop our operations when we divide a and b and get a remainder of 0 which means the numbers are either equal or one of the 2 numbers is a 0, making the other number the GCD</li>
+</ul>
+<div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900">
+  <span class="ltr:pr-3 rtl:pl-3 text-primary-400">
+    
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M506.3 417l-213.3-364c-16.33-28-57.54-28-73.98 0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6C502.1 480 522.6 445 506.3 417zM232 168c0-13.25 10.75-24 24-24S280 154.8 280 168v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zM256 416c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"/></svg>
+
+  </span>
+
+
+  </span>
+  <span class="dark:text-neutral-300">Permission to use the <a href="https://www.youtube.com/watch?v=Jwf6ncRmhPg">images</a> in this section was exclusively granted by the owner</span>
+</div>
+
+<h3 id="the-algorithm-in-python" class="relative group">The algorithm in python <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#the-algorithm-in-python" aria-label="Anchor">#</a></span></h3>
+<h4 id="solution" class="relative group">Solution <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#solution" aria-label="Anchor">#</a></span></h4>
+<ul>
+<li>We will utilize recursion to break down the large problem into smaller sub-problems and find the solution</li>
+<li>The first step is to come up with a <code>base case</code>. The base case tells us when we should stop our calculation. We saw from the above computations that we stop when the numbers are equal or we get a 0. If <code>b</code> is zero, we have found the GCD of a and b, which is a. Therefore, we return <code>a</code> as the result</li>
+<li>Otherwise, we perform a recursive call when we calculate the remainder of a divided by b using the modulo operator %, and call the gcd function recursively with the arguments b and a % b.</li>
+<li>This operation replaces the larger number with its remainder when divided by the smaller number</li>
+</ul>
+<h4 id="code" class="relative group">Code <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#code" aria-label="Anchor">#</a></span></h4>
+<ul>
+<li>The following is a short implementation of the algorithm</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">a</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">main</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">%</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="mi">54</span><span class="p">,</span><span class="mi">21</span><span class="p">))</span> <span class="c1">#3</span>
+</span></span></code></pre></div><div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900">
+  <span class="ltr:pr-3 rtl:pl-3 text-primary-400">
+    
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M506.3 417l-213.3-364c-16.33-28-57.54-28-73.98 0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6C502.1 480 522.6 445 506.3 417zM232 168c0-13.25 10.75-24 24-24S280 154.8 280 168v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zM256 416c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"/></svg>
+
+  </span>
+
+
+  </span>
+  <span class="dark:text-neutral-300">The order of the numbers does not matter. If you supply a small number followed by a big number as your order, the algorithm will swap the numbers in the next step</span>
+</div>
+
+<h2 id="extended-euclidean-algorithm" class="relative group">Extended Euclidean Algorithm <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#extended-euclidean-algorithm" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>
+<p>This is an extension to the euclidean algorithm where in addition to the GCD of integers a and b, we compute x and y such that</p>
+<p><code>ax + by = gcd(a,b)</code></p>
+</li>
+<li>
+<p>The GCD of 54 and 21 is 3.</p>
+</li>
+<li>
+<p>The steps used were:</p>
+<p>step 1:   <code>54 = 2 × 21 + 12</code></p>
+<p>step 2:    <code>21 = 1 × 12 + 9</code></p>
+<p>step 3:    <code>12 = 1 × 9 + 3</code></p>
+<p>step 4:    <code>9 = 3 × 3 + 0</code></p>
+</li>
+<li>
+<p>Now we work backward from step 3 (we don&rsquo;t use step 4 because it has a remainder of 0) to find x and y:</p>
+<p>Step a:     <code>3 = 12 - 1 × 9</code></p>
+<p>Step b:     <code>3 = 12 - 1 × (21 - 1 × 12)</code>
+<code>3 = 2 × 12 - 1 × 21</code></p>
+<p>Step c:     <code>3 = 2 × (54 - 2 × 21) - 1 × 21</code></p>
+<p>step d:     <code>3 = 2 × 54 - 5 × 21</code></p>
+</li>
+<li>
+<p>In step a, we substitute the equation from step 3 (12 = 1 × 9 + 3) to express 3 as a linear combination of 12 and 9.</p>
+</li>
+<li>
+<p>In step b, we substitute the equation from step 2 (21 = 1 × 12 + 9) to express 3 as a linear combination of 12 and 21</p>
+</li>
+<li>
+<p>In step c, we substitute the equations from step 1 to express 3 as a linear combination of 54 and 21. We continue this process until we have expressed the GCD as a linear combination of the original two numbers.</p>
+</li>
+<li>
+<p>We end up with <code>2 and -5</code> as our coefficients</p>
+</li>
+</ul>
+<h3 id="the-algorithm-in-python-1" class="relative group">The algorithm in python <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#the-algorithm-in-python-1" aria-label="Anchor">#</a></span></h3>
+<h4 id="solution-1" class="relative group">Solution <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#solution-1" aria-label="Anchor">#</a></span></h4>
+<ul>
+<li>
+<p>We perform another recursive algorithm for this case as well. It may seem intimidating but it gets pretty simple once you see how we generate the equations for coming up with the coefficients</p>
+</li>
+<li>
+<p>So far, we know that</p>
+<p><code>ax + by = gcd(a,b)</code></p>
+</li>
+<li>
+<p>The gcd(a,b) can also be rewritten as <code>gcd(b,a%b)</code> which is a recursive operation so:</p>
+<p><code>ax + by = gcd(b,a%b)</code></p>
+</li>
+<li>
+<p>We can rewrite gcd(b,a%b) in the form ax2 + by2 as shown:</p>
+<p><code>gcd(b,a%b) = b ⋅ x2 + (a%b) ⋅ y2</code></p>
+</li>
+<li>
+<p>Recall that we said <code>dividend = quotient * divider + remainder</code>.</p>
+</li>
+<li>
+<p>In the form of a and b: <code>a = b*q + r</code> where r is <code>a%b</code> and q is <code>a/b</code></p>
+</li>
+<li>
+<p>So, the remainder can be rewritten as <code>remainder = dividend - (quotient * divider)</code>.</p>
+</li>
+</ul>
+<p><code>a%b = a - (a/b) ⋅ b</code></p>
+<ul>
+<li>
+<p>Rewrite the remainder</p>
+<p><code>gcd(b,a%b) = b⋅x2 + [a - (a/b) ⋅ b] ⋅y2 </code></p>
+<p><code>gcd(b,a%b) = b⋅x2 + a⋅y2 - [a/b ⋅ b] ⋅ y2</code></p>
+</li>
+<li>
+<p>Factor the b</p>
+<p><code>gcd(b,a%b) =  a⋅y2 + b[x2 - (a/b)]⋅ y2</code></p>
+</li>
+<li>
+<p>Replace with the original</p>
+<p><code>ax + by = a⋅y2 + b[x2 - (a/b)] ⋅ y2</code></p>
+</li>
+<li>
+<p>Solve for x</p>
+<p><code>ax = a⋅y2</code></p>
+<p><code>x = y2</code></p>
+</li>
+<li>
+<p>Solve for y</p>
+<p><code>by = b[x2 - (a/b)]</code></p>
+<p><code>y = [x2 - (a/b)]⋅ y2</code></p>
+</li>
+<li>
+<p>We recursively find <code>x1</code> and <code>y2</code> and then find x and 2</p>
+</li>
+</ul>
+<h4 id="base-case" class="relative group">Base Case <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#base-case" aria-label="Anchor">#</a></span></h4>
+<ul>
+<li>Just like in the euclidean algorithm, we check if one of the numbers between a and b is 0. Suppose b is 0 then:</li>
+</ul>
+<p><code>ax +0y = gcd(a,b) = a</code></p>
+<ul>
+<li>That results in x = 1 and y = 1</li>
+</ul>
+<h4 id="code-1" class="relative group">Code <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#code-1" aria-label="Anchor">#</a></span></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">extended</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">extended</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">%</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">y</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">-</span> <span class="p">(</span><span class="n">a</span> <span class="o">//</span> <span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="n">y2</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="n">y2</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</span></span></code></pre></div><ul>
+<li>You can see how we use the equations we computed to form a base case and recursive algorithm to find our coefficients</li>
+</ul>
+<h2 id="conclusion" class="relative group">Conclusion <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#conclusion" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>We have seen how we can compute GCDs of large numbers efficiently using the euclidean algorithm. It is very fundamental in many cryptographic systems and we will see its application in the next blogs.</li>
+</ul>
+
+      </div>
+    </section>
+    <footer class="pt-8 max-w-prose print:hidden">
+      
+
+      
+
+      
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="flex group" href="/posts/2023-03-01_crypto_basics/">
+              <span
+                class="mr-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+              <span
+                class="ml-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Cryptography - The Basics</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2023-03-01 00:00:00 &#43;0000 UTC">1 March 2023</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+            <a class="flex text-right group" href="/posts/2023-03-19_modular_arithmetic/">
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Cryptography - Modular Arithmetic</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2023-03-18 00:00:00 &#43;0000 UTC">18 March 2023</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ml-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span
+                class="mr-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+            </a>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+    </footer>
+    
+  </article>
+
+        
+          <div
+            class="absolute top-[110vh] ltr:right-0 rtl:left-0 w-12 pointer-events-none bottom-0"
+          >
+            <a
+              href="#the-top"
+              class="w-12 h-12 sticky pointer-events-auto top-[calc(100vh-5.5rem)] bg-neutral/50 dark:bg-neutral-800/50 backdrop-blur rounded-full text-xl flex items-center justify-center text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400"
+              aria-label="Scroll to top"
+              title="Scroll to top"
+            >
+              &uarr;
+            </a>
+          </div>
+        
+      </main>
+      <div
+  id="search-wrapper"
+  class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible"
+  data-url="https://trevorsaudi.com/"
+>
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg border-neutral-200 top-20 bg-neutral dark:bg-neutral-800 dark:border-neutral-700"
+  >
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-transparent focus:outline-2"
+          placeholder="Search"
+          tabindex="0"
+        />
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400"
+        title="Close (Esc)"
+      >
+        
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+
+  </span>
+
+
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+<footer class="py-10 print:hidden">
+  
+  
+  <div class="flex justify-between">
+    <div>
+      
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          😄
+      </p>
+      
+      
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          
+          
+          Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> &amp; <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://git.io/hugo-congo" target="_blank" rel="noopener noreferrer">Congo</a>
+        </p>
+      
+    </div>
+    
+    
+      <div
+        class="text-sm cursor-pointer text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400 ltr:mr-14 rtl:ml-14"
+      >
+        <button
+          id="appearance-switcher"
+          class="w-12 h-12 "
+          type="button"
+          title="Switch to dark appearance"
+        >
+          <span class="inline dark:hidden">
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+
+  </span>
+
+</span>
+          <span class="hidden dark:inline">
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+
+  </span>
+
+</span>
+        </button>
+      </div>
+    
+  </div>
+  
+  
+</footer>
+</div>
+  </body>
+</html>

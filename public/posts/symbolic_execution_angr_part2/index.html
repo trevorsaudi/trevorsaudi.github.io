@@ -1,177 +1,926 @@
-<!doctype html><html lang=en dir=ltr class=scroll-smooth data-default-appearance=dark data-auto-appearance=true><head><meta charset=utf-8><meta http-equiv=content-language content="en"><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><title>Symbolic Execution with Angr - part 2 &#183; Trevor Saudi</title><meta name=title content="Symbolic Execution with Angr - part 2 &#183; Trevor Saudi"><meta name=description content="Portfolio/blog"><link rel=canonical href=https://trevorsaudi.com/posts/symbolic_execution_angr_part2/><link type=text/css rel=stylesheet href=/css/main.bundle.min.71883ab0661482cf6c7d29b8bdd1af3be3d2f1ea750e56a67846b7f64f41d19b8dc6d7047f48422ec8cbe4a0a412d551c8210307e2b93b1254cdbf7d8af216e0.css integrity="sha512-cYg6sGYUgs9sfSm4vdGvO+PS8ep1DlameEa39k9B0ZuNxtcEf0hCLsjL5KCkEtVRyCEDB+K5OxJUzb99ivIW4A=="><script type=text/javascript src=/js/appearance.min.badab316c9287a5a42a843e4eb45da65bb3d194a5a0f5fa4a3e516160e67df0b8c65f4f19a8e146436e29d583699e6cb41d6bbe99e05e1dbaa877763bad9f8e2.js integrity="sha512-utqzFskoelpCqEPk60XaZbs9GUpaD1+ko+UWFg5n3wuMZfTxmo4UZDbinVg2mebLQda76Z4F4duqh3djutn44g=="></script>
-<script defer type=text/javascript id=script-bundle src=/js/main.bundle.min.5ffdd39e73bd1438c0f4ff42f13915f067c633da22f60efa62139a4c51b972622badb1157d4aa4322634b55c8a2dc5ddfbd3917426df1c02d7b69362030197da.js integrity="sha512-X/3TnnO9FDjA9P9C8TkV8GfGM9oi9g76YhOaTFG5cmIrrbEVfUqkMiY0tVyKLcXd+9ORdCbfHALXtpNiAwGX2g==" data-copy=Copy data-copied=Copied></script>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><meta property="og:title" content="Symbolic Execution with Angr - part 2"><meta property="og:description" content="Overcoming path explosion, injecting bitvectors into symbolic registers using angr"><meta property="og:type" content="article"><meta property="og:url" content="https://trevorsaudi.com/posts/symbolic_execution_angr_part2/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-08-18T00:00:00+00:00"><meta property="article:modified_time" content="2022-08-18T00:00:00+00:00"><meta property="og:site_name" content="Trevor Saudi"><meta name=twitter:card content="summary"><meta name=twitter:title content="Symbolic Execution with Angr - part 2"><meta name=twitter:description content="Overcoming path explosion, injecting bitvectors into symbolic registers using angr"><script type=application/ld+json>[{"@context":"https://schema.org","@type":"Article","articleSection":"Posts","name":"Symbolic Execution with Angr - part 2","headline":"Symbolic Execution with Angr - part 2","abstract":"Overcoming path explosion, injecting bitvectors into symbolic registers using angr","inLanguage":"en","url":"https:\/\/trevorsaudi.com\/posts\/symbolic_execution_angr_part2\/","author":{"@type":"Person","name":"Trevor Saudi"},"copyrightYear":"2022","dateCreated":"2022-08-18T00:00:00\u002b00:00","datePublished":"2022-08-18T00:00:00\u002b00:00","dateModified":"2022-08-18T00:00:00\u002b00:00","keywords":["python","angr","reverse engineering","exploit development"],"mainEntityOfPage":"true","wordCount":"1498"}]</script><meta name=author content="Trevor Saudi"><link href=https://github.com/trevorsaudi rel=me><link href=https://www.linkedin.com/in/trevor-saudi-9275b8186 rel=me></head><body class="flex flex-col h-screen px-6 m-auto text-lg leading-7 bg-neutral text-neutral-900 sm:px-14 md:px-24 lg:px-32 dark:bg-neutral-800 dark:text-neutral max-w-7xl"><div id=the-top class="absolute flex self-center"><a class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 dark:bg-neutral-600 focus:translate-y-0" href=#main-content><span class="font-bold ltr:pr-2 rtl:pl-2 text-primary-600 dark:text-primary-400">&darr;</span>Skip to main content</a></div><header class="flex justify-between py-6 font-semibold sm:items-center sm:py-10 text-neutral-900 dark:text-neutral print:hidden"><div></div><nav><ul class="flex flex-col list-none sm:flex-row"><li class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><a class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2" href=/ title>Home</a></li><li class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><a class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2" href=/posts/ title=Posts>Posts</a></li><li class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><a class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2" href=/about/ title>About</a></li><li class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><a class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2" href=/tags/ title=Tags>Tags</a></li><li class="ltr:text-right rtl:text-left ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><button id=search-button class="text-base hover:text-primary-600 dark:hover:text-primary-400" title="Search (/)">
-<span class="relative inline-block align-text-bottom icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M505 442.7 405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9.0 208 0S0 93.1.0 208s93.1 208 208 208c48.3.0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9.0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7.0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7.0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></span></button></li></ul></nav></header><div class=relative><main id=main-content class=grow><article><header class=max-w-prose><ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden"><li class="inline hidden"><a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href=/></a><span class="px-1 text-primary-500">/</span></li><li class=inline><a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href=/posts/>Posts</a><span class="px-1 text-primary-500">/</span></li><li class="inline hidden"><a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href=/posts/symbolic_execution_angr_part2/>Symbolic Execution with Angr - part 2</a><span class="px-1 text-primary-500">/</span></li></ol><h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">Symbolic Execution with Angr - part 2</h1><div class="mt-8 mb-12 text-base text-neutral-500 dark:text-neutral-400 print:hidden"><div class="flex flex-row flex-wrap items-center"><time datetime="2022-08-18 00:00:00 +0000 UTC">18 August 2022</time><span class="px-2 text-primary-500">&#183;</span><span title="Reading time">8 mins</span></div></div></header><section class="flex flex-col max-w-full mt-0 prose lg:flex-row dark:prose-invert"><div class="order-first px-0 lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8 lg:order-last"><div class="ltr:pl-5 rtl:pr-5 toc lg:sticky lg:top-10 print:hidden"><details open class="mt-0 overflow-hidden rounded-lg rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 lg:mt-3"><summary class="block py-1 text-lg font-semibold cursor-pointer rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 text-neutral-800 dark:text-neutral-100 lg:hidden bg-neutral-100 dark:bg-neutral-700">Table of Contents</summary><div class="py-2 border-dotted ltr:border-l rtl:border-r rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 border-neutral-300 dark:border-neutral-600"><nav id=TableOfContents><ul><li><a href=#introduction>Introduction</a></li><li><a href=#path-explosion>Path Explosion</a></li><li><a href=#02_angr_find_condition>02_angr_find_condition</a><ul><li><a href=#solution>Solution</a></li></ul></li><li><a href=#03_angr_symbolic_registers>03_angr_symbolic_registers</a><ul><li><a href=#program-analysis>Program analysis</a></li><li><a href=#solution-1>Solution</a></li></ul></li></ul></nav></div></details></div></div><div class="min-w-0 min-h-0 max-w-prose"><p><figure><img class="my-0 rounded-md" src=/posts/symbolic_execution_angr_part2/images/1.png alt=image></figure></p><p><em>Overcoming path explosion, injecting bitvectors into symbolic registers using angr</em></p><h2 id=introduction class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#introduction aria-label=Anchor>#</a></span></h2><p>In the <a href=https://trevorsaudi.com/posts/symbolic_execution_angr_part1/>previous</a> blog, we looked into what Symbolic Execution is and how we can utilize the Angr framework in finding execution paths to reach desirable states in programs. In this blog, we will look at the limitations that Symbolic Execution imposes and how we can use Angr to efficiently navigate through these limitations. We shall also introduce symbolic registers and how to inject symbols directly into registers.</p><h2 id=path-explosion class="relative group">Path Explosion <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#path-explosion aria-label=Anchor>#</a></span></h2><p>In our previous example, we had a simple program with only 2 possible execution paths, one printing out &ldquo;good job&rdquo; while the other &ldquo;try again&rdquo;.</p><p>In a more practical case with a complex program with very many states, execution paths grow exponentially. In the case of unbounded loops in the program, we could even have infinite execution paths making it unfeasible to analyze all these paths. This is the problem of path explosion</p><p>Let us see how we can overcome path explosion in the second binary example using Angr</p><h2 id=02_angr_find_condition class="relative group">02_angr_find_condition <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#02_angr_find_condition aria-label=Anchor>#</a></span></h2><p>This is the 3rd binary file in the exercise</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>➜  02_angr_find_condition git:<span class=o>(</span>master<span class=o>)</span> ✗ ls
-</span></span><span class=line><span class=cl>02_angr_find_condition.c.jinja  generate.py  __init__.py  scaffold02.py
-</span></span><span class=line><span class=cl>➜  02_angr_find_condition git:<span class=o>(</span>master<span class=o>)</span> ✗
-</span></span></code></pre></div><p>Run the binary to see its functionality.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>➜  dist git:<span class=o>(</span>master<span class=o>)</span> ✗ ./02_angr_find_condition
-</span></span><span class=line><span class=cl>Enter the password: asdasd
-</span></span><span class=line><span class=cl>Try again.
-</span></span></code></pre></div><p>It is similar to the previous binary that we looked at. Let us disassemble the main function of the binary in Cutter to get more information.</p><p><figure><img class="my-0 rounded-md" src=/posts/symbolic_execution_angr_part2/images/2.png alt=image></figure></p><p>Well, it&rsquo;s a bloody mess.</p><p>There are tonnes of branches leading to several &lsquo;Try again&rsquo; and &lsquo;Good job&rsquo; states.</p><p><figure><img class="my-0 rounded-md" src=/posts/symbolic_execution_angr_part2/images/3.png alt=image></figure></p><p>It would be tedious noting down the addresses of all Good job states. Instead, we can tell Angr to avoid or consider a state based on the output that the state gives.</p><p>There is a scaffold.py file in each binary file&rsquo;s directory that contains skeleton code that will guide you in your solution. We will slightly modify the skeleton code to come up with our solution.</p><h3 id=solution class="relative group">Solution <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#solution aria-label=Anchor>#</a></span></h3><ol><li><strong>Import necessary libraries & set up an Angr project.</strong></li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>angr</span>
-</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>sys</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
-</span></span><span class=line><span class=cl>    <span class=n>path_to_binary</span> <span class=o>=</span> <span class=s1>&#39;/opt/angr_ctf/dist/02_angr_find_condition&#39;</span>
-</span></span><span class=line><span class=cl>    <span class=n>project</span> <span class=o>=</span> <span class=n>angr</span><span class=o>.</span><span class=n>Project</span><span class=p>(</span><span class=n>path_to_binary</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;[+] Loaded the binary to angr&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>    <span class=n>initial_state</span> <span class=o>=</span> <span class=n>project</span><span class=o>.</span><span class=n>factory</span><span class=o>.</span><span class=n>entry_state</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>    <span class=n>simulation</span> <span class=o>=</span> <span class=n>project</span><span class=o>.</span><span class=n>factory</span><span class=o>.</span><span class=n>simgr</span><span class=p>(</span><span class=n>initial_state</span><span class=p>)</span>
-</span></span></code></pre></div><ol start=2><li><strong>Building out the logic</strong></li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>successful</span><span class=p>(</span><span class=n>state</span><span class=p>):</span> <span class=c1>#1</span>
-</span></span><span class=line><span class=cl>        <span class=n>stdout_output</span> <span class=o>=</span> <span class=n>state</span><span class=o>.</span><span class=n>posix</span><span class=o>.</span><span class=n>dumps</span><span class=p>(</span><span class=n>sys</span><span class=o>.</span><span class=n>stdout</span><span class=o>.</span><span class=n>fileno</span><span class=p>())</span> <span class=c1>#2</span>
-</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=sa>b</span><span class=s1>&#39;Good Job.&#39;</span> <span class=ow>in</span> <span class=n>stdout_output</span><span class=p>:</span> <span class=c1>#3</span>
-</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>True</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>abort</span><span class=p>(</span><span class=n>state</span><span class=p>):</span>
-</span></span><span class=line><span class=cl>        <span class=n>stdout_output</span> <span class=o>=</span> <span class=n>state</span><span class=o>.</span><span class=n>posix</span><span class=o>.</span><span class=n>dumps</span><span class=p>(</span><span class=n>sys</span><span class=o>.</span><span class=n>stdout</span><span class=o>.</span><span class=n>fileno</span><span class=p>())</span>
-</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=sa>b</span><span class=s1>&#39;Try again.&#39;</span> <span class=ow>in</span> <span class=n>stdout_output</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>False</span>
-</span></span></code></pre></div><p>The 2 functions defined - successful and abort, carry out our program&rsquo;s logic. They simply check if you have found the state that you are looking for.</p><p>We begin by defining our function which is going to take in a state<code>#1</code>. We then take what is printed to stdout and assign it to the stdout_output variable <code>#2</code>. The output of <strong>state.posix.dumps</strong> is a python bytes object, so we use <strong>b&rsquo; &lsquo;</strong> to capture the string &lsquo;Good job&rsquo; from the stdout_output variable and return True if found <code>#3</code>.</p><p>We do the same for the abort function where we check for the &lsquo;Try again&rsquo; string.</p><ol start=3><li><strong>Exploring code paths</strong></li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=n>simulation</span><span class=o>.</span><span class=n>explore</span><span class=p>(</span><span class=n>find</span><span class=o>=</span><span class=n>successful</span><span class=p>,</span> <span class=n>avoid</span><span class=o>=</span><span class=n>abort</span><span class=p>)</span>
-</span></span></code></pre></div><p>We can then tell Angr what states to explore and what to avoid exploring. <strong>simulation.explore</strong> has 2 arguments, <strong>find</strong> and <strong>avoid</strong>. They take in an address or a list of addresses. Our program is going to start exploring based on those functions that accept a state and return whether it matches or not</p><ol start=4><li><strong>House-keeping</strong></li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl>    <span class=k>if</span> <span class=n>simulation</span><span class=o>.</span><span class=n>found</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>        <span class=n>solution_state</span> <span class=o>=</span> <span class=n>simulation</span><span class=o>.</span><span class=n>found</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
-</span></span><span class=line><span class=cl>        <span class=n>solution</span> <span class=o>=</span> <span class=n>solution_state</span><span class=o>.</span><span class=n>posix</span><span class=o>.</span><span class=n>dumps</span><span class=p>(</span><span class=n>sys</span><span class=o>.</span><span class=n>stdin</span><span class=o>.</span><span class=n>fileno</span><span class=p>())</span>
-</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;[+] Solution found! : </span><span class=si>{}</span><span class=s2>&#34;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>solution</span><span class=o>.</span><span class=n>decode</span><span class=p>(</span><span class=s1>&#39;utf-8&#39;</span><span class=p>)))</span>
-</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=ne>Exception</span><span class=p>(</span><span class=s2>&#34;Could not find the solution&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>    <span class=n>main</span><span class=p>()</span>    
-</span></span></code></pre></div><p>We finish up by printing the solution once the simulation manager finds the desired state.</p><p>Our final script:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>angr</span>
-</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>sys</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
-</span></span><span class=line><span class=cl>    <span class=n>path_to_binary</span> <span class=o>=</span> <span class=s1>&#39;/opt/angr_ctf/dist/02_angr_find_condition&#39;</span>
-</span></span><span class=line><span class=cl>    <span class=n>project</span> <span class=o>=</span> <span class=n>angr</span><span class=o>.</span><span class=n>Project</span><span class=p>(</span><span class=n>path_to_binary</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;[+] Loaded the binary to angr&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>    <span class=n>initial_state</span> <span class=o>=</span> <span class=n>project</span><span class=o>.</span><span class=n>factory</span><span class=o>.</span><span class=n>entry_state</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>    <span class=n>simulation</span> <span class=o>=</span> <span class=n>project</span><span class=o>.</span><span class=n>factory</span><span class=o>.</span><span class=n>simgr</span><span class=p>(</span><span class=n>initial_state</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=c1># define a function that checks if you have found the state you are looking for</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>successful</span><span class=p>(</span><span class=n>state</span><span class=p>):</span>
-</span></span><span class=line><span class=cl>        <span class=c1># dump what the binary has printed out into a string</span>
-</span></span><span class=line><span class=cl>        <span class=n>stdout_output</span> <span class=o>=</span> <span class=n>state</span><span class=o>.</span><span class=n>posix</span><span class=o>.</span><span class=n>dumps</span><span class=p>(</span><span class=n>sys</span><span class=o>.</span><span class=n>stdout</span><span class=o>.</span><span class=n>fileno</span><span class=p>())</span>
-</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=sa>b</span><span class=s1>&#39;Good Job.&#39;</span> <span class=ow>in</span> <span class=n>stdout_output</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>True</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>abort</span><span class=p>(</span><span class=n>state</span><span class=p>):</span>
-</span></span><span class=line><span class=cl>        <span class=n>stdout_output</span> <span class=o>=</span> <span class=n>state</span><span class=o>.</span><span class=n>posix</span><span class=o>.</span><span class=n>dumps</span><span class=p>(</span><span class=n>sys</span><span class=o>.</span><span class=n>stdout</span><span class=o>.</span><span class=n>fileno</span><span class=p>())</span>
-</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=sa>b</span><span class=s1>&#39;Try again.&#39;</span> <span class=ow>in</span> <span class=n>stdout_output</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>False</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=n>simulation</span><span class=o>.</span><span class=n>explore</span><span class=p>(</span><span class=n>find</span><span class=o>=</span><span class=n>successful</span><span class=p>,</span> <span class=n>avoid</span><span class=o>=</span><span class=n>abort</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>simulation</span><span class=o>.</span><span class=n>found</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>        <span class=n>solution_state</span> <span class=o>=</span> <span class=n>simulation</span><span class=o>.</span><span class=n>found</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
-</span></span><span class=line><span class=cl>        <span class=n>solution</span> <span class=o>=</span> <span class=n>solution_state</span><span class=o>.</span><span class=n>posix</span><span class=o>.</span><span class=n>dumps</span><span class=p>(</span><span class=n>sys</span><span class=o>.</span><span class=n>stdin</span><span class=o>.</span><span class=n>fileno</span><span class=p>())</span>
-</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;[+] Success! Solution is: </span><span class=si>{}</span><span class=s2>&#34;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>solution</span><span class=o>.</span><span class=n>decode</span><span class=p>(</span><span class=s1>&#39;utf-8&#39;</span><span class=p>)))</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=ne>Exception</span><span class=p>(</span><span class=s2>&#34;Could not find the solution&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>    <span class=n>main</span><span class=p>()</span>
-</span></span></code></pre></div><p>Run the code:</p><p><figure><img class="my-0 rounded-md" src=/posts/symbolic_execution_angr_part2/images/5.png alt=image></figure></p><p>We get our solution :)</p><h2 id=03_angr_symbolic_registers class="relative group">03_angr_symbolic_registers <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#03_angr_symbolic_registers aria-label=Anchor>#</a></span></h2><p>Let&rsquo;s crank up the difficulty and see more Angr functionality! We proceed to disassemble our binary.</p><p><figure><img class="my-0 rounded-md" src=/posts/symbolic_execution_angr_part2/images/11.png alt=image></figure></p><p>Various functions are of interest. We can begin by inspecting the main() function. Cutter gives us a nice decompiled output that can help us understand better what our program does under the hood.</p><h3 id=program-analysis class="relative group">Program analysis <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#program-analysis aria-label=Anchor>#</a></span></h3><p>First, we can let us get a general overview of what happens in the main function to understand the functionality of the program</p><p><figure><img class="my-0 rounded-md" src=/posts/symbolic_execution_angr_part2/images/12.png alt=image></figure></p><p>There are 3 variables that get initialized in the main function. Technically 4, but we ignore <strong>int32_t var_4h</strong> as it is used for other procedures out of scope in this tutorial.</p><p>Immediately after initializing, there is a call to <strong>get_user_input()</strong> function which we will have a look at shortly. Our input is stored in the 3 variables which are placed in registers <strong>eax, ebx, edx</strong> and the <strong>complex_function</strong> functions are used to perform some operations on these variables.</p><p>Let us have a look at the <strong>get_user_input()</strong> function</p><p><figure><img class="my-0 rounded-md" src=/posts/symbolic_execution_angr_part2/images/14.png alt=image></figure></p><p>In the scanf function, we can see these 3 badboys - &ldquo;%x %x %x&rdquo;, which means that we are taking 3 inputs as hexadecimal numbers. These are the values moved to the registers we noted earlier.</p><p>So how are we going to approach our exploit? Let us walk through step by step</p><ol><li><strong>Import necessary libraries & set up an Angr project</strong></li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>angr</span>
-</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>sys</span>
-</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>claripy</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
-</span></span><span class=line><span class=cl>    <span class=n>path_to_binary</span> <span class=o>=</span> <span class=s1>&#39;/opt/angr_ctf/dist/02_angr_find_condition&#39;</span>
-</span></span><span class=line><span class=cl>    <span class=n>project</span> <span class=o>=</span> <span class=n>angr</span><span class=o>.</span><span class=n>Project</span><span class=p>(</span><span class=n>path_to_binary</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;[+] Loaded the binary to angr&#34;</span><span class=p>)</span>
-</span></span></code></pre></div><p>We have an additional library <strong>claripy</strong> different from before. We will see its usage later.</p><ol start=2><li><strong>Initialize the starting address.</strong></li></ol><p>In the previous examples, we had Angr start at the beginning of the program. But due to Angr&rsquo;s functionality, format strings are not handled well and we need to skip the call to scanf that specified the %x format strings to pick our hex input.</p><p>Right after the get_user_input(), we pick the address of the next instruction</p><p><figure><img class="my-0 rounded-md" src=/posts/symbolic_execution_angr_part2/images/15.png alt=image></figure></p><p>which is 0x08048980</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python3 data-lang=python3><span class=line><span class=cl><span class=n>start_address</span> <span class=o>=</span> <span class=mh>0x08048980</span>
-</span></span><span class=line><span class=cl><span class=n>initial_state</span> <span class=o>=</span> <span class=n>project</span><span class=o>.</span><span class=n>factory</span><span class=o>.</span><span class=n>blank_state</span><span class=p>(</span><span class=n>addr</span><span class=o>=</span><span class=n>start_address</span><span class=p>)</span>
-</span></span></code></pre></div><p>Note that we used blank_state() instead of entry_state(). This effectively creates a new address that will be the starting point for Angr</p><ol start=3><li><strong>Symbol injection into registers.</strong></li></ol><p>Remember the 3 registers that we noted earlier (<strong>eax, ebx, edx</strong>)? We are going to replace the value inside the register (which we don&rsquo;t know) with our symbol, by injecting into it. Before doing so, let us look at a key concept: <strong>Bitvectors</strong> - simply put, it is an array of bits.</p><p>Our registers are 32 bits in length, so our variables are going to be just as much long, represented as bitvectors.</p><p>This will look as follows:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python3 data-lang=python3><span class=line><span class=cl>    <span class=n>size</span> <span class=o>=</span> <span class=mi>32</span>
-</span></span><span class=line><span class=cl>    <span class=n>pass1</span> <span class=o>=</span> <span class=n>claripy</span><span class=o>.</span><span class=n>BVS</span><span class=p>(</span><span class=s1>&#39;pass1&#39;</span><span class=p>,</span> <span class=n>size</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>    <span class=n>pass2</span> <span class=o>=</span> <span class=n>claripy</span><span class=o>.</span><span class=n>BVS</span><span class=p>(</span><span class=s1>&#39;pass2&#39;</span><span class=p>,</span> <span class=n>size</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>    <span class=n>pass3</span> <span class=o>=</span> <span class=n>claripy</span><span class=o>.</span><span class=n>BVS</span><span class=p>(</span><span class=s1>&#39;pass3&#39;</span><span class=p>,</span> <span class=n>size</span><span class=p>)</span>
-</span></span></code></pre></div><p>Note that we now make use of the claripy library to create our bitvectors which uses the BVS method(bitvector symbol).</p><p>Let us now take our symbols and inject them into the registers. We are going to set the registers based on the starting address initial_state, which essentially marks the registers.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python3 data-lang=python3><span class=line><span class=cl>    <span class=n>initial_state</span><span class=o>.</span><span class=n>regs</span><span class=o>.</span><span class=n>eax</span> <span class=o>=</span> <span class=n>pass1</span>
-</span></span><span class=line><span class=cl>    <span class=n>initial_state</span><span class=o>.</span><span class=n>regs</span><span class=o>.</span><span class=n>ebx</span> <span class=o>=</span> <span class=n>pass2</span>
-</span></span><span class=line><span class=cl>    <span class=n>initial_state</span><span class=o>.</span><span class=n>regs</span><span class=o>.</span><span class=n>edx</span> <span class=o>=</span> <span class=n>pass3</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=n>simulation</span> <span class=o>=</span> <span class=n>project</span><span class=o>.</span><span class=n>factory</span><span class=o>.</span><span class=n>simgr</span><span class=p>(</span><span class=n>initial_state</span><span class=p>)</span>
-</span></span></code></pre></div><ol start=4><li><strong>House-keeping</strong></li></ol><p>Our routine functions for finding the states we need and should avoid.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>successful</span><span class=p>(</span><span class=n>state</span><span class=p>):</span>
-</span></span><span class=line><span class=cl>        <span class=n>stdout_output</span> <span class=o>=</span> <span class=n>state</span><span class=o>.</span><span class=n>posix</span><span class=o>.</span><span class=n>dumps</span><span class=p>(</span><span class=n>sys</span><span class=o>.</span><span class=n>stdout</span><span class=o>.</span><span class=n>fileno</span><span class=p>())</span>
-</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=sa>b</span><span class=s1>&#39;Good Job.&#39;</span> <span class=ow>in</span> <span class=n>stdout_output</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>True</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>abort</span><span class=p>(</span><span class=n>state</span><span class=p>):</span>
-</span></span><span class=line><span class=cl>        <span class=n>stdout_output</span> <span class=o>=</span> <span class=n>state</span><span class=o>.</span><span class=n>posix</span><span class=o>.</span><span class=n>dumps</span><span class=p>(</span><span class=n>sys</span><span class=o>.</span><span class=n>stdout</span><span class=o>.</span><span class=n>fileno</span><span class=p>())</span>
-</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=sa>b</span><span class=s1>&#39;Try again.&#39;</span> <span class=ow>in</span> <span class=n>stdout_output</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>True</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=n>simulation</span><span class=o>.</span><span class=n>explore</span><span class=p>(</span><span class=n>find</span><span class=o>=</span><span class=n>is_successful</span><span class=p>,</span> <span class=n>avoid</span><span class=o>=</span><span class=n>should_abort</span><span class=p>)</span>
-</span></span></code></pre></div><ol start=5><li><strong>Prepare the output</strong></li></ol><p>There is a possibility of getting multiple solutions. <strong>solution_state.solver.eval</strong> ensures that we pick one solution for each symbol and also, formats it into a hexadecimal value</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl>   <span class=k>if</span> <span class=n>simulation</span><span class=o>.</span><span class=n>found</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>        <span class=n>solution_state</span> <span class=o>=</span> <span class=n>simulation</span><span class=o>.</span><span class=n>found</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
-</span></span><span class=line><span class=cl>        <span class=n>pass1</span> <span class=o>=</span> <span class=nb>format</span><span class=p>(</span><span class=n>solution_state</span><span class=o>.</span><span class=n>solver</span><span class=o>.</span><span class=n>eval</span><span class=p>(</span><span class=n>pass1</span><span class=p>),</span> <span class=s1>&#39;x&#39;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>        <span class=n>pass2</span> <span class=o>=</span> <span class=nb>format</span><span class=p>(</span><span class=n>solution_state</span><span class=o>.</span><span class=n>solver</span><span class=o>.</span><span class=n>eval</span><span class=p>(</span><span class=n>pass2</span><span class=p>),</span> <span class=s1>&#39;x&#39;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>        <span class=n>pass3</span> <span class=o>=</span> <span class=nb>format</span><span class=p>(</span><span class=n>solution_state</span><span class=o>.</span><span class=n>solver</span><span class=o>.</span><span class=n>eval</span><span class=p>(</span><span class=n>pass3</span><span class=p>),</span> <span class=s1>&#39;x&#39;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>        <span class=n>solution</span> <span class=o>=</span> <span class=n>pass1</span> <span class=o>+</span> <span class=s2>&#34; &#34;</span> <span class=o>+</span> <span class=n>pass2</span> <span class=o>+</span> <span class=s2>&#34; &#34;</span> <span class=o>+</span> <span class=n>pass3</span> <span class=o>+</span> <span class=s2>&#34; &#34;</span>
-</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;[+] Success! Solution is: </span><span class=si>{}</span><span class=s2>&#34;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>solution</span><span class=p>))</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=ne>Exception</span><span class=p>(</span><span class=s2>&#34;Could not find the solution&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>    <span class=n>main</span><span class=p>()</span>
-</span></span></code></pre></div><h3 id=solution-1 class="relative group">Solution <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#solution-1 aria-label=Anchor>#</a></span></h3><p>Our final script</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>angr</span>
-</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>sys</span>
-</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>claripy</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
-</span></span><span class=line><span class=cl>    <span class=n>path_to_binary</span> <span class=o>=</span> <span class=s1>&#39;/home/saudi/Desktop/CTF/angrchalls/angr_ctf/dist/03_angr_symbolic_registers&#39;</span>
-</span></span><span class=line><span class=cl>    <span class=n>project</span> <span class=o>=</span> <span class=n>angr</span><span class=o>.</span><span class=n>Project</span><span class=p>(</span><span class=n>path_to_binary</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;[+] Loaded the binary to angr&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>    <span class=n>base_address</span> <span class=o>=</span> <span class=mh>0x8048980</span>
-</span></span><span class=line><span class=cl>    <span class=n>initial_state</span> <span class=o>=</span> <span class=n>project</span><span class=o>.</span><span class=n>factory</span><span class=o>.</span><span class=n>blank_state</span><span class=p>(</span><span class=n>addr</span><span class=o>=</span><span class=n>base_address</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=n>size</span> <span class=o>=</span> <span class=mi>32</span>
-</span></span><span class=line><span class=cl>    <span class=n>pass1</span> <span class=o>=</span> <span class=n>claripy</span><span class=o>.</span><span class=n>BVS</span><span class=p>(</span><span class=s1>&#39;pass1&#39;</span><span class=p>,</span> <span class=n>size</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>    <span class=n>pass2</span> <span class=o>=</span> <span class=n>claripy</span><span class=o>.</span><span class=n>BVS</span><span class=p>(</span><span class=s1>&#39;pass2&#39;</span><span class=p>,</span> <span class=n>size</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>    <span class=n>pass3</span> <span class=o>=</span> <span class=n>claripy</span><span class=o>.</span><span class=n>BVS</span><span class=p>(</span><span class=s1>&#39;pass3&#39;</span><span class=p>,</span> <span class=n>size</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=n>initial_state</span><span class=o>.</span><span class=n>regs</span><span class=o>.</span><span class=n>eax</span> <span class=o>=</span> <span class=n>pass1</span>
-</span></span><span class=line><span class=cl>    <span class=n>initial_state</span><span class=o>.</span><span class=n>regs</span><span class=o>.</span><span class=n>ebx</span> <span class=o>=</span> <span class=n>pass2</span>
-</span></span><span class=line><span class=cl>    <span class=n>initial_state</span><span class=o>.</span><span class=n>regs</span><span class=o>.</span><span class=n>edx</span> <span class=o>=</span> <span class=n>pass3</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=n>simulation</span> <span class=o>=</span> <span class=n>project</span><span class=o>.</span><span class=n>factory</span><span class=o>.</span><span class=n>simgr</span><span class=p>(</span><span class=n>initial_state</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>successful</span><span class=p>(</span><span class=n>state</span><span class=p>):</span>
-</span></span><span class=line><span class=cl>        <span class=n>stdout_output</span> <span class=o>=</span> <span class=n>state</span><span class=o>.</span><span class=n>posix</span><span class=o>.</span><span class=n>dumps</span><span class=p>(</span><span class=n>sys</span><span class=o>.</span><span class=n>stdout</span><span class=o>.</span><span class=n>fileno</span><span class=p>())</span>
-</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=sa>b</span><span class=s1>&#39;Good Job.&#39;</span> <span class=ow>in</span> <span class=n>stdout_output</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>True</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>abort</span><span class=p>(</span><span class=n>state</span><span class=p>):</span>
-</span></span><span class=line><span class=cl>        <span class=n>stdout_output</span> <span class=o>=</span> <span class=n>state</span><span class=o>.</span><span class=n>posix</span><span class=o>.</span><span class=n>dumps</span><span class=p>(</span><span class=n>sys</span><span class=o>.</span><span class=n>stdout</span><span class=o>.</span><span class=n>fileno</span><span class=p>())</span>
-</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=sa>b</span><span class=s1>&#39;Try again.&#39;</span> <span class=ow>in</span> <span class=n>stdout_output</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>True</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=n>simulation</span><span class=o>.</span><span class=n>explore</span><span class=p>(</span><span class=n>find</span><span class=o>=</span><span class=n>successful</span><span class=p>,</span> <span class=n>avoid</span><span class=o>=</span><span class=n>abort</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>simulation</span><span class=o>.</span><span class=n>found</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>        <span class=n>solution_state</span> <span class=o>=</span> <span class=n>simulation</span><span class=o>.</span><span class=n>found</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
-</span></span><span class=line><span class=cl>        <span class=n>pass1</span> <span class=o>=</span> <span class=nb>format</span><span class=p>(</span><span class=n>solution_state</span><span class=o>.</span><span class=n>solver</span><span class=o>.</span><span class=n>eval</span><span class=p>(</span><span class=n>pass1</span><span class=p>),</span> <span class=s1>&#39;x&#39;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>        <span class=n>pass2</span> <span class=o>=</span> <span class=nb>format</span><span class=p>(</span><span class=n>solution_state</span><span class=o>.</span><span class=n>solver</span><span class=o>.</span><span class=n>eval</span><span class=p>(</span><span class=n>pass2</span><span class=p>),</span> <span class=s1>&#39;x&#39;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>        <span class=n>pass3</span> <span class=o>=</span> <span class=nb>format</span><span class=p>(</span><span class=n>solution_state</span><span class=o>.</span><span class=n>solver</span><span class=o>.</span><span class=n>eval</span><span class=p>(</span><span class=n>pass3</span><span class=p>),</span> <span class=s1>&#39;x&#39;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>        <span class=n>solution</span> <span class=o>=</span> <span class=n>pass1</span> <span class=o>+</span> <span class=s2>&#34; &#34;</span> <span class=o>+</span> <span class=n>pass2</span> <span class=o>+</span> <span class=s2>&#34; &#34;</span> <span class=o>+</span> <span class=n>pass3</span> <span class=o>+</span> <span class=s2>&#34; &#34;</span>
-</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;[+] Success! Solution is: </span><span class=si>{}</span><span class=s2>&#34;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>solution</span><span class=p>))</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=ne>Exception</span><span class=p>(</span><span class=s2>&#34;Could not find the solution&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>    <span class=n>main</span><span class=p>()</span>
-</span></span></code></pre></div><p>Our solution :)</p><p><figure><img class="my-0 rounded-md" src=/posts/symbolic_execution_angr_part2/images/16.png alt=image></figure></p><p>We come to the end of the tutorial having covered some more advanced concepts. See you in the next where I take you through hell :)</p></div></section><footer class="pt-8 max-w-prose print:hidden"><div class=pt-8><hr class="border-dotted border-neutral-300 dark:border-neutral-600"><div class="flex justify-between pt-3"><span><a class="flex group" href=/posts/symbolic_execution_angr_part1/><span class="mr-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400">&larr;</span>
-<span class="ml-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400">&rarr;</span>
-<span class="flex flex-col"><span class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500">Symbolic Execution with Angr - part 1</span>
-<span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400"><time datetime="2022-08-15 00:00:00 +0000 UTC">15 August 2022</time></span></span></a></span>
-<span><a class="flex text-right group" href=/posts/2023-01-11_code_review_01/><span class="flex flex-col"><span class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500">Secure Code Review - Hash Length Extension Attack</span>
-<span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400"><time datetime="2023-01-10 00:00:00 +0000 UTC">10 January 2023</time></span></span>
-<span class="ml-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400">&rarr;</span>
-<span class="mr-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400">&larr;</span></a></span></div></div></footer></article><div class="absolute top-[110vh] ltr:right-0 rtl:left-0 w-12 pointer-events-none bottom-0"><a href=#the-top class="w-12 h-12 sticky pointer-events-auto top-[calc(100vh-5.5rem)] bg-neutral/50 dark:bg-neutral-800/50 backdrop-blur rounded-full text-xl flex items-center justify-center text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400" aria-label="Scroll to top" title="Scroll to top">&uarr;</a></div></main><div id=search-wrapper class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible" data-url=https://trevorsaudi.com/><div id=search-modal class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg border-neutral-200 top-20 bg-neutral dark:bg-neutral-800 dark:border-neutral-700"><header class="relative z-10 flex items-center justify-between flex-none px-2"><form class="flex items-center flex-auto min-w-0"><div class="flex items-center justify-center w-8 h-8 text-neutral-400"><span class="relative inline-block align-text-bottom icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M505 442.7 405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9.0 208 0S0 93.1.0 208s93.1 208 208 208c48.3.0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9.0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7.0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7.0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></span></div><input type=search id=search-query class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-transparent focus:outline-2" placeholder=Search tabindex=0></form><button id=close-search-button class="flex items-center justify-center w-8 h-8 text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400" title="Close (Esc)">
-<span class="relative inline-block align-text-bottom icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentcolor" d="M310.6 361.4c12.5 12.5 12.5 32.75.0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3 54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75.0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75.0-45.25s32.75-12.5 45.25.0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25.0s12.5 32.75.0 45.25l-105.4 105.4L310.6 361.4z"/></svg></span></button></header><section class="flex-auto px-2 overflow-auto"><ul id=search-results></ul></section></div></div><footer class="py-10 print:hidden"><div class="flex justify-between"><div><p class="text-sm text-neutral-500 dark:text-neutral-400">😄</p><p class="text-xs text-neutral-500 dark:text-neutral-400">Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href=https://gohugo.io/ target=_blank rel="noopener noreferrer">Hugo</a> & <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href=https://git.io/hugo-congo target=_blank rel="noopener noreferrer">Congo</a></p></div><div class="text-sm cursor-pointer text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400 ltr:mr-14 rtl:ml-14"><button id=appearance-switcher class="w-12 h-12" type=button title="Switch to dark appearance">
-<span class="inline dark:hidden"><span class="relative inline-block align-text-bottom icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M32 256C32 132.2 132.3 32 255.8 32c11.36.0 29.7 1.668 40.9 3.746 9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3 9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480 132.1 480 32 379.6 32 256z"/></svg></span></span><span class="hidden dark:inline"><span class="relative inline-block align-text-bottom icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M256 159.1c-53.02.0-95.1 42.98-95.1 95.1s41.2 96.9 95.1 96.9 95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347l-63.2-91.9 63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89 164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6 12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256 2.74 347.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7 19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109 109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69.0-127.1-57.31-127.1-127.1.0-70.69 57.31-127.1 127.1-127.1S383.1 186.2 383.1 256c0 70.7-56.4 127.1-127.1 127.1z"/></svg></span></span></button></div></div></footer></div></body></html>
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="light"
+  data-auto-appearance="true"
+><head>
+  <meta charset="utf-8" />
+  
+    <meta http-equiv="content-language" content="en" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  
+  <title>Symbolic Execution with Angr - part 2 &middot; Trevor Saudi</title>
+    <meta name="title" content="Symbolic Execution with Angr - part 2 &middot; Trevor Saudi" />
+  
+  <meta name="description" content="Portfolio/blog" />
+  
+  
+  
+  <link rel="canonical" href="https://trevorsaudi.com/posts/symbolic_execution_angr_part2/" />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.71883ab0661482cf6c7d29b8bdd1af3be3d2f1ea750e56a67846b7f64f41d19b8dc6d7047f48422ec8cbe4a0a412d551c8210307e2b93b1254cdbf7d8af216e0.css"
+    integrity="sha512-cYg6sGYUgs9sfSm4vdGvO&#43;PS8ep1DlameEa39k9B0ZuNxtcEf0hCLsjL5KCkEtVRyCEDB&#43;K5OxJUzb99ivIW4A=="
+  />
+  
+  
+  <script type="text/javascript" src="/js/appearance.min.badab316c9287a5a42a843e4eb45da65bb3d194a5a0f5fa4a3e516160e67df0b8c65f4f19a8e146436e29d583699e6cb41d6bbe99e05e1dbaa877763bad9f8e2.js" integrity="sha512-utqzFskoelpCqEPk60XaZbs9GUpaD1&#43;ko&#43;UWFg5n3wuMZfTxmo4UZDbinVg2mebLQda76Z4F4duqh3djutn44g=="></script>
+  
+    
+    
+    
+  
+  
+    
+    
+  
+  
+  
+    
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.5ffdd39e73bd1438c0f4ff42f13915f067c633da22f60efa62139a4c51b972622badb1157d4aa4322634b55c8a2dc5ddfbd3917426df1c02d7b69362030197da.js" integrity="sha512-X/3TnnO9FDjA9P9C8TkV8GfGM9oi9g76YhOaTFG5cmIrrbEVfUqkMiY0tVyKLcXd&#43;9ORdCbfHALXtpNiAwGX2g==" data-copy="Copy" data-copied="Copied"></script>
+  
+  
+  
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="Symbolic Execution with Angr - part 2" />
+<meta property="og:description" content="Overcoming path explosion, injecting bitvectors into symbolic registers using angr" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://trevorsaudi.com/posts/symbolic_execution_angr_part2/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-08-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-08-18T00:00:00+00:00" /><meta property="og:site_name" content="Trevor Saudi" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Symbolic Execution with Angr - part 2"/>
+<meta name="twitter:description" content="Overcoming path explosion, injecting bitvectors into symbolic registers using angr"/>
+
+  
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Posts",
+    "name": "Symbolic Execution with Angr - part 2",
+    "headline": "Symbolic Execution with Angr - part 2",
+    
+    "abstract": "Overcoming path explosion, injecting bitvectors into symbolic registers using angr",
+    "inLanguage": "en",
+    "url" : "https:\/\/trevorsaudi.com\/posts\/symbolic_execution_angr_part2\/",
+    "author" : {
+      "@type": "Person",
+      "name": "Trevor Saudi"
+    },
+    "copyrightYear": "2022",
+    "dateCreated": "2022-08-18T00:00:00\u002b00:00",
+    "datePublished": "2022-08-18T00:00:00\u002b00:00",
+    
+    "dateModified": "2022-08-18T00:00:00\u002b00:00",
+    
+    "keywords": ["python","angr","reverse engineering","exploit development"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "1498"
+  }]
+  </script>
+
+
+  
+  <meta name="author" content="Trevor Saudi" />
+  
+    
+      <link href="https://github.com/trevorsaudi" rel="me" />
+    
+      <link href="https://www.linkedin.com/in/trevor-saudi-9275b8186" rel="me" />
+    
+  
+  
+  
+
+
+
+
+
+
+  
+  
+  
+  
+
+
+  
+  
+</head>
+<body
+    class="flex flex-col h-screen px-6 m-auto text-lg leading-7 bg-neutral text-neutral-900 sm:px-14 md:px-24 lg:px-32 dark:bg-neutral-800 dark:text-neutral max-w-7xl"
+  >
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 dark:bg-neutral-600 focus:translate-y-0"
+        href="#main-content"
+        ><span class="font-bold ltr:pr-2 rtl:pl-2 text-primary-600 dark:text-primary-400"
+          >&darr;</span
+        >Skip to main content</a
+      >
+    </div><header
+  class="flex justify-between py-6 font-semibold sm:items-center sm:py-10 text-neutral-900 dark:text-neutral print:hidden"
+>
+  
+  <div>
+    
+      
+    
+    
+
+  </div>
+  
+  
+    <nav>
+      <ul class="flex flex-col list-none sm:flex-row">
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/"
+              title=""
+              >Home</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/posts/"
+              title="Posts"
+              >Posts</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/about/"
+              title=""
+              >About</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/tags/"
+              title="Tags"
+              >Tags</a
+            >
+          </li>
+        
+        
+          <li
+            class="ltr:text-right rtl:text-left ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <button
+              id="search-button"
+              class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+              title="Search (/)"
+            >
+              
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+            </button>
+          </li>
+        
+      </ul>
+    </nav>
+  
+</header>
+<div class="relative">
+      <main id="main-content" class="grow">
+  <article>
+    <header class="max-w-prose">
+      
+        <ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden">
+  
+  
+    
+  
+    
+  
+  <li class="inline hidden">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/"
+      ></a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline ">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/posts/"
+      >Posts</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline hidden">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/posts/symbolic_execution_angr_part2/"
+      >Symbolic Execution with Angr - part 2</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+</ol>
+
+
+      
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        Symbolic Execution with Angr - part 2
+      </h1>
+      <div class="mt-8 mb-12 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+        
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+    
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2022-08-18 00:00:00 &#43;0000 UTC">18 August 2022</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">8 mins</span>
+    
+
+    
+    
+  </div>
+
+  
+  
+
+
+      </div>
+    </header>
+    <section class="flex flex-col max-w-full mt-0 prose lg:flex-row dark:prose-invert">
+      
+        <div class="order-first px-0 lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8 lg:order-last">
+          <div class="ltr:pl-5 rtl:pr-5 toc lg:sticky lg:top-10 print:hidden">
+            <details open class="mt-0 overflow-hidden rounded-lg rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 lg:mt-3">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 text-neutral-800 dark:text-neutral-100 lg:hidden bg-neutral-100 dark:bg-neutral-700"
+  >
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted ltr:border-l rtl:border-r rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 border-neutral-300 dark:border-neutral-600"
+  >
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#path-explosion">Path Explosion</a></li>
+    <li><a href="#02_angr_find_condition">02_angr_find_condition</a>
+      <ul>
+        <li><a href="#solution">Solution</a></li>
+      </ul>
+    </li>
+    <li><a href="#03_angr_symbolic_registers">03_angr_symbolic_registers</a>
+      <ul>
+        <li><a href="#program-analysis">Program analysis</a></li>
+        <li><a href="#solution-1">Solution</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+          </div>
+        </div>
+      
+      <div class="min-w-0 min-h-0 max-w-prose">
+        <p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/symbolic_execution_angr_part2/images/1.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p><em>Overcoming path explosion, injecting bitvectors into symbolic registers using angr</em></p>
+<h2 id="introduction" class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a></span></h2>
+<p>In the <a href="https://trevorsaudi.com/posts/symbolic_execution_angr_part1/">previous</a> blog, we looked into what Symbolic Execution is and how we can utilize the Angr framework in finding execution paths to reach desirable states in programs. In this blog, we will look at the limitations that Symbolic Execution imposes and how we can use Angr to efficiently navigate through these limitations. We shall also introduce symbolic registers and how to inject symbols directly into registers.</p>
+<h2 id="path-explosion" class="relative group">Path Explosion <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#path-explosion" aria-label="Anchor">#</a></span></h2>
+<p>In our previous example, we had a simple program with only 2 possible execution paths, one printing out &ldquo;good job&rdquo; while the other &ldquo;try again&rdquo;.</p>
+<p>In a more practical case with a complex program with very many states, execution paths grow exponentially. In the case of unbounded loops in the program, we could even have infinite execution paths making it unfeasible to analyze all these paths. This is the problem of path explosion</p>
+<p>Let us see how we can overcome path explosion in the second binary example using Angr</p>
+<h2 id="02_angr_find_condition" class="relative group">02_angr_find_condition <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#02_angr_find_condition" aria-label="Anchor">#</a></span></h2>
+<p>This is the 3rd binary file in the exercise</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">➜  02_angr_find_condition git:<span class="o">(</span>master<span class="o">)</span> ✗ ls
+</span></span><span class="line"><span class="cl">02_angr_find_condition.c.jinja  generate.py  __init__.py  scaffold02.py
+</span></span><span class="line"><span class="cl">➜  02_angr_find_condition git:<span class="o">(</span>master<span class="o">)</span> ✗
+</span></span></code></pre></div><p>Run the binary to see its functionality.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">➜  dist git:<span class="o">(</span>master<span class="o">)</span> ✗ ./02_angr_find_condition
+</span></span><span class="line"><span class="cl">Enter the password: asdasd
+</span></span><span class="line"><span class="cl">Try again.
+</span></span></code></pre></div><p>It is similar to the previous binary that we looked at. Let us disassemble the main function of the binary in Cutter to get more information.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/symbolic_execution_angr_part2/images/2.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Well, it&rsquo;s a bloody mess.</p>
+<p>There are tonnes of branches leading to several &lsquo;Try again&rsquo; and &lsquo;Good job&rsquo; states.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/symbolic_execution_angr_part2/images/3.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>It would be tedious noting down the addresses of all Good job states. Instead, we can tell Angr to avoid or consider a state based on the output that the state gives.</p>
+<p>There is a scaffold.py file in each binary file&rsquo;s directory that contains skeleton code that will guide you in your solution. We will slightly modify the skeleton code to come up with our solution.</p>
+<h3 id="solution" class="relative group">Solution <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#solution" aria-label="Anchor">#</a></span></h3>
+<ol>
+<li><strong>Import necessary libraries &amp; set up an Angr project.</strong></li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">angr</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">path_to_binary</span> <span class="o">=</span> <span class="s1">&#39;/opt/angr_ctf/dist/02_angr_find_condition&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">project</span> <span class="o">=</span> <span class="n">angr</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="n">path_to_binary</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[+] Loaded the binary to angr&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">initial_state</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">entry_state</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">simulation</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">simgr</span><span class="p">(</span><span class="n">initial_state</span><span class="p">)</span>
+</span></span></code></pre></div><ol start="2">
+<li><strong>Building out the logic</strong></li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">successful</span><span class="p">(</span><span class="n">state</span><span class="p">):</span> <span class="c1">#1</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stdout_output</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span> <span class="c1">#2</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;Good Job.&#39;</span> <span class="ow">in</span> <span class="n">stdout_output</span><span class="p">:</span> <span class="c1">#3</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stdout_output</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;Try again.&#39;</span> <span class="ow">in</span> <span class="n">stdout_output</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">False</span>
+</span></span></code></pre></div><p>The 2 functions defined - successful and abort, carry out our program&rsquo;s logic. They simply check if you have found the state that you are looking for.</p>
+<p>We begin by defining our function which is going to take in a state<code>#1</code>. We then take what is printed to stdout and assign it to the stdout_output variable <code>#2</code>. The output of <strong>state.posix.dumps</strong> is a python bytes object, so we use <strong>b&rsquo; &lsquo;</strong> to capture the string &lsquo;Good job&rsquo; from the stdout_output variable and return True if found <code>#3</code>.</p>
+<p>We do the same for the abort function where we check for the &lsquo;Try again&rsquo; string.</p>
+<ol start="3">
+<li><strong>Exploring code paths</strong></li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">simulation</span><span class="o">.</span><span class="n">explore</span><span class="p">(</span><span class="n">find</span><span class="o">=</span><span class="n">successful</span><span class="p">,</span> <span class="n">avoid</span><span class="o">=</span><span class="n">abort</span><span class="p">)</span>
+</span></span></code></pre></div><p>We can then tell Angr what states to explore and what to avoid exploring. <strong>simulation.explore</strong> has 2 arguments, <strong>find</strong> and <strong>avoid</strong>. They take in an address or a list of addresses. Our program is going to start exploring based on those functions that accept a state and return whether it matches or not</p>
+<ol start="4">
+<li><strong>House-keeping</strong></li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">simulation</span><span class="o">.</span><span class="n">found</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">solution_state</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">found</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">solution</span> <span class="o">=</span> <span class="n">solution_state</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[+] Solution found! : </span><span class="si">{}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&#34;Could not find the solution&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>    
+</span></span></code></pre></div><p>We finish up by printing the solution once the simulation manager finds the desired state.</p>
+<p>Our final script:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">angr</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">path_to_binary</span> <span class="o">=</span> <span class="s1">&#39;/opt/angr_ctf/dist/02_angr_find_condition&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">project</span> <span class="o">=</span> <span class="n">angr</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="n">path_to_binary</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[+] Loaded the binary to angr&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">initial_state</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">entry_state</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">simulation</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">simgr</span><span class="p">(</span><span class="n">initial_state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># define a function that checks if you have found the state you are looking for</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">successful</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># dump what the binary has printed out into a string</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stdout_output</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;Good Job.&#39;</span> <span class="ow">in</span> <span class="n">stdout_output</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stdout_output</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;Try again.&#39;</span> <span class="ow">in</span> <span class="n">stdout_output</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">simulation</span><span class="o">.</span><span class="n">explore</span><span class="p">(</span><span class="n">find</span><span class="o">=</span><span class="n">successful</span><span class="p">,</span> <span class="n">avoid</span><span class="o">=</span><span class="n">abort</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">simulation</span><span class="o">.</span><span class="n">found</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">solution_state</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">found</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">solution</span> <span class="o">=</span> <span class="n">solution_state</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[+] Success! Solution is: </span><span class="si">{}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&#34;Could not find the solution&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
+</span></span></code></pre></div><p>Run the code:</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/symbolic_execution_angr_part2/images/5.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We get our solution :)</p>
+<h2 id="03_angr_symbolic_registers" class="relative group">03_angr_symbolic_registers <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#03_angr_symbolic_registers" aria-label="Anchor">#</a></span></h2>
+<p>Let&rsquo;s crank up the difficulty and see more Angr functionality! We proceed to disassemble our binary.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/symbolic_execution_angr_part2/images/11.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Various functions are of interest. We can begin by inspecting the main() function. Cutter gives us a nice decompiled output that can help us understand better what our program does under the hood.</p>
+<h3 id="program-analysis" class="relative group">Program analysis <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#program-analysis" aria-label="Anchor">#</a></span></h3>
+<p>First, we can let us get a general overview of what happens in the main function to understand the functionality of the program</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/symbolic_execution_angr_part2/images/12.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>There are 3 variables that get initialized in the main function. Technically 4, but we ignore  <strong>int32_t var_4h</strong> as it is used for other procedures out of scope in this tutorial.</p>
+<p>Immediately after initializing, there is a call to <strong>get_user_input()</strong> function which we will have a look at shortly. Our input is stored in the 3 variables which are placed in registers <strong>eax, ebx, edx</strong> and the <strong>complex_function</strong> functions are used to perform some operations on these variables.</p>
+<p>Let us have a look at the <strong>get_user_input()</strong> function</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/symbolic_execution_angr_part2/images/14.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>In the scanf function, we can see these 3 badboys - &ldquo;%x %x %x&rdquo;, which means that we are taking 3 inputs as hexadecimal numbers. These are the values moved to the registers we noted earlier.</p>
+<p>So how are we going to approach our exploit? Let us walk through step by step</p>
+<ol>
+<li><strong>Import necessary libraries &amp; set up an Angr project</strong></li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">angr</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">claripy</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">path_to_binary</span> <span class="o">=</span> <span class="s1">&#39;/opt/angr_ctf/dist/02_angr_find_condition&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">project</span> <span class="o">=</span> <span class="n">angr</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="n">path_to_binary</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[+] Loaded the binary to angr&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>We have an additional library <strong>claripy</strong> different from before. We will see its usage later.</p>
+<ol start="2">
+<li><strong>Initialize the starting address.</strong></li>
+</ol>
+<p>In the previous examples, we had Angr start at the beginning of the program. But due to Angr&rsquo;s functionality, format strings are not handled well and we need to skip the call to scanf that specified the %x format strings to pick our hex input.</p>
+<p>Right after the get_user_input(), we pick the address of the next instruction</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/symbolic_execution_angr_part2/images/15.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>which is 0x08048980</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="n">start_address</span> <span class="o">=</span> <span class="mh">0x08048980</span>
+</span></span><span class="line"><span class="cl"><span class="n">initial_state</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">blank_state</span><span class="p">(</span><span class="n">addr</span><span class="o">=</span><span class="n">start_address</span><span class="p">)</span>
+</span></span></code></pre></div><p>Note that we used blank_state() instead of entry_state(). This effectively creates a new address that will be the starting point for Angr</p>
+<ol start="3">
+<li><strong>Symbol injection into registers.</strong></li>
+</ol>
+<p>Remember the 3 registers that we noted earlier (<strong>eax, ebx, edx</strong>)? We are going to replace the value inside the register (which we don&rsquo;t know) with our symbol, by injecting into it. Before doing so, let us look at a key concept: <strong>Bitvectors</strong> - simply put, it is an array of bits.</p>
+<p>Our registers are 32 bits in length, so our variables are going to be just as much long, represented as bitvectors.</p>
+<p>This will look as follows:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl">    <span class="n">size</span> <span class="o">=</span> <span class="mi">32</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pass1</span> <span class="o">=</span> <span class="n">claripy</span><span class="o">.</span><span class="n">BVS</span><span class="p">(</span><span class="s1">&#39;pass1&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pass2</span> <span class="o">=</span> <span class="n">claripy</span><span class="o">.</span><span class="n">BVS</span><span class="p">(</span><span class="s1">&#39;pass2&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pass3</span> <span class="o">=</span> <span class="n">claripy</span><span class="o">.</span><span class="n">BVS</span><span class="p">(</span><span class="s1">&#39;pass3&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+</span></span></code></pre></div><p>Note that we now make use of the claripy library to create our bitvectors which uses the BVS method(bitvector symbol).</p>
+<p>Let us now take our symbols and inject them into the registers. We are going to set the registers based on the starting address initial_state, which essentially marks the registers.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl">    <span class="n">initial_state</span><span class="o">.</span><span class="n">regs</span><span class="o">.</span><span class="n">eax</span> <span class="o">=</span> <span class="n">pass1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">initial_state</span><span class="o">.</span><span class="n">regs</span><span class="o">.</span><span class="n">ebx</span> <span class="o">=</span> <span class="n">pass2</span>
+</span></span><span class="line"><span class="cl">    <span class="n">initial_state</span><span class="o">.</span><span class="n">regs</span><span class="o">.</span><span class="n">edx</span> <span class="o">=</span> <span class="n">pass3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">simulation</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">simgr</span><span class="p">(</span><span class="n">initial_state</span><span class="p">)</span>
+</span></span></code></pre></div><ol start="4">
+<li><strong>House-keeping</strong></li>
+</ol>
+<p>Our routine functions for finding the states we need and should avoid.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">successful</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stdout_output</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;Good Job.&#39;</span> <span class="ow">in</span> <span class="n">stdout_output</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">True</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stdout_output</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;Try again.&#39;</span> <span class="ow">in</span> <span class="n">stdout_output</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">simulation</span><span class="o">.</span><span class="n">explore</span><span class="p">(</span><span class="n">find</span><span class="o">=</span><span class="n">is_successful</span><span class="p">,</span> <span class="n">avoid</span><span class="o">=</span><span class="n">should_abort</span><span class="p">)</span>
+</span></span></code></pre></div><ol start="5">
+<li><strong>Prepare the output</strong></li>
+</ol>
+<p>There is a possibility of getting multiple solutions. <strong>solution_state.solver.eval</strong> ensures that we pick one solution for each symbol and also, formats it into a hexadecimal value</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">simulation</span><span class="o">.</span><span class="n">found</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">solution_state</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">found</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pass1</span> <span class="o">=</span> <span class="nb">format</span><span class="p">(</span><span class="n">solution_state</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">pass1</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pass2</span> <span class="o">=</span> <span class="nb">format</span><span class="p">(</span><span class="n">solution_state</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">pass2</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pass3</span> <span class="o">=</span> <span class="nb">format</span><span class="p">(</span><span class="n">solution_state</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">pass3</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">solution</span> <span class="o">=</span> <span class="n">pass1</span> <span class="o">+</span> <span class="s2">&#34; &#34;</span> <span class="o">+</span> <span class="n">pass2</span> <span class="o">+</span> <span class="s2">&#34; &#34;</span> <span class="o">+</span> <span class="n">pass3</span> <span class="o">+</span> <span class="s2">&#34; &#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[+] Success! Solution is: </span><span class="si">{}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solution</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&#34;Could not find the solution&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
+</span></span></code></pre></div><h3 id="solution-1" class="relative group">Solution <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#solution-1" aria-label="Anchor">#</a></span></h3>
+<p>Our final script</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">angr</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">claripy</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">path_to_binary</span> <span class="o">=</span> <span class="s1">&#39;/home/saudi/Desktop/CTF/angrchalls/angr_ctf/dist/03_angr_symbolic_registers&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">project</span> <span class="o">=</span> <span class="n">angr</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="n">path_to_binary</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[+] Loaded the binary to angr&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base_address</span> <span class="o">=</span> <span class="mh">0x8048980</span>
+</span></span><span class="line"><span class="cl">    <span class="n">initial_state</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">blank_state</span><span class="p">(</span><span class="n">addr</span><span class="o">=</span><span class="n">base_address</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">size</span> <span class="o">=</span> <span class="mi">32</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pass1</span> <span class="o">=</span> <span class="n">claripy</span><span class="o">.</span><span class="n">BVS</span><span class="p">(</span><span class="s1">&#39;pass1&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pass2</span> <span class="o">=</span> <span class="n">claripy</span><span class="o">.</span><span class="n">BVS</span><span class="p">(</span><span class="s1">&#39;pass2&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pass3</span> <span class="o">=</span> <span class="n">claripy</span><span class="o">.</span><span class="n">BVS</span><span class="p">(</span><span class="s1">&#39;pass3&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">initial_state</span><span class="o">.</span><span class="n">regs</span><span class="o">.</span><span class="n">eax</span> <span class="o">=</span> <span class="n">pass1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">initial_state</span><span class="o">.</span><span class="n">regs</span><span class="o">.</span><span class="n">ebx</span> <span class="o">=</span> <span class="n">pass2</span>
+</span></span><span class="line"><span class="cl">    <span class="n">initial_state</span><span class="o">.</span><span class="n">regs</span><span class="o">.</span><span class="n">edx</span> <span class="o">=</span> <span class="n">pass3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">simulation</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">simgr</span><span class="p">(</span><span class="n">initial_state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">successful</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stdout_output</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;Good Job.&#39;</span> <span class="ow">in</span> <span class="n">stdout_output</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">True</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stdout_output</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">posix</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;Try again.&#39;</span> <span class="ow">in</span> <span class="n">stdout_output</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">simulation</span><span class="o">.</span><span class="n">explore</span><span class="p">(</span><span class="n">find</span><span class="o">=</span><span class="n">successful</span><span class="p">,</span> <span class="n">avoid</span><span class="o">=</span><span class="n">abort</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">simulation</span><span class="o">.</span><span class="n">found</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">solution_state</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">found</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pass1</span> <span class="o">=</span> <span class="nb">format</span><span class="p">(</span><span class="n">solution_state</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">pass1</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pass2</span> <span class="o">=</span> <span class="nb">format</span><span class="p">(</span><span class="n">solution_state</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">pass2</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pass3</span> <span class="o">=</span> <span class="nb">format</span><span class="p">(</span><span class="n">solution_state</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">pass3</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">solution</span> <span class="o">=</span> <span class="n">pass1</span> <span class="o">+</span> <span class="s2">&#34; &#34;</span> <span class="o">+</span> <span class="n">pass2</span> <span class="o">+</span> <span class="s2">&#34; &#34;</span> <span class="o">+</span> <span class="n">pass3</span> <span class="o">+</span> <span class="s2">&#34; &#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[+] Success! Solution is: </span><span class="si">{}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solution</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&#34;Could not find the solution&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
+</span></span></code></pre></div><p>Our solution :)</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/symbolic_execution_angr_part2/images/16.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We come to the end of the tutorial having covered some more advanced concepts. See you in the next where I take you through hell :)</p>
+
+      </div>
+    </section>
+    <footer class="pt-8 max-w-prose print:hidden">
+      
+
+      
+
+      
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="flex group" href="/posts/symbolic_execution_angr_part1/">
+              <span
+                class="mr-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+              <span
+                class="ml-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Symbolic Execution with Angr - part 1</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2022-08-15 00:00:00 &#43;0000 UTC">15 August 2022</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+            <a class="flex text-right group" href="/posts/2023-01-11_code_review_01/">
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Secure Code Review - Hash Length Extension Attack</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2023-01-10 00:00:00 &#43;0000 UTC">10 January 2023</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ml-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span
+                class="mr-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+            </a>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+    </footer>
+    
+  </article>
+
+        
+          <div
+            class="absolute top-[110vh] ltr:right-0 rtl:left-0 w-12 pointer-events-none bottom-0"
+          >
+            <a
+              href="#the-top"
+              class="w-12 h-12 sticky pointer-events-auto top-[calc(100vh-5.5rem)] bg-neutral/50 dark:bg-neutral-800/50 backdrop-blur rounded-full text-xl flex items-center justify-center text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400"
+              aria-label="Scroll to top"
+              title="Scroll to top"
+            >
+              &uarr;
+            </a>
+          </div>
+        
+      </main>
+      <div
+  id="search-wrapper"
+  class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible"
+  data-url="https://trevorsaudi.com/"
+>
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg border-neutral-200 top-20 bg-neutral dark:bg-neutral-800 dark:border-neutral-700"
+  >
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-transparent focus:outline-2"
+          placeholder="Search"
+          tabindex="0"
+        />
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400"
+        title="Close (Esc)"
+      >
+        
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+
+  </span>
+
+
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+<footer class="py-10 print:hidden">
+  
+  
+  <div class="flex justify-between">
+    <div>
+      
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          😄
+      </p>
+      
+      
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          
+          
+          Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> &amp; <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://git.io/hugo-congo" target="_blank" rel="noopener noreferrer">Congo</a>
+        </p>
+      
+    </div>
+    
+    
+      <div
+        class="text-sm cursor-pointer text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400 ltr:mr-14 rtl:ml-14"
+      >
+        <button
+          id="appearance-switcher"
+          class="w-12 h-12 "
+          type="button"
+          title="Switch to dark appearance"
+        >
+          <span class="inline dark:hidden">
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+
+  </span>
+
+</span>
+          <span class="hidden dark:inline">
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+
+  </span>
+
+</span>
+        </button>
+      </div>
+    
+  </div>
+  
+  
+</footer>
+</div>
+  </body>
+</html>

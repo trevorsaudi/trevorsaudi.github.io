@@ -55,7 +55,7 @@ subtitle: ""
 
 ### 1. Package Payload
 
-- `Application Files`: This section contains the necessary appllications required for the packaged application to run. These can be exes, DLLs, Config files, resource files or any other type of file.
+- `Application Files`: This section contains the necessary appllications required for the packaged application to run. These can be EXEs, DLLs, Config files, resource files or any other type of file.
 
 ### 2. Footprint Files
 
@@ -85,9 +85,20 @@ subtitle: ""
   - `Runtime Manager dll`: Dll responsible for managing runtime operations within the framework
   - `Runtime fix dll`: Dll that provides runtime fixes and patches required by the application
 
+### StartingScriptWrapper.ps1
 
-- The PSF can be used to define post-installation scripts, which will be executed either before or after the application that was packaged has been run. We will see how we can stage our malware for initial access using this.
+- PSF can be used to define post-installation scripts, which will be executed either before or after the application that was packaged has been run. 
+- To perform this, a configuration item called the StartingScriptWrapper can be defined to tell PSF to run a script after the packaged application finishes installing.
+- We can use this to run scripts to stage our implants for Initial Access
 
 ## Analysis of a malicious sample
 
-- Let us look at a malicious sample from 
+- Let us look at a malicious <a target="_blank" href="https://bazaar.abuse.ch/sample/bdd89826ab8d3e3c03833b1ea8e4b0a34c80f13bfa5882e5b82f896cec41d141">
+sample </a> from malwarebazaar.
+- Once you've downloaded and unzipped the sample, you will be presented with the following folder structure
+
+<div class="center">
+<img src="/posts/2024-06-11_asd/images/unzippedmsix.png"> 
+</div>
+
+- We can see the package payload containing the 

@@ -1,1 +1,21 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ret2libc on Trevor Saudi</title><link>https://trevorsaudi.com/tags/ret2libc/</link><description>Recent content in ret2libc on Trevor Saudi</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>:smile:</copyright><lastBuildDate>Wed, 12 May 2021 10:30:13 +0000</lastBuildDate><atom:link href="https://trevorsaudi.com/tags/ret2libc/index.xml" rel="self" type="application/rss+xml"/><item><title>ROP: ret2libc Attack -Protostar6</title><link>https://trevorsaudi.com/posts/2021-05-12_rop-ret2libc-attack-protostar6/</link><pubDate>Wed, 12 May 2021 10:30:13 +0000</pubDate><guid>https://trevorsaudi.com/posts/2021-05-12_rop-ret2libc-attack-protostar6/</guid><description>Bypassing stack pointer restrictions to gain arbitrary code execution # Protostar is a series of beginner binary exploitation challenges which showcases concepts like basic stack-based buffer overflows, bypassing stack protections and even performing format string attacks.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ret2libc on Trevor Saudi</title>
+    <link>https://trevorsaudi.com/tags/ret2libc/</link>
+    <description>Recent content in ret2libc on Trevor Saudi</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>:smile: </copyright>
+    <lastBuildDate>Wed, 12 May 2021 10:30:13 +0000</lastBuildDate><atom:link href="https://trevorsaudi.com/tags/ret2libc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ROP: ret2libc Attack -Protostar6</title>
+      <link>https://trevorsaudi.com/posts/2021-05-12_rop-ret2libc-attack-protostar6/</link>
+      <pubDate>Wed, 12 May 2021 10:30:13 +0000</pubDate>
+      
+      <guid>https://trevorsaudi.com/posts/2021-05-12_rop-ret2libc-attack-protostar6/</guid>
+      <description>Bypassing stack pointer restrictions to gain arbitrary code execution # Protostar is a series of beginner binary exploitation challenges which showcases concepts like basic stack-based buffer overflows, bypassing stack protections and even performing format string attacks.</description>
+    </item>
+    
+  </channel>
+</rss>

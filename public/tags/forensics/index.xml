@@ -1,1 +1,57 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Forensics on Trevor Saudi</title><link>https://trevorsaudi.com/tags/forensics/</link><description>Recent content in Forensics on Trevor Saudi</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>:smile:</copyright><lastBuildDate>Tue, 09 Nov 2021 11:58:56 +0000</lastBuildDate><atom:link href="https://trevorsaudi.com/tags/forensics/index.xml" rel="self" type="application/rss+xml"/><item><title>AfricaHackon 2021 CTF Finals</title><link>https://trevorsaudi.com/posts/2021-11-09_africahackon-2021-ctf-finals/</link><pubDate>Tue, 09 Nov 2021 11:58:56 +0000</pubDate><guid>https://trevorsaudi.com/posts/2021-11-09_africahackon-2021-ctf-finals/</guid><description>My team (fr334aks) and I had the pleasure of taking part in AH2021 CTF finals where we took 3rd out of the ten teams that qualified.</description></item><item><title>CyberTalents National CTF</title><link>https://trevorsaudi.com/posts/2021-09-12_cybertalents-national-ctf/</link><pubDate>Sun, 12 Sep 2021 11:01:27 +0000</pubDate><guid>https://trevorsaudi.com/posts/2021-09-12_cybertalents-national-ctf/</guid><description>My team and I recently took place in the CyberTalents National CTF 2021 where we emerged 1st in Kenya :) We managed to solve all challenges but one.</description></item><item><title>DownUnderCTF-Tim Tams(Misc)</title><link>https://trevorsaudi.com/posts/2020-09-20_downunderctftim-tamsmisc/</link><pubDate>Sun, 20 Sep 2020 16:56:47 +0000</pubDate><guid>https://trevorsaudi.com/posts/2020-09-20_downunderctftim-tamsmisc/</guid><description>Misc challenges are usually random and require logic and lots of patience to solve.</description></item><item><title>DownUnderCTF-On the Spectrum(Forensics)</title><link>https://trevorsaudi.com/posts/2020-09-20_downunderctfon-the-spectrumforensics/</link><pubDate>Sun, 20 Sep 2020 16:36:30 +0000</pubDate><guid>https://trevorsaudi.com/posts/2020-09-20_downunderctfon-the-spectrumforensics/</guid><description>Recently, I’ve been getting hooked with forensics challenges, this being the second solve I made for the team.</description></item><item><title>Habibamod CTF writeup — CyberTalents CTF 2020</title><link>https://trevorsaudi.com/posts/2020-08-23_habibamod-ctf-writeupcybertalents-ctf-2020/</link><pubDate>Sun, 23 Aug 2020 12:36:41 +0000</pubDate><guid>https://trevorsaudi.com/posts/2020-08-23_habibamod-ctf-writeupcybertalents-ctf-2020/</guid><description>CyberTalents organized a national CTF competition yesterday which my team and I participated and settled for 2nd place.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Forensics on Trevor Saudi</title>
+    <link>https://trevorsaudi.com/tags/forensics/</link>
+    <description>Recent content in Forensics on Trevor Saudi</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>:smile: </copyright>
+    <lastBuildDate>Tue, 09 Nov 2021 11:58:56 +0000</lastBuildDate><atom:link href="https://trevorsaudi.com/tags/forensics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AfricaHackon 2021 CTF Finals</title>
+      <link>https://trevorsaudi.com/posts/2021-11-09_africahackon-2021-ctf-finals/</link>
+      <pubDate>Tue, 09 Nov 2021 11:58:56 +0000</pubDate>
+      
+      <guid>https://trevorsaudi.com/posts/2021-11-09_africahackon-2021-ctf-finals/</guid>
+      <description>My team (fr334aks) and I had the pleasure of taking part in AH2021 CTF finals where we took 3rd out of the ten teams that qualified.</description>
+    </item>
+    
+    <item>
+      <title>CyberTalents National CTF</title>
+      <link>https://trevorsaudi.com/posts/2021-09-12_cybertalents-national-ctf/</link>
+      <pubDate>Sun, 12 Sep 2021 11:01:27 +0000</pubDate>
+      
+      <guid>https://trevorsaudi.com/posts/2021-09-12_cybertalents-national-ctf/</guid>
+      <description>My team and I recently took place in the CyberTalents National CTF 2021 where we emerged 1st in Kenya :) We managed to solve all challenges but one.</description>
+    </item>
+    
+    <item>
+      <title>DownUnderCTF-Tim Tams(Misc)</title>
+      <link>https://trevorsaudi.com/posts/2020-09-20_downunderctftim-tamsmisc/</link>
+      <pubDate>Sun, 20 Sep 2020 16:56:47 +0000</pubDate>
+      
+      <guid>https://trevorsaudi.com/posts/2020-09-20_downunderctftim-tamsmisc/</guid>
+      <description>Misc challenges are usually random and require logic and lots of patience to solve.</description>
+    </item>
+    
+    <item>
+      <title>DownUnderCTF-On the Spectrum(Forensics)</title>
+      <link>https://trevorsaudi.com/posts/2020-09-20_downunderctfon-the-spectrumforensics/</link>
+      <pubDate>Sun, 20 Sep 2020 16:36:30 +0000</pubDate>
+      
+      <guid>https://trevorsaudi.com/posts/2020-09-20_downunderctfon-the-spectrumforensics/</guid>
+      <description>Recently, I’ve been getting hooked with forensics challenges, this being the second solve I made for the team.</description>
+    </item>
+    
+    <item>
+      <title>Habibamod CTF writeup — CyberTalents CTF 2020</title>
+      <link>https://trevorsaudi.com/posts/2020-08-23_habibamod-ctf-writeupcybertalents-ctf-2020/</link>
+      <pubDate>Sun, 23 Aug 2020 12:36:41 +0000</pubDate>
+      
+      <guid>https://trevorsaudi.com/posts/2020-08-23_habibamod-ctf-writeupcybertalents-ctf-2020/</guid>
+      <description>CyberTalents organized a national CTF competition yesterday which my team and I participated and settled for 2nd place.</description>
+    </item>
+    
+  </channel>
+</rss>
