@@ -30,7 +30,7 @@ subtitle: ""
 
 .center { 
        display:inline-block; 
-       margin-left: 40px; 
+       margin-left: 60px; 
 }
 
 </style>
@@ -50,7 +50,7 @@ subtitle: ""
 - The general MSIX file format can be deconstructed as shown:
 
 <div class="center">
-<img src="/posts/2024-06-11_asd/images/msix.png" alt="Students in Science Class" > 
+<img src="/posts/2024-06-11_asd/images/msix.png"> 
 </div>
 
 ### 1. Package Payload
@@ -66,7 +66,28 @@ subtitle: ""
 
 ### Why MSIX
 
-- One interesting feature about the MSIX package format is that it supports differential updates, meaning, only the parts of the application that have changed can be updated using a single setup file. This allows for creation of udpater files for various applications.
+- One interesting feature about the MSIX package format is that it supports differential updates, meaning, only the parts of the application that have changed can be updated using a single setup file. This allows for creation of udpater files for various applications such as Chrome in this case.
+
+## Package Support Framework
+
+- The Package Support Framework (PSF), is an open source kit in windows designed to facilitate installation and operation of applications in Windows. It helps one apply fixes to an application without modifying code.
+
+- It allows for extensive configuration to tailor the behaviour of applications. This customization allows resolving of specific compatibility issues without needing tob modify the original code.
+
+<div class="center">
+<img src="/posts/2024-06-11_asd/images/psf.png"> 
+</div>
+
+- In the diagram above, we see the interaction between the PSF and the packaged application at runtime. Let's discuss the various components.
+
+  - `Config.JSON`: Contains settings and parameters for the PSF.
+  - `PsfLauncher.exe`: The initial launcher that initiates the framework.
+  - `Runtime Manager dll`: Dll responsible for managing runtime operations within the framework
+  - `Runtime fix dll`: Dll that provides runtime fixes and patches required by the application
+
+
+- The PSF can be used to define post-installation scripts, which will be executed either before or after the application that was packaged has been run. We will see how we can stage our malware for initial access using this.
 
 ## Analysis of a malicious sample
 
+- Let us look at a malicious sample from 
