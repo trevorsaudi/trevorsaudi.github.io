@@ -7,22 +7,49 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>:smile: </copyright>
-    <lastBuildDate>Sun, 24 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 11 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Initial Access</title>
+      <link>http://localhost:1313/tags/initial-access/</link>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/initial-access/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Malware Development</title>
       <link>http://localhost:1313/tags/malware-development/</link>
-      <pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
       
       <guid>http://localhost:1313/tags/malware-development/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>MSIX</title>
+      <link>http://localhost:1313/tags/msix/</link>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/msix/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Red Teaming</title>
       <link>http://localhost:1313/tags/red-teaming/</link>
-      <pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
       
       <guid>http://localhost:1313/tags/red-teaming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SSL</title>
+      <link>http://localhost:1313/tags/ssl/</link>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/ssl/</guid>
       <description></description>
     </item>
     
