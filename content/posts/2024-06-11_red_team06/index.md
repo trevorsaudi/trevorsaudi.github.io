@@ -1,10 +1,16 @@
 ---
 title: "Creating malicious .MSIX files for initial access"
-author: "Trevor saudi"
+author: "Trevor Saudi"
 date: 2024-06-11
 description: ""
 draft: false
 subtitle: ""
+tags:
+- Red Teaming
+- Malware Development
+- MSIX 
+- SSL
+- Initial Access
 ---
 
 <style>
@@ -36,7 +42,7 @@ subtitle: ""
 
 </style>
 
-
+![image](/posts/2024-06-11_red_team06/images/logo.png)
 
 ## Introduction
 

@@ -19,15 +19,6 @@
     
     <item>
       <title>Malware development: APC Injection with C&#43;&#43;</title>
-      <link>http://localhost:1313/posts/2023-08-06_red_team04/</link>
-      <pubDate>Sun, 06 Aug 2023 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/posts/2023-08-06_red_team04/</guid>
-      <description>Introduction # In our previous blog post, we looked into classic process injection, going into the various techniques such as finding target processes to inject to using Windows APIs, as well as injecting into the said processes.</description>
-    </item>
-    
-    <item>
-      <title>Malware development: APC Injection with C&#43;&#43;</title>
       <link>http://localhost:1313/posts/2023-09-07_red_team05/</link>
       <pubDate>Sun, 06 Aug 2023 00:00:00 +0000</pubDate>
       
