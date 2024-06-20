@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cryptohack on Trevor Saudi</title>
+    <link>http://localhost:1313/tags/cryptohack/</link>
+    <description>Recent content in Cryptohack on Trevor Saudi</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>:smile: </copyright>
+    <lastBuildDate>Sat, 18 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/cryptohack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cryptography - Modular Arithmetic</title>
+      <link>http://localhost:1313/posts/2023-03-19_modular_arithmetic/</link>
+      <pubDate>Sat, 18 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2023-03-19_modular_arithmetic/</guid>
+      <description>Introduction # What happens when the hour hand of your wall clock crosses 12?</description>
+    </item>
+    
+    <item>
+      <title>Cryptography - Euclidean Algorithm</title>
+      <link>http://localhost:1313/posts/2023-03-12_euclidean_modular/</link>
+      <pubDate>Sun, 12 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2023-03-12_euclidean_modular/</guid>
+      <description>Introduction # In the previous blog, we did a general introduction to cryptography and the various important libraries and techniques for handling encrypted data with python.</description>
+    </item>
+    
+    <item>
+      <title>Cryptography - The Basics</title>
+      <link>http://localhost:1313/posts/2023-03-01_crypto_basics/</link>
+      <pubDate>Wed, 01 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2023-03-01_crypto_basics/</guid>
+      <description>Introduction # I spent the better part of the start of my year doing a lot of problem-solving with Python (secretly preparing for interviews :D ).</description>
+    </item>
+    
+  </channel>
+</rss>

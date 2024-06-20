@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machine on Trevor Saudi</title>
+    <link>http://localhost:1313/tags/machine/</link>
+    <description>Recent content in Machine on Trevor Saudi</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>:smile: </copyright>
+    <lastBuildDate>Mon, 05 Apr 2021 18:46:03 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/machine/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>BrainPan-Tryhackme</title>
+      <link>http://localhost:1313/posts/2021-04-05_brainpantryhackme/</link>
+      <pubDate>Mon, 05 Apr 2021 18:46:03 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2021-04-05_brainpantryhackme/</guid>
+      <description>Exploiting a buffer overflow vulnerability by analyzing a Windows executable.</description>
+    </item>
+    
+    <item>
+      <title>Binex-Tryhackme</title>
+      <link>http://localhost:1313/posts/2021-04-01_binextryhackme/</link>
+      <pubDate>Thu, 01 Apr 2021 18:50:44 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2021-04-01_binextryhackme/</guid>
+      <description>Exploit an SUID bit file, use GNU debugger to take advantage of a buffer overflow and gain root access by PATH manipulation.</description>
+    </item>
+    
+    <item>
+      <title>TryhackMe -BrainStorm</title>
+      <link>http://localhost:1313/posts/2021-03-28_tryhackme-brainstorm/</link>
+      <pubDate>Sun, 28 Mar 2021 15:51:16 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2021-03-28_tryhackme-brainstorm/</guid>
+      <description>Reverse engineering a chat application to exploit a windows machine using a buffer overflow # Prerequisites # Windows 7/10 virtual environment Immunity Debugger Basic understanding of buffer overflows Enumeration # We Spin off the instance and get right into some enumeration.</description>
+    </item>
+    
+    <item>
+      <title>CyberSpace Kenya— StegaPwn</title>
+      <link>http://localhost:1313/posts/2021-01-24_cyberspace-kenya-stegapwn/</link>
+      <pubDate>Sun, 24 Jan 2021 10:49:06 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2021-01-24_cyberspace-kenya-stegapwn/</guid>
+      <description>Crontab Privilege escalation # In this awesome beginner friendly CTF, I will be taking you through how I rooted the box.</description>
+    </item>
+    
+    <item>
+      <title>CyberTalents | Shadower</title>
+      <link>http://localhost:1313/posts/2020-12-29_cybertalents-shadower/</link>
+      <pubDate>Tue, 29 Dec 2020 20:45:22 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-12-29_cybertalents-shadower/</guid>
+      <description>In the machine section in Cybertalents, we have this medium level box to root.</description>
+    </item>
+    
+    <item>
+      <title>NULLY CYBERSECURITY:1(Vulnuhb)</title>
+      <link>http://localhost:1313/posts/2020-09-26_nully-cybersecurity1vulnuhb/</link>
+      <pubDate>Sat, 26 Sep 2020 21:59:31 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-09-26_nully-cybersecurity1vulnuhb/</guid>
+      <description>Description # Nully Cybersecurity: 1</description>
+    </item>
+    
+  </channel>
+</rss>

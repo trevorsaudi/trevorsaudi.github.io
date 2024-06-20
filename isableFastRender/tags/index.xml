@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Trevor Saudi</title>
+    <link>http://localhost:1313/tags/</link>
+    <description>Recent content in Tags on Trevor Saudi</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>:smile: </copyright>
+    <lastBuildDate>Sun, 24 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Malware Development</title>
+      <link>http://localhost:1313/tags/malware-development/</link>
+      <pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/malware-development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Red Teaming</title>
+      <link>http://localhost:1313/tags/red-teaming/</link>
+      <pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/red-teaming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Covenant</title>
+      <link>http://localhost:1313/tags/covenant/</link>
+      <pubDate>Sat, 25 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/covenant/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Phishing</title>
+      <link>http://localhost:1313/tags/phishing/</link>
+      <pubDate>Sat, 25 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/phishing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Cryptography</title>
+      <link>http://localhost:1313/tags/cryptography/</link>
+      <pubDate>Sat, 18 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/cryptography/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Cryptohack</title>
+      <link>http://localhost:1313/tags/cryptohack/</link>
+      <pubDate>Sat, 18 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/cryptohack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>http://localhost:1313/tags/python/</link>
+      <pubDate>Sat, 18 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hash length extension</title>
+      <link>http://localhost:1313/tags/hash-length-extension/</link>
+      <pubDate>Sun, 29 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/hash-length-extension/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Secure Code Review</title>
+      <link>http://localhost:1313/tags/secure-code-review/</link>
+      <pubDate>Sun, 29 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/secure-code-review/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>angr</title>
+      <link>http://localhost:1313/tags/angr/</link>
+      <pubDate>Thu, 18 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/angr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>exploit development</title>
+      <link>http://localhost:1313/tags/exploit-development/</link>
+      <pubDate>Thu, 18 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/exploit-development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>reverse engineering</title>
+      <link>http://localhost:1313/tags/reverse-engineering/</link>
+      <pubDate>Thu, 18 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/reverse-engineering/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CTF</title>
+      <link>http://localhost:1313/tags/ctf/</link>
+      <pubDate>Mon, 13 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/ctf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>polyglots</title>
+      <link>http://localhost:1313/tags/polyglots/</link>
+      <pubDate>Mon, 13 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/polyglots/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Zip Slip</title>
+      <link>http://localhost:1313/tags/zip-slip/</link>
+      <pubDate>Mon, 13 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/zip-slip/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Forensics</title>
+      <link>http://localhost:1313/tags/forensics/</link>
+      <pubDate>Tue, 09 Nov 2021 11:58:56 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/forensics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Malware</title>
+      <link>http://localhost:1313/tags/malware/</link>
+      <pubDate>Tue, 09 Nov 2021 11:58:56 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/malware/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pwn</title>
+      <link>http://localhost:1313/tags/pwn/</link>
+      <pubDate>Tue, 09 Nov 2021 11:58:56 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/pwn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>BOF</title>
+      <link>http://localhost:1313/tags/bof/</link>
+      <pubDate>Sun, 12 Sep 2021 11:01:27 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/bof/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Web</title>
+      <link>http://localhost:1313/tags/web/</link>
+      <pubDate>Sun, 12 Sep 2021 11:01:27 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/web/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ret2libc</title>
+      <link>http://localhost:1313/tags/ret2libc/</link>
+      <pubDate>Wed, 12 May 2021 10:30:13 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/ret2libc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ROP</title>
+      <link>http://localhost:1313/tags/rop/</link>
+      <pubDate>Wed, 12 May 2021 10:30:13 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/rop/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PHP</title>
+      <link>http://localhost:1313/tags/php/</link>
+      <pubDate>Sun, 18 Apr 2021 07:43:48 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/php/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>code injection</title>
+      <link>http://localhost:1313/tags/code-injection/</link>
+      <pubDate>Sat, 17 Apr 2021 18:46:32 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/code-injection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pyyaml</title>
+      <link>http://localhost:1313/tags/pyyaml/</link>
+      <pubDate>Sat, 17 Apr 2021 18:46:32 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/pyyaml/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Machine</title>
+      <link>http://localhost:1313/tags/machine/</link>
+      <pubDate>Mon, 05 Apr 2021 18:46:03 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/machine/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RCE</title>
+      <link>http://localhost:1313/tags/rce/</link>
+      <pubDate>Tue, 23 Mar 2021 18:02:12 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/rce/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Redis</title>
+      <link>http://localhost:1313/tags/redis/</link>
+      <pubDate>Tue, 23 Mar 2021 18:02:12 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/redis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>http://localhost:1313/tags/linux/</link>
+      <pubDate>Mon, 15 Feb 2021 06:53:05 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Networking</title>
+      <link>http://localhost:1313/tags/networking/</link>
+      <pubDate>Mon, 15 Feb 2021 06:53:05 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/networking/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Scripting</title>
+      <link>http://localhost:1313/tags/scripting/</link>
+      <pubDate>Mon, 01 Feb 2021 07:13:28 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/scripting/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Privesc</title>
+      <link>http://localhost:1313/tags/privesc/</link>
+      <pubDate>Sun, 24 Jan 2021 10:49:06 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/privesc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SSRF</title>
+      <link>http://localhost:1313/tags/ssrf/</link>
+      <pubDate>Tue, 17 Nov 2020 12:34:18 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/ssrf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Audio</title>
+      <link>http://localhost:1313/tags/audio/</link>
+      <pubDate>Wed, 28 Oct 2020 10:15:04 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/audio/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>QSSTV</title>
+      <link>http://localhost:1313/tags/qsstv/</link>
+      <pubDate>Wed, 28 Oct 2020 10:15:04 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/qsstv/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Morse</title>
+      <link>http://localhost:1313/tags/morse/</link>
+      <pubDate>Wed, 28 Oct 2020 09:56:35 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/morse/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pivoting</title>
+      <link>http://localhost:1313/tags/pivoting/</link>
+      <pubDate>Sat, 26 Sep 2020 21:59:31 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/pivoting/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AWS S3</title>
+      <link>http://localhost:1313/tags/aws-s3/</link>
+      <pubDate>Mon, 14 Sep 2020 10:41:54 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/aws-s3/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ZWSP</title>
+      <link>http://localhost:1313/tags/zwsp/</link>
+      <pubDate>Sun, 13 Sep 2020 16:47:46 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/zwsp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PCAP Analysis</title>
+      <link>http://localhost:1313/tags/pcap-analysis/</link>
+      <pubDate>Sun, 23 Aug 2020 12:36:41 +0000</pubDate>
+      
+      <guid>http://localhost:1313/tags/pcap-analysis/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

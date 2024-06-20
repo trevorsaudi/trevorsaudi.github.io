@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Audio on Trevor Saudi</title>
+    <link>http://localhost:1313/tags/audio/</link>
+    <description>Recent content in Audio on Trevor Saudi</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>:smile: </copyright>
+    <lastBuildDate>Wed, 28 Oct 2020 10:15:04 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/audio/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RaziCTF Cliche-Steganography</title>
+      <link>http://localhost:1313/posts/2020-10-28_razictf-clichesteganography/</link>
+      <pubDate>Wed, 28 Oct 2020 10:15:04 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-10-28_razictf-clichesteganography/</guid>
+      <description>Another audio steganography challenge from RaziCTF.</description>
+    </item>
+    
+    <item>
+      <title>DownUnderCTF-Tim Tams(Misc)</title>
+      <link>http://localhost:1313/posts/2020-09-20_downunderctftim-tamsmisc/</link>
+      <pubDate>Sun, 20 Sep 2020 16:56:47 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-09-20_downunderctftim-tamsmisc/</guid>
+      <description>Misc challenges are usually random and require logic and lots of patience to solve.</description>
+    </item>
+    
+    <item>
+      <title>DownUnderCTF-On the Spectrum(Forensics)</title>
+      <link>http://localhost:1313/posts/2020-09-20_downunderctfon-the-spectrumforensics/</link>
+      <pubDate>Sun, 20 Sep 2020 16:36:30 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-09-20_downunderctfon-the-spectrumforensics/</guid>
+      <description>Recently, I’ve been getting hooked with forensics challenges, this being the second solve I made for the team.</description>
+    </item>
+    
+  </channel>
+</rss>

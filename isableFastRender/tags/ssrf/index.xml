@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SSRF on Trevor Saudi</title>
+    <link>http://localhost:1313/tags/ssrf/</link>
+    <description>Recent content in SSRF on Trevor Saudi</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>:smile: </copyright>
+    <lastBuildDate>Tue, 17 Nov 2020 12:34:18 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/ssrf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SSRF to gaining RCE —( rootme ssrf box)</title>
+      <link>http://localhost:1313/posts/2020-11-17_ssrf-to-gaining-rce-rootme-ssrf-box/</link>
+      <pubDate>Tue, 17 Nov 2020 12:34:18 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-11-17_ssrf-to-gaining-rce-rootme-ssrf-box/</guid>
+      <description>Write-up for an [SSRF box] (https://www.</description>
+    </item>
+    
+  </channel>
+</rss>
