@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="light"
+  data-auto-appearance="true"
+><head>
+  <meta charset="utf-8" />
+  
+    <meta http-equiv="content-language" content="en" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  
+  <title>Malware development: Building malware with 0 imports &middot; Trevor Saudi</title>
+    <meta name="title" content="Malware development: Building malware with 0 imports &middot; Trevor Saudi" />
+  
+  <meta name="description" content="Portfolio/blog" />
+  
+  
+  
+  <link rel="canonical" href="https://trevorsaudi.com/posts/2023-09-24_red_team05/" />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.8b56450ba99cc053901ef8853930f28f4125bd1e416ac7a511402051f4e2fe72c9daaf57ef13f832223954356701ab696fe00a9398ed342f97ae3c421270e287.css"
+    integrity="sha512-i1ZFC6mcwFOQHviFOTDyj0ElvR5BaselEUAgUfTi/nLJ2q9X7xP4MiI5VDVnAatpb&#43;AKk5jtNC&#43;XrjxCEnDihw=="
+  />
+  
+  
+  <script type="text/javascript" src="/js/appearance.min.badab316c9287a5a42a843e4eb45da65bb3d194a5a0f5fa4a3e516160e67df0b8c65f4f19a8e146436e29d583699e6cb41d6bbe99e05e1dbaa877763bad9f8e2.js" integrity="sha512-utqzFskoelpCqEPk60XaZbs9GUpaD1&#43;ko&#43;UWFg5n3wuMZfTxmo4UZDbinVg2mebLQda76Z4F4duqh3djutn44g=="></script>
+  
+    
+    
+    
+  
+  
+    
+    
+  
+  
+  
+    
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.5ffdd39e73bd1438c0f4ff42f13915f067c633da22f60efa62139a4c51b972622badb1157d4aa4322634b55c8a2dc5ddfbd3917426df1c02d7b69362030197da.js" integrity="sha512-X/3TnnO9FDjA9P9C8TkV8GfGM9oi9g76YhOaTFG5cmIrrbEVfUqkMiY0tVyKLcXd&#43;9ORdCbfHALXtpNiAwGX2g==" data-copy="Copy" data-copied="Copied"></script>
+  
+  
+  
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="Malware development: Building malware with 0 imports" />
+<meta property="og:description" content="Behavioural signature evasion" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://trevorsaudi.com/posts/2023-09-24_red_team05/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-09-24T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-09-24T00:00:00+00:00" /><meta property="og:site_name" content="Trevor Saudi" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Malware development: Building malware with 0 imports"/>
+<meta name="twitter:description" content="Behavioural signature evasion"/>
+
+  
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Posts",
+    "name": "Malware development: Building malware with 0 imports",
+    "headline": "Malware development: Building malware with 0 imports",
+    "description": "Behavioural signature evasion",
+    "abstract": "Introduction # Modern AV solutions primarily work in 2 ways: static and dynamic analysis.",
+    "inLanguage": "en",
+    "url" : "https:\/\/trevorsaudi.com\/posts\/2023-09-24_red_team05\/",
+    "author" : {
+      "@type": "Person",
+      "name": "Trevor Saudi"
+    },
+    "copyrightYear": "2023",
+    "dateCreated": "2023-09-24T00:00:00\u002b00:00",
+    "datePublished": "2023-09-24T00:00:00\u002b00:00",
+    
+    "dateModified": "2023-09-24T00:00:00\u002b00:00",
+    
+    "keywords": ["Red Teaming","Malware Development"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "1622"
+  }]
+  </script>
+
+
+  
+  <meta name="author" content="Trevor Saudi" />
+  
+    
+      <link href="https://github.com/trevorsaudi" rel="me" />
+    
+      <link href="https://www.linkedin.com/in/trevor-saudi-9275b8186" rel="me" />
+    
+  
+  
+  
+
+
+
+
+
+
+  
+  
+  
+  
+
+
+  
+  
+</head>
+<body
+    class="flex flex-col h-screen px-6 m-auto text-lg leading-7 bg-neutral text-neutral-900 sm:px-14 md:px-24 lg:px-32 dark:bg-neutral-800 dark:text-neutral max-w-7xl"
+  >
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 dark:bg-neutral-600 focus:translate-y-0"
+        href="#main-content"
+        ><span class="font-bold ltr:pr-2 rtl:pl-2 text-primary-600 dark:text-primary-400"
+          >&darr;</span
+        >Skip to main content</a
+      >
+    </div><header
+  class="flex justify-between py-6 font-semibold sm:items-center sm:py-10 text-neutral-900 dark:text-neutral print:hidden"
+>
+  
+  <div>
+    
+      
+    
+    
+
+  </div>
+  
+  
+    <nav>
+      <ul class="flex flex-col list-none sm:flex-row">
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/"
+              title=""
+              >Home</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/posts/"
+              title="Posts"
+              >Posts</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/about/"
+              title=""
+              >About</a
+            >
+          </li>
+        
+          <li
+            class="mb-1 ltr:text-right rtl:text-left sm:mb-0 ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <a
+              class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2"
+              href="/tags/"
+              title="Tags"
+              >Tags</a
+            >
+          </li>
+        
+        
+          <li
+            class="ltr:text-right rtl:text-left ltr:sm:mr-7 ltr:sm:last:mr-0 rtl:sm:ml-7 rtl:sm:last:ml-0"
+          >
+            <button
+              id="search-button"
+              class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+              title="Search (/)"
+            >
+              
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+            </button>
+          </li>
+        
+      </ul>
+    </nav>
+  
+</header>
+<div class="relative">
+      <main id="main-content" class="grow">
+  <article>
+    <header class="max-w-prose">
+      
+        <ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden">
+  
+  
+    
+  
+    
+  
+  <li class="inline hidden">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/"
+      ></a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline ">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/posts/"
+      >Posts</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline hidden">
+    <a
+      class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
+      href="/posts/2023-09-24_red_team05/"
+      >Malware development: Building malware with 0 imports</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+</ol>
+
+
+      
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        Malware development: Building malware with 0 imports
+      </h1>
+      <div class="mt-8 mb-12 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+        
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+    
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2023-09-24 00:00:00 &#43;0000 UTC">24 September 2023</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">8 mins</span>
+    
+
+    
+    
+  </div>
+
+  
+  
+
+
+      </div>
+    </header>
+    <section class="flex flex-col max-w-full mt-0 prose lg:flex-row dark:prose-invert">
+      
+        <div class="order-first px-0 lg:max-w-xs ltr:lg:pl-8 rtl:lg:pr-8 lg:order-last">
+          <div class="ltr:pl-5 rtl:pr-5 toc lg:sticky lg:top-10 print:hidden">
+            <details open class="mt-0 overflow-hidden rounded-lg rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 lg:mt-3">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 text-neutral-800 dark:text-neutral-100 lg:hidden bg-neutral-100 dark:bg-neutral-700"
+  >
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted ltr:border-l rtl:border-r rtl:pr-5 ltr:pl-5 ltr:-ml-5 rtl:-mr-5 border-neutral-300 dark:border-neutral-600"
+  >
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#static-linking">Static Linking</a></li>
+        <li><a href="#dynamic-linking">Dynamic Linking</a></li>
+        <li><a href="#how-does-dynamic-linking-work">How does dynamic linking work?</a></li>
+      </ul>
+    </li>
+    <li><a href="#import-directory-table">Import Directory Table</a>
+      <ul>
+        <li><a href="#image-import-directory">Image Import Directory</a>
+          <ul>
+            <li><a href="#structure-of-the-image-import-descriptor">Structure of the Image Import Descriptor</a></li>
+          </ul>
+        </li>
+        <li><a href="#import-lookup-table-ilt">Import Lookup Table (ILT)</a></li>
+        <li><a href="#hintname-table">Hint/Name Table</a></li>
+        <li><a href="#import-address-table-iat">Import Address Table (IAT)</a></li>
+      </ul>
+    </li>
+    <li><a href="#getmodulehandle--getprocaddress">GetModuleHandle &amp; GetProcAddress</a></li>
+    <li><a href="#implementation">Implementation</a>
+      <ul>
+        <li><a href="#1-strings-obfuscation">1. Strings Obfuscation</a></li>
+        <li><a href="#2-reducing-all-our-imports-to-0">2. Reducing all our imports to 0</a></li>
+        <li><a href="#hlpgetmodulehandle-function">hlpGetModuleHandle Function</a></li>
+        <li><a href="#hlpgetprocaddress-function">hlpGetProcAddress Function</a></li>
+      </ul>
+    </li>
+    <li><a href="#project-files">Project Files</a></li>
+    <li><a href="#compilation-and-running">Compilation and Running</a></li>
+    <li><a href="#verifying-zero-imports">Verifying Zero Imports</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+          </div>
+        </div>
+      
+      <div class="min-w-0 min-h-0 max-w-prose">
+        <style>
+
+
+
+@import url('https://cdn.rawgit.com/lonekorean/gist-syntax-themes/d49b91b3/stylesheets/one-dark.css');
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+
+   
+  *, ::before, ::after {
+    border-style: none;
+    font: 16px;
+
+  }
+
+  body {
+  margin: 20px;
+  font: 16px 'Open Sans', sans-serif;
+}
+
+
+
+</style>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-09-24_red_team05/images/logo.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h2 id="introduction" class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>Modern AV solutions primarily work in 2 ways: <code>static and dynamic analysis</code>. Static analysis involves detecting known malicious signatures by comparing them with a database of known malicious signatures. It also involves identifying <code>suspicious characteristics</code> and patterns with how the malware behaves by analysing <code>behavioural signatures</code>.</li>
+<li><code>Dynamic analysis</code> involves monitoring the program&rsquo;s behaviour in real-time to determine whether it is malicious.</li>
+<li>This article primarily focuses on the first method, looking at techniques that would help us break <code>common signatures</code> such as <code>suspicious strings and imports</code> that a malware has. We begin by understanding how exactly PE files resolve imports, how various PE data structures such as the IAT work, and how we can build malware that has 0 imports by dynamically resolving all windows APIs.</li>
+</ul>
+<h3 id="static-linking" class="relative group">Static Linking <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#static-linking" aria-label="Anchor">#</a></span></h3>
+<ul>
+<li>When creating a program using Windows APIs, the functions in your program are linked against the respective import libraries.</li>
+<li>The operating system&rsquo;s loader will resolve the functions&rsquo; addresses at the time the application starts (compile time) and will not run if there are missing functions.</li>
+</ul>
+<h3 id="dynamic-linking" class="relative group">Dynamic Linking <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#dynamic-linking" aria-label="Anchor">#</a></span></h3>
+<ul>
+<li>Using <code>GetModuleHandle</code> and <code>GetProcAddress</code> allows you to resolve function addresses during the execution of your program, i.e., at <code>runtime</code>.</li>
+<li>This does not create a hard dependency on a DLL and when the DLL or the function is missing, your application can <code>handle the error gracefully</code>, perhaps by <code>notifying</code> the user or <code>falling back to alternative functionality</code>.</li>
+<li>When using dynamic linking in developing malware, the malware will not directly reference any suspicious imports in a recognizable way until it is actually running.</li>
+<li>We will use this technique to build malware with virtually 0 imports!</li>
+</ul>
+<h3 id="how-does-dynamic-linking-work" class="relative group">How does dynamic linking work? <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#how-does-dynamic-linking-work" aria-label="Anchor">#</a></span></h3>
+<ol>
+<li>When a program starts, PE loader (responsible for loading PE files from disk) inspects the binary file, identifying external libraries that it depends on</li>
+<li>The external libraries are located and loaded into memory</li>
+<li>The program contains symbols or references that point to the functions and data contained in the external libraries</li>
+<li>The PE loader resolves these references by updating the program&rsquo;s memory addresses to point to the corresponding locations in the loaded libraries (symbol resolution)</li>
+<li>The program can now call functions and access data from external libraries as if it were part of the program</li>
+</ol>
+</br>
+<ul>
+<li>To accomplish this, various <code>Windows data structures</code> are involved:</li>
+</ul>
+<h2 id="import-directory-table" class="relative group">Import Directory Table <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#import-directory-table" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>
+<p>The import information of a PE begins with the <code>import directory table</code>. This generally entails various Windows structures such as pointers to the Import Lookup Table and the Import Address Table, which resolve addresses within imported DLLs.</p>
+</li>
+<li>
+<p>Some of its key components are described below:</p>
+</li>
+</ul>
+<h3 id="image-import-directory" class="relative group">Image Import Directory <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#image-import-directory" aria-label="Anchor">#</a></span></h3>
+<ul>
+<li>This is a data structure that is located within a PE file. It plays a crucial role in dynamic resolving of functions and APIs, by allowing programs to import and utilize external libraries during runtime.</li>
+</ul>
+<h4 id="structure-of-the-image-import-descriptor" class="relative group">Structure of the Image Import Descriptor <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#structure-of-the-image-import-descriptor" aria-label="Anchor">#</a></span></h4>
+<ul>
+<li>The structure of the IID in a PE is defined as follows:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">_IMAGE_IMPORT_DESCRIPTOR</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">union</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">DWORD</span>   <span class="n">Characteristics</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">DWORD</span>   <span class="n">OriginalFirstThunk</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="n">DUMMYUNIONNAME</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">DWORD</span>   <span class="n">TimeDateStamp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">DWORD</span>   <span class="n">ForwarderChain</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">DWORD</span>   <span class="n">Name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">DWORD</span>   <span class="n">FirstThunk</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">IMAGE_IMPORT_DESCRIPTOR</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="n">IMAGE_IMPORT_DESCRIPTOR</span> <span class="n">UNALIGNED</span> <span class="o">*</span><span class="n">PIMAGE_IMPORT_DESCRIPTOR</span><span class="p">;</span>
+</span></span></code></pre></div><ul>
+<li>The main elements we are concerned in are:
+<ol>
+<li><code>OriginalFirstThunk</code> - stores a pointer to an array of function names or ordinals (numeric values that are associated with functions) which are located in the <code>import lookup table</code>.</li>
+<li><code>Name</code> - holds a pointer to the name of the imported DLL.</li>
+<li><code>FirstThunk</code> - points to an array of function pointers, stored in the <code>imported address table</code>. These function pointers will be updated with the actual memory addresses of the functions in the imported DLL.</li>
+</ol>
+</li>
+</ul>
+<h3 id="import-lookup-table-ilt" class="relative group">Import Lookup Table (ILT) <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#import-lookup-table-ilt" aria-label="Anchor">#</a></span></h3>
+<ul>
+<li>Also referred to as the Import Name Table (INT). It is a table of function names/references that tell the loader which functions are needed from the DLL being imported.</li>
+<li>It is especially useful in function forwarding, where function calls are redirected from one DLL to another for the purpose of delegating other functions to other DLLs</li>
+</ul>
+<h3 id="hintname-table" class="relative group">Hint/Name Table <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#hintname-table" aria-label="Anchor">#</a></span></h3>
+<ul>
+<li>This structure is defined in the Windows Internals header file <code>winnt.h</code> as shown below:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">_IMAGE_IMPORT_BY_NAME</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">WORD</span>    <span class="n">Hint</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">CHAR</span>   <span class="n">Name</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">IMAGE_IMPORT_BY_NAME</span><span class="p">,</span> <span class="o">*</span><span class="n">PIMAGE_IMPORT_BY_NAME</span><span class="p">;</span>
+</span></span></code></pre></div><ul>
+<li>Hint is a number that is used to look up a function. It is an index to the export name pointer table (contains pointers to functions exported from a DLL)</li>
+<li>If the index lookup fails, a binary search on the name is performed on the export name pointer table to find the function.</li>
+</ul>
+<h3 id="import-address-table-iat" class="relative group">Import Address Table (IAT) <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#import-address-table-iat" aria-label="Anchor">#</a></span></h3>
+<ul>
+<li>
+<p>Similar to the ILT in that it contains addresses of functions and data items that are imported from external dynamic-link libraries. It differs because the IAT is overwritten with the actual addresses of imports during the program runtime.</p>
+</li>
+<li>
+<p>The functioning of the Import Directory Table can be summarized as shown in the diagram below:</p>
+</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-09-24_red_team05/images/IAT.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h2 id="getmodulehandle--getprocaddress" class="relative group">GetModuleHandle &amp; GetProcAddress <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#getmodulehandle--getprocaddress" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>
+<p><code>GetModuleHandle</code> is used to retrieve a handle to a given module. The module can be a DLL e.g <code>kernel2.dll</code>. The handle can be passed to GetProcAddress to retrieve the address of an exported function from the DLL.</p>
+</li>
+<li>
+<p>In summary, the two are used to <code>locate function addresses</code>. Instead of statically linking to functions, which can be easily detected during static analysis, we can use these 2 functions to dynamically resolve function addresses at runtime.</p>
+</li>
+<li>
+<p>This means that malware does not have to reveal which functions it intends to call.</p>
+</li>
+<li>
+<p>Their implementations are as follows:</p>
+</li>
+</ul>
+<script src="https://gist.github.com/trevorsaudi/67162d0a04ac020560329d906679ff12.js"></script>
+<br>
+<script src="https://gist.github.com/trevorsaudi/df8bd6f59f483ff485f5fb4e86ae2689.js"></script>
+<h2 id="implementation" class="relative group">Implementation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#implementation" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>We are going to integrate <code>GetModuleHandle</code> and <code>GetProcAddress</code> into an example from our <a href="https://gist.github.com/trevorsaudi/7a1b06437f2b7ae9c9b8e76398571a32#file-finalimplant-cpp">previous</a> blogs.</li>
+<li>Before we proceed, let us see a simple example using MessageBoxW API and how we can dynamically resolve that API at runtime.</li>
+</ul>
+<br>
+<script src="https://gist.github.com/trevorsaudi/6563be9c36ad135289d2e2872b67c59c.js"></script>
+<ul>
+<li>Let us break it down further to understand what is happening:</li>
+</ul>
+<p><code>Line 6</code></p>
+<ul>
+<li>We begin by obtaining a handle to the DLL that contains the functions we will utilize</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl">    <span class="n">HMODULE</span> <span class="n">user32Dll</span> <span class="o">=</span> <span class="n">GetModuleHandle</span><span class="p">(</span><span class="sa">L</span><span class="s">&#34;user32.dll&#34;</span><span class="p">);</span>
+</span></span></code></pre></div><p><code>Line 9-15</code></p>
+<ul>
+<li>We proceed to define a new data type using <code>typedef</code>. The data type being defined is a function pointer that has a signature exactly like the <code>MessageBoxW</code> API. The function pointer is of type <code>WINAPI</code></li>
+<li>GetProcAddress is used to locate the <code>MessageBoxW</code> function address from the DLL. It returns a pointer of type <code>FARPROC</code>, a generic pointer to a function in a DLL.</li>
+<li>Since we now have a function pointer called <code>pMessageBoxW</code> , we need to typecast it so that the compiler knows how to handle the pointer i.e <code>calling convention, paramters, return value</code> that the MessageBoxWFunc function expects.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl">    <span class="k">typedef</span> <span class="nf">int</span> <span class="p">(</span><span class="n">WINAPI</span><span class="o">*</span> <span class="n">MessageBoxWFunc</span><span class="p">)(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">HWND</span> <span class="n">hwnd</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">LPCWSTR</span> <span class="n">lpText</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">LPCWSTR</span> <span class="n">lpCaption</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">UINT</span> <span class="n">uType</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MessageBoxWFunc</span> <span class="n">pMessageBoxW</span> <span class="o">=</span> <span class="p">(</span><span class="n">MessageBoxWFunc</span><span class="p">)</span><span class="n">GetProcAddress</span><span class="p">(</span><span class="n">user32Dll</span><span class="p">,</span> <span class="s">&#34;MessageBoxW&#34;</span><span class="p">);</span>
+</span></span></code></pre></div><p><code>Line 22</code></p>
+<ul>
+<li>
+<p>We finally invoke the <code>pMessageBoxW</code> function.</p>
+</li>
+<li>
+<p>If we apply the same logic to our shellcode execution implant, we end up with the following:</p>
+</li>
+</ul>
+<script src="https://gist.github.com/trevorsaudi/30a321a013b6ddb1f0263e969ec7ed49.js"></script>
+<ul>
+<li>There are 2 issues to address with this kind of implementation.</li>
+</ul>
+<h3 id="1-strings-obfuscation" class="relative group">1. Strings Obfuscation <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#1-strings-obfuscation" aria-label="Anchor">#</a></span></h3>
+<ul>
+<li>If we check the strings on the compiled program, it reveals API strings that were used in the program (line 41 - 44). When an antivirus is performing static detection, the suspicious strings will get picked up.</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-09-24_red_team05/images/strings.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<ul>
+<li>We can get around this by encrypting the suspicious strings using XOR, and decrypting them before using them.</li>
+<li>You can use Cyberchef to perform the strings encryption.</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-09-24_red_team05/images/xorencr.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<ul>
+<li>The final XOR implementation is as shown. Note that I added null-terminating characters <code>0x00</code> for our strings:</li>
+</ul>
+<script src="https://gist.github.com/trevorsaudi/f683da46ee351741900be94667ef7b27.js"></script>
+<ul>
+<li>We successfully get rid of all suspicious strings.</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-09-24_red_team05/images/strings2.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h3 id="2-reducing-all-our-imports-to-0" class="relative group">2. Reducing all our imports to 0 <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-reducing-all-our-imports-to-0" aria-label="Anchor">#</a></span></h3>
+<ul>
+<li>Our code statically links to GetModuleHandle and GetProcAddress Windows APIs. When viewed in the Import Address Table, we see these 2 which may raise suspicion with some antiviruses.</li>
+<li>The workaround we cover in this blog is to link a manual implementation of the 2 APIs to our program so that instead of relying on the Windows APIs, we use our implementations that parse the various DLLs and locate our needed functions.</li>
+<li>The main chunk of the implementation has been provided below. The code might look complex but it&rsquo;s actually straightforward if you understand the purpose of <code>GetProcAddress</code> and <code>GetModuleHandle</code>.</li>
+<li>The implementations of GetProcAddress and GetModuleHandle work as follows:</li>
+</ul>
+<h3 id="hlpgetmodulehandle-function" class="relative group">hlpGetModuleHandle Function <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#hlpgetmodulehandle-function" aria-label="Anchor">#</a></span></h3>
+<ul>
+<li>This function retrieves the <code>Process Environment Block (PEB)</code> for the current process. This structure contains information about the loaded DLLs in a process.</li>
+<li>If no module has been provided, it returns the base address of the calling module. <code>GetModuleHandle</code> API works exactly like this, where passing <code>NULL</code> as the module name retrieves the handle to the file used to create the calling process (usually the executable file)</li>
+<li>The <code>PEB</code> contains a structure called LDR which has information about the loaded DLL within a process. It has a linked-list called <code>InLoadOrderModuleList</code> containing names of our modules, which we iterate through to find our desired module.</li>
+<li>We compare the <code>BaseDllName</code> of each module entry with <code>sModuleName</code> and return the base address of the module we find. If no match we return NULL.</li>
+</ul>
+<h3 id="hlpgetprocaddress-function" class="relative group">hlpGetProcAddress Function <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#hlpgetprocaddress-function" aria-label="Anchor">#</a></span></h3>
+<ul>
+<li>This function parses the main headers and structures from the obtained module handle to access information about functions that have been exported by a module.</li>
+<li>If <code>sProcName</code> has been provided as an ordinal, it directly looks up the address in the Export Address Table using the ordinal.</li>
+<li>If <code>sProcName</code> is a function name, we search the table of function names to find a match.</li>
+<li>If we find a match, we retrieve the function&rsquo;s address and return it, otherwise, we return NULL.</li>
+</ul>
+<h2 id="project-files" class="relative group">Project Files <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#project-files" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>The complete project files are linked <a href="https://github.com/trevorsaudi/Zero-Import-Malware">here</a></li>
+<li>The final implant code fully encrypts all suspicious strings and dynamically resolves all our functions:</li>
+</ul>
+<script src="https://gist.github.com/trevorsaudi/51cb353e6f7e6950452d658d30ac9e62.js"></script>
+<h2 id="compilation-and-running" class="relative group">Compilation and Running <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#compilation-and-running" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>The project includes a compile.bat file to help with the compilation and linking of the implant and helper files. You can do it as shown:</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-09-24_red_team05/images/zeroimports.gif" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h2 id="verifying-zero-imports" class="relative group">Verifying Zero Imports <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#verifying-zero-imports" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>If you open the compiled implant on PEBear, the imports are zero as shown:</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2023-09-24_red_team05/images/zeroimports.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h2 id="references" class="relative group">References <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#references" aria-label="Anchor">#</a></span></h2>
+<p><a href="https://institute.sektor7.net/rto-maldev-intermediate">https://institute.sektor7.net/rto-maldev-intermediate</a></p>
+
+      </div>
+    </section>
+    <footer class="pt-8 max-w-prose print:hidden">
+      
+
+      
+
+      
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="flex group" href="/posts/2023-09-07_red_team05/">
+              <span
+                class="mr-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+              <span
+                class="ml-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Malware development: APC Injection with C++</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2023-08-06 00:00:00 &#43;0000 UTC">6 August 2023</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+            <a class="flex text-right group" href="/posts/2024-06-11_red_team06/">
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Creating malicious .MSIX files for initial access</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2024-06-11 00:00:00 &#43;0000 UTC">11 June 2024</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ml-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span
+                class="mr-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+            </a>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+    </footer>
+    
+  </article>
+
+        
+          <div
+            class="absolute top-[110vh] ltr:right-0 rtl:left-0 w-12 pointer-events-none bottom-0"
+          >
+            <a
+              href="#the-top"
+              class="w-12 h-12 sticky pointer-events-auto top-[calc(100vh-5.5rem)] bg-neutral/50 dark:bg-neutral-800/50 backdrop-blur rounded-full text-xl flex items-center justify-center text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400"
+              aria-label="Scroll to top"
+              title="Scroll to top"
+            >
+              &uarr;
+            </a>
+          </div>
+        
+      </main>
+      <div
+  id="search-wrapper"
+  class="fixed inset-0 z-50 flex flex-col p-4 sm:p-6 md:p-[10vh] lg:p-[12vh] w-screen h-screen cursor-default bg-neutral-500/50 backdrop-blur-sm dark:bg-neutral-900/50 invisible"
+  data-url="https://trevorsaudi.com/"
+>
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg border-neutral-200 top-20 bg-neutral dark:bg-neutral-800 dark:border-neutral-700"
+  >
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-transparent focus:outline-2"
+          placeholder="Search"
+          tabindex="0"
+        />
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400"
+        title="Close (Esc)"
+      >
+        
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+
+  </span>
+
+
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+<footer class="py-10 print:hidden">
+  
+  
+  <div class="flex justify-between">
+    <div>
+      
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          😄
+      </p>
+      
+      
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          
+          
+          Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> &amp; <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://git.io/hugo-congo" target="_blank" rel="noopener noreferrer">Congo</a>
+        </p>
+      
+    </div>
+    
+    
+      <div
+        class="text-sm cursor-pointer text-neutral-700 dark:text-neutral hover:text-primary-600 dark:hover:text-primary-400 ltr:mr-14 rtl:ml-14"
+      >
+        <button
+          id="appearance-switcher"
+          class="w-12 h-12 "
+          type="button"
+          title="Switch to dark appearance"
+        >
+          <span class="inline dark:hidden">
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+
+  </span>
+
+</span>
+          <span class="hidden dark:inline">
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+
+  </span>
+
+</span>
+        </button>
+      </div>
+    
+  </div>
+  
+  
+</footer>
+</div>
+  </body>
+</html>

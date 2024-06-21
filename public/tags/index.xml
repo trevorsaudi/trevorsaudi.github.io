@@ -7,22 +7,49 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>:smile: </copyright>
-    <lastBuildDate>Sun, 06 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://trevorsaudi.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 11 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://trevorsaudi.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Initial Access</title>
+      <link>https://trevorsaudi.com/tags/initial-access/</link>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://trevorsaudi.com/tags/initial-access/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Malware Development</title>
       <link>https://trevorsaudi.com/tags/malware-development/</link>
-      <pubDate>Sun, 06 Aug 2023 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
       
       <guid>https://trevorsaudi.com/tags/malware-development/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>MSIX</title>
+      <link>https://trevorsaudi.com/tags/msix/</link>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://trevorsaudi.com/tags/msix/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Red Teaming</title>
       <link>https://trevorsaudi.com/tags/red-teaming/</link>
-      <pubDate>Sun, 06 Aug 2023 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
       
       <guid>https://trevorsaudi.com/tags/red-teaming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SSL</title>
+      <link>https://trevorsaudi.com/tags/ssl/</link>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://trevorsaudi.com/tags/ssl/</guid>
       <description></description>
     </item>
     
