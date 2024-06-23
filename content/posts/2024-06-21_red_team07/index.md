@@ -3,7 +3,7 @@ title: "Analysis and Exploitation of a Parser Differential Bug"
 author: "Trevor Saudi"
 date: 2024-06-11
 description: ""
-draft: false
+draft: true
 subtitle: ""
 tags:
 - Red Teaming
