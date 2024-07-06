@@ -3,7 +3,7 @@ title: "GOAD Part 1: AD Recon, NTLM relay, ASREPRoasting & Kerberoasting"
 author: "Trevor Saudi"
 date: 2024-06-11
 description: ""
-draft: false
+draft: true
 subtitle: ""
 tags:
 - Active Directory
