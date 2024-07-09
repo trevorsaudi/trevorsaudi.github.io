@@ -46,7 +46,7 @@ tags:
 ## Introduction
 
 - <a href="https://github.com/Orange-Cyberdefense/GOAD" target="_blank">Game of Active Directory</a> is a fully functional AD lab environment, misconfigured with several AD issues designed to help understand various AD security concepts. 
-- In this n-part series, we will explore how we can abuse the misconfigurations .In part 1, we focus on `enumerating` the environment to find `domains, domain controllers, usernames and groups`. We further leverage this to conduct various attacks, showcasing techniques like `password spraying & ASREPRoasting`.
+- In this n-part series, we will explore how we can abuse the misconfigurations. In part 1, we focus on `enumerating` the environment to find `domains, domain controllers, usernames and groups`. We further leverage this to conduct various attacks, showcasing techniques like `password spraying & ASREPRoasting`.
 - We then finish off by exploring what attacks can be carried out when we have `no credentials or usernames` to work with such as the `LLMNR Poisoning and NTLM relay`.
 
 ## Network Diagram
