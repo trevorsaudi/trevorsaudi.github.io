@@ -81,6 +81,15 @@ Grade: First Class Honors
 
 ## Certifications
 
+
+### Certified Red Team Expert (CRTE)
+**Altered Security** <br>
+Feb 2024 <br>
+
+[Credential ID RTLID2386](https://www.credential.net/ea0d2568-f8db-44a2-a073-3d033f956599#gs.4l7g3e)
+
+### Certified Linux Administrator (LPIC-1)
+
 ### Certified Red Team Operator (CRTO)
 **Zero-Point Security** <br>
 Jun 2023 <br>
