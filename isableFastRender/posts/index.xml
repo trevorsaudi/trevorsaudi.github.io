@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>:smile: </copyright>
-    <lastBuildDate>Fri, 21 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 14 Oct 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GOAD Part 2: Domain Enumeration </title>
+      <link>http://localhost:1313/posts/2024-10-10_red_team08/</link>
+      <pubDate>Mon, 14 Oct 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2024-10-10_red_team08/</guid>
+      <description>Introduction # In the previous walkthrough we exploited various misconfigurations and obtained some valid domain user credentials.</description>
+    </item>
+    
     <item>
       <title>GOAD Part 1: AD Recon, Password Spraying , ASREPRoasting &amp; LLMNR Poisoning </title>
       <link>http://localhost:1313/posts/2024-06-21_red_team07/</link>

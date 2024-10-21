@@ -147,6 +147,9 @@ samwell.tarly : Heartsbane
 <br>
 
 - Recon is a recursive process. Upon getting valid credentials, you should rerun your user enumeration commands with credentials to see whether you get more information
+```bash
+crackmapexec smb ips.txt -u samwell.tarly -p Heartsbane 
+```
 
 <div>
         <img src="/posts/2024-06-21_red_team07/images/users-enum2.png" alt="no image" />
