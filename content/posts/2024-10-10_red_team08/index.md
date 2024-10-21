@@ -136,3 +136,16 @@ jeor.mormont: \_L0ngCl@w\_
  ![image](/posts/2024-10-10_red_team08/images/jeor.png)
 
 
+## Known Vulnerabilities
+
+ ![image](/posts/2024-10-10_red_team08/images/known-vulns.png)
+
+
+- Some of these vulnerabilities require credentials to enumerate so we will use a domain user's credentials with netexec, to check the various known vulnerabilities
+
+```python
+ nxc smb 192.168.56.10-23 -u 'jon.snow' -p 'iknownothing' -M zerologon -M nopac -M printnightmare -M smbghost -M ms17-010   
+```
+- We are able to identify printnightmare and nopac on winterfell:
+
+ ![image](/posts/2024-10-10_red_team08/images/vulns.png)

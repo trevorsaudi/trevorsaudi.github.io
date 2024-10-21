@@ -105,7 +105,7 @@
     "keywords": ["Active Directory","Pentesting"],
     
     "mainEntityOfPage": "true",
-    "wordCount": "226"
+    "wordCount": "280"
   }]
   </script>
 
@@ -344,6 +344,7 @@
         <li><a href="#spidering-and-dumping-shares">Spidering and Dumping Shares</a></li>
       </ul>
     </li>
+    <li><a href="#known-vulnerabilities">Known Vulnerabilities</a></li>
   </ul>
 </nav>
   </div>
@@ -610,6 +611,42 @@ We will explore kerberoasting and domain enumeration using bloodhound&hellip;..<
   
     <figure>
       <img class="my-0 rounded-md" src="/posts/2024-10-10_red_team08/images/jeor.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<h2 id="known-vulnerabilities" class="relative group">Known Vulnerabilities <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#known-vulnerabilities" aria-label="Anchor">#</a></span></h2>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2024-10-10_red_team08/images/known-vulns.png" alt="image" />
+      
+    </figure>
+  
+
+</p>
+<ul>
+<li>Some of these vulnerabilities require credentials to enumerate so we will use a domain user&rsquo;s credentials with netexec, to check the various known vulnerabilities</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"> <span class="n">nxc</span> <span class="n">smb</span> <span class="mf">192.168.56.10</span><span class="o">-</span><span class="mi">23</span> <span class="o">-</span><span class="n">u</span> <span class="s1">&#39;jon.snow&#39;</span> <span class="o">-</span><span class="n">p</span> <span class="s1">&#39;iknownothing&#39;</span> <span class="o">-</span><span class="n">M</span> <span class="n">zerologon</span> <span class="o">-</span><span class="n">M</span> <span class="n">nopac</span> <span class="o">-</span><span class="n">M</span> <span class="n">printnightmare</span> <span class="o">-</span><span class="n">M</span> <span class="n">smbghost</span> <span class="o">-</span><span class="n">M</span> <span class="n">ms17</span><span class="o">-</span><span class="mi">010</span>   
+</span></span></code></pre></div><ul>
+<li>We are able to identify printnightmare and nopac on winterfell:</li>
+</ul>
+<p>
+
+
+
+  
+  
+  
+    <figure>
+      <img class="my-0 rounded-md" src="/posts/2024-10-10_red_team08/images/vulns.png" alt="image" />
       
     </figure>
   
