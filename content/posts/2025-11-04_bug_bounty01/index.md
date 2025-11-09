@@ -54,12 +54,12 @@ tags:
 
 - The first step and probably the hardest for most beginners. Alot of experienced researchers advocate for [various ways](https://www.uprootsecurity.com/blog/choosing-the-right-bug-bounty-target-a-hacker-s-guide) of choosing your target, I personally prefer working with targets I am already familiar with. It helps to form a connection with the target which goes a long way in maintaining momentum 
 
-- I therefore selected a target which I am a frequent user. I was familiar with alot of the features and it gave me an idea of what bugs to look for first.
+- I therefore selected a target which I am a frequent user. I was familiar with a lot of the features, and it gave me an idea of what bugs to look for first.
 
-- I decided to stick to my target for more than 3 months or even more and build a solid understanding that might give me an edge during hunting. 
+- Furthermore, I decided to stick to my target for more than 3 months or even more and build a solid understanding that might give me an edge during hunting. 
 - I also selected a `secondary target` on a different platform that I would go to in case things get monotonous on the main target.
 
-- While fingerprinting the target, I discovered `Graphql` was in use. I must admit, I had never worked on graphql before, so I sort out to fill this gap and picked up this book -> [`Black Hat GraphQL - Nick Aleks`](https://www.amazon.com/Black-Hat-GraphQL-Attacking-Generation/dp/1718502842). Super useful resource that helped me get familiar and know what to expect when hunting on my target.
+- While fingerprinting the target, I discovered `GraphQl` was in use. I must admit, I had never worked on GraphQl before, so I sort out to fill this gap and picked up this book -> [`Black Hat GraphQL - Nick Aleks`](https://www.amazon.com/Black-Hat-GraphQL-Attacking-Generation/dp/1718502842). Super useful resource that helped me get familiar and know what to expect when hunting on my target.
 ![blackhatgql](/posts/2025-11-04_bug_bounty01/images/bql.png)
 
 - [Graphql](https://graphql.org/) is a query language for APIs that lets clients ask for exactly what data they need.
@@ -87,10 +87,10 @@ tags:
 - During testing, I keep track of all requests that I come through as shown below, performing my tests across the various boundaries:
 ![summary2](/posts/2025-11-04_bug_bounty01/images/attack.png)
 
-- I also keep an excel sheet to track every possible GraphQL operation name. Here I categorized the operation names, which helped me know what features to start hitting. 
+- I also keep an Excel sheet to track every possible GraphQL operation name. Here I categorized the operation names, which helped me know what features to start hitting. 
 
 
-- I automated the process of retrieving the operation names by writing a parser that would extract unique operation names from burp and notify me on discord when new operation names are encountered that I had not tested before. All this tracked on my excel sheet as well. 
+- I automated the process of retrieving the operation names by writing a parser that would extract unique operation names from burp and notify me on discord when new operation names are encountered that I had not tested before. All this tracked on my Excel sheet as well. 
 
 ![summary2](/posts/2025-11-04_bug_bounty01/images/operation-parser.png)
 
@@ -104,8 +104,9 @@ tags:
 #### Finding the first 2 IDORs
 
 - I scoured the main application within a few days, testing every single feature that existed.
-- After testing the older well known features, I discovered one low severity IDOR that allwoed me to leak backup histories but the triage team decided it had no useful impact to an attacker. I did not give up :)
-- One day when browsing, I suddenly noticed 2 new features introduced to the platform. My priorities changed and I immediately began hunting on these.  
+- After testing the older well known features, I discovered one low severity IDOR that allowed me to leak backup histories, but the triage team decided it had no useful impact to an attacker. I did not give up :)
+- When monotony strikes and I get bored, I would go back to my secondary target to refresh my perspective before coming back. There, I landed 2 duplicates of a Critical and a High severity bug.
+- One day when browsing the main target, I suddenly noticed 2 new features introduced to the platform. My priorities changed, and I immediately began hunting on these.  
 - My operation name parser tool eventually extracted all new operation names that I had not tested, making the hunting process more structured. 
 - 24 days later after starting the journey, I was able to find a medium severity UUID IDOR on one of the new features that allowed me to leak emails and configuration data of other users in the platform.
 - I had no way of leaking the UUID, nevertheless, I showed I could retrieve the UUIDs via github dorking and this helped maintain the impact. This landed me first bounty - 700$ + 800$ bonus.
