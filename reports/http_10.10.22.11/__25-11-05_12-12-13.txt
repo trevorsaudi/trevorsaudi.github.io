@@ -1,0 +1,8 @@
+# Dirsearch started Wed Nov  5 12:14:13 2025 as: /usr/lib/python3/dist-packages/dirsearch/dirsearch.py -u http://10.10.22.11/
+
+403   312B   http://10.10.22.11/%2e%2e//google.com
+403   312B   http://10.10.22.11/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd
+403   312B   http://10.10.22.11/\..\..\..\..\..\..\..\..\..\etc\passwd
+403   312B   http://10.10.22.11/cgi-bin/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd
+200   363B   http://10.10.22.11/uploads/
+301   150B   http://10.10.22.11/uploads    -> REDIRECTS TO: http://10.10.22.11/uploads/

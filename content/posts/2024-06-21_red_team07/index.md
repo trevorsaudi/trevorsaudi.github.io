@@ -46,8 +46,10 @@ tags:
 ## Introduction
 
 - <a href="https://github.com/Orange-Cyberdefense/GOAD" target="_blank">Game of Active Directory</a> is a fully functional AD lab environment, misconfigured with several AD issues designed to help understand various AD security concepts. 
-- In this n-part series, we will explore how we can abuse the misconfigurations. In part 1, we focus on `enumerating` the environment to find `domains, domain controllers, usernames and groups`. We further leverage this to conduct various attacks, showcasing techniques like `password spraying & ASREPRoasting`.
+- The lab showcased here was deployed using the `wazuh extension`, which is part of the <a href="https://github.com/Orange-Cyberdefense/GOAD/tree/v3-beta" target="_blank">GOADv3 - BETA VERSION.</a> which is the lastest as of this blog . We will explore the various OPSEC considerations when running commands against the environment. 
+- In part 1, we focus on `enumerating` the environment to find `domains, domain controllers, usernames and groups`. We further leverage this to conduct various attacks, showcasing techniques like `password spraying & ASREPRoasting`.
 - We then finish off by exploring what attacks can be carried out when we have `no credentials or usernames` to work with such as the `LLMNR Poisoning and NTLM relay`.
+
 
 ## Network Diagram
 
@@ -161,6 +163,19 @@ crackmapexec smb ips.txt -u samwell.tarly -p Heartsbane
         <img src="/posts/2024-06-21_red_team07/images/users-enum2.png" alt="no image" />
 </div>
 
+### Wazuh alerts
+
+- When this command is run we can notice a pattern. Several anonymous logons are performed in a short period of time indicating that crackmapexec is utilizing anonymous access to retrieve a list of possible usernames. CME is also using the SAMR protocol over SMB to list users 
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/anonymous_logon.png" alt="no image" />
+</div>
+- After the retrieval of usernames, crackmapexec attempts to validate the accounts retrieved by trying to establish a session with the listed users.
+
+<div>
+        <img src="/posts/2024-06-21_red_team07/images/kerberos.png" alt="no image" />
+</div>
+
+- This pattern of repeated ANONYMOUS logons could potentially indicate some enumeration is going on.
 
 ### Domain Group enumeration
 

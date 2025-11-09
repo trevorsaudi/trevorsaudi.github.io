@@ -76,7 +76,6 @@
 <meta property="article:published_time" content="2023-01-10T00:00:00+00:00" />
 <meta property="article:modified_time" content="2023-01-10T00:00:00+00:00" /><meta property="og:site_name" content="Trevor Saudi" />
 
-
   <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://trevorsaudi.com/posts/2023-01-11-Source_Code_Review_01/images/logo.png"/>
 
@@ -453,7 +452,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">data</span> <span class="o">=</span> <span class="n">secret</span><span class="o">+</span><span class="n">reset_information</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/reset_password/&lt;email&gt;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/reset_password/&lt;email&gt;&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">reset_password_route</span><span class="p">(</span><span class="n">email</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">token</span> <span class="o">=</span> <span class="n">token_hex</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> 
 </span></span><span class="line"><span class="cl">    <span class="n">reset_info</span> <span class="o">=</span> <span class="s2">&#34;token=&#34;</span><span class="o">+</span><span class="n">token</span><span class="o">+</span><span class="s2">&#34;&amp;email=&#34;</span><span class="o">+</span><span class="n">email</span>
@@ -558,7 +557,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">data</span> <span class="o">=</span> <span class="n">reset_information</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">secret</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">msg</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">digestmod</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/reset_password/&lt;email&gt;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/reset_password/&lt;email&gt;&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">reset_password_route</span><span class="p">(</span><span class="n">email</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">token</span> <span class="o">=</span> <span class="n">token_hex</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> 
 </span></span><span class="line"><span class="cl">    <span class="n">reset_info</span> <span class="o">=</span> <span class="s2">&#34;token=&#34;</span><span class="o">+</span><span class="n">token</span><span class="o">+</span><span class="s2">&#34;&amp;email=&#34;</span><span class="o">+</span><span class="n">email</span>

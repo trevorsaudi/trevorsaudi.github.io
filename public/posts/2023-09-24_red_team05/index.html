@@ -76,7 +76,6 @@
 <meta property="article:published_time" content="2023-09-24T00:00:00+00:00" />
 <meta property="article:modified_time" content="2023-09-24T00:00:00+00:00" /><meta property="og:site_name" content="Trevor Saudi" />
 
-
   <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Malware development: Building malware with 0 imports"/>
 <meta name="twitter:description" content="Behavioural signature evasion"/>
@@ -556,7 +555,7 @@
 <ul>
 <li>We begin by obtaining a handle to the DLL that contains the functions we will utilize</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl">    <span class="n">HMODULE</span> <span class="n">user32Dll</span> <span class="o">=</span> <span class="n">GetModuleHandle</span><span class="p">(</span><span class="sa">L</span><span class="s">&#34;user32.dll&#34;</span><span class="p">);</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl">    <span class="n">HMODULE</span> <span class="n">user32Dll</span> <span class="o">=</span> <span class="nf">GetModuleHandle</span><span class="p">(</span><span class="sa">L</span><span class="s">&#34;user32.dll&#34;</span><span class="p">);</span>
 </span></span></code></pre></div><p><code>Line 9-15</code></p>
 <ul>
 <li>We proceed to define a new data type using <code>typedef</code>. The data type being defined is a function pointer that has a signature exactly like the <code>MessageBoxW</code> API. The function pointer is of type <code>WINAPI</code></li>
@@ -569,7 +568,7 @@
 </span></span><span class="line"><span class="cl">        <span class="n">LPCWSTR</span> <span class="n">lpCaption</span><span class="p">,</span> 
 </span></span><span class="line"><span class="cl">        <span class="n">UINT</span> <span class="n">uType</span>
 </span></span><span class="line"><span class="cl">    <span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">MessageBoxWFunc</span> <span class="n">pMessageBoxW</span> <span class="o">=</span> <span class="p">(</span><span class="n">MessageBoxWFunc</span><span class="p">)</span><span class="n">GetProcAddress</span><span class="p">(</span><span class="n">user32Dll</span><span class="p">,</span> <span class="s">&#34;MessageBoxW&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MessageBoxWFunc</span> <span class="n">pMessageBoxW</span> <span class="o">=</span> <span class="p">(</span><span class="n">MessageBoxWFunc</span><span class="p">)</span><span class="nf">GetProcAddress</span><span class="p">(</span><span class="n">user32Dll</span><span class="p">,</span> <span class="s">&#34;MessageBoxW&#34;</span><span class="p">);</span>
 </span></span></code></pre></div><p><code>Line 22</code></p>
 <ul>
 <li>

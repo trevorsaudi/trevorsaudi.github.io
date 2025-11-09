@@ -48,7 +48,7 @@ tags:
  We will explore kerberoasting and domain enumeration using bloodhound.....
 
 
-### Kerberoasting in the north domain
+## Kerberoasting in the north domain
 
  ![image](/posts/2024-10-10_red_team08/images/kerberoasting.png)
 
@@ -95,7 +95,7 @@ jon.snow: iknownothing
 {{< /alert >}}
 
 
-### Spidering and Dumping Shares
+## Spidering and Dumping Shares
 
  ![image](/posts/2024-10-10_red_team08/images/shares2.png)
 
@@ -122,7 +122,7 @@ jon.snow: iknownothing
 
  ![image](/posts/2024-10-10_red_team08/images/crt.png)
 
- - We discover credentials to jeor.mormont user.
+ - We discover credentials to `jeor.mormont` user.
 
  ![image](/posts/2024-10-10_red_team08/images/creds.png)
 
@@ -149,3 +149,43 @@ jeor.mormont: \_L0ngCl@w\_
 - We are able to identify printnightmare and nopac on winterfell:
 
  ![image](/posts/2024-10-10_red_team08/images/vulns.png)
+
+### noPac
+
+- noPac is a combination of 2 critical vulnerabilities CVE-2021-42278 and CVE-2021-42287 abusing the Security Account Manager and the Keberos Privilege Attribute Ceritificate (PAC).
+
+- The attack chain is as follows:
+  1. Attacker gains access to a domain user account
+  2. Attacker renames a computer account's sAMAccountName to impersonate a domain controller's name  CVE-2021-42278
+  3. The attacker requests a service ticket from KDC which issues a ticket associated with the domain controller  CVE-2021-42287
+  4. Using the ticket, the attacker can authenticate to the dc with admin priviliges.
+
+- Using [this](https://github.com/Ridter/noPac.git) exploit, we can perform a dcsync attack and extract password hashes and keys from the domain controller. 
+
+
+```python
+ python3 noPac.py north.sevenkingdoms.local/jon.snow:'iknownothing' -dc-ip winterfell.north.sevenkingdoms.local -dc-host winterfell --impersonate administrator -dump
+```
+
+  ![image](/posts/2024-10-10_red_team08/images/nopac.png) 
+
+
+  ![image](/posts/2024-10-10_red_team08/images/hashes.png) 
+
+
+ ### Printnightmare
+
+ - Printnightmare abuses a code execution vulnerability arising via an improper validation of input and insufficient checks within the print spooler service.
+ - This vulnerability allows execution of code at SYSTEM level privileges.
+
+
+## Bloodhound
+
+- We can perform domain enumeration using the extracted credentials with the powerful bloodhound tool.
+
+### Collection with Netexec
+
+
+### Collection with SharpHound Reflective Loading + ASMI Bypass
+
+
