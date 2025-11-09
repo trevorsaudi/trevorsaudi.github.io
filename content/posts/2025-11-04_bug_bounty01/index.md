@@ -3,16 +3,16 @@ title: "0-1500$ in my first 24 days of bug bounty "
 author: "Trevor Saudi"
 date: 2025-11-04
 description: ""
+image: "/posts/2025-11-04_bug_bounty01/images/bounty2.png"
 draft: false
-subtitle: ""
+subtitle: "A story of how i landed my first bug"
 tags:
 - Web Security
 - Bug bounty
 ---
+![image](/posts/2025-11-04_bug_bounty01/images/bounty.png)
 
 <style>
-
-
 
 @import url('https://cdn.rawgit.com/lonekorean/gist-syntax-themes/d49b91b3/stylesheets/one-dark.css');
 
