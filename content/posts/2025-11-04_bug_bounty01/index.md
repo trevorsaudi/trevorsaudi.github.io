@@ -105,10 +105,15 @@ tags:
 
 - I scoured the main application within a few days, testing every single feature that existed.
 - After testing the older well known features, I discovered one low severity IDOR that allowed me to leak backup histories, but the triage team decided it had no useful impact to an attacker. I did not give up :)
-- When monotony strikes and I get bored, I would go back to my secondary target to refresh my perspective before coming back. There, I landed 2 duplicates of a Critical and a High severity bug.
-- One day when browsing the main target, I suddenly noticed 2 new features introduced to the platform. My priorities changed, and I immediately began hunting on these.  
-- My operation name parser tool eventually extracted all new operation names that I had not tested, making the hunting process more structured. 
-- 24 days later after starting the journey, I was able to find a medium severity UUID IDOR on one of the new features that allowed me to leak emails and configuration data of other users in the platform.
+- When monotony strikes, and I get bored, I would go back to my secondary target to refresh my perspective before coming back. There, I landed 2 duplicates of a Critical and a Medium severity bug.
+
+![summary2](/posts/2025-11-04_bug_bounty01/images/duplicate.jpg)
+![summary2](/posts/2025-11-04_bug_bounty01/images/duplicate2.jpg)
+
+
+- One day when browsing the main target, I noticed 2 `new features` introduced to the platform. I immediately began hunting on these.  
+- The tool I wrote extracted all new operation names that I had not tested, making the hunting process faster. 
+- And finally, `24 days` later after starting the journey, I was able to find a medium severity UUID IDOR on one of the new features that allowed me to leak emails and configuration data of other users in the platform.
 - I had no way of leaking the UUID, nevertheless, I showed I could retrieve the UUIDs via github dorking and this helped maintain the impact. This landed me first bounty - 700$ + 800$ bonus.
 ![summary2](/posts/2025-11-04_bug_bounty01/images/bounty.png)
 - While this was an incredibly simple bug to find, hunting daily and efficiently helped me identify it first.
@@ -118,7 +123,7 @@ tags:
 - Is the journey worth it? Yes. If you like to hack and want to get paid for it I think it is worth putting the effort for.
 - Consistency beats talent.
 - Visualize your goal and actively work towards it. 
-- Be patient. It can take a while even for someone with a security background to land their first bug. This field is highly competitive.
+- Be patient. It can take a while even for someone with a security background to land their first valid paid bug. This field is highly competitive so be ready for duplicates and informatives.
 
 ### Resources.
 
