@@ -43,8 +43,9 @@ tags:
 
 ## Introduction
 
-- This article is about a journey I recently embarked on to improve my Web security skills. It ended up being a very important experience where I changed my mindset in approaching learning, problem solving, consistency and discipline
-- I took on a challenge where try to consistently hack on a `bug bounty target` till you achieve your own personal objective.
+- This article is about a journey I recently embarked on to improve my Web security skills. It ended up being a very important experience where I changed my mindset in approaching learning, problem-solving, consistency and discipline
+- I took on a challenge where I try to consistently hack on a `bug bounty target` till you achieve a personal objective. Juggling this and a busy 9-5 was surely going to be a task!
+
 - For those that may be unfamiliar with bug bounty: 
 
 > A bug bounty program is a crowdsourced cybersecurity initiative where companies invite ethical hackers and security researchers to find and report software bugs and security vulnerabilities in their applications. In return, they offer monetary rewards or other incentives for successful discoveries. [1](https://ciphrexlabs.com/bcontent/how-to-start-bug-bounty-hunting)
